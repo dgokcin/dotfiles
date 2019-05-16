@@ -174,7 +174,15 @@ else
   endif
   
 endif
+"Different shaped cursor for different inser/visual mode
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[1 q"
 
+" optional reset cursor on start:
+augroup myCmds
+au!
+autocmd VimEnter * silent !echo -ne "\e[2 q"
+augroup END
 
 if &term =~ '256color'
   set t_ut=
