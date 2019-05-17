@@ -3,6 +3,10 @@
 "*****************************************************************************
 "" Vim-PLug core
 "*****************************************************************************
+if has('win32')
+    execute pathogen#infect()
+endif
+
 let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 
 let g:vim_bootstrap_langs = "python"
@@ -61,7 +65,7 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
 "" Snippets
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 "" Color
@@ -164,7 +168,6 @@ else
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
 
-  
   if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
   else
@@ -174,15 +177,6 @@ else
   endif
   
 endif
-"Different shaped cursor for different inser/visual mode
-let &t_SI = "\e[5 q"
-let &t_EI = "\e[1 q"
-
-" optional reset cursor on start:
-augroup myCmds
-au!
-autocmd VimEnter * silent !echo -ne "\e[2 q"
-augroup END
 
 if &term =~ '256color'
   set t_ut=
@@ -192,7 +186,6 @@ endif
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
 set scrolloff=3
-
 "" Status bar
 set laststatus=2
 
@@ -238,6 +231,17 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
+""Different cursors in insert and visual mode""
+:autocmd InsertEnter,InsertLeave * set cul!
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[1 q"
+
+" optional reset cursor on start:
+augroup myCmds
+au!
+autocmd VimEnter * silent !echo -ne "\e[2 q"
+augroup END
+"
 "" NERDTree configuration
 ""autocmd VimEnter * NERDTree | wincmd p
 let g:NERDTreeChDirMode=2
@@ -246,7 +250,12 @@ let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
+let g:NERDTreeWinSize=30
+" NERDTree setting defaults to work around http://github.com/scrooloose/nerdtree/issues/489
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeGlyphReadOnly = "RO"
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 map <silent> <C-n> :NERDTreeToggle<CR>
@@ -370,10 +379,10 @@ nnoremap <silent> <leader>e :FZF -m<CR>
 nmap <leader>y :History:<CR>
 
 " snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+"let g:UltiSnipsEditSplit="vertical"
 
 " ale
 let g:ale_linters = {}
