@@ -300,7 +300,7 @@ augroup vimrc-remember-cursor-position
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
-
+set cursorline
 "" txt
 augroup vimrc-wrapping
   autocmd!
@@ -443,6 +443,8 @@ nnoremap <Leader>o :.Gbrowse<CR>
 
 "*****************************************************************************
 "" Custom configs
+" When vimrc is edited, reload it
+autocmd! bufwritepost .vimrc source ~/.vimrc
 "*****************************************************************************
 
 " python
