@@ -6,7 +6,7 @@
 if has('win32')
     execute pathogen#infect()
 endif
-
+set guifont=Hack:h12
 let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 
 let g:vim_bootstrap_langs = "python"
@@ -80,6 +80,7 @@ Plug 'tomasr/molokai'
 Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
+Plug 'davidhalter/jedi-vim'
 
 "*****************************************************************************
 "*****************************************************************************
@@ -156,7 +157,7 @@ set gfn=Monospace\ 10
 
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
-    set guifont=Menlo:h12
+    ""set guifont=Menlo:h12
     set transparency=7
   endif
 else
@@ -181,8 +182,6 @@ endif
 if &term =~ '256color'
   set t_ut=
 endif
-
-
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
 set scrolloff=3
