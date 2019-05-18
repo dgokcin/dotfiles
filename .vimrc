@@ -53,6 +53,7 @@ if isdirectory('/usr/local/opt/fzf')
 else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
+  Plug 'ryanoasis/vim-devicons'
 endif
 let g:make = 'gmake'
 if exists('make')
@@ -527,3 +528,8 @@ else
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
 endif
+""""""NOTES""""""
+  "Download this and set it as your font in the terminal that you are using for icons,
+  "https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/DroidSansMono"
+  "https://github.com/ryanoasis/vim-devicons for more details about the icons
+
