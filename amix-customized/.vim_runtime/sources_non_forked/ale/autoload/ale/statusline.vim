@@ -117,7 +117,7 @@ endfunction
 
 " Returns a Dictionary with counts for use in third party integrations.
 function! ale#statusline#Count(buffer) abort
-    " The Dictionary is copied here before exposing it to other plugins.
+    " The Dictionary is copied here before exposing it to other plugInsertuuu.
     return copy(s:GetCounts(a:buffer))
 endfunction
 
