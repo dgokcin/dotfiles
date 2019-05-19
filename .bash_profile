@@ -7,6 +7,9 @@ function cl {
 md () {
     mkdir -p $1 && cd $1
 }
+cim () {
+    vim $1
+}
 ###########
 # Aliases #
 ###########
