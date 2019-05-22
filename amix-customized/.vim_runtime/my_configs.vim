@@ -2,6 +2,7 @@
 map <silent> <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=30
 let g:NERDTreeWinPos = "left"
+set splitright
 " NERDTree setting defaults to work around http://github.com/scrooloose/nerdtree/issues/489"
     let g:NERDTreeDirArrows = 1
     let g:NERDTreeDirArrowExpandable = '▸'
