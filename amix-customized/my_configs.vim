@@ -28,6 +28,10 @@ nnoremap d "_d
 nnoremap D "_D
 vnoremap d "_d
 
+"""use up and down arrows to swithc lines"""
+nnoremap <up> ddkP
+nnoremap <down> ddp
+
 """<leader+d cuts>"""
 if has('unix')
     nnoremap <leader>d ""d
