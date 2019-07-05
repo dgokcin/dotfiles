@@ -17,6 +17,36 @@ set number
 nmap <BS> O<Esc>
 nmap <Enter> o<Esc>
 
+"""Inserts a blank line with backsace/enter to above/below the current line"""
+nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+
+"""Maps default d to black-hole registry"""
+nnoremap x "_x
+nnoremap X "_X
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+"""<leader+d cuts>"""
+if has('unix')
+    nnoremap <leader>d ""d
+    nnoremap <leader>D ""D
+    vnoremap <leader>d ""d
+elseif has('win32') || has('win64')
+  if has('unnamedplus')
+    set clipboard=unnamed,unnamedplus
+    nnoremap <leader>d "+d
+    nnoremap <leader>D "+D
+    vnoremap <leader>d "+d
+  else
+    set clipboard=unnamed
+    nnoremap <leader>d "*d
+    nnoremap <leader>D "*D
+    vnoremap <leader>d "*d
+  endif
+endif
+
 "" Remember cursor position""
 augroup vimrc-remember-cursor-position
   autocmd!
