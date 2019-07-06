@@ -13,13 +13,10 @@ set splitright
 "" Shows Line Numbers""
 set number
 
-""Insert a new line with backspace and enter without insert mode""
-nmap <BS> O<Esc>
-nmap <Enter> o<Esc>
-
 """Inserts a blank line with backsace/enter to above/below the current line"""
 nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+
 
 """Maps default d to black-hole registry"""
 nnoremap x "_x
@@ -29,8 +26,30 @@ nnoremap D "_D
 vnoremap d "_d
 
 """use up and down arrows to swithc lines"""
-nnoremap <up> ddkP
-nnoremap <down> ddp
+"""nnoremap <up> ddkP
+"""nnoremap <down> ddp
+
+"""Indent with keeping the cursor position"""
+func! Indent(ind)
+  if &sol
+    set nostartofline
+  endif
+  let vcol = virtcol('.')
+  if a:ind
+    norm! >>
+    exe "norm!". (vcol + shiftwidth()) . '|'
+  else
+    norm! <<
+    exe "norm!". (vcol - shiftwidth()) . '|'
+  endif
+endfunc
+
+"""indent with tab/shift-tab in normal and visual mode, keeping the cursor position"""
+nnoremap > :call Indent(1)<cr>
+nnoremap < :call Indent(0)<cr>
+
+nnoremap <TAB> :call Indent(1)<cr>
+nnoremap <S-TAB> :call Indent(0)<cr>
 
 """<leader+d cuts>"""
 if has('unix')
