@@ -91,8 +91,10 @@ let g:NERDTreeGlyphReadOnly = "RO"
 " => NERDCommenter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Makes commenting and uncommenting in visual mode to stay in visual mode
-vmap <leader>cc <plug>NERDCommenterCommentgv
+vmap cc <plug>NERDCommenterCommentgv
 vmap <leader>cu <plug>NERDCommenterUncommentgv
+nmap <leader>cc <plug>NERDCommenterCommentj^
+nmap <leader>cu <plug>NERDCommenterUncommentj^
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
