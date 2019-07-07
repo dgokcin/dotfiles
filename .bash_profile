@@ -43,3 +43,4 @@ alias la="ls -a"
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
 alias ..='cd ../'                           # Go back 1 directory level
 alias qfind="find . -name "                 # qfind:    Quickly search for file
+alias tlog="git log --all --decorate --oneline --graph"
