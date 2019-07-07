@@ -76,12 +76,23 @@ endif
 " => NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <silent> <C-n> :NERDTreeToggle<CR>
+
+" Custom window position and size
 let g:NERDTreeWinSize=30
 let g:NERDTreeWinPos = "left"
+
+" Because of a bug in NERDTree
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeGlyphReadOnly = "RO"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NERDCommenter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Makes commenting and uncommenting in visual mode to stay in visual mode
+vmap <leader>cc <plug>NERDCommenterCommentgv
+vmap <leader>cu <plug>NERDCommenterUncommentgv
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
