@@ -90,9 +90,15 @@ let g:NERDTreeGlyphReadOnly = "RO"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDCommenter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Makes toggling comments better
+vmap <leader><Space> <plug>NERDCommenterTogglegv
+nmap <leader><Space> <plug>NERDCommenterToggle^
+
 " Makes commenting and uncommenting in visual mode to stay in visual mode
-vmap cc <plug>NERDCommenterCommentgv
+vmap <leader>cc <plug>NERDCommenterCommentgv
 vmap <leader>cu <plug>NERDCommenterUncommentgv
+
+ "Makes commenting and uncommenting in normal mode to go to next line
 nmap <leader>cc <plug>NERDCommenterCommentj^
 nmap <leader>cu <plug>NERDCommenterUncommentj^
 
