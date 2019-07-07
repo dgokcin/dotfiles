@@ -30,6 +30,7 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings for better editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Inserts a blank line with backspace/enter to above/below the current line without loosing cursor position
 nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
@@ -37,10 +38,6 @@ nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 " Indent with >,< and TAB, Shift-Tab without loosing cursor position
 nnoremap > :call Indent(1)<cr>
 nnoremap < :call Indent(0)<cr>
-nnoremap <TAB> :call Indent(1)<cr>
-nnoremap <S-TAB> :call Indent(0)<cr>
-
-"" Vmap to maintain Visual Mode after shifting > and <
 vmap < <gv
 vmap > >gv
 
@@ -69,6 +66,9 @@ elseif has('win32') || has('win64')
     vnoremap <leader>d "*d
   endif
 endif
+
+" Maps / to <space> for faster search
+:nnoremap <space> /
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin Related
