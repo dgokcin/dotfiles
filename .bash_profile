@@ -27,7 +27,7 @@ mcd () {
     mkdir -p $1 && cd $1
 }
 
-# => For handling common typos
+# => For handling common typos that I make
 cim () {
     vim $1
 }
@@ -36,6 +36,7 @@ bim () {
     vim $1
 }
 
+# => Zips the given parameter
 zipf () {
     zip -r "$1".zip "$1" ;
 }
