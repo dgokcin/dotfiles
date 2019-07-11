@@ -21,7 +21,7 @@ colorscheme peaksea
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
 
-" Remember cursor position when starting vim
+" Remember cursor position
 augroup vimrc-remember-cursor-position
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -30,6 +30,7 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings for better editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Inserts a blank line with backspace/enter to above/below the current line without loosing cursor position
 nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
@@ -52,18 +53,18 @@ if has('unix')
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
-elseif has('win32') || has('win64')
-  if has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
-    nnoremap <leader>d "+d
-    nnoremap <leader>D "+D
-    vnoremap <leader>d "+d
-  else
-    set clipboard=unnamed
-    nnoremap <leader>d "*d
-    nnoremap <leader>D "*D
-    vnoremap <leader>d "*d
-  endif
+"elseif has('win32') || has('win64')
+  "if has('unnamedplus')
+    "set clipboard=unnamed,unnamedplus
+    "nnoremap <leader>d "+d
+    "nnoremap <leader>D "+D
+    "vnoremap <leader>d "+d
+  "else
+    "set clipboard=unnamed
+    "nnoremap <leader>d "*d
+    "nnoremap <leader>D "*D
+    "vnoremap <leader>d "*d
+  "endif
 endif
 
 " Maps / to <space> for faster search
