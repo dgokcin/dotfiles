@@ -27,6 +27,9 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
+" Enables syntax highlighting for groovy
+au BufNewfile, BufRead Jenkinsfile setf groovy
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings for better editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -49,10 +52,10 @@ inoremap $q ''<esc>i
 inoremap $e ""<esc>i
 
  " Swap the lines with the next/previous with down/up arrows
-nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
-nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
-inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
-inoremap <silent> <down> <C-o>:call MoveLineDown()<CR>
+"nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
+"nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
+"inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
+"inoremap <silent> <down> <C-o>:call MoveLineDown()<CR>
 xnoremap <silent> <up> :<C-u>call MoveVisualUp()<CR>
 xnoremap <silent> <down> :<C-u>call MoveVisualDown()<CR>
 
@@ -73,25 +76,18 @@ nnoremap d "_d
 nnoremap D "_D
 vnoremap d "_d
 
-" TODO Make this work for windows
 " Maps <leader>d to cut depending on the OS
-if has('unix')
+let uname = substitute(ststem('uname'), '\n', '', '')
+if uname == 'Linux' || uname == 'Darwin'
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
 
-"elseif has('win32') || has('win64')
-  "if has('unnamedplus')
-    "set clipboard=unnamed,unnamedplus
-    "nnoremap <leader>d "+d
-    "nnoremap <leader>D "+D
-    "vnoremap <leader>d "+d
-  "else
-    "set clipboard=unnamed
-    "nnoremap <leader>d "*d
-    "nnoremap <leader>D "*D
-    "vnoremap <leader>d "*d
-  "endif
+else
+    set clipboard=unnamed
+    nnoremap <leader>d "*d
+    nnoremap <leader>D "*D
+    vnoremap <leader>d "*d
 endif
 
 " Maps / to <space> for faster search
@@ -214,7 +210,6 @@ func! Indent(ind)
     exe "norm!". (vcol - shiftwidth()) . '|'
   endif
 endfunc
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Why not?
