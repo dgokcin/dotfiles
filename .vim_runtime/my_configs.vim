@@ -28,7 +28,7 @@ augroup vimrc-remember-cursor-position
 augroup END
 
 " Enables syntax highlighting for groovy
-au BufNewfile, BufRead Jenkinsfile setf groovy
+au BufNewfile,BufRead Jenkinsfile setf groovy
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings for better editing
