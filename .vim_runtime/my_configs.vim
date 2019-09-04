@@ -77,8 +77,8 @@ nnoremap D "_D
 vnoremap d "_d
 
 " Maps <leader>d to cut depending on the OS
-let uname = substitute(ststem('uname'), '\n', '', '')
-if uname == 'Linux' || uname == 'Darwin'
+let uname = substitute(system('uname'), '\n', '', '')
+if has('unix')
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
