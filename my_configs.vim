@@ -27,8 +27,8 @@ let &t_EI = "\e[1 q"
 
 " Remember cursor position
 augroup vimrc-remember-cursor-position
-  autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
 " Enables syntax highlighting for groovy
@@ -55,7 +55,7 @@ inoremap $4 {<esc>o}<esc>O
 inoremap $q ''<esc>i
 inoremap $e ""<esc>i
 
- " Swap the lines with the next/previous with down/up arrows
+" Swap the lines with the next/previous with down/up arrows
 "nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
 "nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
 "inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
@@ -126,7 +126,7 @@ nmap <leader><Space> <plug>NERDCommenterToggle^
 vmap <leader>cc <plug>nerdcommentercommentgv
 vmap <leader>cu <plug>nerdcommenteruncommentgv
 
- "Makes commenting and uncommenting in normal mode to go to next line
+"Makes commenting and uncommenting in normal mode to go to next line
 nmap <leader>cc <plug>NERDCommenterCommentj^
 nmap <leader>cu <plug>NERDCommenterUncommentj^
 
@@ -149,70 +149,70 @@ let g:multi_cursor_quit_key            = '<Esc>'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set noshowmode
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
+            \ 'colorscheme': 'wombat',
+            \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use up and down arrows to swap lines"""
 function! MoveLineUp()
-  call MoveLineOrVisualUp(".", "")
+    call MoveLineOrVisualUp(".", "")
 endfunction
 
 function! MoveLineDown()
-  call MoveLineOrVisualDown(".", "")
+    call MoveLineOrVisualDown(".", "")
 endfunction
 
 function! MoveVisualUp()
-  call MoveLineOrVisualUp("'<", "'<,'>")
-  normal gv
+    call MoveLineOrVisualUp("'<", "'<,'>")
+    normal gv
 endfunction
 
 function! MoveVisualDown()
-  call MoveLineOrVisualDown("'>", "'<,'>")
-  normal gv
+    call MoveLineOrVisualDown("'>", "'<,'>")
+    normal gv
 endfunction
 
 function! MoveLineOrVisualUp(line_getter, range)
-  let l_num = line(a:line_getter)
-  if l_num - v:count1 - 1 < 0
-    let move_arg = "0"
-  else
-    let move_arg = a:line_getter." -".(v:count1 + 1)
-  endif
-  call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
+    let l_num = line(a:line_getter)
+    if l_num - v:count1 - 1 < 0
+        let move_arg = "0"
+    else
+        let move_arg = a:line_getter." -".(v:count1 + 1)
+    endif
+    call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
 endfunction
 
 function! MoveLineOrVisualDown(line_getter, range)
-  let l_num = line(a:line_getter)
-  if l_num + v:count1 > line("$")
-    let move_arg = "$"
-  else
-    let move_arg = a:line_getter." +".v:count1
-  endif
-  call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
+    let l_num = line(a:line_getter)
+    if l_num + v:count1 > line("$")
+        let move_arg = "$"
+    else
+        let move_arg = a:line_getter." +".v:count1
+    endif
+    call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
 endfunction
 
 function! MoveLineOrVisualUpOrDown(move_arg)
-  let col_num = virtcol(".")
-  execute "silent! ".a:move_arg
-  execute "normal! ".col_num."|"
+    let col_num = virtcol(".")
+    execute "silent! ".a:move_arg
+    execute "normal! ".col_num."|"
 endfunction
 
 " Indent with keeping the cursor position
 func! Indent(ind)
-  if &sol
-    set nostartofline
-  endif
-  let vcol = virtcol('.')
-  if a:ind
-    norm! >>
-    exe "norm!". (vcol + shiftwidth()) . '|'
-  else
-    norm! <<
-    exe "norm!". (vcol - shiftwidth()) . '|'
-  endif
+    if &sol
+        set nostartofline
+    endif
+    let vcol = virtcol('.')
+    if a:ind
+        norm! >>
+        exe "norm!". (vcol + shiftwidth()) . '|'
+    else
+        norm! <<
+        exe "norm!". (vcol - shiftwidth()) . '|'
+    endif
 endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
