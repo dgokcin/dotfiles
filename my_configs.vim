@@ -9,7 +9,7 @@ set splitright
 
 " Sets the font and encoding for vim-devicons
 set encoding=utf8
-set guifont=DroidSansMono_Nerd_Font:12
+set guifont=DroidSansMono\ Nerd\ Font:h12
 
 " Disable scrollbars
 set guioptions-=r
