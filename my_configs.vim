@@ -7,6 +7,10 @@ set number
 " Opens new tabs to the right of the current tab
 set splitright
 
+" Sets the font and encoding for vim-devicons
+set encoding=utf8
+set guifont=DroidSansMono_Nerd_Font:12
+
 " Disable scrollbars
 set guioptions-=r
 set guioptions-=R
