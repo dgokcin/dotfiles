@@ -17,12 +17,6 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
-" Disable arrow keys
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-
 " Folding
 set foldenable 
 set foldlevelstart=10 
@@ -51,6 +45,15 @@ inoremap $3 {}<esc>i
 inoremap $4 {<esc>o}<esc>O
 inoremap $q ''<esc>i
 inoremap $e ""<esc>i
+
+" Disable auto-comment insertion
+autocmd FileType * setlocal formatoptions-=cro
+
+" Disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 " Different cursors in insert and visual mode
 let &t_SI = "\e[5 q"
