@@ -1,8 +1,65 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Leader
+let mapleader = ","
+
+" Sets how many lines of history VIM has to remember
+set history=1000
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Disable swap and backup file options
+set noswapfile
+set nobackup
+set nowb
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases 
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch 
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw 
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch 
+
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => GUI related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Shows Line Numbers
 set number
+
+"Always show current position
+set ruler
+
+" Height of the command bar
+set cmdheight=2
+
+" Enable syntax highlighting
+syntax enable 
 
 " Opens new tabs to the right of the current tab
 set splitright
@@ -28,7 +85,7 @@ set background=dark
 colorscheme peaksea
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mappings and configurations for better editing
+" => Mappings and configurations for better vi
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map auto complete of (, ", ', [ in visual mode
 vnoremap $1 <esc>`>a)<esc>`<i(<esc>
@@ -45,6 +102,9 @@ inoremap $3 {}<esc>i
 inoremap $4 {<esc>o}<esc>O
 inoremap $q ''<esc>i
 inoremap $e ""<esc>i
+
+" Maps / to <space> for faster search
+nnoremap <space> /
 
 " Disable auto-comment insertion
 autocmd FileType * setlocal formatoptions-=cro
@@ -114,9 +174,6 @@ else
     nnoremap <leader>D "*D
     vnoremap <leader>d "*d
 endif
-
-" Maps / to <space> for faster search
-:nnoremap <space> /
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin Related
@@ -256,3 +313,4 @@ cnoreabbrev Qall qal
 "nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
 "inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
 "inoremap <silent> <down> <C-o>:call MoveLineDown()<CR>
+
