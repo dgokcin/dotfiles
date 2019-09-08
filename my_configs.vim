@@ -58,9 +58,10 @@ augroup END
 
 " Persistent folding
 augroup auto_save_folds
-autocmd!
-autocmd BufWinLeave * mkview
-autocmd BufWinEnter * silent loadview
+    autocmd!
+    autocmd BufWinLeave ?* mkview
+    autocmd BufWinEnter ?* silent loadview
+augroup END
 
 " Enables syntax highlighting for groovy
 au BufNewfile,BufRead Jenkinsfile setf groovy
@@ -92,7 +93,6 @@ if has('unix')
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
-
 else
     set clipboard=unnamed
     nnoremap <leader>d "*d
