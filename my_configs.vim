@@ -56,6 +56,12 @@ augroup vimrc-remember-cursor-position
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
+" Enables relative numbers in normal mode
+augroup toggle_relative_number
+    autocmd InsertEnter * :setlocal norelativenumber
+    autocmd InsertLeave * :setlocal relativenumber
+augroup END
+
 " Persistent folding
 augroup auto_save_folds
     autocmd!
@@ -66,9 +72,9 @@ augroup END
 " Enables syntax highlighting for groovy
 au BufNewfile,BufRead Jenkinsfile setf groovy
 
-" Swap the lines with the next/previous with down/up arrows
-xnoremap <silent> <up> :<C-u>call MoveVisualUp()<CR>
-xnoremap <silent> <down> :<C-u>call MoveVisualDown()<CR>
+" Move lines up and down without loosing the cursor position
+vnoremap J :<C-u>call MoveVisualDown()<CR>
+vnoremap K :<C-u>call MoveVisualUp()<CR>
 
 " Inserts a blank line with backspace/enter to above/below the current line without loosing cursor position
 nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
