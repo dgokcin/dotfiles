@@ -28,7 +28,7 @@ set background=dark
 colorscheme peaksea
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mappings for better editing
+" => Mappings and configurations for better editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map auto complete of (, ", ', [ in visual mode
 vnoremap $1 <esc>`>a)<esc>`<i(<esc>
@@ -140,7 +140,6 @@ nmap <leader>cu <plug>NERDCommenterUncommentj^
 " => vim-multi-cursor
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:multi_cursor_use_default_mapping=0
-
 let g:multi_cursor_start_word_key      = '<C-c>'
 let g:multi_cursor_start_key           = 'g<C-c>'
 let g:multi_cursor_select_all_word_key = '<A-c>'
