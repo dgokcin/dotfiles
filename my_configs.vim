@@ -17,6 +17,12 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
+" Disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
 " Folding
 set foldenable 
 set foldlevelstart=10 
