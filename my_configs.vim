@@ -17,9 +17,34 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
+" Folding
+set foldenable 
+set foldlevelstart=10 
+set foldnestmax=10 
+set foldmethod=manual 
+
 " Colorscheme
 set background=dark
 colorscheme peaksea
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mappings for better editing
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Map auto complete of (, ", ', [ in visual mode
+vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap $q <esc>`>a'<esc>`<i'<esc>
+vnoremap $e <esc>`>a"<esc>`<i"<esc>
+
+" Map auto complete of (, ", ', [ in insert mode
+inoremap $1 ()<esc>i
+inoremap $2 []<esc>i
+inoremap $3 {}<esc>i
+inoremap $4 {<esc>o}<esc>O
+inoremap $q ''<esc>i
+inoremap $e ""<esc>i
 
 " Different cursors in insert and visual mode
 let &t_SI = "\e[5 q"
@@ -31,35 +56,16 @@ augroup vimrc-remember-cursor-position
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
+" Persistent folding
+augroup auto_save_folds
+autocmd!
+autocmd BufWinLeave * mkview
+autocmd BufWinEnter * silent loadview
+
 " Enables syntax highlighting for groovy
 au BufNewfile,BufRead Jenkinsfile setf groovy
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mappings for better editing
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Parenthesis/bracket
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-vnoremap $1 <esc>`>a)<esc>`<i(<esc>
-vnoremap $2 <esc>`>a]<esc>`<i[<esc>
-vnoremap $3 <esc>`>a}<esc>`<i{<esc>
-vnoremap $$ <esc>`>a"<esc>`<i"<esc>
-vnoremap $q <esc>`>a'<esc>`<i'<esc>
-vnoremap $e <esc>`>a"<esc>`<i"<esc>
-
-" Map auto complete of (, ", ', [
-inoremap $1 ()<esc>i
-inoremap $2 []<esc>i
-inoremap $3 {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
-
 " Swap the lines with the next/previous with down/up arrows
-"nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
-"nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
-"inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
-"inoremap <silent> <down> <C-o>:call MoveLineDown()<CR>
 xnoremap <silent> <up> :<C-u>call MoveVisualUp()<CR>
 xnoremap <silent> <down> :<C-u>call MoveVisualDown()<CR>
 
@@ -67,7 +73,7 @@ xnoremap <silent> <down> :<C-u>call MoveVisualDown()<CR>
 nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
-" Indent with >,< and TAB, Shift-Tab without loosing cursor position
+" Indent with >,< without loosing cursor position
 nnoremap > :call Indent(1)<cr>
 nnoremap < :call Indent(0)<cr>
 vmap < <gv
@@ -232,4 +238,7 @@ cnoreabbrev Qall qal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Not sure
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+"nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
+"nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
+"inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
+"inoremap <silent> <down> <C-o>:call MoveLineDown()<CR>
