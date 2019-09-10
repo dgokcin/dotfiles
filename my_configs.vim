@@ -110,6 +110,13 @@ nnoremap <space> /
 " Disable auto-comment insertion
 autocmd FileType * setlocal formatoptions-=cro
 
+" Enable persistent undo.
+try
+    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undofile
+catch
+endtry
+
 " Disable arrow keys
 noremap <Up> <Nop>
 noremap <Down> <Nop>
@@ -310,6 +317,9 @@ cnoreabbrev Qall qal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Not sure
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Spell checking
+map <leader>ss :setlocal spell!<cr>
+
 "nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
 "nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
 "inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
