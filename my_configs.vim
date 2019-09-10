@@ -49,8 +49,9 @@ set mat=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => GUI related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Shows Line Numbers
+" Shows relative line numbers
 set number
+set relativenumber
 
 "Always show current position
 set ruler
