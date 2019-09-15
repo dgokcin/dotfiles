@@ -240,7 +240,7 @@ let g:lightline = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use up and down arrows to swap lines"""
+" Moves lines up and down, while keeping the cursor pos
 function! MoveLineUp()
     call MoveLineOrVisualUp(".", "")
 endfunction
@@ -319,6 +319,9 @@ cnoreabbrev Qall qal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Spell checking
 map <leader>ss :setlocal spell!<cr>
+
+" Maps jj to esc
+imap jj <Esc>
 
 "nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
 "nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
