@@ -170,7 +170,6 @@ nnoremap d "_d
 nnoremap D "_D
 vnoremap d "_d
 
-" MAKE THIS WORK
 " Maps <leader>d to cut depending on the OS
 let uname = substitute(system('uname'), '\n', '', '')
 if uname == 'Darwin'
@@ -178,7 +177,6 @@ if uname == 'Darwin'
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
 else
-    echo 'b'
     set clipboard=unnamed
     nnoremap <leader>d "*d
     nnoremap <leader>D "*D
