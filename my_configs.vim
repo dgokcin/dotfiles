@@ -108,7 +108,7 @@ inoremap $e ""<esc>i
 nnoremap <space> /
 
 " Disable auto-comment insertion
-autocmd FileType * setlocal formatoptions-=cro
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Enable persistent undo.
 try
