@@ -117,7 +117,7 @@ try
 catch
 endtry
 
-" Disable arrow keys
+" Disable arrow keys in normal mode
 noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
@@ -188,12 +188,11 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Toggles NERDTree with Ctrl + N
-map <silent> <C-n> :NERDTreeToggle<CR>
-
-" Custom window position and size
 let g:NERDTreeWinSize=30
 let g:NERDTreeWinPos = "left"
+
+" Toggles NERDTree with Ctrl + N
+map <silent> <C-n> :NERDTreeToggle<CR>
 
 " Because of a bug in NERDTree
 let g:NERDTreeDirArrows = 1
@@ -321,7 +320,7 @@ cnoreabbrev Qall qal
 map <leader>ss :setlocal spell!<cr>
 
 " Maps jj to esc
-imap jj <Esc>
+"imap jj <Esc>
 
 "nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
 "nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
