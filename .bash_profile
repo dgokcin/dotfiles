@@ -27,13 +27,28 @@ mcd () {
     mkdir -p $1 && cd $1
 }
 
-# => For handling common typos that I make
+# => Lazy git
+gacp () {
+    git add .
+    git commit -a -m "$1"
+    git push
+}
+
+# => For handling common typos that I make all the time
 cim () {
     vim $1
 }
 
 bim () {
     vim $1
+}
+
+ci () {
+    vi $1
+}
+
+bi () {
+    vi $1
 }
 
 # => Zips the given parameter
