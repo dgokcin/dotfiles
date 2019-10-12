@@ -104,6 +104,9 @@ inoremap $4 {<esc>o}<esc>O
 inoremap $q ''<esc>i
 inoremap $e ""<esc>i
 
+" Clears highlights on hitting esc twice
+nnoremap <esc><esc> :noh<return>
+
 " Maps / to <space> for faster search
 nnoremap <space> /
 
@@ -127,6 +130,11 @@ noremap <Right> <Nop>
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
 
+set hidden
+" move to beginning/end of line asd
+nnoremap B ^
+nnoremap E $
+
 " Remember cursor position
 augroup vimrc-remember-cursor-position
     autocmd!
@@ -149,6 +157,8 @@ augroup END
 " Enables syntax highlighting for groovy
 au BufNewfile,BufRead Jenkinsfile setf groovy
 
+:nnoremap gcp "+p
+:noremap gcp "+p
 " Move lines up and down without loosing the cursor position
 vnoremap J :<C-u>call MoveVisualDown()<CR>
 vnoremap K :<C-u>call MoveVisualUp()<CR>
@@ -173,6 +183,7 @@ vnoremap d "_d
 " Maps <leader>d to cut depending on the OS
 let uname = substitute(system('uname'), '\n', '', '')
 if uname == 'Darwin'
+    set clipboard=unnamed
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
