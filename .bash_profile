@@ -28,10 +28,25 @@ mcd () {
 }
 
 # => Lazy git
-gacp () {
-    git add .
-    git commit -a -m "$1"
-    git push
+function gacp {
+	argc=$#
+	argv=("$@")
+	while [ $argc -gt 0 ]
+	do
+		if [ $argc -gt 1 ]
+		then
+			for (( i=0;i<$(($argc-1));i++ ))
+			do
+				git add ${argv[i]}
+			done
+		else
+			git add .
+		fi
+		git commit -m "${argv[-1]}"
+		git push origin
+		return 1
+	done
+	echo not enough input arguments
 }
 
 # => For handling common typos that I make all the time
@@ -78,3 +93,18 @@ extract () {
      fi
 }
 
+
+# Setting PATH for Python 3.7
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH
+
+# Setting PATH for Python 3.6
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+export PATH
+
+# Setting PATH for Python 3.7
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH
