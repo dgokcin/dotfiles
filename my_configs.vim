@@ -4,6 +4,9 @@
 " Leader
 let mapleader = ","
 
+" Determines the OS
+let uname = substitute(system('uname'), '\n', '', '')
+
 " Sets how many lines of history VIM has to remember
 set history=1000
 
@@ -17,10 +20,8 @@ set nobackup
 set nowb
 
 " No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
+"set t_vb=
+"set tm=500
 
 " Ignore case when searching
 set ignorecase
@@ -67,7 +68,7 @@ set splitright
 
 " Sets the font and encoding for vim-devicons
 set encoding=utf8
-set guifont=DroidSansMono\ Nerd\ Font:h12
+"set guifont=DroidSansMono\ Nerd\ Font:h12
 
 " Disable scrollbars
 set guioptions-=r
@@ -84,6 +85,14 @@ set foldmethod=manual
 " Colorscheme
 set background=dark
 colorscheme peaksea
+"if has("gui_running")
+    "colorscheme darcula
+"else
+    "colorscheme peaksea
+"endif
+
+" Disable underline
+set nocursorline
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings and configurations for better vi
@@ -130,10 +139,9 @@ noremap <Right> <Nop>
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
 
-set hidden
 " move to beginning/end of line asd
-nnoremap B ^
-nnoremap E $
+nnoremap <Tab> ^
+nnoremap <leader><Tab> $
 
 " Remember cursor position
 augroup vimrc-remember-cursor-position
@@ -157,8 +165,6 @@ augroup END
 " Enables syntax highlighting for groovy
 au BufNewfile,BufRead Jenkinsfile setf groovy
 
-:nnoremap gcp "+p
-:noremap gcp "+p
 " Move lines up and down without loosing the cursor position
 vnoremap J :<C-u>call MoveVisualDown()<CR>
 vnoremap K :<C-u>call MoveVisualUp()<CR>
@@ -181,7 +187,6 @@ nnoremap D "_D
 vnoremap d "_d
 
 " Maps <leader>d to cut depending on the OS
-let uname = substitute(system('uname'), '\n', '', '')
 if uname == 'Darwin'
     set clipboard=unnamed
     nnoremap <leader>d ""d
