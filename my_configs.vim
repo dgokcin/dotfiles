@@ -20,8 +20,9 @@ set nobackup
 set nowb
 
 " No annoying sound on errors
-"set t_vb=
-"set tm=500
+set visualbell
+set t_vb=
+set tm=500
 
 " Ignore case when searching
 set ignorecase
@@ -68,7 +69,6 @@ set splitright
 
 " Sets the font and encoding for vim-devicons
 set encoding=utf8
-"set guifont=DroidSansMono\ Nerd\ Font:h12
 
 " Disable scrollbars
 set guioptions-=r
@@ -84,12 +84,12 @@ set foldmethod=manual
 
 " Colorscheme
 set background=dark
-colorscheme peaksea
-"if has("gui_running")
-    "colorscheme darcula
-"else
+if has("gui_running")
     "colorscheme peaksea
-"endif
+    colorscheme darcula
+else
+    colorscheme peaksea
+endif
 
 " Disable underline
 set nocursorline
@@ -97,22 +97,6 @@ set nocursorline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings and configurations for better vi
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map auto complete of (, ", ', [ in visual mode
-vnoremap $1 <esc>`>a)<esc>`<i(<esc>
-vnoremap $2 <esc>`>a]<esc>`<i[<esc>
-vnoremap $3 <esc>`>a}<esc>`<i{<esc>
-vnoremap $$ <esc>`>a"<esc>`<i"<esc>
-vnoremap $q <esc>`>a'<esc>`<i'<esc>
-vnoremap $e <esc>`>a"<esc>`<i"<esc>
-
-" Map auto complete of (, ", ', [ in insert mode
-inoremap $1 ()<esc>i
-inoremap $2 []<esc>i
-inoremap $3 {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
-
 " Clears highlights on hitting esc twice
 nnoremap <esc><esc> :noh<return>
 
@@ -227,9 +211,15 @@ nmap <leader><Space> <plug>NERDCommenterToggle^
 vmap <leader>cc <plug>nerdcommentercommentgv
 vmap <leader>cu <plug>nerdcommenteruncommentgv
 
-"Makes commenting and uncommenting in normal mode to go to next line
-nmap <leader>cc <plug>NERDCommenterCommentj^
-nmap <leader>cu <plug>NERDCommenterUncommentj^
+" Makes commenting and uncommenting in normal mode to go to next line
+" Ctrl + / for windows
+if uname == 'Darwin'
+    nmap <leader>cc <plug>NERDCommenterCommentj^
+    nmap <leader>cu <plug>NERDCommenterUncommentj^
+else
+    nmap <C-_> <plug>NERDCommenterCommentj^
+    nmap <leader>cu <plug>NERDCommenterUncommentj^
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-multi-cursor
