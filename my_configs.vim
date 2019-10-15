@@ -124,8 +124,8 @@ let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
 
 " move to beginning/end of line asd
-nnoremap <Tab> ^
-nnoremap <leader><Tab> $
+nnoremap <Tab> $
+nnoremap <S-Tab> ^
 
 " Remember cursor position
 augroup vimrc-remember-cursor-position
