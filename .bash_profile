@@ -42,12 +42,19 @@ function gacp {
 		else
 			git add .
 		fi
-		git commit -m "${argv[*]: -1}"
+		if [ $(uname) == "Darwin" -o $(uname) == "Linux" ]
+		then  
+			git commit -m "${argv[*]: -1}"
+		else
+			git commit -m "${argv[-1]}" 
+			# mingw, cygwin
+		fi
 		git push origin
 		return 1
 	done
 	echo not enough input arguments
 }
+
 # => For handling common typos that I make all the time
 cim () {
     vim $1
