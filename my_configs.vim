@@ -85,8 +85,8 @@ set foldmethod=manual
 " Colorscheme
 set background=dark
 if has("gui_running")
-    "colorscheme peaksea
-    colorscheme darcula
+    colorscheme peaksea
+    "colorscheme darcula
 else
     colorscheme peaksea
 endif
