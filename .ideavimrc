@@ -1,0 +1,88 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Leader
+let mapleader = ","
+
+" Determines the OS
+let uname = substitute(system('uname'), '\n', '', '')
+
+" Sets how many lines of history VIM has to remember
+set history=1000
+
+" Disable swap and backup file options
+set noswapfile
+set nobackup
+set nowb
+
+" No annoying sound on errors
+set visualbell
+set t_vb=
+set tm=500
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases 
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => GUI related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Shows relative line numbers
+set number
+
+"Always show current position
+set ruler
+
+" Disable underline
+set nocursorline
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mappings and configurations for better vi
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Clears highlights on hitting esc twice
+nnoremap <esc><esc> :noh<return>
+
+" Maps / to <space> for faster search
+nnoremap <space> /
+
+" Enable persistent undo.
+try
+    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undofile
+catch
+endtry
+
+" Disable arrow keys in normal mode
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+" move to beginning/end of line asd
+nnoremap <Tab> $
+nnoremap <S-Tab> ^
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-multi-cursor
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set multiple-cursors
+set surround
+set commentary
+
+"let g:multi_cursor_use_default_mapping=0
+"let g:multi_cursor_start_word_key      = '<C-c>'
+"let g:multi_cursor_start_key           = 'g<C-c>'
+"let g:multi_cursor_select_all_word_key = '<A-c>'
+"let g:multi_cursor_select_all_key      = 'g<A-c>'
+"let g:multi_cursor_next_key            = '<C-c>'
+"let g:multi_cursor_prev_key            = '<C-p>'
+"let g:multi_cursor_skip_key            = '<C-x>'
+"let g:multi_cursor_quit_key            = '<Esc>'
