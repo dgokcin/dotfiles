@@ -170,6 +170,9 @@ nnoremap d "_d
 nnoremap D "_D
 vnoremap d "_d
 
+" Maps <leader>d to visual in word
+:map <leader>w viw
+
 " Maps <leader>d to cut depending on the OS
 if uname == 'Darwin'
     set clipboard=unnamed
