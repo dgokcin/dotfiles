@@ -53,6 +53,9 @@ nnoremap <esc><esc> :noh<return>
 " Maps / to <space> for faster search
 nnoremap <space> /
 
+" Visual select current word
+:map <leader>w viwc
+
 " Enable persistent undo.
 try
     set undodir=~/.vim_runtime/temp_dirs/undodir
