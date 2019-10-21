@@ -171,7 +171,7 @@ nnoremap D "_D
 vnoremap d "_d
 
 " Maps <leader>d to visual in word
-:map <leader>w viwc
+:map <leader>w viw
 
 " Maps <leader>d to cut depending on the OS
 if uname == 'Darwin'
