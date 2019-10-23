@@ -203,6 +203,12 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeGlyphReadOnly = "RO"
 
+" Switch between tabs with shift and direction
+nmap <S-j> <C-W>j
+nmap <S-h> <C-W>h
+nmap <S-l> <C-W>l
+nmap <S-k> <C-W>k
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDCommenter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
