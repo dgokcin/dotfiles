@@ -189,6 +189,12 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin Related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VimCompletesMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Auto complete with tab in insert mode
+autocmd FileType vim let b:vcm_tab_complete = 'vim'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDTreeWinSize=30
@@ -319,6 +325,8 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
+cnoreabbrev Q! q!
+cnoreabbrev q1 q!
 cnoreabbrev Qall! qall!
 cnoreabbrev Wq wq
 cnoreabbrev Wa wa
@@ -333,7 +341,6 @@ cnoreabbrev Qall qal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Spell checking
 map <leader>ss :setlocal spell!<cr>
-
 " Maps jj to esc
 "imap jj <Esc>
 
