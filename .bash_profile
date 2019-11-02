@@ -11,6 +11,9 @@ alias ..='cd ../'
 # Quickly search for file
 alias qfind="find . -name "
 
+# Alias for quick access to icloud drive
+alias cloud="cd ~/iCloud/com~apple~CloudDocs/"
+
 # Graphical git log.
 alias tlog="git log --all --decorate --oneline --graph"
 
