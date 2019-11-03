@@ -16,3 +16,5 @@ catch
 endtry' > ~/.vimrc
 
 echo "Installed the Ultimate Vim configuration successfully! Enjoy :-)"
+cp ~/.vim_runtime/.bash_profile ~/
+echo "Copied bash profile successfully"
