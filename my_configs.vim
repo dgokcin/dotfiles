@@ -16,7 +16,6 @@ filetype indent on
 
 " Disable swap and backup file options
 set noswapfile
-set nobackup
 set nowb
 
 " No annoying sound on errors
@@ -173,14 +172,20 @@ vnoremap d "_d
 " Maps <leader>d to visual in word
 :map <leader>w viw
 
+
+" Maps leader yank to copy to system clipboard.
+" Works only hasclipboard is true
+noremap <leader>y "*y
+noremap <leader>Y "*+y
+noremap <leader>p "*p
+noremap <leader>P "+p
+
 " Maps <leader>d to cut depending on the OS
 if uname == 'Darwin'
-    set clipboard=unnamed
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
 else
-    set clipboard=unnamed
     nnoremap <leader>d "*d
     nnoremap <leader>D "*D
     vnoremap <leader>d "*d
