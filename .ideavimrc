@@ -10,10 +10,6 @@ let uname = substitute(system('uname'), '\n', '', '')
 " Sets how many lines of history VIM has to remember
 set history=1000
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
-
 " Disable swap and backup file options
 set noswapfile
 set nowb
@@ -76,22 +72,13 @@ noremap <Right> <Nop>
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
 
-" move to beginning/end of line asd
+" move to beginning/end of line 
 nnoremap <Tab> $
 nnoremap <S-Tab> ^
 
 " Enables relative numbers in normal mode
-augroup toggle_relative_number
-    autocmd InsertEnter * :setlocal norelativenumber
-    autocmd InsertLeave * :setlocal relativenumber
-augroup END
-
-" Enables syntax highlighting for groovy
-au BufNewfile,BufRead Jenkinsfile setf groovy
-
-" Inserts a blank line with backspace/enter to above/below the current line without loosing cursor position
-nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+set number
+set relativenumber
 
 " Indent with >,< without loosing cursor position
 vmap < <gv
