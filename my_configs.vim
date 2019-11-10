@@ -122,7 +122,7 @@ noremap <Right> <Nop>
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
 
-" move to beginning/end of line asd
+" move to beginning/end of line 
 nnoremap <Tab> $
 nnoremap <S-Tab> ^
 
