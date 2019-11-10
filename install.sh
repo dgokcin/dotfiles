@@ -19,6 +19,9 @@ echo "Installed the Ultimate Vim configuration successfully! Enjoy :-)"
 cp ~/.vim_runtime/.bash_profile ~/
 echo "Copied bash profile successfully"
 
+cp ~/.vim_runtime/.bashrc ~/
+echo "Copied .bashrc successfully"
+
 cp ~/.vim_runtime/.vsvimrc ~/
 echo "Copied .vsvimrc successfully"
 
