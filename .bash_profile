@@ -7,6 +7,8 @@ alias la="ls -a"
 # Go back 1 directory level (for fast typers)
 alias cd..='cd ../'
 alias ..='cd ../' 
+alias j8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
+alias j13="export JAVA_HOME=`/usr/libexec/java_home -v 13`; java -version"
 
 # Quickly search for file
 alias qfind="find . -name "
