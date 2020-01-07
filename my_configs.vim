@@ -7,6 +7,10 @@ let mapleader = ","
 " Determines the OS
 let uname = substitute(system('uname'), '\n', '', '')
 
+" Search down into subfolders, provide also tab-completion
+set path+=**
+set wildmenu
+
 " Sets how many lines of history VIM has to remember
 set history=1000
 
