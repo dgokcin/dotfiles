@@ -166,6 +166,10 @@ nnoremap < :call Indent(0)<cr>
 vmap < <gv
 vmap > >gv
 
+" Fix indentation in entire file, get the cursor back to where it was, and put the current line in the middle of your window.
+nnoremap _ gg=G``zz
+vmap _ gg=G``zz
+
 " Maps d and x to black-hole registry
 nnoremap x "_x
 nnoremap X "_X
