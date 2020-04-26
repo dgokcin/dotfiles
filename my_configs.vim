@@ -64,6 +64,10 @@ set relativenumber
 "Always show current position
 set ruler
 
+" Sets text widths for different filetypes 
+autocmd bufreadpre *.tex setlocal textwidth=120
+autocmd bufreadpre *.py setlocal textwidth=80
+
 " Height of the command bar
 set cmdheight=2
 
@@ -103,9 +107,8 @@ set nocursorline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings and configurations for better vi
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Sets text widths for different filetypes 
-autocmd bufreadpre *.tex setlocal textwidth=120
-autocmd bufreadpre *.py setlocal textwidth=80
+" Maps <leader>f formatting paragraph, without loosing the cursor position
+noremap <leader>f gwap
 
 " Makes working with long lines easier, without breaking 5j, 5k behaviour
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
@@ -119,7 +122,6 @@ nnoremap <space> /
 
 " Disable auto-comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
 
 " Enable persistent undo.
 try
