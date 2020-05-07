@@ -1,6 +1,21 @@
 #!/bin/sh
 set -e
 
+cp .bash_profile ~/
+echo "Copied bash profile successfully"
+
+cp .vsvimrc ~/
+echo "Copied .vsvimrc successfully"
+
+cp .ideavimrc ~/
+echo "Copied .ideavimrc successfully"
+
+cp .gvimrc ~/
+echo "Copied .gvimrc successfully"
+
+rsync -a -v .vim_runtime ~/
+
+
 cd ~/.vim_runtime
 
 echo 'set runtimepath+=~/.vim_runtime
@@ -16,14 +31,3 @@ catch
 endtry' > ~/.vimrc
 
 echo "Installed the Ultimate Vim configuration successfully! Enjoy :-)"
-cp ~/.vim_runtime/.bash_profile ~/
-echo "Copied bash profile successfully"
-
-cp ~/.vim_runtime/.vsvimrc ~/
-echo "Copied .vsvimrc successfully"
-
-cp ~/.vim_runtime/.ideavimrc ~/
-echo "Copied .ideavimrc successfully"
-
-cp ~/.vim_runtime/.gvimrc ~/
-echo "Copied .gvimrc successfully"
