@@ -55,3 +55,4 @@ function gacp {
 		then  
 			git commit -m "${argv[*]: -1}"
 }
+
