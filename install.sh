@@ -13,8 +13,8 @@ echo "Copied .ideavimrc successfully"
 cp .gvimrc ~/
 echo "Copied .gvimrc successfully"
 
-rsync -a -v .vim_runtime ~/
-
+rm -rf ~/.vim_runtime
+cp -v -r .vim_runtime ~/
 
 cd ~/.vim_runtime
 
