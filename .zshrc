@@ -37,22 +37,22 @@ mcd () {
 }
 
 # => Lazy git
-function gacp {
-	argc=$#
-	argv=("$@")
-	while [ $argc -gt 0 ]
-	do	
-		if [ $argc -gt 1 ]
-		then
-			for (( i=0;i<$(($argc-1));i++ ))
-			do
-				git add ${argv[i]}
-			done
-		else
-			git add .
-		fi
-		if [ $(uname) == "Darwin" -o $(uname) == "Linux" ]
-		then  
-			git commit -m "${argv[*]: -1}"
-}
+#function gacp {
+	#argc=$#
+	#argv=("$@")
+	#while [ $argc -gt 0 ]
+	#do	
+		#if [ $argc -gt 1 ]
+		#then
+			#for (( i=0;i<$(($argc-1));i++ ))
+			#do
+				#git add ${argv[i]}
+			#done
+		#else
+			#git add .
+		#fi
+		#if [ $(uname) == "Darwin" -o $(uname) == "Linux" ]
+		#then  
+			#git commit -m "${argv[*]: -1}"
+#}
 
