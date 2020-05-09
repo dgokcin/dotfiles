@@ -1,20 +1,21 @@
 #!/bin/sh
 set -e
 
-cp .bash_profile ~/
-echo "Copied bash profile successfully"
-
-cp .vsvimrc ~/
-echo "Copied .vsvimrc successfully"
-
-cp .ideavimrc ~/
-echo "Copied .ideavimrc successfully"
-
-cp .gvimrc ~/
-echo "Copied .gvimrc successfully"
-
+# remove dotfiles
+rm -rf ~/.bash_profile
+rm -rf ~/.vsvimrc
+rm -rf ~/.ideavimrc
+rm -rf ~/.gvimrc
 rm -rf ~/.vim_runtime
+rm -rf ~/.zshrc
+
+# copy current dotfiles
 cp -v -r .vim_runtime ~/
+cp .bash_profile ~/
+cp .vsvimrc ~/
+cp .ideavimrc ~/
+cp .gvimrc ~/
+cp .zshrc ~/
 
 cd ~/.vim_runtime
 
@@ -30,4 +31,4 @@ source ~/.vim_runtime/my_configs.vim
 catch
 endtry' > ~/.vimrc
 
-echo "Installed the Ultimate Vim configuration successfully! Enjoy :-)"
+echo "Installed vim config, added dotfiles to the current root."
