@@ -1,2 +1,3 @@
-temp_dirs
+temp_dirs/*
+!temp_dirs/undodir/.gitkeep
 *.DS_Store
