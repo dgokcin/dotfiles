@@ -191,6 +191,9 @@ nnoremap d "_d
 nnoremap D "_D
 vnoremap d "_d
 
+" Paste without yanking
+vnoremap p "_dP
+
 " Maps <leader>d to visual in word
 :map <leader>w viw
 
