@@ -64,9 +64,7 @@ set relativenumber
 "Always show current position
 set ruler
 
-" Sets text widths for different filetypes 
-autocmd bufreadpre *.tex setlocal textwidth=80
-autocmd bufreadpre *.py setlocal textwidth=80
+" File extension specific stuff
 
 " Height of the command bar
 set cmdheight=2
@@ -103,6 +101,19 @@ endif
 
 " Disable underline
 set nocursorline
+
+autocmd bufreadpre *.tex setlocal textwidth=80
+autocmd bufreadpre *.py setlocal textwidth=80
+
+" Fix yaml indent issues
+augroup filetype_yaml
+    autocmd!
+    autocmd BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+    autocmd FileType yaml |
+        setlocal shiftwidth=2 |
+        setlocal softtabstop=2 |
+        setlocal tabstop=2
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings and configurations for better vi
