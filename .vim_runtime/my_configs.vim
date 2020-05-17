@@ -27,6 +27,10 @@ set visualbell
 set t_vb=
 set tm=500
 
+" No annoying messages after changing configuration
+set shortmess=at
+set cmdheight=2
+
 " Ignore case when searching
 set ignorecase
 
@@ -106,14 +110,14 @@ autocmd bufreadpre *.tex setlocal textwidth=80
 autocmd bufreadpre *.py setlocal textwidth=80
 
 " Fix yaml indent issues
-augroup filetype_yaml
-    autocmd!
-    autocmd BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
-    autocmd FileType yaml |
-        setlocal shiftwidth=2 |
-        setlocal softtabstop=2 |
-        setlocal tabstop=2
-augroup END
+"augroup filetype_yaml
+    "autocmd!
+    "autocmd BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+    "autocmd FileType yaml |
+        "setlocal shiftwidth=2 |
+        "setlocal softtabstop=2 |
+        "setlocal tabstop=2
+"augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings and configurations for better vi
