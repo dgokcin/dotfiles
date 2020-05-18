@@ -9,6 +9,9 @@ rm -rf ~/.gvimrc
 rm -rf ~/.vim_runtime
 rm -rf ~/.zshrc
 
+# clear .view directory
+rm -rf ~/.vim/view/*
+
 # copy current dotfiles
 cp -v -r .vim_runtime ~/
 cp .bash_profile ~/
