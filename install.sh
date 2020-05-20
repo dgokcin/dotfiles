@@ -13,7 +13,7 @@ rm -rf ~/.zshrc
 rm -rf ~/.vim/view/*
 
 # copy current dotfiles
-cp -v -r .vim_runtime ~/
+cp -r .vim_runtime ~/
 cp .bash_profile ~/
 cp .vsvimrc ~/
 cp .ideavimrc ~/
