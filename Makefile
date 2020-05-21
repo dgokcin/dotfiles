@@ -1,4 +1,4 @@
-.PHONY: vim vsvim ideavim gvim zsh bash
+.PHONY: vim vsvim ideavim gvim zsh bash git
 all: .PHONY
 
 DOTFILES := $(shell pwd)
@@ -18,4 +18,5 @@ zsh:
 		git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
-
+git:
+	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
