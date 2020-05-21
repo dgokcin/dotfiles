@@ -4,7 +4,7 @@ all: .PHONY
 DOTFILES := $(shell pwd)
 
 vim:
-	ln -fs $(DOTFILES)/.vim_runtime ${HOME}/.vim_runtime
+	ln -fs $(DOTFILES)/.vim_runtime ${HOME}
 	ln -fs $(DOTFILES)/.vimrc ${HOME}/.vimrc
 vsvim:
 	ln -fs $(DOTFILES)/.vsvimrc ${HOME}/.vsvimrc
