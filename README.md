@@ -1,6 +1,9 @@
 #### For Windows:
-```sh install.sh
+```shell
+sh install.sh
 ```
 
 #### For Unix:
-```sh install.sh```
+```shell
+make
+```
