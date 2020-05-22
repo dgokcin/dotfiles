@@ -1,9 +1,4 @@
-#### For Windows:
-```shell
-sh install.sh
-```
-
-#### For Unix:
+#### Installation:
 ```shell
 make
 ```
