@@ -1,7 +1,8 @@
-.PHONY: vim vsvim ideavim gvim zsh bash
-all: .PHONY
+.PHONY: all
+all : vim vsvim ideavim gvim zsh bash git
 
 DOTFILES := $(shell pwd)
+UNAME := $(shell uname)
 
 vim:
 	ln -fs $(DOTFILES)/.vim_runtime ${HOME}
@@ -12,11 +13,28 @@ ideavim:
 	ln -fs $(DOTFILES)/.ideavimrc ${HOME}/.ideavimrc
 gvim:
 	ln -fs $(DOTFILES)/.gvimrc ${HOME}/.gvimrc
-zsh:
-	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
-	git -C ${HOME}/.oh-my-zsh pull || \
-		git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
-#git:
-	#ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
+zsh:
+ifneq ($(UNAME), MINGW64_NT-10.0 )
+	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
+	git -C ${HOME}/.oh-my-zsh pull || \
+	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
+endif
+git:
+ifneq ($(UNAME), MINGW64_NT-10.0 )
+	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
+endif
+
+.PHONY: clean
+
+clean:
+	rm -rf ${HOME}/.vim_runtime
+	rm -rf ${HOME}/.vimrc
+	rm -rf ${HOME}/.vsvimrc
+	rm -rf ${HOME}/.gvimrc
+	rm -rf ${HOME}/.ideavimrc
+	rm -rf ${HOME}/.gvimrc
+	rm -rf ${HOME}/.bash_profile
+	rm -rf ${HOME}/.zshrc
+
