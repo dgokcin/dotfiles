@@ -16,13 +16,13 @@ gvim:
 bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 zsh:
-ifneq ($(UNAME), MINGW64_NT-10.0 )
+ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
 	git -C ${HOME}/.oh-my-zsh pull || \
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 endif
 git:
-ifneq ($(UNAME), MINGW64_NT-10.0 )
+ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
 endif
 
