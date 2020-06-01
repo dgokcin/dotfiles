@@ -1,206 +1,208 @@
 
+
 // To view the default settings, hold "alt" while clicking on the "Settings" button.
 // For documentation on these settings, see: https://aka.ms/terminal-documentation
- 
+
 {
-    "$schema": "https://aka.ms/terminal-profiles-schema",
- 
-    "defaultProfile": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
- 
-    "profiles":
-    {
-        "defaults":
-        {
-            // Put settings here that you want to apply to all profiles
-        },
-        "list":
-        [
-            {
-                "guid": "{00000000-0000-0000-ba54-000000000002}",
-                "acrylicOpacity" : 0.75,
-                "closeOnExit" : true,
-                "colorScheme" : "Campbell",
-                "commandline" : "\"%PROGRAMFILES%\\Git\\usr\\bin\\bash.exe\" -i -l",
-                "cursorShape" : "filledBox",
-                "fontFace" : "CodeNewRoman NF",
-                "fontSize" : 10,
-                "historySize" : 9001,
-                "icon" : "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
-                "name" : "Git Bash",
-                "tabTitle": "Git Bash",
-                "padding" : "0, 0, 0, 0",
-                "snapOnInput" : true,
-                "startingDirectory" : "%USERPROFILE%",
-                "useAcrylic" : true
-            },
-            {
-                // Make changes here to the powershell.exe profile
-                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "background":  "#012456",
-                "name": "Windows PowerShell",
-                "commandline": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-                "hidden": false,
-                "name": "Windows PowerShell",
-               "commandline": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-                "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png"
-            },
-            {
-                // Make changes here to the cmd.exe profile
-                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-                "name": "cmd",
-                "commandline": "cmd.exe",
-                "hidden": false
-            },
-            {
-                "acrylicOpacity" : 0.75,
-                "closeOnExit" : true,
-                "colorScheme" : "Campbell",
-                "commandline" : "C:\\Apps\\cygwin\\bin\\bash.exe",
-                "cursorColor" : "#FFFFFF",
-                "cursorShape" : "bar",
-                "fontFace" : "Input",
-                "fontSize" : 12,
-                "guid" : "{07ece1cb-ff14-4179-a738-1781081fd8be}",
-                "historySize" : 9001,
-                "icon" : "C:/Apps/cygwin/Cygwin-Terminal.ico",
-               "name" : "Cygwin",
-                "padding" : "0, 0, 0, 0",
-                "snapOnInput" : true,
-                "useAcrylic" : true
-            },
-            {
-                "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
-                "hidden": false,
-                "name": "Ubuntu-18.04",
-                "startingDirectory": "D:\\codes",
-                "fontFace" : "CodeNewRoman NF",
-                "fontSize" : 11,
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": true,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
-            }
-        ]
-    },
- 
-    // Add custom color schemes to this array
-    "schemes": [
-        {
-            "background" : "#2C001E",
-            "black" : "#4E9A06",
-            "blue" : "#3465A4",
-            "brightBlack" : "#555753",
-            "brightBlue" : "#729FCF",
-            "brightCyan" : "#34E2E2",
-            "brightGreen" : "#8AE234",
-            "brightPurple" : "#AD7FA8",
-            "brightRed" : "#EF2929",
-            "brightWhite" : "#EEEEEE",
-            "brightYellow" : "#FCE94F",
-            "cyan" : "#06989A",
-            "foreground" : "#EEEEEE",
-            "green" : "#300A24",
-            "name" : "UbuntuLegit",
-            "purple" : "#75507B",
-            "red" : "#CC0000",
-            "white" : "#D3D7CF",
-            "yellow" : "#C4A000"
-        }
-    ],
- 
-    // Add any keybinding overrides to this array.
-    // To unbind a default keybinding, set the command to "unbound"
-    "keybindings": [
-        {
-            "command" : "closePane",
-            "keys" :
-            [
-                "ctrl+e"
-            ]
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "vertical",
-                "index": 0
-            },
-            "keys": [
-                "ctrl+g"
-            ]
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "horizontal",
-                "index": 0
-            },
-            "keys": [
-                "alt+g"
-            ]
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "vertical",
-                "index": 1
-            },
-            "keys": [
-                "ctrl+p"
-            ]
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "horizontal",
-                "index": 1
-            },
-            "keys": [
-                "alt+p"
-            ]
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "vertical",
-                "index": 2
-            },
-            "keys": [
-                "ctrl+w"
-            ]
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "horizontal",
-                "index": 2
-            },
-            "keys": [
-                "alt+w"
-            ]
-        },
- 
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "vertical",
-                "index": 4
-            },
-            "keys": [
-                "ctrl+u"
-            ]
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "horizontal",
-                "index": 4
-            },
-            "keys": [
-                "alt+u"
-            ]
-        }
-    ]
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+
+    "defaultProfile": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
+
+    "profiles":
+    {
+        "defaults":
+        {
+            // Put settings here that you want to apply to all profiles
+        },
+        "list":
+        [
+            {
+                "guid": "{00000000-0000-0000-ba54-000000000002}",
+                "acrylicOpacity" : 0.75,
+                "closeOnExit" : true,
+                "colorScheme" : "Campbell",
+                "commandline" : "\"%PROGRAMFILES%\\Git\\usr\\bin\\bash.exe\" -i -l",
+                "cursorShape" : "filledBox",
+                "fontFace" : "CodeNewRoman NF",
+                "fontSize" : 10,
+                "historySize" : 9001,
+                "icon" : "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
+                "name" : "Git Bash",
+                "tabTitle": "Git Bash",
+                "padding" : "0, 0, 0, 0",
+                "snapOnInput" : true,
+                "startingDirectory" : "%USERPROFILE%",
+                "useAcrylic" : true
+            },
+            {
+                // Make changes here to the powershell.exe profile
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "background":  "#012456",
+                "name": "Windows PowerShell",
+                "commandline": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "hidden": false,
+                "name": "Windows PowerShell",
+                "commandline": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png"
+            },
+            {
+                // Make changes here to the cmd.exe profile
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "name": "cmd",
+                "commandline": "cmd.exe",
+                "hidden": false
+            },
+            {
+                "acrylicOpacity" : 0.75,
+                "closeOnExit" : true,
+                "colorScheme" : "Campbell",
+                "commandline" : "C:\\Apps\\cygwin\\bin\\bash.exe",
+                "cursorColor" : "#FFFFFF",
+                "cursorShape" : "bar",
+                "fontFace" : "Input",
+                "fontSize" : 12,
+                "guid" : "{07ece1cb-ff14-4179-a738-1781081fd8be}",
+                "historySize" : 9001,
+                "icon" : "C:/Apps/cygwin/Cygwin-Terminal.ico",
+                "name" : "Cygwin",
+                "padding" : "0, 0, 0, 0",
+                "snapOnInput" : true,
+                "useAcrylic" : true
+            },
+            {
+                "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
+                "hidden": false,
+                "name": "Ubuntu-18.04",
+                "startingDirectory": "D:\\codes",
+                "fontFace" : "CodeNewRoman NF",
+                "fontSize" : 11,
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": true,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            }
+        ]
+    },
+
+    // Add custom color schemes to this array
+    "schemes": [
+        {
+            "background" : "#2C001E",
+            "black" : "#4E9A06",
+            "blue" : "#3465A4",
+            "brightBlack" : "#555753",
+            "brightBlue" : "#729FCF",
+            "brightCyan" : "#34E2E2",
+            "brightGreen" : "#8AE234",
+            "brightPurple" : "#AD7FA8",
+            "brightRed" : "#EF2929",
+            "brightWhite" : "#EEEEEE",
+            "brightYellow" : "#FCE94F",
+            "cyan" : "#06989A",
+            "foreground" : "#EEEEEE",
+            "green" : "#300A24",
+            "name" : "UbuntuLegit",
+            "purple" : "#75507B",
+            "red" : "#CC0000",
+            "white" : "#D3D7CF",
+            "yellow" : "#C4A000"
+        }
+    ],
+
+    // Add any keybinding overrides to this array.
+    // To unbind a default keybinding, set the command to "unbound"
+    "keybindings": [
+        {
+            "command" : "closePane",
+            "keys" :
+            [
+                "ctrl+e"
+            ]
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "vertical",
+                "index": 0
+            },
+            "keys": [
+                "ctrl+g"
+            ]
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "horizontal",
+                "index": 0
+            },
+            "keys": [
+                "alt+g"
+            ]
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "vertical",
+                "index": 1
+            },
+            "keys": [
+                "ctrl+p"
+            ]
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "horizontal",
+                "index": 1
+            },
+            "keys": [
+                "alt+p"
+            ]
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "vertical",
+                "index": 2
+            },
+            "keys": [
+                "ctrl+w"
+            ]
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "horizontal",
+                "index": 2
+            },
+            "keys": [
+                "alt+w"
+            ]
+        },
+
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "vertical",
+                "index": 4
+            },
+            "keys": [
+                "ctrl+u"
+            ]
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "horizontal",
+                "index": 4
+            },
+            "keys": [
+                "alt+u"
+            ]
+        }
+    ]
 }
+
