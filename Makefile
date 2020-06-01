@@ -1,5 +1,5 @@
 .PHONY: all
-all : vim vsvim ideavim gvim zsh bash git
+all : vim vsvim ideavim gvim zsh bash git winter
 
 DOTFILES := $(shell pwd)
 UNAME := $(shell uname)
@@ -24,6 +24,11 @@ endif
 git:
 ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
+endif
+
+winter:
+ifeq ($(OS),Windows_NT)
+	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/setings.json
 endif
 
 .PHONY: clean
