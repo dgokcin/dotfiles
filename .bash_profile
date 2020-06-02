@@ -1,3 +1,3 @@
-source .functions
-source .aliases
+source ~/.functions
+source ~/.aliases
 
