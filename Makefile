@@ -14,9 +14,9 @@ ideavim:
 gvim:
 	ln -fs $(DOTFILES)/.gvimrc ${HOME}/.gvimrc
 bash:
-	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
+	ln -fs $(DOTFILES)/.bashrc ${HOME}/.bashrc
 zsh:
 ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
@@ -37,7 +37,7 @@ clean:
 	rm -rf ${HOME}/.gvimrc
 	rm -rf ${HOME}/.ideavimrc
 	rm -rf ${HOME}/.gvimrc
-	rm -rf ${HOME}/.bash_profile
+	rm -rf ${HOME}/.bashrc
 	rm -rf ${HOME}/.aliases
 	rm -rf ${HOME}/.functions
 	rm -rf ${HOME}/.zshrc

@@ -1,8 +1,0 @@
-# This is Git's per-user configuration file.
-[user]
-# Please adapt and uncomment the following lines:
-	name = Deniz Gökçin
-	email = dgokcin@gmail.com
-[filesystem "Amazon.com Inc.|1.8.0_232|/dev/disk1s1"]
-	timestampResolution = 1001 milliseconds
-	minRacyThreshold = 0 nanoseconds

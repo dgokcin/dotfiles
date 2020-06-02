@@ -1,2 +1,0 @@
-source ~/.functions
-source ~/.aliases
