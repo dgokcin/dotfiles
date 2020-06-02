@@ -15,7 +15,7 @@ gvim:
 	ln -fs $(DOTFILES)/.gvimrc ${HOME}/.gvimrc
 bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
-	ln -fs $(DOTFILES)/.aliases ${HOME}/.alieases
+	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
 zsh:
 ifneq ($(UNAME), MINGW64_NT-10.0-18363)
