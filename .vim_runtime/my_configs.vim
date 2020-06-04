@@ -185,6 +185,11 @@ au BufNewfile,BufRead Jenkinsfile setf groovy
 vnoremap J :<C-u>call MoveVisualDown()<CR>
 vnoremap K :<C-u>call MoveVisualUp()<CR>
 
+" Swap words without loosing cursor position
+nnoremap <silent> gl "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o><c-l>:nohlsearch<CR>
+nnoremap <silent> gr "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o>/\w\+\_W\+<CR><c-l>:nohlsearch<CR>
+
+
 " Inserts a blank line with backspace/enter to above/below the current line without loosing cursor position
 nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
