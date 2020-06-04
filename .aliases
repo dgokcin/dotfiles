@@ -12,7 +12,4 @@ alias qfind="find . -name "
 alias vimrc='vim ~/.vim_runtime/my_configs.vim'
 alias bashrc='vim ~/.bash_profile'
 
-# Graphical git log.
-alias tlog="git log --all --decorate --oneline --graph"
 alias rm='rm -i'
-

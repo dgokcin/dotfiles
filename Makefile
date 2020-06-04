@@ -1,5 +1,5 @@
 .PHONY: all
-all : vim vsvim ideavim gvim zsh bash winter
+all : vim vsvim ideavim gvim bash git winter zsh
 
 DOTFILES := $(shell pwd)
 UNAME := $(shell uname)
@@ -17,17 +17,18 @@ bash:
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
+git:
+	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
+winter:
+ifeq ($(OS),Windows_NT)
+	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
+endif
 zsh:
 ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
 	git -C ${HOME}/.oh-my-zsh pull || \
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 endif
-winter:
-ifeq ($(OS),Windows_NT)
-	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
-endif
-
 
 .PHONY: clean
 
