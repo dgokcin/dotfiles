@@ -4,7 +4,7 @@ mcd () {
 }
 
 # Lazy git
-function gacp {
+function gacp() {
 	argc=$#
 	argv=("$@")
 	while [ $argc -gt 0 ]
@@ -32,19 +32,19 @@ function gacp {
 }
 
 # For handling common typos that I make all the time
-cim () {
+function cim() {
     vim $1
 }
 
-bim () {
+function bim() {
     vim $1
 }
 
-ci () {
+function ci() {
     vi $1
 }
 
-bi () {
+function bi () {
     vi $1
 }
 
