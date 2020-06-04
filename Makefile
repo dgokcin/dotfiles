@@ -16,7 +16,7 @@ gvim:
 bash:
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
-	ln -fs $(DOTFILES)/.bashrc ${HOME}/.bashrc
+	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 zsh:
 ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
@@ -28,6 +28,7 @@ ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 
+
 .PHONY: clean
 
 clean:
@@ -37,7 +38,7 @@ clean:
 	rm -rf ${HOME}/.gvimrc
 	rm -rf ${HOME}/.ideavimrc
 	rm -rf ${HOME}/.gvimrc
-	rm -rf ${HOME}/.bashrc
+	rm -rf ${HOME}/.bash_profile
 	rm -rf ${HOME}/.aliases
 	rm -rf ${HOME}/.functions
 	rm -rf ${HOME}/.zshrc
