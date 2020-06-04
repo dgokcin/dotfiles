@@ -3,9 +3,9 @@
     email = dgokcin@gmail.com
     #email = deniz.gokcin@ge.com
 
-[core]
-    filemode = false
-    autocrlf = true
+;[core]
+    ;filemode = false
+    ;autocrlf = true
 
 [alias]
 
