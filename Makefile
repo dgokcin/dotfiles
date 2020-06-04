@@ -18,13 +18,13 @@ bash:
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
+	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
 ifeq ($(UNAME),Darwin)
 	git config --global user.email "dgokcin@gmail.com"
 endif
 ifeq ($(OS),Windows_NT)
 	git config --global user.email "deniz.gokcin@ge.com"
 endif
-	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
 winter:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
