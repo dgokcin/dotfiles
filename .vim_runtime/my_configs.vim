@@ -265,6 +265,9 @@ nmap <S-h> <C-W>h
 nmap <S-l> <C-W>l
 nmap <S-k> <C-W>k
 
+" Show hidden files by default
+let NERDTreeShowHidden=1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDCommenter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
