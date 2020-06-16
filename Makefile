@@ -34,6 +34,7 @@ endif
 
 clean:
 	rm -rf ${HOME}/.vim_runtime
+	rm -rf ${HOME}/.vim/view/*
 	rm -rf ${HOME}/.vimrc
 	rm -rf ${HOME}/.vsvimrc
 	rm -rf ${HOME}/.gvimrc
