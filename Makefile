@@ -5,6 +5,7 @@ DOTFILES := $(shell pwd)
 UNAME := $(shell uname)
 
 vim:
+	mkdir -p ${HOME}/.vim/view
 	ln -fs $(DOTFILES)/.vim_runtime ${HOME}
 	ln -fs $(DOTFILES)/.vimrc ${HOME}/.vimrc
 vsvim:
