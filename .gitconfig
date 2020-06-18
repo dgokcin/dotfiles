@@ -9,11 +9,14 @@
 
 [alias]
 
+    # Status
+    s = status
+
+    # Push
+    s = status
+
     # Git add, git commit, git push
     cmp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
-
-    # Git status
-    s = status
 
     # Git log with tree view
     tlog="!git log --all --decorate --oneline --graph"
