@@ -19,7 +19,10 @@ bash:
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
+ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
+	git config --global user.email "deniz.gokcin@ge.com"
+endif
 winter:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
