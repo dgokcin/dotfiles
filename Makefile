@@ -1,6 +1,3 @@
-.PHONY: all
-all : vim vsvim ideavim gvim bash git winter zsh
-
 DOTFILES := $(shell pwd)
 UNAME := $(shell uname)
 
@@ -20,6 +17,10 @@ bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
 	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
+gegit:
+	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
+	git config --global core.autocrlf true
+	git config --global user.email "deniz.gokcin@ge.com"
 winter:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
@@ -31,7 +32,6 @@ ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 endif
 
-.PHONY: clean
 
 clean:
 	rm -rf ${HOME}/.vim_runtime
@@ -46,3 +46,7 @@ clean:
 	rm -rf ${HOME}/.functions
 	rm -rf ${HOME}/.zshrc
 
+all: vim vsvim ideavim gvim bash git winter zsh
+ge: vim vsvim ideavim gvim bash gegit winter zsh
+
+.PHONY: all clean
