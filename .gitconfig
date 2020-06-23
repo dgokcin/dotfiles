@@ -12,7 +12,7 @@
     s = status
 
     # Push
-    s = status
+    p = push
 
     # Git add, git commit, git push
     acp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
