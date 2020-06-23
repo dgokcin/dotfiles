@@ -1,6 +1,7 @@
 DOTFILES := $(shell pwd)
 UNAME := $(shell uname)
 
+
 vim:
 	mkdir -p ${HOME}/.vim/view
 	ln -fs $(DOTFILES)/.vim_runtime ${HOME}
@@ -47,6 +48,10 @@ clean:
 	rm -rf ${HOME}/.zshrc
 
 all: vim vsvim ideavim gvim bash git winter zsh
+
 ge: vim vsvim ideavim gvim bash gegit winter zsh
 
 .PHONY: all clean
+
+.DEFAULT_GOAL := all
+
