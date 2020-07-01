@@ -8,6 +8,9 @@
     ;autocrlf = true
 
 [alias]
+    # Add
+    a = add
+
     # Status
     s = status
 
