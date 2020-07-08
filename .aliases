@@ -1,17 +1,13 @@
 # Lists everything in a directory
 alias la="ls -a"
-
 # Go back 1 directory level (for fast typers)
 alias cd..='cd ../'
 alias ..='cd ../' 
 alias ....='cd ../../' 
 alias ......='cd ../../../' 
-
 # Quickly search for file
 alias qfind="find . -name "
-
 # Quickly edit vimrc and bash_profile
 alias vimrc='vim ~/.vim_runtime/my_configs.vim'
 alias bashrc='vim ~/.bash_profile'
-
 alias rm='rm -i'

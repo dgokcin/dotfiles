@@ -17,11 +17,12 @@ bash:
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
-	ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
-#gegit:
-	#ln -fs $(DOTFILES)/.gitconfig ${HOME}/.gitconfig
-	#git config --global core.autocrlf true
-	#git config --global user.email "deniz.gokcin@ge.com"
+	ln -fs $(DOTFILES)/.gitconfig.str ~/.config/git/gitconfig
+ifneq ($(UNAME), MINGW64_NT-10.0-18363)
+	ln -fs $(DOTFILES)/.gitconfig.personal ${HOME}/.gitconfig
+else
+	ln -fs $(DOTFILES)/.gitconfig.work ${HOME}/.gitconfig
+endif
 winter:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
@@ -49,10 +50,7 @@ clean:
 
 all: vim vsvim ideavim gvim bash git winter zsh
 
-#ge: vim vsvim ideavim gvim bash gegit winter zsh
-
 .PHONY: all clean
-#.PHONY: all ge clean
 
 .DEFAULT_GOAL := all
 
