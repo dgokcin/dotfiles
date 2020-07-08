@@ -1,7 +1,7 @@
 [user]
 	name = Deniz Gökçin
-    ;email = dgokcin@gmail.com
-    email = deniz.gokcin@ge.com
+    email = dgokcin@gmail.com
+    ;email = deniz.gokcin@ge.com
 
 [core]
     filemode = false
@@ -10,6 +10,9 @@
 [alias]
     # Add
     a = add
+
+    # Add
+    f = fetch
 
     # Status
     s = status
