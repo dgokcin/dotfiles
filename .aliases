@@ -4,6 +4,8 @@ alias la="ls -a"
 # Go back 1 directory level (for fast typers)
 alias cd..='cd ../'
 alias ..='cd ../' 
+alias ....='cd ../../' 
+alias ......='cd ../../../' 
 
 # Quickly search for file
 alias qfind="find . -name "
