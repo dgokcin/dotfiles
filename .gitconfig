@@ -20,8 +20,8 @@
     # Push
     p = push
 
-    # Git log with tree view
-    fp = "!git fetch && git pull"
+    # Git stash,fetch and pull
+    sfp = "!git stash && git fetch && git pull"
 
     # Git add, git commit, git push
     acp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
