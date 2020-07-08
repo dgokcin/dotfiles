@@ -1,11 +1,11 @@
 [user]
 	name = Deniz Gökçin
-    email = dgokcin@gmail.com
-    ;email = deniz.gokcin@ge.com
+    ;email = dgokcin@gmail.com
+    email = deniz.gokcin@ge.com
 
-;[core]
-    ;filemode = false
-    ;autocrlf = true
+[core]
+    filemode = false
+    autocrlf = true
 
 [alias]
     # Add
@@ -16,6 +16,9 @@
 
     # Push
     p = push
+
+    # Git log with tree view
+    fp = "!git fetch && git pull"
 
     # Git add, git commit, git push
     acp = "!f() { git add -A && git commit -m \"$@\" && git push; }; f"
