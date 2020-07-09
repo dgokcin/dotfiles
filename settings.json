@@ -21,7 +21,7 @@
                 "acrylicOpacity" : 0.75,
                 "closeOnExit" : true,
                 "colorScheme" : "Campbell",
-                "commandline" : "\"%PROGRAMFILES%\\Git\\usr\\bin\\bash.exe\" -i -l",
+                "commandline" : "\"%PROGRAMFILES%\\git\\bin\\bash.exe\" -i -l",
                 "cursorShape" : "filledBox",
                 "fontFace" : "CodeNewRoman NF",
                 "fontSize" : 10,
