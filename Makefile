@@ -15,13 +15,15 @@ gvim:
 bash:
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
+	ln -fs $(DOTFILES)/.path ${HOME}/.path
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
-	ln -fs $(DOTFILES)/.gitconfig.str ~/.config/git/gitconfig
+	#touch ${XDG_CONFIG_HOME}
+	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 ifneq ($(UNAME), MINGW64_NT-10.0-18363)
-	ln -fs $(DOTFILES)/.gitconfig.personal ${HOME}/.gitconfig
+	ln -fs $(DOTFILES)/.gitconfig.personal ~/.gitconfig
 else
-	ln -fs $(DOTFILES)/.gitconfig.work ${HOME}/.gitconfig
+	ln -fs $(DOTFILES)/.gitconfig.work ~/.gitconfig
 endif
 winter:
 ifeq ($(OS),Windows_NT)
