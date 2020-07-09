@@ -1,5 +1,6 @@
 DOTFILES := $(shell pwd)
 UNAME := $(shell uname)
+XDG_CONFIG_HOME ?= $(HOME)/.config
 
 
 vim:
