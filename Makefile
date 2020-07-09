@@ -49,6 +49,8 @@ clean:
 	rm -rf ${HOME}/.bash_profile
 	rm -rf ${HOME}/.aliases
 	rm -rf ${HOME}/.functions
+	rm -rf ${HOME}/.path
+	rm -rf ${HOME}/.oh-my-zsh
 	rm -rf ${HOME}/.zshrc
 
 all: vim vsvim ideavim gvim bash git winter zsh
