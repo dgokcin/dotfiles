@@ -20,10 +20,10 @@ bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
-	ln -fs $(DOTFILES)/.gitconfig.personal ~/.gitconfig
+	ln -fs $(DOTFILES)/.gitconfig.personal ${HOME}.gitconfig
 gegit:
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
-	ln -fs $(DOTFILES)/.gitconfig.work ~/.gitconfig
+	ln -fs $(DOTFILES)/.gitconfig.work ${HOME}/.gitconfig
 winter:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
