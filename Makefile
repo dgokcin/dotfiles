@@ -20,7 +20,7 @@ bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
-	ln -fs $(DOTFILES)/.gitconfig.personal ${HOME}.gitconfig
+	ln -fs $(DOTFILES)/.gitconfig.personal ${HOME}/.gitconfig
 gegit:
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/.gitconfig.work ${HOME}/.gitconfig
