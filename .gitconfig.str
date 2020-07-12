@@ -3,7 +3,6 @@
 
 [core]
     filemode = false
-    autocrlf = true
 
 [alias]
     # Add
