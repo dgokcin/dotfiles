@@ -20,17 +20,16 @@ bash:
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
-ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.gitconfig.personal ~/.gitconfig
-else
+gegit:
+	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/.gitconfig.work ~/.gitconfig
-endif
 winter:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 zsh:
-ifneq ($(UNAME), MINGW64_NT-10.0-18363)
+ifeq ($(UNAME),$(filter $(UNAME),Darwin Linux))
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
 	git -C ${HOME}/.oh-my-zsh pull || \
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
@@ -53,9 +52,10 @@ clean:
 	rm -rf ${HOME}/.path
 	rm -rf ${HOME}/.zshrc
 
-all: vim vsvim ideavim gvim bash git winter zsh
+personal: vim vsvim ideavim gvim bash git winter zsh
+work: vim vsvim ideavim gvim bash gegit winter zsh
 
-.PHONY: all clean
+.PHONY: personal work clean
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := personal
 
