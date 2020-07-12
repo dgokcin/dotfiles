@@ -19,7 +19,6 @@ bash:
 	ln -fs $(DOTFILES)/.path ${HOME}/.path
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
-	#touch ${XDG_CONFIG_HOME}
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 ifneq ($(UNAME), MINGW64_NT-10.0-18363)
 	ln -fs $(DOTFILES)/.gitconfig.personal ~/.gitconfig
@@ -46,11 +45,12 @@ clean:
 	rm -rf ${HOME}/.gvimrc
 	rm -rf ${HOME}/.ideavimrc
 	rm -rf ${HOME}/.gvimrc
+	rm -rf ${HOME}/.gitconfig
+	rm -rf ${XDG_CONFIG_HOME}/git/config
 	rm -rf ${HOME}/.bash_profile
 	rm -rf ${HOME}/.aliases
 	rm -rf ${HOME}/.functions
 	rm -rf ${HOME}/.path
-	rm -rf ${HOME}/.oh-my-zsh
 	rm -rf ${HOME}/.zshrc
 
 all: vim vsvim ideavim gvim bash git winter zsh
