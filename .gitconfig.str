@@ -1,9 +1,13 @@
 [user]
 	name = Deniz Gökçin
 
+[merge]
+	ff = false
+
 [core]
     filemode = false
     autocrlf = true
+    whitespace = cr-at-eol
 
 [alias]
     # Add
