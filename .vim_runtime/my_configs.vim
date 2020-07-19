@@ -110,14 +110,7 @@ autocmd bufreadpre *.tex setlocal textwidth=80
 autocmd bufreadpre *.py setlocal textwidth=80
 
 " Fix yaml indent issues
-"augroup filetype_yaml
-    "autocmd!
-    "autocmd BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
-    "autocmd FileType yaml |
-        "setlocal shiftwidth=2 |
-        "setlocal softtabstop=2 |
-        "setlocal tabstop=2
-"augroup END
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mappings and configurations for better vi
