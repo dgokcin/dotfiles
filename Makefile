@@ -29,6 +29,7 @@ ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 zsh:
+	mkdir -p ${HOME}/.config/git
 ifeq ($(UNAME),$(filter $(UNAME),Darwin Linux))
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
 	git -C ${HOME}/.oh-my-zsh pull || \

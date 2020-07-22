@@ -6,7 +6,7 @@
 
 [core]
     filemode = false
-    autocrlf = true
+    autocrlf = input
     whitespace = cr-at-eol
 
 [alias]
