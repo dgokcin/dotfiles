@@ -73,10 +73,12 @@ plugins=(
   history-substring-search
   web-search
   docker
+  kubectl
   pip
 )
 
 source $ZSH/oh-my-zsh.sh
+source <(kubectl completion zsh)
 
 # User configuration
 
