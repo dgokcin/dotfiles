@@ -19,6 +19,7 @@ bash:
 	ln -fs $(DOTFILES)/.path ${HOME}/.path
 	ln -fs $(DOTFILES)/.bash_profile ${HOME}/.bash_profile
 git:
+	mkdir -p ${XDG_CONFIG_HOME}/git
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/.gitconfig.personal ${HOME}/.gitconfig
 gegit:
