@@ -24,6 +24,7 @@ git:
 gegit:
 	ln -fs $(DOTFILES)/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/.gitconfig.work ${HOME}/.gitconfig
+	ln -fs $(DOTFILES)/.inputrc ${HOME}/.inputrc
 winter:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
@@ -51,6 +52,7 @@ clean:
 	rm -rf ${HOME}/.aliases
 	rm -rf ${HOME}/.functions
 	rm -rf ${HOME}/.path
+	rm -rf ${HOME}/.inputrc
 	rm -rf ${HOME}/.zshrc
 
 personal: vim vsvim ideavim gvim bash git winter zsh
