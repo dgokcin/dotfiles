@@ -13,6 +13,9 @@ ideavim:
 	ln -fs $(DOTFILES)/.ideavimrc ${HOME}/.ideavimrc
 gvim:
 	ln -fs $(DOTFILES)/.gvimrc ${HOME}/.gvimrc
+nvim:
+	mkdir -p ${XDG_CONFIG_HOME}/nvim
+	ln -fs $(DOTFILES)/.init.vim ${XDG_CONFIG_HOME}/nvim/init.vim
 bash:
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
@@ -45,6 +48,7 @@ clean:
 	rm -rf ${HOME}/.vimrc
 	rm -rf ${HOME}/.vsvimrc
 	rm -rf ${HOME}/.gvimrc
+	rm -rf ${XDG_CONFIG_HOME}/nvim/init.vim
 	rm -rf ${HOME}/.ideavimrc
 	rm -rf ${HOME}/.gvimrc
 	rm -rf ${HOME}/.gitconfig
@@ -56,8 +60,8 @@ clean:
 	rm -rf ${HOME}/.inputrc
 	rm -rf ${HOME}/.zshrc
 
-personal: vim vsvim ideavim gvim bash git winter zsh
-work: vim vsvim ideavim gvim bash gegit winter zsh
+personal: vim vsvim ideavim gvim nvim bash git winter zsh
+work: vim vsvim ideavim gvim nvim bash gegit winter zsh
 
 .PHONY: personal work clean
 
