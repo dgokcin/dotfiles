@@ -30,11 +30,13 @@ gegit:
 	ln -fs $(DOTFILES)/.gitconfig.work ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/.inputrc ${HOME}/.inputrc
 winter:
+# ge-dell
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 zsh:
 	mkdir -p ${HOME}/.config/git
+# wsl,linux or mac
 ifeq ($(UNAME),$(filter $(UNAME),Darwin Linux))
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
 	git -C ${HOME}/.oh-my-zsh pull || \
