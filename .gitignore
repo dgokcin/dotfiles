@@ -1,3 +1,4 @@
 vim/.vim_runtime/temp_dirs/*
-vim/!.vim_runtime/temp_dirs/undodir/.gitkeep
+ide/vscode/vscode-settings
+!vim/.vim_runtime/temp_dirs/undodir/.gitkeep
 *.DS_Store
