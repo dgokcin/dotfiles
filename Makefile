@@ -114,6 +114,7 @@ clean:
 	rm -rf ${HOME}/.path
 	rm -rf ${HOME}/.inputrc
 	rm -rf ${HOME}/.zshrc
+	rm -rf ${DOTFILES}/ide/vscode/vscode-settings
 
 personal:vim vsvim ideavim gvim nvim bash git winter zsh vscode
 work:vim vsvim ideavim gvim nvim bash gegit winter zsh vscode
