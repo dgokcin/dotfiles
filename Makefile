@@ -49,6 +49,19 @@ vim:
 	mkdir -p ${HOME}/.vim/view
 vsvim:
 	ln -fs $(DOTFILES)/ide/vs/.vsvimrc ${HOME}/.vsvimrc
+vscode:
+	git -C ${DOTFILES}/ide/vscode/vscode-settings pull || \
+	git clone https://gist.github.com/84196e5d3c71a45750d3eda70353cbe1.git ${DOTFILES}/ide/vscode/vscode-settings
+	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
+ifeq ($(UNAME),Darwin)
+	@echo "Darwin detected"
+	ln -fs $(DOTFILES)/ide/vscode/vscode-settings/settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
+else ifeq ($(OS),Windows_NT)
+	@echo "Windows detected"
+	ln -fs $(DOTFILES)/ide/vscode/vscode-settings/settings.json ${APPDATA}/Code/User/settings.json
+endif
+
+
 ideavim:
 	ln -fs $(DOTFILES)/ide/intellij/.ideavimrc ${HOME}/.ideavimrc
 gvim:
@@ -72,7 +85,7 @@ gegit:
 winter:
 # ge-dell
 ifeq ($(OS),Windows_NT)
-	ln -fs $(DOTFILES)/winter/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
+	ln -fs $(DOTFILES)/winter/settings.json ${APPDATA}/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 zsh:
 	mkdir -p ${HOME}/.config/git
@@ -101,9 +114,10 @@ clean:
 	rm -rf ${HOME}/.path
 	rm -rf ${HOME}/.inputrc
 	rm -rf ${HOME}/.zshrc
+	rm -rf ${DOTFILES}/ide/vscode/vscode-settings
 
-personal:vim vsvim ideavim gvim nvim bash git winter zsh
-work:vim vsvim ideavim gvim nvim bash gegit winter zsh
+personal:vim vsvim ideavim gvim nvim bash git winter zsh vscode
+work:vim vsvim ideavim gvim nvim bash gegit winter zsh vscode
 
 .PHONY: personal work clean
 
