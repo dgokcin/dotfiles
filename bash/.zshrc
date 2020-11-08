@@ -78,6 +78,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+autoload -U +X compinit && compinit
 source <(kubectl completion zsh)
 
 # User configuration
