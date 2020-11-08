@@ -1,46 +1,41 @@
 DOTFILES := $(shell pwd)
 UNAME := $(shell uname)
+KERNEL_NAME := $(shell uname -s)
+MACHINE := $(shell uname -m)
 XDG_CONFIG_HOME ?= $(HOME)/.config
+LSB_RELEASE := $(shell lsb_release -cs)
+KUBECTL_URL := $(shell curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 
 
 install-packages:
 ifeq ($(UNAME),Darwin)
 	@echo "Darwin detected"
 	brew update
-	brew install \
-		vim \
-		git \
-		zsh \
-		curl \
-		wget \
-else
-	@echo "Linux detected. Assuming there's an apt binary though."	
+	brew install vim git zsh curl wget
+else ifeq ($(UNAME),Linux)
+	@echo "Linux detected"
 	sudo apt-get update
 	sudo apt install -y \
 		vim \
 		git \
 		zsh \
 		curl \
-		apt-transport-https \
-		ca-certificates \
-		curl \
-		gnupg-agent \
-		software-properties-common
-	 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-	 sudo add-apt-repository \
-	   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-	   $(lsb_release -cs) \
-	   stable"
-	sudo apt-get update
-	sudo apt-get install \
-		docker-ce \
-	   	docker-ce-cli \
-	   	containerd.io
-	curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+		ca-certificates
+	# docker
+	curl -fsSL https://get.docker.com -o get-docker.sh
+	sh get-docker.sh
+
+	# docker-compose
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-${KERNEL_NAME}-${MACHINE})" -o /usr/local/bin/docker-compose
+	sudo chmod +x /usr/local/bin/docker-compose
+
+	# kubectl
+	curl -LO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_URL}/bin/linux/amd64/kubectl"
 	chmod +x ./kubectl
 	sudo mv ./kubectl /usr/local/bin/kubectl
 	kubectl version --client
-
+else
+	@echo "Unsupported OS detected"
 endif
 
 vim:
@@ -114,12 +109,13 @@ clean:
 	rm -rf ${HOME}/.path
 	rm -rf ${HOME}/.inputrc
 	rm -rf ${HOME}/.zshrc
+	rm -rf ${HOME}/.oh-my-zsh
 	rm -rf ${DOTFILES}/ide/vscode/vscode-settings
 
 personal:vim vsvim ideavim gvim nvim bash git winter zsh vscode
 work:vim vsvim ideavim gvim nvim bash gegit winter zsh vscode
 
-.PHONY: personal work clean
+.PHONY: personal work clean stuff
 
 .DEFAULT_GOAL := personal
 
