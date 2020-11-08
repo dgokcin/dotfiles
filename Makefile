@@ -52,6 +52,7 @@ vsvim:
 vscode:
 	git -C ${DOTFILES}/ide/vscode/vscode-settings pull || \
 	git clone https://gist.github.com/84196e5d3c71a45750d3eda70353cbe1.git ${DOTFILES}/ide/vscode/vscode-settings
+	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
 ifeq ($(UNAME),Darwin)
 	@echo "Darwin detected"
 	ln -fs $(DOTFILES)/ide/vscode/vscode-settings/settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
@@ -115,7 +116,7 @@ clean:
 	rm -rf ${HOME}/.zshrc
 
 personal:vim vsvim ideavim gvim nvim bash git winter zsh vscode
-work:vim vsvim ideavim gvim nvim bash gegit winter zsh
+work:vim vsvim ideavim gvim nvim bash gegit winter zsh vscode
 
 .PHONY: personal work clean
 
