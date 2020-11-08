@@ -1,0 +1,142 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Leader
+let mapleader = ","
+
+" Determines the OS
+let uname = substitute(system('uname'), '\n', '', '')
+
+" Sets how many lines of history VIM has to remember
+set history=1000
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Disable swap and backup file options
+set noswapfile
+set nowb
+
+" No annoying sound on errors
+set visualbell
+set t_vb=
+set tm=500
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases 
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch 
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw 
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch 
+
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mappings and configurations for better vi
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Maps <leader>f formatting paragraph, without loosing the cursor position
+noremap <leader>f gwap
+
+" Makes working with long lines easier, without breaking 5j, 5k behaviour
+nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+
+" Clears highlights on hitting esc twice
+nnoremap <esc><esc> :noh<return>
+
+" Maps / to <space> for faster search
+nnoremap <space> /
+
+" Disable auto-comment insertion
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Enable persistent undo.
+try
+    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undofile
+catch
+endtry
+
+" Disable arrow keys in normal mode
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+" Different cursors in insert and visual mode
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[1 q"
+
+" Enables relative numbers in normal mode
+augroup toggle_relative_number
+    autocmd InsertEnter * :setlocal norelativenumber
+    autocmd InsertLeave * :setlocal relativenumber
+augroup END
+
+" Enables syntax highlighting for groovy
+au BufNewfile,BufRead Jenkinsfile setf groovy
+
+" Inserts a blank line with backspace/enter to above/below the current line without loosing cursor position
+nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+
+" Indent with >,< without loosing cursor position
+vmap < <gv
+vmap > >gv
+
+" Maps d and x to black-hole registry
+nnoremap x "_x
+nnoremap X "_X
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+" Maps <leader>d to visual in word
+:map <leader>w viw
+
+" Maps leader yank to copy to system clipboard.
+" Works only hasclipboard is true
+noremap <leader>y "*y
+noremap <leader>Y "*+y
+noremap <leader>p "*p
+noremap <leader>P "+p
+
+" Maps <leader>d to cut depending on the OS
+if uname == 'Darwin'
+    nnoremap <leader>d ""d
+    nnoremap <leader>D ""D
+    vnoremap <leader>d ""d
+else
+    nnoremap <leader>d "*d
+    nnoremap <leader>D "*D
+    vnoremap <leader>d "*d
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin Related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-multi-cursor
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set multiple-cursors
+set surround
+set commentary
+
