@@ -3,6 +3,46 @@ UNAME := $(shell uname)
 XDG_CONFIG_HOME ?= $(HOME)/.config
 
 
+install-packages:
+ifeq ($(UNAME),Darwin)
+	@echo "Darwin detected"
+	brew update
+	brew install \
+		vim \
+		git \
+		zsh \
+		curl \
+		wget \
+else
+	@echo "Linux detected. Assuming there's an apt binary though."	
+	sudo apt-get update
+	sudo apt install -y \
+		vim \
+		git \
+		zsh \
+		curl \
+		apt-transport-https \
+		ca-certificates \
+		curl \
+		gnupg-agent \
+		software-properties-common
+	 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	 sudo add-apt-repository \
+	   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+	   $(lsb_release -cs) \
+	   stable"
+	sudo apt-get update
+	sudo apt-get install \
+		docker-ce \
+	   	docker-ce-cli \
+	   	containerd.io
+	curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+	chmod +x ./kubectl
+	sudo mv ./kubectl /usr/local/bin/kubectl
+	kubectl version --client
+
+endif
+
 vim:
 	ln -fs $(DOTFILES)/vim/.vim_runtime ${HOME}/.vim_runtime
 	ln -fs $(DOTFILES)/vim/.vimrc ${HOME}/.vimrc
