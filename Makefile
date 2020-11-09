@@ -77,10 +77,10 @@ gegit:
 	ln -fs $(DOTFILES)/git/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/git/.gitconfig.work ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/.inputrc ${HOME}/.inputrc
-winter:
+winterm:
 # ge-dell
 ifeq ($(OS),Windows_NT)
-	ln -fs $(DOTFILES)/winter/settings.json ${APPDATA}/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
+	ln -fs $(DOTFILES)/winterm/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 zsh:
 	mkdir -p ${HOME}/.config/git
@@ -112,8 +112,8 @@ clean:
 	rm -rf ${HOME}/.oh-my-zsh
 	rm -rf ${DOTFILES}/ide/vscode/vscode-settings
 
-personal:vim vsvim ideavim gvim nvim bash git winter zsh vscode
-work:vim vsvim ideavim gvim nvim bash gegit winter zsh vscode
+personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscode
+work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscode
 
 .PHONY: personal work clean stuff
 
