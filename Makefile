@@ -45,18 +45,7 @@ vim:
 vsvim:
 	ln -fs $(DOTFILES)/ide/vs/.vsvimrc ${HOME}/.vsvimrc
 vscode:
-	git -C ${DOTFILES}/ide/vscode/vscode-settings pull || \
-	git clone https://gist.github.com/84196e5d3c71a45750d3eda70353cbe1.git ${DOTFILES}/ide/vscode/vscode-settings
 	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
-ifeq ($(UNAME),Darwin)
-	@echo "Darwin detected"
-	ln -fs $(DOTFILES)/ide/vscode/vscode-settings/settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
-else ifeq ($(OS),Windows_NT)
-	@echo "Windows detected"
-	ln -fs $(DOTFILES)/ide/vscode/vscode-settings/settings.json ${APPDATA}/Code/User/settings.json
-endif
-
-
 ideavim:
 	ln -fs $(DOTFILES)/ide/intellij/.ideavimrc ${HOME}/.ideavimrc
 gvim:
@@ -110,7 +99,6 @@ clean:
 	rm -rf ${HOME}/.inputrc
 	rm -rf ${HOME}/.zshrc
 	rm -rf ${HOME}/.oh-my-zsh
-	rm -rf ${DOTFILES}/ide/vscode/vscode-settings
 
 personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscode
 work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscode
