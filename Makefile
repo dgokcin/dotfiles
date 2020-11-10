@@ -46,6 +46,15 @@ vsvim:
 	ln -fs $(DOTFILES)/ide/vs/.vsvimrc ${HOME}/.vsvimrc
 vscode:
 	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
+	rm -rf ${HOME}/vscode-settings
+	git clone https://gist.github.com/84196e5d3c71a45750d3eda70353cbe1.git ${HOME}/vscode-settings
+ifeq ($(UNAME),Darwin)
+	@echo "Darwin detected"
+	ln -fs ${HOME}/vscode-settings/settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
+else ifeq ($(OS),Windows_NT)
+	@echo "Windows detected"
+	ln -fs ${HOME}/vscode-settings/settings.json ${APPDATA}/Code/User/settings.json
+endif
 ideavim:
 	ln -fs $(DOTFILES)/ide/intellij/.ideavimrc ${HOME}/.ideavimrc
 gvim:
