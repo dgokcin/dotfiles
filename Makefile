@@ -47,6 +47,7 @@ vsvim:
 vscode:
 	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
 	rm -rf ${HOME}/vscode-settings
+	git -C ${HOME}/vscode-settings pull
 	git clone https://gist.github.com/84196e5d3c71a45750d3eda70353cbe1.git ${HOME}/vscode-settings
 ifeq ($(UNAME),Darwin)
 	@echo "Darwin detected"
