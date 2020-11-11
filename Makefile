@@ -46,15 +46,13 @@ vsvim:
 	ln -fs $(DOTFILES)/ide/vs/.vsvimrc ${HOME}/.vsvimrc
 vscode:
 	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
-	rm -rf ${HOME}/vscode-settings
-	git -C ${HOME}/vscode-settings pull
-	git clone https://gist.github.com/84196e5d3c71a45750d3eda70353cbe1.git ${HOME}/vscode-settings
+	wget https://gist.githubusercontent.com/dgokcin/84196e5d3c71a45750d3eda70353cbe1/raw/047912a731660654540a385f303fc22b686d9c79/settings.json -P ${HOME}/vscode-settings.json
 ifeq ($(UNAME),Darwin)
 	@echo "Darwin detected"
-	ln -fs ${HOME}/vscode-settings/settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
+	ln -fs ${HOME}/vscode-settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
 else ifeq ($(OS),Windows_NT)
 	@echo "Windows detected"
-	ln -fs ${HOME}/vscode-settings/settings.json ${HOME}/AppData/Roaming/Code/User/settings.json
+	ln -fs ${HOME}/vscode-settings.json ${HOME}/AppData/Roaming/Code/User/settings.json
 endif
 ideavim:
 	ln -fs $(DOTFILES)/ide/intellij/.ideavimrc ${HOME}/.ideavimrc
@@ -96,6 +94,7 @@ clean:
 	rm -rf ${HOME}/.vim/view/*
 	rm -rf ${HOME}/.vimrc
 	rm -rf ${HOME}/.vsvimrc
+	rm -rf ${HOME}/.vscodesettings.json
 	rm -rf ${HOME}/.gvimrc
 	rm -rf ${XDG_CONFIG_HOME}/nvim/init.vim
 	rm -rf ${HOME}/.ideavimrc
