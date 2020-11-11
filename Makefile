@@ -53,7 +53,7 @@ ifeq ($(UNAME),Darwin)
 	ln -fs ${HOME}/vscode-settings/settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
 else ifeq ($(OS),Windows_NT)
 	@echo "Windows detected"
-	ln -fs ${HOME}/vscode-settings/settings.json ${APPDATA}/Code/User/settings.json
+	ln -fs ${HOME}/vscode-settings/settings.json ${HOME}/AppData/Roaming/Code/User/settings.json
 endif
 ideavim:
 	ln -fs $(DOTFILES)/ide/intellij/.ideavimrc ${HOME}/.ideavimrc
