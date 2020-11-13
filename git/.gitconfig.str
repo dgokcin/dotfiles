@@ -36,6 +36,9 @@
     # Push
     p = push
 
+    # Set upstream automatically
+    po = !git push -u origin  $(git symbolic-ref --short HEAD)
+
     # Git stash,fetch and pull
     sfp = "!git stash && git fetch && git pull"
 
