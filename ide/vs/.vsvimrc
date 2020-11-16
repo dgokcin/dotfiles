@@ -55,8 +55,8 @@ set mat=2
 noremap <leader>f gwap
 
 " Makes working with long lines easier, without breaking 5j, 5k behaviour
-nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+nnoremap j gj
+nnoremap k gk
 
 " Clears highlights on hitting esc twice
 nnoremap <esc><esc> :noh<return>
