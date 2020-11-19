@@ -58,6 +58,12 @@ noremap <leader>f gwap
 nnoremap j gj
 nnoremap k gk
 
+" Move in splits like nerdtree
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " Clears highlights on hitting esc twice
 nnoremap <esc><esc> :noh<return>
 
