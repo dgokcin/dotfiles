@@ -1,3 +1,3 @@
-[submodule ".ide/vscode/vscode-settings"]
-	path = .vim_runtime/sources_non_forked/vim-bracketed-paste
-	url = git@gist.github.com:84196e5d3c71a45750d3eda70353cbe1.git
+[submodule "vim/.vim_runtime/sources_non_forked/vim-startify"]
+	path = vim/.vim_runtime/sources_non_forked/vim-startify
+	url = git@github.com:mhinz/vim-startify.git
