@@ -7,38 +7,10 @@ LSB_RELEASE := $(shell lsb_release -cs)
 KUBECTL_URL := $(shell curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 
 
-install-packages:
-ifeq ($(UNAME),Darwin)
-	@echo "Darwin detected"
-	brew update
-	brew install vim git zsh curl wget
-else ifeq ($(UNAME),Linux)
-	@echo "Linux detected"
-	sudo apt-get update
-	sudo apt install -y \
-		vim \
-		git \
-		zsh \
-		curl \
-		ca-certificates
-	# docker
-	curl -fsSL https://get.docker.com -o get-docker.sh
-	sh get-docker.sh
-
-	# docker-compose
-	sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-${KERNEL_NAME}-${MACHINE})" -o /usr/local/bin/docker-compose
-	sudo chmod +x /usr/local/bin/docker-compose
-
-	# kubectl
-	curl -LO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_URL}/bin/linux/amd64/kubectl"
-	chmod +x ./kubectl
-	sudo mv ./kubectl /usr/local/bin/kubectl
-	kubectl version --client
-else
-	@echo "Unsupported OS detected"
-endif
 
 vim:
+	git submodule init
+	git submodule update
 	ln -fs $(DOTFILES)/vim/.vim_runtime ${HOME}/.vim_runtime
 	ln -fs $(DOTFILES)/vim/.vimrc ${HOME}/.vimrc
 	mkdir -p ${HOME}/.vim/view
@@ -47,7 +19,7 @@ vsvim:
 vscode:
 	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
 	wget https://gist.githubusercontent.com/dgokcin/84196e5d3c71a45750d3eda70353cbe1/raw/047912a731660654540a385f303fc22b686d9c79/settings.json -O vscode-settings.json
-ifeq ($(UNAME),Darwin)
+ifeq ($(UNAME),Darwin):
 	@echo "Darwin detected"
 	ln -fs ${DOTFILES}/vscode-settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
 else ifeq ($(OS),Windows_NT)
@@ -109,10 +81,44 @@ clean:
 	rm -rf ${HOME}/.zshrc
 	rm -rf ${HOME}/.oh-my-zsh
 
+install-fonts:
+	curl -fLo "Ubuntu Mono Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf
+
+install-packages:
+ifeq ($(UNAME),Darwin)
+	@echo "Darwin detected"
+	brew update
+	brew install vim git zsh curl wget
+else ifeq ($(UNAME),Linux)
+	@echo "Linux detected"
+	sudo apt-get update
+	sudo apt install -y \
+		vim \
+		git \
+		zsh \
+		curl \
+		ca-certificates
+	# docker
+	curl -fsSL https://get.docker.com -o get-docker.sh
+	sh get-docker.sh
+
+	# docker-compose
+	sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-${KERNEL_NAME}-${MACHINE})" -o /usr/local/bin/docker-compose
+	sudo chmod +x /usr/local/bin/docker-compose
+
+	# kubectl
+	curl -LO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_URL}/bin/linux/amd64/kubectl"
+	chmod +x ./kubectl
+	sudo mv ./kubectl /usr/local/bin/kubectl
+	kubectl version --client
+else
+	@echo "Unsupported OS detected"
+endif
+
 personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscode
 work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscode
 
-.PHONY: personal work clean stuff
+.PHONY: personal work clean
 
 .DEFAULT_GOAL := personal
 
