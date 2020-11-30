@@ -3,9 +3,7 @@ UNAME := $(shell uname)
 KERNEL_NAME := $(shell uname -s)
 MACHINE := $(shell uname -m)
 XDG_CONFIG_HOME ?= $(HOME)/.config
-LSB_RELEASE := $(shell lsb_release -cs)
 KUBECTL_URL := $(shell curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-
 
 
 vim:
@@ -19,7 +17,7 @@ vsvim:
 vscode:
 	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
 	wget https://gist.githubusercontent.com/dgokcin/84196e5d3c71a45750d3eda70353cbe1/raw/047912a731660654540a385f303fc22b686d9c79/settings.json -O vscode-settings.json
-ifeq ($(UNAME),Darwin):
+ifeq ($(UNAME),Darwin)
 	@echo "Darwin detected"
 	ln -fs ${DOTFILES}/vscode-settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
 else ifeq ($(OS),Windows_NT)
