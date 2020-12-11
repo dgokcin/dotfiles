@@ -37,25 +37,23 @@ bash:
 	ln -fs $(DOTFILES)/bash/.path ${HOME}/.path
 	ln -fs $(DOTFILES)/bash/.bash_profile ${HOME}/.bash_profile
 git:
+	mkdir -p ${HOME}/.config/git
 	mkdir -p ${XDG_CONFIG_HOME}/git
 	ln -fs $(DOTFILES)/git/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/git/.gitconfig.personal ${HOME}/.gitconfig
 gegit:
+	mkdir -p ${HOME}/.config/git
 	ln -fs $(DOTFILES)/git/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/git/.gitconfig.work ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/.inputrc ${HOME}/.inputrc
+zsh:
+	ln -fs $(DOTFILES)/bash/.zshrc ${HOME}/.zshrc
+	git -C ${HOME}/.oh-my-zsh pull || \
+	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 winterm:
 # ge-dell
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/winterm/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
-endif
-zsh:
-	mkdir -p ${HOME}/.config/git
-# wsl,linux or mac
-ifeq ($(UNAME),$(filter $(UNAME),Darwin Linux))
-	ln -fs $(DOTFILES)/bash/.zshrc ${HOME}/.zshrc
-	git -C ${HOME}/.oh-my-zsh pull || \
-	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 endif
 
 
