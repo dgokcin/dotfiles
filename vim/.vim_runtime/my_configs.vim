@@ -27,6 +27,9 @@ set visualbell
 set t_vb=
 set tm=500
 
+" No annoying sound on errors
+set autochdir
+
 " No annoying messages after changing configuration
 set shortmess=at
 set cmdheight=2
