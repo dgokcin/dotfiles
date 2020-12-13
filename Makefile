@@ -55,7 +55,8 @@ winterm:
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/winterm/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
-
+update-plugins:
+	git submodule foreach "git fetch && git reset --hard origin/master"
 
 clean:
 	rm -rf ${HOME}/.vim_runtime
