@@ -1,6 +1,6 @@
 [submodule "vim/.vim_runtime/sources_non_forked/vim-startify"]
-    path = vim/.vim_runtime/sources_non_forked/vim-startify
-    url = git@github.com:mhinz/vim-startify.git
+	path = vim/.vim_runtime/sources_non_forked/vim-startify
+	url = git@github.com:mhinz/vim-startify.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-wakatime"]
 	path = vim/.vim_runtime/sources_non_forked/vim-wakatime
 	url = git@github.com:wakatime/vim-wakatime.git
