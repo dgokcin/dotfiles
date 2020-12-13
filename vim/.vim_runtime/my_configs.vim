@@ -96,6 +96,7 @@ set foldenable
 set foldlevelstart=10 
 set foldnestmax=10 
 set foldmethod=manual 
+set foldcolumn=0
 
 " Colorscheme
 set background=dark
@@ -139,6 +140,7 @@ nnoremap <space> /
 
 " Disable auto-comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType * setlocal foldcolumn=0
 
 " Enable persistent undo.
 try
