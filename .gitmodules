@@ -1,45 +1,45 @@
 [submodule "vim/.vim_runtime/sources_non_forked/vim-startify"]
 	path = vim/.vim_runtime/sources_non_forked/vim-startify
-	url = ../mhinz/vim-startify.git
+	url = ../../mhinz/vim-startify.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-wakatime"]
 	path = vim/.vim_runtime/sources_non_forked/vim-wakatime
-	url = ../wakatime/vim-wakatime.git
+	url = ../../wakatime/vim-wakatime.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-surround"]
 	path = vim/.vim_runtime/sources_non_forked/vim-surround
-	url = ../tpope/vim-surround.git
+	url = ../../tpope/vim-surround.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-snippets"]
 	path = vim/.vim_runtime/sources_non_forked/vim-snippets
-	url = ../honza/vim-snippets.git
+	url = ../../honza/vim-snippets.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-repeat"]
 	path = vim/.vim_runtime/sources_non_forked/vim-repeat
-	url = ../tpope/vim-repeat.git
+	url = ../../tpope/vim-repeat.git
 [submodule "vim/.vim_runtime/sources_non_forked/nerdcommenter"]
 	path = vim/.vim_runtime/sources_non_forked/nerdcommenter
-	url = ../preservim/nerdcommenter.git
+	url = ../../preservim/nerdcommenter.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-multiple-cursors"]
 	path = vim/.vim_runtime/sources_non_forked/vim-multiple-cursors
-	url = ../terryma/vim-multiple-cursors.git
+	url = ../../terryma/vim-multiple-cursors.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-markdown"]
 	path = vim/.vim_runtime/sources_non_forked/vim-markdown
-	url = ../plasticboy/vim-markdown.git
+	url = ../../plasticboy/vim-markdown.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-devicons"]
 	path = vim/.vim_runtime/sources_non_forked/vim-devicons
-	url = ../ryanoasis/vim-devicons.git
+	url = ../../ryanoasis/vim-devicons.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-addon-mw-utils"]
 	path = vim/.vim_runtime/sources_non_forked/vim-addon-mw-utils
-	url = ../MarcWeber/vim-addon-mw-utils.git
+	url = ../../MarcWeber/vim-addon-mw-utils.git
 [submodule "vim/.vim_runtime/sources_non_forked/vim-snipmate"]
 	path = vim/.vim_runtime/sources_non_forked/vim-snipmate
-	url = ../garbas/vim-snipmate.git
+	url = ../../garbas/vim-snipmate.git
 [submodule "vim/.vim_runtime/sources_non_forked/peaksea"]
 	path = vim/.vim_runtime/sources_non_forked/peaksea
-	url = ../vim-scripts/peaksea.git
+	url = ../../vim-scripts/peaksea.git
 [submodule "vim/.vim_runtime/sources_non_forked/nerdtree"]
 	path = vim/.vim_runtime/sources_non_forked/nerdtree
-	url = ../preservim/nerdtree.git
+	url = ../../preservim/nerdtree.git
 [submodule "vim/.vim_runtime/sources_non_forked/lightline.vim"]
 	path = vim/.vim_runtime/sources_non_forked/lightline.vim
-	url = ../itchyny/lightline.vim.git
+	url = ../../itchyny/lightline.vim.git
 [submodule "vim/.vim_runtime/sources_non_forked/VimCompletesMe"]
 	path = vim/.vim_runtime/sources_non_forked/VimCompletesMe
-	url = ../ajh17/VimCompletesMe.git
+	url = ../../ajh17/VimCompletesMe.git
