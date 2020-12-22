@@ -51,6 +51,9 @@
     # Git log with tree view
     tlog="!git log --all --decorate --oneline --graph"
     
+    # Git log oneline
+    slog="!git log --oneline"
+
     # Show the diff between the latest commit and the current state
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 
