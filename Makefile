@@ -43,8 +43,10 @@ zsh:
 	git -C ${HOME}/.oh-my-zsh pull || \
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 terminator:
+ifeq ($(OS),Linux)
 	mkdir -p ${XDG_CONFIG_HOME}/terminator
 	ln -fs $(DOTFILES)/terminal/.terminator.config ${XDG_CONFIG_HOME}/terminator/config
+endif
 winterm:
 # ge-dell
 ifeq ($(OS),Windows_NT)
@@ -109,8 +111,8 @@ clean:
 	rm -rf ${HOME}/.zshrc
 	rm -rf ${HOME}/.oh-my-zsh
 
-personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscodevim
-work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscodevim
+personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscodevim terminator
+work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscodevim terminator
 
 .PHONY: personal work clean
 
