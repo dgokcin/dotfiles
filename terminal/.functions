@@ -3,34 +3,6 @@ mcd () {
     mkdir -p $1 && cd $1
 }
 
-# Lazy git
-function gacp() {
-	argc=$#
-	argv=("$@")
-	while [ $argc -gt 0 ]
-	do	
-		if [ $argc -gt 1 ]
-		then
-			for (( i=0;i<$(($argc-1));i++ ))
-			do
-				git add ${argv[i]}
-			done
-		else
-			git add .
-		fi
-		if [ $(uname) == "Darwin" -o $(uname) == "Linux" ]
-		then  
-			git commit -m "${argv[*]: -1}"
-		else
-			git commit -m "${argv[-1]}" 
-			# mingw, cygwin
-		fi
-		git push origin
-		return 1
-	done
-	echo not enough input arguments
-}
-
 # For handling common typos that I make all the time
 function cim() {
     vim $1

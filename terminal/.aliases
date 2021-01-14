@@ -6,7 +6,8 @@ alias ..='cd ../'
 alias ....='cd ../../' 
 alias ......='cd ../../../' 
 # Quickly search for file
-alias qfind="find . -name "
+alias qfind='find . -name'
+alias qsearch='grep -rnw . -e'
 # Quickly edit vimrc and bash_profile
 alias vimrc='vim ~/.vim_runtime/my_configs.vim'
 alias bashrc='vim ~/.bash_profile'
