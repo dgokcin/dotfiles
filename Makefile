@@ -14,16 +14,8 @@ vim:
 	mkdir -p ${HOME}/.vim/view
 vsvim:
 	ln -fs $(DOTFILES)/ide/vs/.vsvimrc ${HOME}/.vsvimrc
-vscode:
+vscodevim:
 	ln -fs $(DOTFILES)/ide/vscode/.vscodevimrc ${HOME}/.vscodevimrc
-	#wget https://gist.githubusercontent.com/dgokcin/84196e5d3c71a45750d3eda70353cbe1/raw/047912a731660654540a385f303fc22b686d9c79/settings.json -O vscode-settings.json
-#ifeq ($(UNAME),Darwin)
-	#@echo "Darwin detected"
-	#ln -fs ${DOTFILES}/vscode-settings.json "${HOME}/Library/Application Support/Code/User/settings.json"
-#else ifeq ($(OS),Windows_NT)
-	#@echo "Windows detected"
-	#ln -fs ${DOTFILES}/vscode-settings.json ${HOME}/AppData/Roaming/Code/User/settings.json
-#endif
 ideavim:
 	ln -fs $(DOTFILES)/ide/intellij/.ideavimrc ${HOME}/.ideavimrc
 gvim:
@@ -32,10 +24,10 @@ nvim:
 	mkdir -p ${XDG_CONFIG_HOME}/nvim
 	ln -fs $(DOTFILES)/vim/.init.vim ${XDG_CONFIG_HOME}/nvim/init.vim
 bash:
-	ln -fs $(DOTFILES)/bash/.aliases ${HOME}/.aliases
-	ln -fs $(DOTFILES)/bash/.functions ${HOME}/.functions
-	ln -fs $(DOTFILES)/bash/.path ${HOME}/.path
-	ln -fs $(DOTFILES)/bash/.bash_profile ${HOME}/.bash_profile
+	ln -fs $(DOTFILES)/terminal/.aliases ${HOME}/.aliases
+	ln -fs $(DOTFILES)/terminal/.functions ${HOME}/.functions
+	ln -fs $(DOTFILES)/terminal/.path ${HOME}/.path
+	ln -fs $(DOTFILES)/terminal/.bash_profile ${HOME}/.bash_profile
 git:
 	mkdir -p ${HOME}/.config/git
 	mkdir -p ${XDG_CONFIG_HOME}/git
@@ -47,36 +39,22 @@ gegit:
 	ln -fs $(DOTFILES)/git/.gitconfig.work ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/.inputrc ${HOME}/.inputrc
 zsh:
-	ln -fs $(DOTFILES)/bash/.zshrc ${HOME}/.zshrc
+	ln -fs $(DOTFILES)/terminal/.zshrc ${HOME}/.zshrc
 	git -C ${HOME}/.oh-my-zsh pull || \
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
+terminator:
+ifeq ($(OS),Linux)
+	mkdir -p ${XDG_CONFIG_HOME}/terminator
+	ln -fs $(DOTFILES)/terminal/.terminator.config ${XDG_CONFIG_HOME}/terminator/config
+endif
 winterm:
 # ge-dell
 ifeq ($(OS),Windows_NT)
 	ln -fs $(DOTFILES)/winterm/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
+
 update-plugins:
 	git submodule foreach "git fetch && git reset --hard origin/master"
-
-clean:
-	rm -rf ${HOME}/.vim_runtime
-	rm -rf ${HOME}/.vim/view/*
-	rm -rf ${HOME}/.vimrc
-	rm -rf ${HOME}/.vsvimrc
-	rm -rf ${HOME}/.vscodesettings.json
-	rm -rf ${HOME}/.gvimrc
-	rm -rf ${XDG_CONFIG_HOME}/nvim/init.vim
-	rm -rf ${HOME}/.ideavimrc
-	rm -rf ${HOME}/.gvimrc
-	rm -rf ${HOME}/.gitconfig
-	rm -rf ${XDG_CONFIG_HOME}/git/config
-	rm -rf ${HOME}/.bash_profile
-	rm -rf ${HOME}/.aliases
-	rm -rf ${HOME}/.functions
-	rm -rf ${HOME}/.path
-	rm -rf ${HOME}/.inputrc
-	rm -rf ${HOME}/.zshrc
-	rm -rf ${HOME}/.oh-my-zsh
 
 install-fonts:
 	curl -fLo "Ubuntu Mono Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf
@@ -112,8 +90,29 @@ else
 	@echo "Unsupported OS detected"
 endif
 
-personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscode
-work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscode
+clean:
+	rm -rf ${HOME}/.vim_runtime
+	rm -rf ${HOME}/.vim/view/*
+	rm -rf ${HOME}/.vimrc
+	rm -rf ${HOME}/.vsvimrc
+	rm -rf ${HOME}/.vscodesettings.json
+	rm -rf ${HOME}/.gvimrc
+	rm -rf ${XDG_CONFIG_HOME}/nvim/init.vim
+	rm -rf ${XDG_CONFIG_HOME}/terminator/config
+	rm -rf ${HOME}/.ideavimrc
+	rm -rf ${HOME}/.gvimrc
+	rm -rf ${HOME}/.gitconfig
+	rm -rf ${XDG_CONFIG_HOME}/git/config
+	rm -rf ${HOME}/.bash_profile
+	rm -rf ${HOME}/.aliases
+	rm -rf ${HOME}/.functions
+	rm -rf ${HOME}/.path
+	rm -rf ${HOME}/.inputrc
+	rm -rf ${HOME}/.zshrc
+	rm -rf ${HOME}/.oh-my-zsh
+
+personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscodevim terminator
+work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscodevim terminator
 
 .PHONY: personal work clean
 
