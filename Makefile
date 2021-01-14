@@ -27,6 +27,7 @@ bash:
 	ln -fs $(DOTFILES)/terminal/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/terminal/.functions ${HOME}/.functions
 	ln -fs $(DOTFILES)/terminal/.path ${HOME}/.path
+	ln -fs $(DOTFILES)/terminal/.extra ${HOME}/.extra
 	ln -fs $(DOTFILES)/terminal/.bash_profile ${HOME}/.bash_profile
 git:
 	mkdir -p ${HOME}/.config/git
