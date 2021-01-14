@@ -1,3 +1,5 @@
 export XDG_CONFIG_HOME=$HOME/.config
+export EDITOR=VIM
+export VISUAL=VIM
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
