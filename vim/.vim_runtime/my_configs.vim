@@ -418,13 +418,13 @@ cnoreabbrev Qall qal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Spell checking
 map <leader>ss :setlocal spell!<cr>
-" Maps jj to esc
-"imap jj <Esc>
 
-"nnoremap <silent> <up> :<C-u>call MoveLineUp()<CR>
-"nnoremap <silent> <down> :<C-u>call MoveLineDown()<CR>
-"inoremap <silent> <up> <C-o>:call MoveLineUp()<CR>
-"inoremap <silent> <down> <C-o>:call MoveLineDown()<CR>
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Workaround
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
