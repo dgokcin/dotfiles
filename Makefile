@@ -44,13 +44,13 @@ zsh:
 	git -C ${HOME}/.oh-my-zsh pull || \
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 terminator:
-ifeq ($(OS),Linux)
+ifeq ($(UNAME),Linux)
 	mkdir -p ${XDG_CONFIG_HOME}/terminator
 	ln -fs $(DOTFILES)/terminal/.terminator.config ${XDG_CONFIG_HOME}/terminator/config
 endif
 winterm:
 # ge-dell
-ifeq ($(OS),Windows_NT)
+ifeq ($(UNAME),Windows_NT)
 	ln -fs $(DOTFILES)/winterm/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 
