@@ -247,10 +247,12 @@ vnoremap d "_d
 
 " Maps leader yank to copy to system clipboard.
 " Works only hasclipboard is true
-noremap <leader>y "*y
-noremap <leader>Y "*+y
-noremap <leader>p "*p
-noremap <leader>P "+p
+if has('clipboard')
+    noremap <leader>y "*y
+    noremap <leader>Y "*+y
+    noremap <leader>p "*p
+    noremap <leader>P "+p
+endif
 
 " Maps <leader>d to cut depending on the OS
 nnoremap <leader>d ""d
