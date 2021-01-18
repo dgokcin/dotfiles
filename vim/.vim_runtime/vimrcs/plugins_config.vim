@@ -99,3 +99,8 @@ let s:p.normal.middle = [ [ s:base2, s:base02 ] ]
 let s:p.normal.error = [ [ s:base03, s:red ] ]
 let s:p.normal.warning = [ [ s:base023, s:yellow ] ]
 let g:lightline#colorscheme#wombat#palette = lightline#colorscheme#flatten(s:p)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => snipmate
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:snipMate = { 'snippet_version' : 1 }
