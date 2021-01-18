@@ -284,9 +284,9 @@ noremap <leader>p "*p
 noremap <leader>P "+p
 
 " Maps <leader>d to cut depending on the OS
-nnoremap <leader>d *d
-nnoremap <leader>D *D
-vnoremap <leader>d *d
+nnoremap <leader>d ""d
+nnoremap <leader>D ""D
+vnoremap <leader>d ""d
 
 " Paste without yanking
 vnoremap p "_dP
