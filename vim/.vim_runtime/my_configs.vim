@@ -16,13 +16,6 @@ set history=1000
 " Set to auto read when a file is changed from the outside
 set autoread
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
-" :W sudo saves the file 
-" (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
-
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
@@ -132,11 +125,6 @@ set relativenumber
 "Always show current position
 set ruler
 
-" File extension specific stuff
-
-" Height of the command bar
-set cmdheight=2
-
 " Enable syntax highlighting
 syntax enable 
 
@@ -192,7 +180,6 @@ else
     nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 endif
 
-
 " Clears highlights on hitting esc twice
 nnoremap <esc><esc> :noh<return>
 
@@ -246,24 +233,6 @@ augroup END
 " Enables syntax highlighting for groovy
 au BufNewfile,BufRead Jenkinsfile setf groovy
 
-" Move lines up and down without loosing the cursor position
-vnoremap J :<C-u>call MoveVisualDown()<CR>
-vnoremap K :<C-u>call MoveVisualUp()<CR>
-
-" Swap words without loosing cursor position
-nnoremap <silent> gl "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o><c-l>:nohlsearch<CR>
-nnoremap <silent> gr "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o>/\w\+\_W\+<CR><c-l>:nohlsearch<CR>
-
-
-" Inserts a blank line with backspace/enter to above/below the current line without loosing cursor position
-nnoremap <silent><Enter> :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent><BS> :set paste<CR>m`O<Esc>``:set nopaste<CR>
-
-" Indent with >,< without loosing cursor position
-nnoremap > :call Indent(1)<cr>
-nnoremap < :call Indent(0)<cr>
-vmap < <gv
-vmap > >gv
 
 " Fix indentation in entire file, get the cursor back to where it was, and put the current line in the middle of your window.
 nnoremap _ gg=G``zz
@@ -294,71 +263,9 @@ vnoremap p "_dP
 " Maps <leader>d to visual in word
 :map <leader>w viw
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Moves lines up and down, while keeping the cursor pos
-function! MoveLineUp()
-    call MoveLineOrVisualUp(".", "")
-endfunction
-
-function! MoveLineDown()
-    call MoveLineOrVisualDown(".", "")
-endfunction
-
-function! MoveVisualUp()
-    call MoveLineOrVisualUp("'<", "'<,'>")
-    normal gv
-endfunction
-
-function! MoveVisualDown()
-    call MoveLineOrVisualDown("'>", "'<,'>")
-    normal gv
-endfunction
-
-function! MoveLineOrVisualUp(line_getter, range)
-    let l_num = line(a:line_getter)
-    if l_num - v:count1 - 1 < 0
-        let move_arg = "0"
-    else
-        let move_arg = a:line_getter." -".(v:count1 + 1)
-    endif
-    call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
-endfunction
-
-function! MoveLineOrVisualDown(line_getter, range)
-    let l_num = line(a:line_getter)
-    if l_num + v:count1 > line("$")
-        let move_arg = "$"
-    else
-        let move_arg = a:line_getter." +".v:count1
-    endif
-    call MoveLineOrVisualUpOrDown(a:range."move ".move_arg)
-endfunction
-
-function! MoveLineOrVisualUpOrDown(move_arg)
-    let col_num = virtcol(".")
-    execute "silent! ".a:move_arg
-    execute "normal! ".col_num."|"
-endfunction
-
-" Indent with keeping the cursor position
-func! Indent(ind)
-    if &sol
-        set nostartofline
-    endif
-    let vcol = virtcol('.')
-    if a:ind
-        norm! >>
-        exe "norm!". (vcol + shiftwidth()) . '|'
-    else
-        norm! <<
-        exe "norm!". (vcol - shiftwidth()) . '|'
-    endif
-endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Why not?
+" => MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
@@ -373,34 +280,10 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qal
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Not sure
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Spell checking
-map <leader>ss :setlocal spell!<cr>
+" Fast saving
+nmap <leader>w :w!<cr>
 
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+" :W sudo saves the file 
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
 
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Workaround
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:openVSCodeCommandsInVisualMode()
-    normal! gv
-    let visualmode = visualmode()
-    if visualmode == "V"
-        let startLine = line("v")
-        let endLine = line(".")
-        call VSCodeNotifyRange("workbench.action.showCommands", startLine, endLine, 1)
-    else
-        let startPos = getpos("v")
-        let endPos = getpos(".")
-        call VSCodeNotifyRangePos("workbench.action.showCommands", startPos[1], endPos[1], startPos[2], endPos[2], 1)
-    endif
-endfunction
-
-" workaround for calling command picker in visual mode
-xnoremap <silent> <C-P> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
