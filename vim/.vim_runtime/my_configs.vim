@@ -234,10 +234,14 @@ if uname == 'Darwin'
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
+elseif uname == 'Linux'
+    nnoremap <leader>d d
+    nnoremap <leader>D D
+    vnoremap <leader>d d
 else
-    nnoremap <leader>d "*d
-    nnoremap <leader>D "*D
-    vnoremap <leader>d "*d
+    nnoremap <leader>d *d
+    nnoremap <leader>D *D
+    vnoremap <leader>d *d
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
