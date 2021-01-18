@@ -27,6 +27,9 @@ vmap > >gv
 " Maps / to <space> for faster search
 nnoremap <space> /
 
+" Maps ctrl + a to select all
+nnoremap <C-A> ggVG
+
 " Helper functions
 " Moves lines up and down, while keeping the cursor pos
 function! MoveLineUp()
