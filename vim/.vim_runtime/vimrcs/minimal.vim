@@ -1,10 +1,10 @@
 " General settings
 set number
-syntax enable
 set expandtab
 set smarttab
 set shiftwidth=4
 set tabstop=4
+syntax enable
 
 " Move lines up and down without loosing the cursor position
 vnoremap J :<C-u>call MoveVisualDown()<CR>
