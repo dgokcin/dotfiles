@@ -1,3 +1,5 @@
+" Leader
+let mapleader = ","
 let uname = substitute(system('uname'), '\n', '', '')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Load pathogen paths
@@ -46,7 +48,6 @@ vmap <leader><Space> <plug>NERDCommenterTogglegv
 nmap <leader><Space> <plug>NERDCommenterToggle^
 
 " Makes commenting and uncommenting in visual mode to stay in visual mode
-vmap <leader>cc <plug>nerdcommentercommentgv
 vmap <leader>cu <plug>nerdcommenteruncommentgv
 
 " Makes commenting and uncommenting in normal mode to go to next line
