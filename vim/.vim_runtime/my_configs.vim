@@ -262,9 +262,8 @@ vnoremap <leader>d ""d
 " Paste without yanking
 vnoremap p "_dP
 
-" Maps <leader>d to visual in word
-:map <leader>w viw
-
+" Maps <leader>v to visual in word
+vnoremap <leader>w viw
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MISC
@@ -283,7 +282,7 @@ cnoreabbrev Q q
 cnoreabbrev Qall qal
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nmap <leader>s :w!<cr>
 
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
