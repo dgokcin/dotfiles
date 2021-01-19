@@ -255,15 +255,21 @@ if has('clipboard')
 endif
 
 " Maps <leader>d to cut depending on the OS
-nnoremap <leader>d ""d
-nnoremap <leader>D ""D
-vnoremap <leader>d ""d
+if uname == 'Darwin' || uname == 'Darwin'
+    nnoremap <leader>d ""d
+    nnoremap <leader>D ""D
+    vnoremap <leader>d ""d
+else
+    nnoremap <leader>d "*d
+    nnoremap <leader>D "*D
+    vnoremap <leader>d "*d
+endif
 
 " Paste without yanking
 vnoremap p "_dP
 
 " Maps <leader>v to visual in word
-vnoremap <leader>w viw
+noremap <leader>w viw
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MISC
