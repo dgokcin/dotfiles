@@ -255,7 +255,7 @@ if has('clipboard')
 endif
 
 " Maps <leader>d to cut depending on the OS
-if uname == 'Darwin' || uname == 'Darwin'
+if uname == 'Darwin' || uname == 'Linux'
     nnoremap <leader>d ""d
     nnoremap <leader>D ""D
     vnoremap <leader>d ""d
