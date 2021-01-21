@@ -66,6 +66,9 @@
     # Amend the currently staged files to the latest commit
     amend = commit --amend --reuse-message=HEAD
 
+    # Change the latest commit message
+    ccm = "!f() { git commit --amend -m \"$@\" && git push --force; }; f"
+
     # Interactive rebase with the given number of latest commits
     reb = "!r() { git rebase -i HEAD~$1; }; r"
 
