@@ -1,3 +1,5 @@
 [user]
     email = dgokcin@gmail.com
 
+[push]
+	followTags = true

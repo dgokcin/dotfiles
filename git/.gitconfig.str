@@ -18,6 +18,9 @@
 [difftool "meld"]
     cmd = meld "$LOCAL" "$REMOTE"
 
+[push]
+	followTags = true
+
 [core]
     filemode = false
     autocrlf = input
