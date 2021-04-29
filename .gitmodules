@@ -43,3 +43,6 @@
 [submodule "vim/.vim_runtime/sources_non_forked/VimCompletesMe"]
 	path = vim/.vim_runtime/sources_non_forked/VimCompletesMe
 	url = ../../ajh17/VimCompletesMe.git
+[submodule "vim/.vim_runtime/sources_non_forked/onedark.vim"]
+	path = vim/.vim_runtime/sources_non_forked/onedark.vim
+	url = git@github.com:joshdick/onedark.vim.git
