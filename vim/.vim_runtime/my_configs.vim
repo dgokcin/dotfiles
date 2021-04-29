@@ -151,10 +151,12 @@ set foldcolumn=0
 set background=dark
 if has("gui_running")
     colorscheme peaksea
+    "colorscheme onedark
     "colorscheme ir_black
 else
-    "colorscheme ir_black
     colorscheme peaksea
+    "colorscheme onedark
+    "colorscheme ir_black
 endif
 
 " Disable underline
