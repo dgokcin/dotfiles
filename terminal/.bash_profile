@@ -6,3 +6,5 @@ for file in ~/.{aliases,functions,path,extra}; do
 done;
 unset file;
 
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
