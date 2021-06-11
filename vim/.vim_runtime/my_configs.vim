@@ -150,9 +150,9 @@ set foldcolumn=0
 " Colorscheme
 set background=dark
 if has("gui_running")
-    colorscheme peaksea
+    "colorscheme peaksea
     "colorscheme onedark
-    "colorscheme ir_black
+    colorscheme ir_black
 else
     colorscheme peaksea
     "colorscheme onedark
@@ -244,9 +244,11 @@ vmap _ gg=G``zz
 " Maps d and x to black-hole registry
 nnoremap x "_x
 nnoremap X "_X
-nnoremap d "_d
-nnoremap D "_D
-vnoremap d "_d
+
+" Maps leader de to cut
+nnoremap <leader>d "_d
+nnoremap <leader>D "_D
+vnoremap <leader>d "_d
 
 " Maps leader yank to copy to system clipboard.
 " Works only hasclipboard is true
@@ -255,17 +257,6 @@ if has('clipboard')
     noremap <leader>Y "*+y
     noremap <leader>p "*p
     noremap <leader>P "+p
-endif
-
-" Maps <leader>d to cut depending on the OS
-if uname == 'Darwin' || uname == 'Linux'
-    nnoremap <leader>d ""d
-    nnoremap <leader>D ""D
-    vnoremap <leader>d ""d
-else
-    nnoremap <leader>d "*d
-    nnoremap <leader>D "*D
-    vnoremap <leader>d "*d
 endif
 
 " Paste without yanking
