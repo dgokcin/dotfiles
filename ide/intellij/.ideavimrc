@@ -87,9 +87,11 @@ vmap > >gv
 " Maps d and x to black-hole registry
 nnoremap x "_x
 nnoremap X "_X
-nnoremap d "_d
-nnoremap D "_D
-vnoremap d "_d
+
+" Maps leader d to cut
+nnoremap <leader>d "_d
+nnoremap <leader>D "_D
+vnoremap <leader>d "_d
 
 " Paste without yanking
 vnoremap p "_dP
@@ -103,17 +105,6 @@ noremap <leader>y "*y
 noremap <leader>Y "*+y
 noremap <leader>p "*p
 noremap <leader>P "+p
-
-" Maps <leader>d to cut depending on the OS
-if uname == 'Darwin'
-    nnoremap <leader>d ""d
-    nnoremap <leader>D ""D
-    vnoremap <leader>d ""d
-else
-    nnoremap <leader>d "*d
-    nnoremap <leader>D "*D
-    vnoremap <leader>d "*d
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin Related
