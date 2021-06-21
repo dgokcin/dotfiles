@@ -86,24 +86,26 @@ let &t_SI = "\e[5 q"
 let &t_EI = "\e[1 q"
 
 " Maps d and x to black-hole registry
-"nnoremap x "_x
-"nnoremap X "_X
-"nnoremap d "_d
-"nnoremap D "_D
-"vnoremap d "_d
+nnoremap x "_x
+nnoremap X "_X
 
-"" Maps <leader>d to visual in word
-"nnoremap <leader>w viw
+" Maps leader d to cut
+nnoremap <leader>d "_d
+nnoremap <leader>D "_D
+vnoremap <leader>d "_d
 
-"" Maps leader yank to copy to system clipboard.
-"" Works only hasclipboard is true
-"noremap <leader>y "*y
-"noremap <leader>Y "*+y
-"noremap <leader>p "*p
-"noremap <leader>P "+p
+" Maps leader yank to copy to system clipboard.
+" Works only hasclipboard is true
+if has('clipboard')
+    noremap <leader>y "*y
+    noremap <leader>Y "*+y
+    noremap <leader>p "*p
+    noremap <leader>P "+p
+endif
 
-"" Maps <leader>d to cut depending on the OS
-"noremap <leader>d "*d
-"noremap <leader>D "*D
-"noremap <leader>d "*d
+" Paste without yanking
+vnoremap p "_dP
+
+" Maps <leader>v to visual in word
+noremap <leader>w viw
 
