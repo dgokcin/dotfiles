@@ -34,6 +34,9 @@ git:
 	mkdir -p ${XDG_CONFIG_HOME}/git
 	ln -fs $(DOTFILES)/git/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
 	ln -fs $(DOTFILES)/git/.gitconfig.personal ${HOME}/.gitconfig
+yamllint:
+	mkdir -p ${HOME}/.config/yamllint
+	ln -fs $(DOTFILES)/yamllint/config ${XDG_CONFIG_HOME}/yamllint/config
 gegit:
 	mkdir -p ${HOME}/.config/git
 	ln -fs $(DOTFILES)/git/.gitconfig.str ${XDG_CONFIG_HOME}/git/config
@@ -112,7 +115,7 @@ clean:
 	rm -rf ${HOME}/.zshrc
 	rm -rf ${HOME}/.oh-my-zsh
 
-personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscodevim terminator
+personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscodevim terminator yamllint
 work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscodevim terminator
 
 .PHONY: personal work clean
