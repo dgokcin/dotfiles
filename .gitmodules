@@ -45,7 +45,7 @@
 	url = ../../ajh17/VimCompletesMe.git
 [submodule "vim/.vim_runtime/sources_non_forked/onedark.vim"]
 	path = vim/.vim_runtime/sources_non_forked/onedark.vim
-	url = git@github.com:joshdick/onedark.vim.git
+	url = ../../joshdick/onedark.vim.git
 [submodule "vim/.vim_runtime/sources_non_forked/ale"]
 	path = vim/.vim_runtime/sources_non_forked/ale
-	url = https://github.com/dense-analysis/ale.git
+	url = ../../dense-analysis/ale.git
