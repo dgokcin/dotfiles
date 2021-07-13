@@ -118,7 +118,7 @@ clean:
 personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscodevim terminator yamllint
 work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscodevim terminator
 
-.PHONY: personal work clean
+.PHONY: vim personal work clean
 
 .DEFAULT_GOAL := personal
 
