@@ -86,6 +86,8 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+# Reamps CapsLock to ESC
+hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x700000029}]}'
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
