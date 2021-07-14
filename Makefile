@@ -30,6 +30,7 @@ bash:
 	ln -fs $(DOTFILES)/terminal/.extra ${HOME}/.extra
 	ln -fs $(DOTFILES)/terminal/.bash_profile ${HOME}/.bash_profile
 	cp $(DOTFILES)/terminal/com.googlecode.iterm2.plist ${HOME}/Library/Preferences/
+	cp $(DOTFILES)/.osx ${HOME}/.osx
 
 git:
 	mkdir -p ${HOME}/.config/git
