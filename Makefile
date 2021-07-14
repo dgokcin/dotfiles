@@ -29,7 +29,7 @@ bash:
 	ln -fs $(DOTFILES)/terminal/.path ${HOME}/.path
 	ln -fs $(DOTFILES)/terminal/.extra ${HOME}/.extra
 	ln -fs $(DOTFILES)/terminal/.bash_profile ${HOME}/.bash_profile
-	ln -fs $(DOTFILES)/com.googlecode.iterm2.plist ${HOME}/Library/Preferences/
+	cp $(DOTFILES)/com.googlecode.iterm2.plist ${HOME}/Library/Preferences/
 
 git:
 	mkdir -p ${HOME}/.config/git
