@@ -29,6 +29,8 @@ bash:
 	ln -fs $(DOTFILES)/terminal/.path ${HOME}/.path
 	ln -fs $(DOTFILES)/terminal/.extra ${HOME}/.extra
 	ln -fs $(DOTFILES)/terminal/.bash_profile ${HOME}/.bash_profile
+	ln -fs $(DOTFILES)/com.googlecode.iterm2.plist ${HOME}/Library/Preferences/
+
 git:
 	mkdir -p ${HOME}/.config/git
 	mkdir -p ${XDG_CONFIG_HOME}/git
@@ -60,40 +62,6 @@ endif
 update-plugins:
 	git submodule foreach "git fetch && git reset --hard origin/master"
 
-install-fonts:
-	curl -fLo "Ubuntu Mono Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/UbuntuMono/Regular/complete/Ubuntu%20Mono%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf
-
-install-packages:
-ifeq ($(UNAME),Darwin)
-	@echo "Darwin detected"
-	brew update
-	brew install vim git zsh curl wget
-else ifeq ($(UNAME),Linux)
-	@echo "Linux detected"
-	sudo apt-get update
-	sudo apt install -y \
-		vim \
-		git \
-		zsh \
-		curl \
-		ca-certificates
-	# docker
-	curl -fsSL https://get.docker.com -o get-docker.sh
-	sh get-docker.sh
-
-	# docker-compose
-	sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-${KERNEL_NAME}-${MACHINE})" -o /usr/local/bin/docker-compose
-	sudo chmod +x /usr/local/bin/docker-compose
-
-	# kubectl
-	curl -LO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_URL}/bin/linux/amd64/kubectl"
-	chmod +x ./kubectl
-	sudo mv ./kubectl /usr/local/bin/kubectl
-	kubectl version --client
-else
-	@echo "Unsupported OS detected"
-endif
-
 clean:
 	rm -rf ${HOME}/.vim_runtime
 	rm -rf ${HOME}/.vim/view/*
@@ -118,7 +86,7 @@ clean:
 personal:vim vsvim ideavim gvim nvim bash git winterm zsh vscodevim terminator yamllint
 work:vim vsvim ideavim gvim nvim bash gegit winterm zsh vscodevim terminator
 
-.PHONY: personal work clean
+.PHONY: vim personal work clean
 
 .DEFAULT_GOAL := personal
 
