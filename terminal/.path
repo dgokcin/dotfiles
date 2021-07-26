@@ -1,9 +1,0 @@
-export XDG_CONFIG_HOME=$HOME/.config
-export EDITOR=vim
-export VISUAL=vim
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-export PATH="$PATH:/usr/local/share/dotnet"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-

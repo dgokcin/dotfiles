@@ -9,8 +9,8 @@ KUBECTL_URL := $(shell curl -s https://storage.googleapis.com/kubernetes-release
 vim:
 	git submodule init
 	git submodule update
-	ln -fs $(DOTFILES)/vim/.vim_runtime ${HOME}/.vim_runtime
-	ln -fs $(DOTFILES)/vim/.vimrc ${HOME}/.vimrc
+	ln -fs $(DOTFILES)/.vim_runtime ${HOME}/.vim_runtime
+	ln -fs $(DOTFILES)/.vimrc ${HOME}/.vimrc
 	mkdir -p ${HOME}/.vim/view
 vsvim:
 	ln -fs $(DOTFILES)/ide/vs/.vsvimrc ${HOME}/.vsvimrc

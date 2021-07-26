@@ -1,6 +1,6 @@
-vim/.vim_runtime/temp_dirs/*
-vim/.vim_runtime/.vim_runtime
+.vim_runtime/temp_dirs/*
+.vim_runtime/.vim_runtime
 vscode-settings.json
 terminal/.extra
-!vim/.vim_runtime/temp_dirs/undodir/.gitkeep
+!.vim_runtime/temp_dirs/undodir/.gitkeep
 *.DS_Store
