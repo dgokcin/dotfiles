@@ -10,7 +10,7 @@ curl -sS https://raw.githubusercontent.com/dgokcin/dotfiles/master/vim/.vim_runt
 
 #### Adding a new plugin:
 ```shell
-cd vim/.vim_runtime/sources_non_forked
+cd .vim_runtime/sources_non_forked
 git submodule add <git@....>
 ```
 
