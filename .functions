@@ -1,0 +1,50 @@
+# Makes a new directory and cds to it
+mcd () {
+    mkdir -p $1 && cd $1
+}
+
+# For handling common typos that I make all the time
+function cim() {
+    vim $1
+}
+
+function bim() {
+    vim $1
+}
+
+function ci() {
+    vi $1
+}
+
+function bi () {
+    vi $1
+}
+
+# Extract most know archives with one command
+function extract()
+{
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1     ;;
+            *.tar.gz)    tar xvzf $1     ;;
+            *.bz2)       bunzip2 $1      ;;
+            *.rar)       unrar x $1      ;;
+            *.gz)        gunzip $1       ;;
+            *.tar)       tar xvf $1      ;;
+            *.tbz2)      tar xvjf $1     ;;
+            *.tgz)       tar xvzf $1     ;;
+            *.zip)       unzip $1        ;;
+            *.Z)         uncompress $1   ;;
+            *.7z)        7z x $1         ;;
+            *)           echo "'$1' cannot be extracted via >extract<" ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}
+
+# Creates an archive (*.tar.gz) from given directory.
+function maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
+
+# Create a ZIP archive of a file or folder.
+function zipf() { zip -r "${1%%/}.zip" "$1" ; }
