@@ -17,9 +17,9 @@ jobs:
         os:
           - macos-latest
     steps:
-      - name: Check out the codebase.
+      - name: checkout the codebase
         uses: actions/checkout@v2
 
-      - name: Rin Make
+      - name: run make
         run: |
           make
