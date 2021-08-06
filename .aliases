@@ -12,3 +12,6 @@ alias qsearch='grep -rnw . -e'
 alias vimrc='vim ~/.vim_runtime/my_configs.vim'
 alias bashrc='vim ~/.bash_profile'
 #alias rm='rm -i'
+
+alias pip=pip3
+alias python=python3
