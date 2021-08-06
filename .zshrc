@@ -107,4 +107,6 @@ source <(kubectl completion zsh)
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source ~/.bash_profile
+if [ -f ~/.bash_profile ]; then 
+    . ~/.bash_profile;
+fi
