@@ -9,3 +9,6 @@ unset file;
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="/home/denizgokcin/.pyenv/bin:$PATH"
+export PATH="/Users/denizgokcin/pyenv/bin:$PATH"
+
