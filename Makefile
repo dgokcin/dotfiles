@@ -50,6 +50,8 @@ zsh:
 	ln -fs $(DOTFILES)/.zshrc ${HOME}/.zshrc
 	git -C ${HOME}/.oh-my-zsh pull || \
 	git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
+	git -C ${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions pull || \
+	git clone https://github.com/zsh-users/zsh-autosuggestions.git ${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 yamllint:
 	mkdir -p ${HOME}/.config/yamllint
