@@ -25,7 +25,7 @@ gvim:
 
 nvim:
 	mkdir -p ${XDG_CONFIG_HOME}/nvim
-	ln -fs $(DOTFILES)/.init.vim ${XDG_CONFIG_HOME}/nvim/init.vim
+	ln -fs $(DOTFILES)/.vimrc ${XDG_CONFIG_HOME}/nvim/init.vim
 
 bash:
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
@@ -60,7 +60,8 @@ yamllint:
 # works only on mac
 iterm2:
 ifeq ($(UNAME),Darwin)
-	ln -fs $(DOTFILES)/other/iterm2/com.googlecode.iterm2.plist ${HOME}/Library/Preferences/
+	#ln -fs $(DOTFILES)/other/iterm2/com.googlecode.iterm2.plist ${HOME}/Library/Preferences/
+	echo "Please update manually"
 endif
 
 # works only on linux
