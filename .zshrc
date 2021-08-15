@@ -74,7 +74,7 @@ plugins=(
   web-search
   docker
   kubectl
-  pip
+  aws
   zsh-autosuggestions
 )
 
