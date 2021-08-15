@@ -24,6 +24,12 @@ nnoremap < :call Indent(0)<cr>
 vmap < <gv
 vmap > >gv
 
+" Switch between tabs with shift and direction
+nmap <S-j> <C-W>j
+nmap <S-h> <C-W>h
+nmap <S-l> <C-W>l
+nmap <S-k> <C-W>k
+
 " Maps / to <space> for faster search
 nnoremap <space> /
 
