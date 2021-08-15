@@ -56,12 +56,6 @@ nnoremap k gk
 nnoremap <Tab> $
 nnoremap <S-Tab> ^
 
-" Move in splits like nerdtree
-nnoremap <S-J> <C-W><C-J>
-nnoremap <S-K> <C-W><C-K>
-nnoremap <S-L> <C-W><C-L>
-nnoremap <S-H> <C-W><C-H>
-
 " Maps / to <space> for faster search
 nnoremap <space> /
 
@@ -93,6 +87,12 @@ nnoremap X "_X
 nnoremap <leader>d "_d
 nnoremap <leader>D "_D
 vnoremap <leader>d "_d
+
+" Switch between tabs with shift and direction
+nmap <S-j> <C-W>j
+nmap <S-h> <C-W>h
+nmap <S-l> <C-W>l
+nmap <S-k> <C-W>k
 
 " Maps leader yank to copy to system clipboard.
 " Works only hasclipboard is true
