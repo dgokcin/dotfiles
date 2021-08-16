@@ -23,6 +23,9 @@
     autocrlf = input
     whitespace = cr-at-eol
 
+[pull]
+	rebase = false
+
 [alias]
     # Add
     a = add
