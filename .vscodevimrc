@@ -95,13 +95,10 @@ nmap <S-l> <C-W>l
 nmap <S-k> <C-W>k
 
 " Maps leader yank to copy to system clipboard.
-" Works only hasclipboard is true
-if has('clipboard')
-    noremap <leader>y "*y
-    noremap <leader>Y "*+y
-    noremap <leader>p "*p
-    noremap <leader>P "+p
-endif
+noremap <leader>y "*y
+noremap <leader>Y "*+y
+noremap <leader>p "*p
+noremap <leader>P "+p
 
 " Paste without yanking
 vnoremap p "_dP
