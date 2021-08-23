@@ -5,6 +5,7 @@ alias cd..='cd ../'
 alias ..='cd ../' 
 alias ....='cd ../../' 
 alias ......='cd ../../../' 
+alias ........='cd ../../../../' 
 # Quickly search for file
 alias qfind='find . -name'
 alias qsearch='grep -rnw . -e'
