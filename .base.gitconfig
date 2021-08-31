@@ -43,6 +43,9 @@
     po = !git push -u origin  $(git symbolic-ref --short HEAD)
 
     # Git stash,fetch and pull
+    sync = "!git fetch origin && git reset --hard origin/$(git symbolic-ref --short HEAD) && git clean -df"
+    # Git stash,fetch and pull
+
     sfp = "!git stash && git fetch && git pull"
 
     # Git add, git commit, git push
