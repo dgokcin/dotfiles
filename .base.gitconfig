@@ -15,6 +15,9 @@
 [diff]
     tool = intellij
 
+[difftool]
+    prompt = false
+
 [difftool "intellij"]
     cmd = /Applications/IntelliJ\\ IDEA.app/Contents/MacOS/idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
 
