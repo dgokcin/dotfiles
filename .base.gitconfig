@@ -1,4 +1,5 @@
 [user]
+    # Change this to your name
     name = Deniz Gökçin
 
 [merge]
@@ -8,6 +9,7 @@
 [mergetool]
 	keepBackup = false
 
+# Use intellij as git mergetool
 [mergetool "intellij"]
     cmd = /Applications/IntelliJ\\ IDEA.app/Contents/MacOS/idea merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
     trustExitCode = true
@@ -18,6 +20,7 @@
 [difftool]
     prompt = false
 
+# Use intellij as git difftool
 [difftool "intellij"]
     cmd = /Applications/IntelliJ\\ IDEA.app/Contents/MacOS/idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
 
@@ -45,10 +48,10 @@
     # Set upstream automatically
     po = !git push -u origin  $(git symbolic-ref --short HEAD)
 
-    # Git stash,fetch and pull
+    # Git sync the local branch with the remote branch
     sync = "!git fetch origin && git reset --hard origin/$(git symbolic-ref --short HEAD) && git clean -df"
-    # Git stash,fetch and pull
 
+    # Git stash,fetch and pull
     sfp = "!git stash && git fetch && git pull"
 
     # Git add, git commit, git push
@@ -60,7 +63,7 @@
     # Git log with tree view
     tlog="!git log --all --decorate --oneline --graph"
     
-    # Git log oneline
+    # Git log in a single line
     slog="!git log --oneline"
 
     # Show the diff between the latest commit and the current state
