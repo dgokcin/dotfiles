@@ -117,10 +117,8 @@ endif
 
 " Add a bit extra margin to the left
 set foldcolumn=1
-" Shows relative line numbers
 
 set number
-set relativenumber
 
 "Always show current position
 set ruler
@@ -221,10 +219,10 @@ augroup vimrc-remember-cursor-position
 augroup END
 
 " Enables relative numbers in normal mode
-augroup toggle_relative_number
-    autocmd InsertEnter * :setlocal norelativenumber
-    autocmd InsertLeave * :setlocal relativenumber
-augroup END
+"augroup toggle_relative_number
+    "autocmd InsertEnter * :setlocal norelativenumber
+    "autocmd InsertLeave * :setlocal relativenumber
+"augroup END
 
 " Persistent folding
 augroup auto_save_folds
