@@ -119,6 +119,7 @@ endif
 set foldcolumn=1
 
 set number
+set norelativenumber
 
 "Always show current position
 set ruler
