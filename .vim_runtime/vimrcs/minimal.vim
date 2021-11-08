@@ -6,6 +6,9 @@ set shiftwidth=4
 set tabstop=4
 syntax enable
 
+" Fixes maxmempattern issue on super long files
+set re=0
+
 " Move lines up and down without loosing the cursor position
 vnoremap J :<C-u>call MoveVisualDown()<CR>
 vnoremap K :<C-u>call MoveVisualUp()<CR>
