@@ -76,8 +76,9 @@ ifeq ($(UNAME),Windows_NT)
 	ln -fs $(DOTFILES)/other/winterm/settings.json ${HOME}/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
 endif
 
+# update submodules
 update-plugins:
-	git submodule foreach "git fetch && git reset --hard origin/master"
+	git submodule update --init --recursive
 
 clean:
 	rm -rf ${HOME}/.vim_runtime
