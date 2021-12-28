@@ -77,7 +77,6 @@ plugins=(
   docker
   kubectl
   aws
-  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
