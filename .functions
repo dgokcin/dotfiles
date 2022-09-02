@@ -48,3 +48,11 @@ function maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
 
 # Create a ZIP archive of a file or folder.
 function zipf() { zip -r "${1%%/}.zip" "$1" ; }
+
+# TerraGrunt Clear cache
+function tgc() {
+    TARGET_DIR='.terragrunt-cache'
+    read -k "?Clear terragrunt cache? [Y/n] ";
+    [[ $REPLY =~ [nN] ]] || find . -iname "${TARGET_DIR}" -exec rm -rf {} +;
+    [[ -n $REPLY ]] && echo;
+}
