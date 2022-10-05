@@ -51,8 +51,13 @@ function zipf() { zip -r "${1%%/}.zip" "$1" ; }
 
 # TerraGrunt Clear cache
 function tgc() {
-    TARGET_DIR='.terragrunt-cache'
-    read -k "?Clear terragrunt cache? [Y/n] ";
-    [[ $REPLY =~ [nN] ]] || find . -iname "${TARGET_DIR}" -exec rm -rf {} +;
-    [[ -n $REPLY ]] && echo;
+    echo "Are you sure you want to delete .terragrunt-cache directory and .terraform.lock.hcl file? (y/n)"
+    read answer
+    if [ "$answer" != "${answer#[Yy]}" ] ;then
+        find . -iname ".terragrunt-cache" -type d -exec rm -rf {} +;
+        find . -iname ".terraform.lock.hcl" -type f -exec rm -rf {} +;
+    else
+        echo "Exiting..."
+        exit 1
+    fi
 }
