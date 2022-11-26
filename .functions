@@ -61,3 +61,15 @@ function tgc() {
         exit 1
     fi
 }
+
+
+function nmc() {
+    echo "Are you sure you want to delete node_modules recursively? (y/n)"
+    read answer
+    if [ "$answer" != "${answer#[Yy]}" ] ;then
+        find . -iname "node_modules" -type d -exec rm -rf {} +;
+    else
+        echo "Exiting..."
+        exit 1
+    fi
+}
