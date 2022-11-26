@@ -72,6 +72,7 @@ ZSH_THEME="ys"
 plugins=(
   git
   vi-mode
+  zsh-autosuggestions
   history-substring-search
   web-search
   docker
