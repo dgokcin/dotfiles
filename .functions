@@ -73,3 +73,22 @@ function nmc() {
         exit 1
     fi
 }
+
+function move_env_file() {
+    if [ -f .env.local ]; then
+        echo "A .env.local file already exists. Do you want to overwrite it? (y/n)"
+        read answer
+        if [ "$answer" = "y" ]; then
+            cp .env.local .env.local-$(date +%Y%m%d-%H%M%S)
+            cp $1 .env.local
+        fi
+    else
+        cp $1 .env.local
+    fi
+}
+
+
+# a function to kill all processes on a given port
+function killport() {
+    lsof -t -i tcp:$1 | xargs kill
+}
