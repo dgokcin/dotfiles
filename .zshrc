@@ -78,6 +78,7 @@ plugins=(
   docker
   kubectl
   aws
+  z
 )
 
 source $ZSH/oh-my-zsh.sh
