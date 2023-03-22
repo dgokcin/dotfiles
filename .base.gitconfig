@@ -62,7 +62,7 @@
 
     # Git log with tree view
     tlog="!git log --all --decorate --oneline --graph"
-    
+
     # Git log in a single line
     slog="!git log --oneline"
 
@@ -105,6 +105,21 @@
 
     # Show the user email for the current repository.
     whoami = config user.email
+
+    # Create a release branch from the current branch named release/DDMMYYY. If a release branch already exists, a new one will not be created with -1 appended to the name. if it exists as well -2 will be appended and so on.
+    release = "!f() { \
+        local branch=$(git rev-parse --abbrev-ref HEAD); \
+        local date=$(date '+%d%m%Y'); \
+        local release_branch='release/'$date; \
+        local counter=0; \
+        while git show-ref --verify --quiet refs/heads/$release_branch; do \
+            counter=$((counter+1)); \
+            release_branch='release/'$date'-'$counter; \
+        done; \
+        git checkout -b $release_branch; \
+        echo 'Created release branch: '$release_branch; \
+    }; f"
+
 
 [help]
 
