@@ -28,9 +28,6 @@
 [submodule ".vim_runtime/sources_non_forked/vim-addon-mw-utils"]
 	path = .vim_runtime/sources_non_forked/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule ".vim_runtime/sources_non_forked/vim-snipmate"]
-	path = .vim_runtime/sources_non_forked/vim-snipmate
-	url = https://github.com/garbas/vim-snipmate.git
 [submodule ".vim_runtime/sources_non_forked/peaksea"]
 	path = .vim_runtime/sources_non_forked/peaksea
 	url = https://github.com/vim-scripts/peaksea.git
@@ -40,9 +37,6 @@
 [submodule ".vim_runtime/sources_non_forked/lightline.vim"]
 	path = .vim_runtime/sources_non_forked/lightline.vim
 	url = https://github.com/itchyny/lightline.vim.git
-[submodule ".vim_runtime/sources_non_forked/VimCompletesMe"]
-	path = .vim_runtime/sources_non_forked/VimCompletesMe
-	url = https://github.com/ajh17/VimCompletesMe.git
 [submodule ".vim_runtime/sources_non_forked/onedark.vim"]
 	path = .vim_runtime/sources_non_forked/onedark.vim
 	url = https://github.com/joshdick/onedark.vim.git
