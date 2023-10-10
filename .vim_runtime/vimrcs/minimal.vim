@@ -39,6 +39,58 @@ nnoremap <space> /
 " Maps ctrl + a to select all
 nnoremap <C-A> ggVG
 
+" Fix indentation in entire file, get the cursor back to where it was, and put the current line in the middle of your window.
+nnoremap _ gg=G``zz
+vmap _ gg=G``zz
+
+" Maps d and x to black-hole registry
+nnoremap x "_x
+nnoremap X "_X
+
+" Maps leader de to cut
+nnoremap <leader>d "_d
+nnoremap <leader>D "_D
+vnoremap <leader>d "_d
+
+" Maps leader yank to copy to system clipboard.
+" Works only hasclipboard is true
+if has('clipboard')
+    noremap <leader>y "*y
+    noremap <leader>Y "*+y
+    noremap <leader>p "*p
+    noremap <leader>P "+p
+endif
+
+" Paste without yanking
+vnoremap p "_dP
+
+" Maps <leader>v to visual in word
+noremap <leader>w viw
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => MISC
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Q! q!
+cnoreabbrev q1 q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qal
+
+" Fast saving
+nmap <leader>s :w!<cr>
+
+" :W sudo saves the file 
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
+
+
 " Helper functions
 " Moves lines up and down, while keeping the cursor pos
 function! MoveLineUp()
