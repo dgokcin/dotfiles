@@ -92,3 +92,16 @@ function move_env_file() {
 function killport() {
     lsof -t -i tcp:$1 | xargs kill
 }
+
+# Functions needed for the copilot aliases to work
+eval_git_question() {
+  eval "gh copilot suggest -t git \"$1\""
+}
+
+eval_gh_question() {
+  eval "gh copilot suggest -t gh \"$1\""
+}
+
+eval_shell_question() {
+  eval "gh copilot suggest -t shell \"$1\""
+}

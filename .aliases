@@ -20,3 +20,7 @@ alias creds='vim ~/.aws/credentials'
 alias pip=pip3
 alias python=python3
 
+# Copilot CLI aliases
+alias 'git?'='eval_git_question'
+alias 'gh?'='eval_gh_question'
+alias '??'='eval_shell_question'
