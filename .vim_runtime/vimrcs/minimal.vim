@@ -6,6 +6,9 @@ set shiftwidth=4
 set tabstop=4
 syntax enable
 
+" Leader
+let mapleader = ","
+
 " Fixes maxmempattern issue on super long files
 set re=0
 
