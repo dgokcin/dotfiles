@@ -84,6 +84,9 @@
     # Interactive rebase with the given number of latest commits
     reb = "!r() { git rebase -i HEAD~$1; }; r"
 
+    # rebase on main origin branch
+    rom = !git fetch --all && git rebase $(git rev-parse --abbrev-ref origin/HEAD)
+
     # Find branches containing commit
     fb = "!f() { git branch -a --contains $1; }; f"
 
