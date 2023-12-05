@@ -123,6 +123,15 @@
         echo 'Created release branch: '$release_branch; \
     }; f"
 
+    # rebase current branch on top of input branch
+    rbo = "!f() { \
+        if [ -z \"$1\" ]; then \
+            echo \"No input branch given\"; \
+            exit 1; \
+        fi; \
+        git fetch origin $1; \
+        git rebase origin/$1; \
+        }; f"
 
 [help]
 
