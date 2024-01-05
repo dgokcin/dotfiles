@@ -6,9 +6,6 @@ for file in ~/.{aliases,functions,path,extra}; do
 done;
 unset file;
 
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-export PATH="/home/denizgokcin/.pyenv/bin:$PATH"
-export PATH="/Users/denizgokcin/pyenv/bin:$PATH"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && \. "/usr/local/opt/nvm/etc/bash_completion"
 

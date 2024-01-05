@@ -23,23 +23,23 @@ set tm=500
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch 
+set incsearch
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set lazyredraw
 
 " For regular expressions turn magic on
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch 
+set showmatch
 
 " How many tenths of a second to blink when matching brackets
 set mat=2
@@ -52,7 +52,7 @@ set mat=2
 nnoremap j gj
 nnoremap k gk
 
-" move to beginning/end of line 
+" move to beginning/end of line
 nnoremap <Tab> $
 nnoremap <S-Tab> ^
 
@@ -82,6 +82,8 @@ let &t_EI = "\e[1 q"
 " Maps d and x to black-hole registry
 nnoremap x "_x
 nnoremap X "_X
+nnoremap d "_d
+nnoremap D "_D
 
 " Maps leader d to cut
 nnoremap <leader>d "_d

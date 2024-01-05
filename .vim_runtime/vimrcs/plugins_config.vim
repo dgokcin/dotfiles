@@ -107,3 +107,5 @@ let g:lightline#colorscheme#wombat#palette = lightline#colorscheme#flatten(s:p)
 " => snipmate
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:snipMate = { 'snippet_version' : 1 }
+
+let g:copilot_filetypes = { 'gitcommit': v:true }

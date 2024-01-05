@@ -1,3 +1,10 @@
 export XDG_CONFIG_HOME=$HOME/.config
 export EDITOR=vim
 export VISUAL=vim
+export FZF_DEFAULT_OPTS="--bind='j:down,k:up'"
+export NVM_DIR="$HOME/.nvm"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="/home/denizgokcin/.pyenv/bin:$PATH"
+export PATH="/Users/denizgokcin/pyenv/bin:$PATH"
