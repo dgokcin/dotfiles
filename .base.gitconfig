@@ -14,6 +14,9 @@
     cmd = open -nWa 'IntelliJ IDEA.app' --args merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
     trustExitCode = true
 
+[rebase]
+    autosquash = true
+
 [diff]
     tool = intellij
 
@@ -30,7 +33,10 @@
     whitespace = cr-at-eol
 
 [pull]
-	rebase = false
+	rebase = true
+
+[push]
+	autoSetupRemote = true
 
 [alias]
     # Add
@@ -82,7 +88,27 @@
     ccm = "!f() { git commit --amend -m \"$@\" && git push --force; }; f"
 
     # Interactive rebase with the given number of latest commits
-    reb = "!r() { git rebase -i HEAD~$1; }; r"
+    reb = "!r() { \
+        if [[ $1 =~ ^[0-9]+$ ]]; then \
+            echo \"A number was passed\"; \
+            git rebase -i HEAD~$1; \
+        else \
+            echo \"A SHA was passed\"; \
+            git rebase -i $1^; \
+        fi; \
+    }; r"
+
+
+    # Interactive rebase with autosquash given number of latest commits
+    reba = "!r() { \
+        if [[ $1 =~ ^[0-9]+$ ]]; then \
+            echo \"A number was passed\"; \
+            git rebase -i --autosquash HEAD~$1; \
+        else \
+            echo \"A SHA was passed\"; \
+            git rebase -i --autosquash $1^; \
+        fi; \
+    }; r"
 
     # rebase on main origin branch
     rom = !git fetch --all && git rebase $(git rev-parse --abbrev-ref origin/HEAD)
@@ -132,6 +158,12 @@
         git fetch origin $1; \
         git rebase origin/$1; \
         }; f"
+
+    # Unstages the file, but preserve its contents
+    unstage = reset HEAD --
+
+    # Fixup with fzf
+    fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
 
 [help]
 

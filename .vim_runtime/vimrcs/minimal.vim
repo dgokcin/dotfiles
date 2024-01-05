@@ -89,7 +89,7 @@ cnoreabbrev Qall qal
 " Fast saving
 nmap <leader>s :w!<cr>
 
-" :W sudo saves the file 
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
