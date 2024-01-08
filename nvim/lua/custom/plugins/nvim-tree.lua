@@ -36,7 +36,7 @@ return {
                 },
             })
 
-            -- Toggle NvimTree globally with <C-n>
+            -- Toggle NvimTree globally with <C-b>
             vim.keymap.set('n', '<C-b>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
         end
     },
