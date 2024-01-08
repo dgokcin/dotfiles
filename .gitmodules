@@ -46,3 +46,9 @@
 [submodule ".vim_runtime/sources_non_forked/vim-terraform"]
 	path = .vim_runtime/sources_non_forked/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
+[submodule ".vim_runtime/sources_non_forked/VimCompletesMe"]
+	path = .vim_runtime/sources_non_forked/VimCompletesMe
+	url = https://github.com/vim-scripts/VimCompletesMe.git
+[submodule ".vim_runtime/sources_non_forked/copilot.vim"]
+	path = .vim_runtime/sources_non_forked/copilot.vim
+	url = https://github.com/github/copilot.vim.git
