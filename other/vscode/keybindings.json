@@ -1,0 +1,242 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+  {
+    "key": "f2",
+    "command": "-editor.action.rename",
+    "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+r",
+    "command": "editor.action.refactor",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+r",
+    "command": "-editor.action.refactor",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "-workbench.action.quickOpenNavigateNextInRecentFilesPicker",
+    "when": "inQuickOpen && inRecentFilesPicker"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "-workbench.action.openRecent"
+  },
+  {
+    "key": "shift+j",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
+  },
+  {
+    "key": "alt+down",
+    "command": "-editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+k",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
+  },
+  {
+    "key": "alt+up",
+    "command": "-editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+.",
+    "command": "editor.action.indentLines",
+    "when": "editorTextFocus &&  !editorReadOnly && vim.active  && vim.mode != 'Insert'"
+  },
+  {
+    "key": "shift+,",
+    "command": "outdent",
+    "when": "editorFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
+  },
+  {
+    "key": "s",
+    "command": "explorer.openToSide",
+    "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "-explorer.openToSide",
+    "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
+  },
+  {
+    "key": "cmd+t",
+    "command": "terminal.toggle"
+  },
+  {
+    "key": "ctrl+alt+t",
+    "command": "-terminal.toggle"
+  },
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  {
+    "key": "ctrl+`",
+    "command": "-workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "-workbench.action.terminal.findPrevious",
+    "when": "terminalFindFocused && terminalProcessSupported || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "-editor.action.previousMatchFindAction",
+    "when": "editorFocus"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "git-graph.view"
+  },
+  {
+    "key": "cmd+e",
+    "command": "-actions.findWithSelection"
+  },
+  {
+    "key": "cmd+e",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+shift+5",
+    "command": "-workbench.action.terminal.split",
+    "when": "terminalFocus && terminalProcessSupported"
+  },
+  // {
+  //   "key": "ctrl+n",
+  //   "command": "workbench.view.explorer",
+  //   "when": "viewContainer.workbench.view.explorer.enabled"
+  // },
+  // {
+  //   "key": "ctrl+n",
+  //   "command": "workbench.view.explorer",
+  //   "when": "viewContainer.workbench.view.explorer.enabled"
+  // },
+  {
+    "key": "shift+cmd+e",
+    "command": "-workbench.view.explorer",
+    "when": "viewContainer.workbench.view.explorer.enabled"
+  },
+  {
+    "key": "enter",
+    "command": "-renameFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.navigateUp"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.navigateDown"
+  },
+  {
+    "key": "shift+cmd+b",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  },
+  {
+    "key": "alt+cmd+b",
+    "command": "-workbench.action.toggleAuxiliaryBar"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "redo",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
+  },
+  {
+    "key": "shift+cmd+z",
+    "command": "-redo"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "-extension.vim_ctrl+r",
+    "when": "editorTextFocus && vim.active && vim.use<C-r> && !inDebugRepl"
+  },
+  {
+    "key": "enter",
+    "command": "-acceptRenameInput",
+    "when": "editorFocus && renameInputVisible && !isComposing"
+  },
+  {
+    "key": "enter",
+    "command": "-renameFile",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "u",
+    "command": "undo",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal'"
+  },
+  {
+    "key": "cmd+z",
+    "command": "-undo"
+  },
+  {
+    "key": "escape",
+    "command": "-aws.codeWhisperer.rejectCodeSuggestion",
+    "when": "CODEWHISPERER_ENABLED && inlineSuggestionVisible && !editorReadonly"
+  },
+  // multi-cursor support for classic vim plugin
+  {
+    "key": "ctrl+c",
+    "command": "extension.vim_cmd+d",
+    "when": "editorTextFocus && vim.active && vim.use<D-d> && !inDebugRepl"
+  },
+  {
+    "key": "cmd+d",
+    "command": "-extension.vim_cmd+d",
+    "when": "editorTextFocus && vim.active && vim.use<D-d> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+c",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "vim.active && editorFocus && vim.mode == 'Normal' || vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
+  },
+
+  // Skip current match (ctrl + x)
+  {
+    "key": "ctrl+x",
+    "command": "editor.action.moveSelectionToNextFindMatch",
+    "when": "vim.active && editorFocus && vim.mode == 'Normal' || vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
+  },
+
+  // Go back to previous match (ctrl + p)
+  {
+    "key": "ctrl+p",
+    "command": "editor.action.moveSelectionToPreviousFindMatch",
+    "when": "vim.active && editorFocus && vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
+  },
+
+  // Select all matches (ctrl + a). This is effectively the same as (ctrl + shift + l)
+  {
+    "key": "ctrl+a",
+    "command": "editor.action.selectHighlights",
+    "when": "vim.active && editorFocus && vim.mode == 'Normal' || vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
+  },
+  {
+    "key": "shift+`",
+    "command": "aws.codeWhisperer.rejectCodeSuggestion",
+    "when": "CODEWHISPERER_ENABLED && inlineSuggestionVisible && !editorReadonly || isCloud9 && suggestWidgetVisible && !editorReadonly"
+  },
+  {
+    "key": "escape",
+    "command": "-aws.codeWhisperer.rejectCodeSuggestion",
+    "when": "CODEWHISPERER_ENABLED && inlineSuggestionVisible && !editorReadonly || isCloud9 && suggestWidgetVisible && !editorReadonly"
+  }
+]
