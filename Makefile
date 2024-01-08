@@ -25,7 +25,9 @@ gvim:
 
 nvim:
 	mkdir -p ${XDG_CONFIG_HOME}/nvim
-	ln -fs $(DOTFILES)/.init.vim ${XDG_CONFIG_HOME}/nvim/init.vim
+	for file in $(DOTFILES)/nvim/*; do \
+		ln -fs $$file ${XDG_CONFIG_HOME}/nvim/; \
+	done
 
 bash:
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
@@ -87,7 +89,7 @@ clean:
 	rm -rf ${HOME}/.vsvimrc
 	rm -rf ${HOME}/.vscodesettings.json
 	rm -rf ${HOME}/.gvimrc
-	rm -rf ${XDG_CONFIG_HOME}/nvim/init.vim
+	rm -rf ${XDG_CONFIG_HOME}/nvim
 	rm -rf ${XDG_CONFIG_HOME}/terminator/config
 	rm -rf ${HOME}/.ideavimrc
 	rm -rf ${HOME}/.gvimrc
@@ -104,7 +106,7 @@ clean:
 personal:vim vsvim vscodevim ideavim gvim nvim bash personal-git zsh yamllint iterm2 terminator winterm
 work:vim vsvim vscodevim ideavim gvim nvim bash work-git zsh yamllint iterm2 terminator winterm
 
-.PHONY: vim personal work clean
+.PHONY: vim personal work clean nvim
 
 .DEFAULT_GOAL := personal
 
