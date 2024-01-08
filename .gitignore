@@ -4,3 +4,4 @@ vscode-settings.json
 .extra
 !.vim_runtime/temp_dirs/undodir/.gitkeep
 *.DS_Store
+.vscode
