@@ -37,12 +37,14 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
+require('utils')
+require('command_abbr')
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -266,7 +268,7 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+{ import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -300,6 +302,7 @@ vim.o.smartcase = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
+
 -- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
@@ -316,6 +319,7 @@ vim.o.termguicolors = true
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -327,6 +331,79 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Custom keymaps come here
+-- Maps ctrl + a to select all
+vim.keymap.set('n', '<C-A>', 'ggVG', { noremap = true })
+
+-- Maps <leader>w to visual in word
+vim.keymap.set('n', '<leader>w', 'viw', { noremap = true })
+
+-- Makes <Tab> and <S-Tab> move to beginning/end of line in normal mode
+vim.keymap.set('n', '<Tab>', '$', { noremap = true })
+vim.keymap.set('n', '<S-Tab>', '^', { noremap = true })
+
+-- Fix indentation in entire file
+vim.keymap.set('n', '_', 'gg=G``zz', { noremap = true })
+vim.keymap.set('v', '_', 'gg=G``zz', { noremap = true })
+
+-- Maps d and x to black-hole registry
+vim.keymap.set('n', 'x', '"_x', { noremap = true })
+vim.keymap.set('n', 'X', '"_X', { noremap = true })
+
+-- Maps leader de to cut
+vim.keymap.set('n', '<leader>d', '"_d', { noremap = true })
+vim.keymap.set('n', '<leader>D', '"_D', { noremap = true })
+vim.keymap.set('v', '<leader>d', '"_d', { noremap = true })
+
+-- Maps leader yank to copy to system clipboard (conditional)
+if vim.fn.has('clipboard') == 1 then
+    vim.keymap.set('n', '<leader>y', '"*y', { noremap = true })
+    vim.keymap.set('n', '<leader>Y', '"*+y', { noremap = true })
+    vim.keymap.set('n', '<leader>p', '"*p', { noremap = true })
+    vim.keymap.set('n', '<leader>P', '"+p', { noremap = true })
+end
+
+-- Move between windows with ctrl + hjkl
+vim.keymap.set('n', '<S-h>', '<C-w>h', { noremap = true })
+vim.keymap.set('n', '<S-l>', '<C-w>l', { noremap = true })
+vim.keymap.set('n', '<S-j>', '<C-w>j', { noremap = true })
+vim.keymap.set('n', '<S-k>', '<C-w>k', { noremap = true })
+
+-- Paste without yanking
+vim.keymap.set('v', 'p', '"_dP', { noremap = true })
+
+-- Insert blank line above/below without losing cursor position
+vim.keymap.set('n', '<Enter>', function() insert_blank_line_below() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<BS>', function() insert_blank_line_above() end, { noremap = true, silent = true })
+
+-- Move current line 1 line down in v-line mode and remember cursor position with gv
+vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+
+-- Warrior Mode
+vim.keymap.set('n', '<Up>', '<Nop>', { noremap = true })
+vim.keymap.set('n', '<Down>', '<Nop>', { noremap = true })
+vim.keymap.set('n', '<Left>', '<Nop>', { noremap = true })
+vim.keymap.set('n', '<Right>', '<Nop>', { noremap = true })
+
+-- Disable auto-comment insertion
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "*",
+    callback = function()
+        -- Disable auto-comment insertion
+        vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+
+        -- Set foldcolumn to 0
+        vim.opt_local.foldcolumn = "0"
+    end,
+})
+
+-- Remember cursor position when reopening a file
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+    pattern = { "*" },
+    callback = function()
+        vim.api.nvim_exec('silent! normal! g`"zv', false)
+    end,
+})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
