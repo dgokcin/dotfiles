@@ -350,7 +350,7 @@ vim.keymap.set('n', 'x', '"_x', { noremap = true })
 vim.keymap.set('n', 'X', '"_X', { noremap = true })
 
 -- Maps leader de to cut
-vim.keymap.set('n', '<leader>d', '"_d', { noremap = true })
+vim.keymap.set('n', '<leader>d', '"_d', { noremap = true, desc = 'asdasdasd' })
 vim.keymap.set('n', '<leader>D', '"_D', { noremap = true })
 vim.keymap.set('v', '<leader>d', '"_d', { noremap = true })
 
@@ -372,8 +372,8 @@ vim.keymap.set('n', '<S-k>', '<C-w>k', { noremap = true })
 vim.keymap.set('v', 'p', '"_dP', { noremap = true })
 
 -- Insert blank line above/below without losing cursor position
-vim.keymap.set('n', '<Enter>', function() insert_blank_line_below() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<BS>', function() insert_blank_line_above() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<Enter>', function() require('utils').insert_blank_line_below() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<BS>', function() require('utils').insert_blank_line_above() end, { noremap = true, silent = true })
 
 -- Move current line 1 line down in v-line mode and remember cursor position with gv
 vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
