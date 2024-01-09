@@ -51,6 +51,9 @@
     # Push
     p = push
 
+    # Commit Verbos
+    cv = commit -v
+
     # Set upstream automatically
     po = !git push -u origin  $(git symbolic-ref --short HEAD)
 
