@@ -350,7 +350,7 @@ vim.keymap.set('n', 'x', '"_x', { noremap = true })
 vim.keymap.set('n', 'X', '"_X', { noremap = true })
 
 -- Maps leader de to cut
-vim.keymap.set('n', '<leader>d', '"_d', { noremap = true, desc = 'asdasdasd' })
+vim.keymap.set('n', '<leader>d', '"_d', { noremap = true })
 vim.keymap.set('n', '<leader>D', '"_D', { noremap = true })
 vim.keymap.set('v', '<leader>d', '"_d', { noremap = true })
 
