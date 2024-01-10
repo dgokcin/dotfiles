@@ -37,7 +37,6 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
-require('utils')
 require('command_abbr')
 
 -- Set <space> as the leader key
@@ -302,7 +301,6 @@ vim.o.smartcase = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
-
 -- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
@@ -319,6 +317,8 @@ vim.o.termguicolors = true
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+-- Clear search highlight with two <esc>
+-- vim.keymap.set('n', '<Esc><Esc>', ':noh<CR>', { noremap = true, silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -354,15 +354,7 @@ vim.keymap.set('n', '<leader>d', '"_d', { noremap = true })
 vim.keymap.set('n', '<leader>D', '"_D', { noremap = true })
 vim.keymap.set('v', '<leader>d', '"_d', { noremap = true })
 
--- Maps leader yank to copy to system clipboard (conditional)
-if vim.fn.has('clipboard') == 1 then
-    vim.keymap.set('n', '<leader>y', '"*y', { noremap = true })
-    vim.keymap.set('n', '<leader>Y', '"*+y', { noremap = true })
-    vim.keymap.set('n', '<leader>p', '"*p', { noremap = true })
-    vim.keymap.set('n', '<leader>P', '"+p', { noremap = true })
-end
-
--- Move between windows with ctrl + hjkl
+-- Move between windows with shift + hjkl
 vim.keymap.set('n', '<S-h>', '<C-w>h', { noremap = true })
 vim.keymap.set('n', '<S-l>', '<C-w>l', { noremap = true })
 vim.keymap.set('n', '<S-j>', '<C-w>j', { noremap = true })
