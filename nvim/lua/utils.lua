@@ -48,7 +48,7 @@ end
 
 -- Function to swap words (placeholder)
 function M.swap_words(direction)
-    -- Additional logic will be required here to replicate the exact behavior of your Vimscript.
+    -- Additional logic will bej
     -- This is a placeholder for where you would implement the word swapping logic.
 end
 
