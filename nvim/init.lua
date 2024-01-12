@@ -37,7 +37,7 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
-require('command_abbr')
+require('util.command_abbr')
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
