@@ -249,6 +249,12 @@ require('lazy').setup({
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    opts = {
+      ensure_installed = {
+        "hcl",
+        "terraform",
+      },
+    },
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
@@ -332,7 +338,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- Custom keymaps come here
 -- Maps ctrl + a to select all
-vim.keymap.set('n', '<C-A>', 'ggVG', { noremap = true })
+vim.keymap.set('n', '<C-A>', 'ggVG', { noremap = true, desc = 'Select All'})
 
 -- Maps <leader>w to visual in word
 vim.keymap.set('n', '<leader>w', 'viw', { noremap = true })
