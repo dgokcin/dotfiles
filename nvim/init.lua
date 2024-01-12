@@ -42,8 +42,8 @@ require('command_abbr')
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -273,7 +273,7 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-{ import = 'custom.plugins' },
+{ import = 'plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -317,71 +317,8 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- [[ Basic Keymaps ]]
-
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Clear search highlight with two <esc>
--- vim.keymap.set('n', '<Esc><Esc>', ':noh<CR>', { noremap = true, silent = true })
-
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-
--- Custom keymaps come here
--- Maps ctrl + a to select all
-vim.keymap.set('n', '<C-A>', 'ggVG', { noremap = true, desc = 'Select All'})
-
--- Maps <leader>w to visual in word
-vim.keymap.set('n', '<leader>w', 'viw', { noremap = true })
-
--- Makes <Tab> and <S-Tab> move to beginning/end of line in normal mode
-vim.keymap.set('n', '<Tab>', '$', { noremap = true })
-vim.keymap.set('n', '<S-Tab>', '^', { noremap = true })
-
--- Fix indentation in entire file
-vim.keymap.set('n', '_', 'gg=G``zz', { noremap = true })
-vim.keymap.set('v', '_', 'gg=G``zz', { noremap = true })
-
--- Maps d and x to black-hole registry
-vim.keymap.set('n', 'x', '"_x', { noremap = true })
-vim.keymap.set('n', 'X', '"_X', { noremap = true })
-
--- Maps leader de to cut
-vim.keymap.set('n', '<leader>d', '"_d', { noremap = true })
-vim.keymap.set('n', '<leader>D', '"_D', { noremap = true })
-vim.keymap.set('v', '<leader>d', '"_d', { noremap = true })
-
--- Move between windows with shift + hjkl
-vim.keymap.set('n', '<S-h>', '<C-w>h', { noremap = true })
-vim.keymap.set('n', '<S-l>', '<C-w>l', { noremap = true })
-vim.keymap.set('n', '<S-j>', '<C-w>j', { noremap = true })
-vim.keymap.set('n', '<S-k>', '<C-w>k', { noremap = true })
-
--- Paste without yanking
-vim.keymap.set('v', 'p', '"_dP', { noremap = true })
-
--- Insert blank line above/below without losing cursor position
-vim.keymap.set('n', '<Enter>', function() require('utils').insert_blank_line_below() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<BS>', function() require('utils').insert_blank_line_above() end, { noremap = true, silent = true })
-
--- Move current line 1 line down in v-line mode and remember cursor position with gv
-vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
-
--- Warrior Mode
-vim.keymap.set('n', '<Up>', '<Nop>', { noremap = true })
-vim.keymap.set('n', '<Down>', '<Nop>', { noremap = true })
-vim.keymap.set('n', '<Left>', '<Nop>', { noremap = true })
-vim.keymap.set('n', '<Right>', '<Nop>', { noremap = true })
+-- [[ Custom Keymaos ]]
+require('config.keymaps')
 
 -- Disable auto-comment insertion
 vim.api.nvim_create_autocmd("FileType", {
@@ -463,6 +400,17 @@ local function live_grep_git_root()
     }
   end
 end
+
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
 
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
@@ -733,6 +681,7 @@ cmp.setup {
     { name = 'path' },
   },
 }
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
