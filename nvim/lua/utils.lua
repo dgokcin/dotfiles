@@ -46,12 +46,6 @@ function M.move_visual_down()
     vim.cmd('normal! gv')
 end
 
--- Function to swap words (placeholder)
-function M.swap_words(direction)
-    -- Additional logic will bej
-    -- This is a placeholder for where you would implement the word swapping logic.
-end
-
 -- Inserts a blank line below the current line without losing cursor position
 function M.insert_blank_line_below()
     local save_cursor = vim.api.nvim_win_get_cursor(0)
