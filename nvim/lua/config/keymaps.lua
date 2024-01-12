@@ -1,5 +1,4 @@
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
+local Util = require("util")
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -41,12 +40,28 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { noremap = true })
 vim.keymap.set('v', 'p', '"_dP', { noremap = true })
 
 -- Insert blank line above/below without losing cursor position
-vim.keymap.set('n', '<Enter>', function() require('utils').insert_blank_line_below() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<BS>', function() require('utils').insert_blank_line_above() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<Enter>', function() Util.helpers.insert_blank_line_below() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<BS>', function() Util.helpers.insert_blank_line_above() end, { noremap = true, silent = true })
 
 -- Move current line 1 line down in v-line mode and remember cursor position with gv
 vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+
+-- floating terminal
+local lazyterm = function() Util.terminal(nil, { cwd = Util.root() }) end
+vim.keymap.set("n", "<leader>ft", lazyterm, { desc = "Terminal (root dir)" })
+vim.keymap.set("n", "<leader>fT", function() Util.terminal() end, { desc = "Terminal (cwd)" })
+vim.keymap.set("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
+vim.keymap.set("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+
+-- Terminal Mappings
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
+vim.keymap.set("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to left window" })
+vim.keymap.set("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to lower window" })
+vim.keymap.set("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to upper window" })
+vim.keymap.set("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window" })
+vim.keymap.set("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+vim.keymap.set("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
 
 -- Warrior Mode
 vim.keymap.set('n', '<Up>', '<Nop>', { noremap = true })
