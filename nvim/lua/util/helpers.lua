@@ -1,4 +1,10 @@
-local M = {}
+---@class lazyvim.util.helpers
+---@overload fun(cmd: string|string[], opts: LazyTermOpts): LazyFloat
+local M = setmetatable({}, {
+    __call = function(m, ...)
+      return m.open(...)
+    end,
+  })
 
 local function move_line_or_visual_up_or_down(move_arg)
     local col_num = vim.fn.virtcol('.')
