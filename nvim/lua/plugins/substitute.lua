@@ -1,5 +1,6 @@
 return {
     "gbprod/substitute.nvim",
+    event = "BufRead",
     keys = {
       "s",
       "ss",
