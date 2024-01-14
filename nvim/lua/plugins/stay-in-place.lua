@@ -4,6 +4,7 @@
 -- See the kickstart.nvim README for more information
 return {
     'gbprod/stay-in-place.nvim',
+    event = 'BufRead',
     config = function()
         local stayinplace = require("stay-in-place")  -- Importing the module
 
