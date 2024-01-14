@@ -1,5 +1,3 @@
-local Util = require("util")
-
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -40,8 +38,8 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { noremap = true })
 vim.keymap.set('v', 'p', '"_dP', { noremap = true })
 
 -- Insert blank line above/below without losing cursor position
-vim.keymap.set('n', '<Enter>', function() Util.helpers.insert_blank_line_below() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<BS>', function() Util.helpers.insert_blank_line_above() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<Enter>', 'm`o<Esc>``', { noremap = true, silent = true })
+vim.keymap.set('n', '<BS>', 'm`O<Esc>``', { noremap = true, silent = true })
 
 -- Move current line 1 line down in v-line mode and remember cursor position with gv
 vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
