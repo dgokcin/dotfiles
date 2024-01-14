@@ -12,6 +12,10 @@ vim.o.mouse = 'a'
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
+
+-- Confirm to save changes before quitting
+vim.o.confirm = true
+
 -- Enable break indent
 vim.o.breakindent = true
 
