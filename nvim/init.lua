@@ -246,6 +246,10 @@ require('lazy').setup({
         end,
       },
     },
+    keys = {
+      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
+    }
   },
 
   {
