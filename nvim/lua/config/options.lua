@@ -44,3 +44,6 @@ vim.o.termguicolors = true
 
 -- Disable highlighted cursor line
 vim.o.cursorline = false
+
+-- Disable swap files
+vim.o.swapfile = false
