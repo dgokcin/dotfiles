@@ -1,3 +1,6 @@
+-- Autocmds are automatically loaded on the VeryLazy event
+-- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
+-- Add any additional autocmds here
 -- Disable auto-comment insertion
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
@@ -7,14 +10,6 @@ vim.api.nvim_create_autocmd("FileType", {
 
         -- Set foldcolumn to 0
         vim.opt_local.foldcolumn = "0"
-    end,
-})
-
--- Remember cursor position when reopening a file
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-    pattern = { "*" },
-    callback = function()
-        vim.api.nvim_exec('silent! normal! g`"zv', false)
     end,
 })
 

@@ -29,14 +29,12 @@ return {
                     adaptive_size = true,
                 },
                 git = {
-                    enable = true,
+                    enable = false,
                     ignore = false,
                     timeout = 500,
                 },
             })
-
-            -- Toggle NvimTree globally with <C-b>
-            vim.keymap.set('n', '<C-b>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
         end
+
     },
 }
