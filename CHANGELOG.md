@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.3.0](https://github.com/dgokcin/dotfiles/compare/v1.2.0...v1.3.0) (2024-01-15)
+
+
+### Features
+
+* add bufferline plugin ([fb49050](https://github.com/dgokcin/dotfiles/commit/fb49050f2aa91351573f3c8dd7a970465c84c543))
+* **nvim:** add alpha-nvim plugin ([d39aeb7](https://github.com/dgokcin/dotfiles/commit/d39aeb7fe77e9e274ff5080cbd33ec3c0829d46f))
+* **nvim:** add noice.nvim for floating terminal ([0d21654](https://github.com/dgokcin/dotfiles/commit/0d216546bf795f46f5d504a525eee819064bac27))
+* **nvim:** add persistence.nvim plugin ([e97ecb5](https://github.com/dgokcin/dotfiles/commit/e97ecb58efbbc1eb8b749daa4cf7d2c35fc681f6))
+* **nvim:** add telescope git commands ([d508efc](https://github.com/dgokcin/dotfiles/commit/d508efcab44379232a7fb14458e8474d5c1d0162))
+* **nvim:** add terraform and hcl to treesitter ([b3cd6e4](https://github.com/dgokcin/dotfiles/commit/b3cd6e40fe014437b1d7f3a17c33381ca7744d80))
+* **nvim:** change theme to tokyonight ([5f7785c](https://github.com/dgokcin/dotfiles/commit/5f7785cfe62ce36b2dc3daf53182f9c19fad203a))
+
+
+### Bug Fixes
+
+* add BufRead to plugins for faster startup ([1054d7f](https://github.com/dgokcin/dotfiles/commit/1054d7fe1551811484ab1927c7a6b9f4eff6bcc7))
+* remove unnecessary files ([e0c8eff](https://github.com/dgokcin/dotfiles/commit/e0c8eff7183421057a2913796bfb19a498068eff))
+* standardize telescope keymap descriptions ([bc64874](https://github.com/dgokcin/dotfiles/commit/bc6487456dfbd81649b8441573fae13358f92d37))
+
 ## [1.2.0](https://github.com/dgokcin/dotfiles/compare/v1.1.0...v1.2.0) (2024-01-10)
 
 
