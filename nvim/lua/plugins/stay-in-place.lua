@@ -5,6 +5,7 @@
 return {
     'gbprod/stay-in-place.nvim',
     event = 'BufRead',
+    vscode = "true",
     config = function()
         local stayinplace = require("stay-in-place")  -- Importing the module
 
