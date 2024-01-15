@@ -2,7 +2,7 @@
 " => General Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Leader
-let mapleader = ","
+let mapleader = " "
 
 " Determines the OS
 let uname = substitute(system('uname'), '\n', '', '')
