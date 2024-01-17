@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.4.0](https://github.com/dgokcin/dotfiles/compare/v1.3.0...v1.4.0) (2024-01-17)
+
+
+### Features
+
+* enable tab completion in nvim-cmp ([a5a58bb](https://github.com/dgokcin/dotfiles/commit/a5a58bb2630d41d0548f699023357617b99a9c91))
+* **nvim:** add vscode support for some plugins ([e6eeb8d](https://github.com/dgokcin/dotfiles/commit/e6eeb8de04d1c7d86ca4826dbc41f5915ff336c6))
+* **nvim:** add vscode-multi-cursor plugin ([e4eaa24](https://github.com/dgokcin/dotfiles/commit/e4eaa24ea04cf0b436ac959525b887c2cc1e9e51))
+* **nvim:** disable swap files ([041c430](https://github.com/dgokcin/dotfiles/commit/041c43087fffd36358b1cfad449b916ff179849c))
+* **nvim:** enhance git short-log alias ([c022470](https://github.com/dgokcin/dotfiles/commit/c022470513a2542714e6aa6bb5065fa71add1215))
+* **nvim:** migrate to lazyvim ([e40ad40](https://github.com/dgokcin/dotfiles/commit/e40ad402937c7638aa118ae9caa79a33c3e58918))
+
+
+### Bug Fixes
+
+* **checker:** disable notifications ([94b6914](https://github.com/dgokcin/dotfiles/commit/94b691477c4f38583116b15737c217ef90380f3b))
+* disable mini.ai plugin ([22705b9](https://github.com/dgokcin/dotfiles/commit/22705b9b9f4095b8eeec5df60b5ec628286f682d))
+* disable vim-illuminate ([1dccb04](https://github.com/dgokcin/dotfiles/commit/1dccb043fc2ee66e4affaed400f5e61fd5ddfac1))
+* **nvim:** properly disable neo-tree plugin ([1486a80](https://github.com/dgokcin/dotfiles/commit/1486a8056779c03add912d5030d12af0f6f5a7c5))
+* show shrug in dashboard ([ff9d417](https://github.com/dgokcin/dotfiles/commit/ff9d4173e70a52470232c050675c0474efc3b58b))
+
 ## [1.3.0](https://github.com/dgokcin/dotfiles/compare/v1.2.0...v1.3.0) (2024-01-15)
 
 
