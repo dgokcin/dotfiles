@@ -2,7 +2,7 @@ return {
   {
     "folke/tokyonight.nvim",
     config = function()
-      require('tokyonight').setup({
+      require("tokyonight").setup({
         transparent = true,
         styles = {
           sidebars = "transparent",
@@ -11,15 +11,16 @@ return {
       })
 
       -- Override the Visual highlight group after Vim starts up
-      vim.cmd [[
+      vim.cmd([[
         augroup MyColors
           autocmd!
           autocmd VimEnter * highlight Visual guibg=Gray guifg=#ffffff
         augroup END
-      ]]
+      ]])
     end,
     opts = {
       -- Your existing options
     },
-  }
+  },
 }
+

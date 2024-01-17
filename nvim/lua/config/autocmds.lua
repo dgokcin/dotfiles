@@ -3,26 +3,23 @@
 -- Add any additional autocmds here
 -- Disable auto-comment insertion
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "*",
-    callback = function()
-        -- Disable auto-comment insertion
-        vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  pattern = "*",
+  callback = function()
+    -- Disable auto-comment insertion
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
 
-        -- Set foldcolumn to 0
-        vim.opt_local.foldcolumn = "0"
-    end,
+    -- Set foldcolumn to 0
+    vim.opt_local.foldcolumn = "0"
+  end,
 })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
+local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank()
   end,
   group = highlight_group,
-  pattern = '*',
+  pattern = "*",
 })
-
-
-
