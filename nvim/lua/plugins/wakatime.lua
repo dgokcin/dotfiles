@@ -1,4 +1,4 @@
 return {
-    'wakatime/vim-wakatime',
-    version = '*',
+  "wakatime/vim-wakatime",
+  version = "*",
 }
