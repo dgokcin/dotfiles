@@ -69,11 +69,14 @@
     # Git commit, git push
     cp = "!f() { git commit -m \"$@\" && git push; }; f"
 
+    # a hard reset to the latest commit, removes untracked files and directories, and aborts any ongoing git rebase operation.
+    nah = "!f(){ git reset --hard; git clean -i; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
+
     # Git log with tree view
     tlog="!git log --all --decorate --oneline --graph"
 
     # Git log in a single line
-    slog="!git log --oneline"
+    slog="!git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
     # Show the diff between the latest commit and the current state
     d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
