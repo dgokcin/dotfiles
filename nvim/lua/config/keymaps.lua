@@ -20,12 +20,15 @@ vim.keymap.set("n", "<Tab>", "$", { noremap = true })
 vim.keymap.set("n", "<S-Tab>", "^", { noremap = true })
 
 -- Fix indentation in entire file
-vim.keymap.set("n", "_", "gg=G``zz", { noremap = true })
-vim.keymap.set("v", "_", "gg=G``zz", { noremap = true })
+vim.keymap.set("n", "<leader>cfi", "gg=G``zz", { noremap = true, desc = "Fix indentation in the entire file" })
+vim.keymap.set("v", "<leader>cfi", "gg=G``zz", { noremap = true, desc = "Fix indentation in the entire file" })
 
 -- Maps d and x to black-hole registry
 vim.keymap.set("n", "x", '"_x', { noremap = true })
 vim.keymap.set("n", "X", '"_X', { noremap = true })
+
+-- Escape terminal mode with <C-\\><C-n>
+vim.keymap.set("t", "<Esc><leader>", "<C-\\><C-n>", { noremap = true })
 
 -- Maps leader d to cut
 vim.keymap.set("n", "<leader>d", '"_d', { noremap = true, desc = "Delete line without yanking" })
@@ -74,12 +77,17 @@ vim.keymap.set("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
--- Toggle NvimTree globally with <C-b>
+-- Toggle NvimTree
 vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+vim.keymap.set(
+  "n",
+  "<leader>e",
+  ":NvimTreeToggle<CR>",
+  { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" }
+)
 
 -- Warrior Mode
 vim.keymap.set("n", "<Up>", "<Nop>", { noremap = true })
 vim.keymap.set("n", "<Down>", "<Nop>", { noremap = true })
 vim.keymap.set("n", "<Left>", "<Nop>", { noremap = true })
 vim.keymap.set("n", "<Right>", "<Nop>", { noremap = true })
-
