@@ -2,6 +2,9 @@
     # Change this to your name
     name = Deniz Gökçin
 
+[init]
+	defaultBranch = main
+
 [merge]
     ff = false
     tool = intellij
