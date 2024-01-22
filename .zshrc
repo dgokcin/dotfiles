@@ -142,7 +142,7 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [ -f ~/.bash_profile ]; then 
+if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile;
 fi
 
