@@ -86,6 +86,10 @@ vim.keymap.set(
   { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" }
 )
 
+-- Remap > back to > in normal mode
+-- vim.keymap.set("n", ">", ">", { noremap = true })
+-- vim.keymap.set("n", "<", "<", { noremap = true })
+
 -- Warrior Mode
 vim.keymap.set("n", "<Up>", "<Nop>", { noremap = true })
 vim.keymap.set("n", "<Down>", "<Nop>", { noremap = true })
