@@ -10,6 +10,7 @@ return {
       gitcommit = true,
       markdown = true,
       typescript = true,
+      yaml = true,
     },
   },
 }

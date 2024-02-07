@@ -1,26 +1,37 @@
+-- return {
+--   {
+--     "folke/tokyonight.nvim",
+--     config = function()
+--       require("tokyonight").setup({
+--         transparent = true,
+--         styles = {
+--           sidebars = "transparent",
+--           floats = "transparent",
+--         },
+--       })
+--
+--       -- Override the Visual highlight group after Vim starts up
+--       vim.cmd([[
+--         augroup MyColors
+--           autocmd!
+--           autocmd VimEnter * highlight Visual guibg=Gray guifg=#ffffff
+--         augroup END
+--       ]])
+--     end,
+--     opts = {
+--       -- Your existing options
+--     },
+--   },
+-- }
 return {
-  {
-    "folke/tokyonight.nvim",
-    config = function()
-      require("tokyonight").setup({
-        transparent = true,
-        styles = {
-          sidebars = "transparent",
-          floats = "transparent",
-        },
-      })
+  -- add gruvbox
+  { "Mofiqul/vscode.nvim" },
 
-      -- Override the Visual highlight group after Vim starts up
-      vim.cmd([[
-        augroup MyColors
-          autocmd!
-          autocmd VimEnter * highlight Visual guibg=Gray guifg=#ffffff
-        augroup END
-      ]])
-    end,
+  -- Configure LazyVim to load gruvbox
+  {
+    "LazyVim/LazyVim",
     opts = {
-      -- Your existing options
+      colorscheme = "vscode",
     },
   },
 }
-
