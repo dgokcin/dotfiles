@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.5.0](https://github.com/dgokcin/dotfiles/compare/v1.4.0...v1.5.0) (2024-02-07)
+
+
+### Features
+
+* enhance telescope-undo and toggleterm ([335e18b](https://github.com/dgokcin/dotfiles/commit/335e18b461153a164f9be4f11ce80cdac5e88c7c))
+* **git:** make default branch vim on new repos ([269df44](https://github.com/dgokcin/dotfiles/commit/269df449076453197d251935209d56d9aa831da5))
+* **nvim:** add copilot plugin ([720fc11](https://github.com/dgokcin/dotfiles/commit/720fc11de3d2f03d3892ad2319d100a3a2faccf4))
+* **nvim:** add keymap for exiting terminal mode ([d6b0fdd](https://github.com/dgokcin/dotfiles/commit/d6b0fdd05e9bd70b16c4fe2eae38e0df0e9c3ff1))
+* **nvim:** add telescope-undo plugin ([354b330](https://github.com/dgokcin/dotfiles/commit/354b33082344fe137b0709073ecd251793a11846))
+* **nvim:** add toggleterm and term-edit plugins ([7a24d72](https://github.com/dgokcin/dotfiles/commit/7a24d72dc70789857334d36910b76bdc208c33d1))
+* **nvim:** remove s keymap from flash.nvim ([506a6a1](https://github.com/dgokcin/dotfiles/commit/506a6a1d0b0c5753f464318df9eecd02e40537fa))
+* **zsh:** fix boot time problem for zsh ([199e487](https://github.com/dgokcin/dotfiles/commit/199e48782dd99015880e8b9e45688fec7e271b61))
+
+
+### Bug Fixes
+
+* enable lazy loading for toggleterm&term-edit ([2917075](https://github.com/dgokcin/dotfiles/commit/2917075f529c3fdca069c00b9ccacb1d1fa50cd6))
+* **nvim-tree:** change open vertical split keymap ([6ba9fda](https://github.com/dgokcin/dotfiles/commit/6ba9fda13e0b852437aa15a1bec320e87701ea67))
+* **telescope-undo:** fix preview height ([d696226](https://github.com/dgokcin/dotfiles/commit/d6962266598b61d619db7dc8a5061110e9c687b6))
+
 ## [1.4.0](https://github.com/dgokcin/dotfiles/compare/v1.3.0...v1.4.0) (2024-01-17)
 
 
