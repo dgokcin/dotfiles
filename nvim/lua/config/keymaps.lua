@@ -23,9 +23,9 @@ vim.keymap.set("n", "<S-Tab>", "^", { noremap = true })
 vim.keymap.set("n", "<leader>cfi", "gg=G``zz", { noremap = true, desc = "Fix indentation in the entire file" })
 vim.keymap.set("v", "<leader>cfi", "gg=G``zz", { noremap = true, desc = "Fix indentation in the entire file" })
 
--- Maps d and x to black-hole registry
-vim.keymap.set("n", "x", '"_x', { noremap = true })
-vim.keymap.set("n", "X", '"_X', { noremap = true })
+-- Maps x and X to delete without yanking using register a
+vim.keymap.set("n", "x", '"ax', { noremap = true, desc = "Delete character without yanking" })
+vim.keymap.set("n", "X", '"aX', { noremap = true, desc = "Delete character without yanking" })
 
 -- Escape terminal mode with <C-\\><C-n>
 vim.keymap.set("t", "<Esc><leader>", "<C-\\><C-n>", { noremap = true })
@@ -85,10 +85,6 @@ vim.keymap.set(
   ":NvimTreeToggle<CR>",
   { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" }
 )
-
--- Remap > back to > in normal mode
--- vim.keymap.set("n", ">", ">", { noremap = true })
--- vim.keymap.set("n", "<", "<", { noremap = true })
 
 -- Warrior Mode
 vim.keymap.set("n", "<Up>", "<Nop>", { noremap = true })
