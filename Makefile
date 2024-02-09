@@ -29,6 +29,10 @@ nvim:
 		ln -fs $$file ${XDG_CONFIG_HOME}/nvim/; \
 	done
 
+lazygit:
+	mkdir -p ${XDG_CONFIG_HOME}/lazygit
+	ln -fs $(DOTFILES)/other/lazygit/config.yml ${XDG_CONFIG_HOME}/lazygit/config.yml
+
 bash:
 	ln -fs $(DOTFILES)/.aliases ${HOME}/.aliases
 	ln -fs $(DOTFILES)/.functions ${HOME}/.functions
@@ -103,8 +107,8 @@ clean:
 	rm -rf ${HOME}/.zshrc
 	rm -rf ${HOME}/.oh-my-zsh
 
-personal:vim vsvim vscodevim ideavim gvim nvim bash personal-git zsh yamllint iterm2 terminator winterm
-work:vim vsvim vscodevim ideavim gvim nvim bash work-git zsh yamllint iterm2 terminator winterm
+personal:vim vsvim vscodevim ideavim gvim nvim lazygit bash personal-git zsh yamllint iterm2 terminator winterm
+work:vim vsvim vscodevim ideavim gvim nvim lazygit bash work-git zsh yamllint iterm2 terminator winterm
 
 .PHONY: vim personal work clean nvim
 
