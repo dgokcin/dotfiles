@@ -55,7 +55,7 @@
     "when": "editorFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
   },
   {
-    "key": "s",
+    "key": "shift+\\",
     "command": "explorer.openToSide",
     "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
   },
@@ -110,16 +110,6 @@
     "command": "-workbench.action.terminal.split",
     "when": "terminalFocus && terminalProcessSupported"
   },
-  // {
-  //   "key": "ctrl+n",
-  //   "command": "workbench.view.explorer",
-  //   "when": "viewContainer.workbench.view.explorer.enabled"
-  // },
-  // {
-  //   "key": "ctrl+n",
-  //   "command": "workbench.view.explorer",
-  //   "when": "viewContainer.workbench.view.explorer.enabled"
-  // },
   {
     "key": "shift+cmd+e",
     "command": "-workbench.view.explorer",
@@ -187,11 +177,6 @@
     "key": "cmd+z",
     "command": "-undo"
   },
-  {
-    "key": "escape",
-    "command": "-aws.codeWhisperer.rejectCodeSuggestion",
-    "when": "CODEWHISPERER_ENABLED && inlineSuggestionVisible && !editorReadonly"
-  },
   // multi-cursor support for classic vim plugin
   {
     "key": "ctrl+c",
@@ -208,21 +193,53 @@
     "command": "editor.action.addSelectionToNextFindMatch",
     "when": "vim.active && editorFocus && vim.mode == 'Normal' || vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
   },
-
-  // Skip current match (ctrl + x)
   {
     "key": "ctrl+x",
     "command": "editor.action.moveSelectionToNextFindMatch",
     "when": "vim.active && editorFocus && vim.mode == 'Normal' || vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
   },
-
-  // Go back to previous match (ctrl + p)
   {
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
     "when": "vim.active && editorFocus && vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
   },
-
+  //multi cursor for nvim
+  {
+    "command": "vscode-neovim.send",
+    "key": "ctrl+n",
+    "when": "editorTextFocus && neovim.mode != insert",
+    "args": "<C-n>"
+  },
+  {
+    "command": "vscode-neovim.send",
+    "key": "ctrl+up",
+    "when": "editorTextFocus && neovim.mode != insert",
+    "args": "<c-up>"
+  },
+  {
+    "command": "vscode-neovim.send",
+    "key": "shift+up",
+    "when": "editorTextFocus && neovim.mode != insert",
+    "args": "<S-up>"
+  },
+  {
+    "command": "vscode-neovim.send",
+    "key": "shift+down",
+    "when": "editorTextFocus && neovim.mode != insert",
+    "args": "<S-down>"
+  },
+  {
+    "command": "vscode-neovim.send",
+    "key": "shift+left",
+    "when": "editorTextFocus && neovim.mode != insert",
+    "args": "<S-left>"
+  },
+  {
+    "command": "vscode-neovim.send",
+    "key": "shift+right",
+    "when": "editorTextFocus && neovim.mode != insert",
+    "args": "<S-right>"
+  },
   // Select all matches (ctrl + a). This is effectively the same as (ctrl + shift + l)
   {
     "key": "ctrl+a",
@@ -230,13 +247,8 @@
     "when": "vim.active && editorFocus && vim.mode == 'Normal' || vim.mode == 'Visual' || vim.mode == 'VisualBlock' && !inDebugRepl"
   },
   {
-    "key": "shift+`",
-    "command": "aws.codeWhisperer.rejectCodeSuggestion",
-    "when": "CODEWHISPERER_ENABLED && inlineSuggestionVisible && !editorReadonly || isCloud9 && suggestWidgetVisible && !editorReadonly"
-  },
-  {
     "key": "escape",
     "command": "-aws.codeWhisperer.rejectCodeSuggestion",
-    "when": "CODEWHISPERER_ENABLED && inlineSuggestionVisible && !editorReadonly || isCloud9 && suggestWidgetVisible && !editorReadonly"
+    "when": "aws.codewhisperer.connected && inlineSuggestionVisible && !editorReadonly || isCloud9 && suggestWidgetVisible && !editorReadonly"
   }
 ]
