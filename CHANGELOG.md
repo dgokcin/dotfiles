@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/dgokcin/dotfiles/compare/v1.5.0...v1.6.0) (2024-02-13)
+
+
+### Features
+
+* add lazygit config file and makefile target ([a1bacff](https://github.com/dgokcin/dotfiles/commit/a1bacffa5e91af79c81f7167da71a4781cae0e18))
+
+
+### Bug Fixes
+
+* delete without yanking using register a ([76b4952](https://github.com/dgokcin/dotfiles/commit/76b495244e403ca0d9f695aca4d2e15760ed1a5a))
+* make vim-visual-multi work with vscode ([05fe3af](https://github.com/dgokcin/dotfiles/commit/05fe3af1c72ad9cc91d4acd974519f5a8f1a9a63))
+* resolve permission issue with wakatime plugin ([4a8f4b0](https://github.com/dgokcin/dotfiles/commit/4a8f4b0cf1df8786c0509453e17076da5855e4ff))
+
 ## [1.5.0](https://github.com/dgokcin/dotfiles/compare/v1.4.0...v1.5.0) (2024-02-07)
 
 
