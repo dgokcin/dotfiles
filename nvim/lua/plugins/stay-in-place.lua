@@ -25,9 +25,6 @@ return {
     vim.keymap.set("x", "=", stayinplace.filter_visual, { noremap = true })
 
     stayinplace.setup({
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
       set_keymaps = false,
     })
   end,
