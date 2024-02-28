@@ -5,7 +5,12 @@
 -- Navigation
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move up by display lines" })
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Move down by display lines" })
+vim.keymap.set(
+  "n",
+  "j",
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true, desc = "Move down by display lines" }
+)
 -- Move between windows with shift + hjkl
 vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, desc = "Move to window left" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, desc = "Move to window right" })
@@ -45,8 +50,18 @@ vim.keymap.set("n", "<S-Tab>", "^", { noremap = true, desc = "Move to start of l
 vim.keymap.set("n", "<Enter>", "m`o<Esc>``", { noremap = true, silent = true, desc = "Insert blank line below" })
 vim.keymap.set("n", "<BS>", "m`O<Esc>``", { noremap = true, silent = true, desc = "Insert blank line above" })
 -- Move current line 1 line down in v-line mode and remember cursor position with gv
-vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines down" })
-vim.api.nvim_set_keymap("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines up" })
+vim.api.nvim_set_keymap(
+  "v",
+  "J",
+  ":m '>+1<CR>gv=gv",
+  { noremap = true, silent = true, desc = "Move selected lines down" }
+)
+vim.api.nvim_set_keymap(
+  "v",
+  "K",
+  ":m '<-2<CR>gv=gv",
+  { noremap = true, silent = true, desc = "Move selected lines up" }
+)
 
 -- Terminal Mappings
 -- Escape terminal mode with <C-\\><C-n>
@@ -90,3 +105,4 @@ vim.keymap.set("n", "<Up>", "<Nop>", { noremap = true, desc = "Disable arrow key
 vim.keymap.set("n", "<Down>", "<Nop>", { noremap = true, desc = "Disable arrow keys" })
 vim.keymap.set("n", "<Left>", "<Nop>", { noremap = true, desc = "Disable arrow keys" })
 vim.keymap.set("n", "<Right>", "<Nop>", { noremap = true, desc = "Disable arrow keys" })
+
