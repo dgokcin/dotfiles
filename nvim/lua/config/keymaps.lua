@@ -18,9 +18,12 @@ vim.keymap.set("n", "<Esc><Esc>", ":noh<CR>", { noremap = true, silent = true, d
 -- Fix indentation in entire file
 vim.keymap.set("n", "<leader>cfi", "gg=G``zz", { noremap = true, desc = "Fix indentation in the entire file" })
 vim.keymap.set("v", "<leader>cfi", "gg=G``zz", { noremap = true, desc = "Fix indentation in the entire file" })
--- Maps x and X to delete without yanking using black hole register
+-- Maps x and X to delete without yanking using register a
 vim.keymap.set("n", "x", '"ax', { noremap = true, desc = "Delete character without yanking" })
 vim.keymap.set("n", "X", '"aX', { noremap = true, desc = "Delete character before cursor without yanking" })
+-- Maps c and C to delete without yanking using register a
+vim.keymap.set("n", "c", '"ac', { noremap = true, desc = "Change character without yanking" })
+vim.keymap.set("n", "C", '"aC', { noremap = true, desc = "Change to end of line without yanking" })
 -- Maps leader d to cut
 vim.keymap.set("n", "<leader>d", '"_d', { noremap = true, desc = "Delete line without yanking" })
 vim.keymap.set("n", "<leader>D", '"_D', { noremap = true, desc = "Delete to end of line without yanking" })
