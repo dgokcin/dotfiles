@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.7.0](https://github.com/dgokcin/dotfiles/compare/v1.6.0...v1.7.0) (2024-02-29)
+
+
+### Features
+
+* add keymaps for C to change without yanking ([#28](https://github.com/dgokcin/dotfiles/issues/28)) ([9cfc77f](https://github.com/dgokcin/dotfiles/commit/9cfc77f1be0b9347f8b96c29aad8eee45cf8ca69))
+
+
+### Bug Fixes
+
+* rename gitconfig files ([#31](https://github.com/dgokcin/dotfiles/issues/31)) ([129ec2f](https://github.com/dgokcin/dotfiles/commit/129ec2fc21516f6df557ca39ed796314c177adab))
+
 ## [1.6.0](https://github.com/dgokcin/dotfiles/compare/v1.5.0...v1.6.0) (2024-02-13)
 
 
