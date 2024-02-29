@@ -43,13 +43,13 @@ bash:
 personal-git:
 	mkdir -p ${HOME}/.config/git
 	mkdir -p ${XDG_CONFIG_HOME}/git
-	ln -fs $(DOTFILES)/.base.gitconfig ${XDG_CONFIG_HOME}/git/config
-	ln -fs $(DOTFILES)/.personal.gitconfig ${HOME}/.gitconfig
+	ln -fs $(DOTFILES)/base.gitconfig ${XDG_CONFIG_HOME}/git/config
+	ln -fs $(DOTFILES)/personal.gitconfig ${HOME}/.gitconfig
 
 work-git:
 	mkdir -p ${HOME}/.config/git
-	ln -fs $(DOTFILES)/.base.gitconfig ${XDG_CONFIG_HOME}/git/config
-	ln -fs $(DOTFILES)/.work.gitconfig ${HOME}/.gitconfig
+	ln -fs $(DOTFILES)/base.gitconfig ${XDG_CONFIG_HOME}/git/config
+	ln -fs $(DOTFILES)/work.gitconfig ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/.inputrc ${HOME}/.inputrc
 
 zsh:
