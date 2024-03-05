@@ -88,7 +88,3 @@ vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous
 -- Toggle NvimTree
 vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Toggle file explorer" })
 vim.keymap.set( "n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" })
-
--- Delete some default keymaps
-vim.keymap.del("n", "j")
-vim.keymap.del("n", "k")
