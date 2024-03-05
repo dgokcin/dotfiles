@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/dgokcin/dotfiles/compare/v1.7.0...v1.7.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* override vscode-neovim keybindings for j and k ([#32](https://github.com/dgokcin/dotfiles/issues/32)) ([b6526eb](https://github.com/dgokcin/dotfiles/commit/b6526eb919b49136f5d4d8537591cc3ab81c51c0))
+
 ## [1.7.0](https://github.com/dgokcin/dotfiles/compare/v1.6.0...v1.7.0) (2024-02-29)
 
 
