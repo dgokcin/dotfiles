@@ -55,7 +55,7 @@
     "when": "editorFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
   },
   {
-    "key": "shift+\\",
+    "key": "\\",
     "command": "explorer.openToSide",
     "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
   },
@@ -250,5 +250,20 @@
     "key": "escape",
     "command": "-aws.codeWhisperer.rejectCodeSuggestion",
     "when": "aws.codewhisperer.connected && inlineSuggestionVisible && !editorReadonly || isCloud9 && suggestWidgetVisible && !editorReadonly"
-  }
+  },
+  {
+    "key": "ctrl+r shift+1",
+    "command": "-vscode-neovim.send-cmdline",
+    "when": "neovim.init && neovim.mode == 'cmdline'"
+  },
+  {
+    "command": "cursorDown",
+    "key": "j",
+    "when": "editorTextFocus && neovim.mode == normal"
+  },
+  {
+    "command": "cursorUp",
+    "key": "k",
+    "when": "editorTextFocus && neovim.mode == normal"
+  },
 ]
