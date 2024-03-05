@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/dgokcin/dotfiles/compare/v1.7.1...v1.8.0) (2024-03-05)
+
+
+### Features
+
+* customizing fast-cursor-move.nvim ([#34](https://github.com/dgokcin/dotfiles/issues/34)) ([cee9499](https://github.com/dgokcin/dotfiles/commit/cee9499a72ede773dff3d5fa48054a71b4952296))
+
 ## [1.7.1](https://github.com/dgokcin/dotfiles/compare/v1.7.0...v1.7.1) (2024-03-05)
 
 
