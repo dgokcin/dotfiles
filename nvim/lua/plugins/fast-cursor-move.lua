@@ -1,5 +1,5 @@
 return {
-  dir = "~/codes/fast-cursor-move.nvim",
+  "dgokcin/fast-cursor-move.nvim",
   event = "BufRead",
   vscode = true,
   config = function()
