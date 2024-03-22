@@ -145,3 +145,5 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile;
 fi
+
+eval "$(gh copilot alias -- zsh)"
