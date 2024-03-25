@@ -48,3 +48,5 @@ vim.o.cursorline = false
 -- Disable swap files
 vim.o.swapfile = false
 
+-- Set relative line numbers to false
+vim.wo.relativenumber = false
