@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/dgokcin/dotfiles/compare/v1.8.0...v1.8.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* get rid of linter errors in lsp.lua ([#42](https://github.com/dgokcin/dotfiles/issues/42)) ([4dbda2c](https://github.com/dgokcin/dotfiles/commit/4dbda2ca1e72effda205fb56cd18db28d7fa6764))
+
 ## [1.8.0](https://github.com/dgokcin/dotfiles/compare/v1.7.1...v1.8.0) (2024-03-05)
 
 
