@@ -1,11 +1,11 @@
 # Utility commands for maintenance and updates
 
 # Update submodules
-update-vim-plugins:
+update-vim-plugins: ## Update vim plugins to the latest version with submodules
 	git submodule update --init --recursive
 
 # Clean configuration
-clean:
+clean: ## Clean up all configurations
 	$(call remove_file,${HOME}/.vim_runtime)
 	$(call remove_file,${HOME}/.vim/view/*)
 	$(call remove_file,${HOME}/.vimrc)
@@ -25,5 +25,3 @@ clean:
 	$(call remove_file,${HOME}/.inputrc)
 	$(call remove_file,${HOME}/.zshrc)
 	$(call remove_file,${HOME}/.oh-my-zsh)
-
-.PHONY: update-vim-plugins clean
