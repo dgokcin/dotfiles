@@ -3,6 +3,5 @@ return {
   branch = "master",
   vscode = "true",
   event = "BufReadPost",
-  init = function()
-  end,
+  init = function() end,
 }
