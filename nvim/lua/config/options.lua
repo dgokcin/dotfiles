@@ -1,6 +1,7 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
+local opt = vim.opt
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -50,3 +51,6 @@ vim.o.swapfile = false
 
 -- Set relative line numbers to false
 vim.wo.relativenumber = false
+
+-- Set wrap to true
+opt.wrap = true
