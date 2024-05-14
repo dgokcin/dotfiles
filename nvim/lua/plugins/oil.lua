@@ -27,6 +27,6 @@ return {
       },
     })
     -- Set a Neovim keymap for navigating to the parent directory using oil
-    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory with oil" })
   end,
 }
