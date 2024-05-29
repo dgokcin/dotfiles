@@ -147,3 +147,4 @@ if [ -f ~/.bash_profile ]; then
 fi
 
 eval "$(gh copilot alias -- zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
