@@ -77,6 +77,7 @@ plugins=(
   web-search
   docker
   kubectl
+  nvm
   aws
   z
 )
@@ -146,5 +147,5 @@ if [ -f ~/.bash_profile ]; then
     . ~/.bash_profile;
 fi
 
-eval "$(gh copilot alias -- zsh)"
+# eval "$(gh copilot alias -- zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
