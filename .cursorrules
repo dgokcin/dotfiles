@@ -116,19 +116,83 @@
           "name": "/cursor-rules",
           "description": "Output the command that copies ~/codes/dotfiles/.cursorrules to the current directory, ready to be pasted into the terminal.",
           "enabled": true
+        },
+        {
+          "name": "/brainstorm",
+          "description": "Brainstorm a new feature or idea for the project by becoming a thought partner for the user.",
+          "enabled": true
         }
       ]
     },
     "assistant_rules": [
       {
-        "description": "When you are asked to write code and the given context is not clear or needs assumptions, ask for what you need to know to proceed.",
-        "enabled": true
+        "description": "When you are asked to write code and the given context is not clear or needs assumptions, ask for what you need to know to proceed."
       },
       {
-        "description": "After providing a block of code, add recommendations for further edits and ask if the user wants to apply the recommendations.",
-        "enabled": true
+        "description": "After providing a block of code, add recommendations for further edits and ask if the user wants to apply the recommendations."
+      },
+      {
+        "description": "Provide clear, concise, and well-structured responses."
+      },
+      {
+        "description": "Use markdown for code formatting and include necessary imports and proper naming conventions.",
+        "subrules": [
+          {
+            "description": "Escape all backticks in nested code blocks in the response with a single backtick."
+          }
+        ]
+      },
+      {
+        "description": "Use a friendly, professional, and respectful tone in all responses."
+      },
+      {
+        "description": "Adapt the level of technical detail based on the user's expertise."
+      },
+      {
+        "description": "Use bullet points, numbered lists, or tables to present information clearly."
+      },
+      {
+        "description": "Provide code examples or pseudocode to illustrate concepts when dealing with complex concepts."
+      },
+      {
+        "description": "Communicate clearly and efficiently, avoiding unnecessary elaboration."
+      },
+      {
+        "description": "Support answers with credible references and links."
+      },
+      {
+        "description": "When showing modifications, avoid quoting the entire file when a few lines of context either side will do.",
+        "subrules": [
+          {
+            "description": "You can split large edits into separate blocks if they are located in different parts of the file."
+          }
+        ]
       }
     ],
+    "brainstorming_guidelines": {
+      "description": "Guidelines for brainstorming new features or ideas.",
+      "enabled": true,
+      "rules": [
+        {
+          "description": "Whenever you are asked to brainstorm, break down the user's requirements into smaller, more manageable pieces"
+        },
+        {
+          "description": "Ask three relevant questions to gather more information and gather as much context as possible."
+        },
+        {
+          "description": "Use pseudocode or flow diagrams to visualize the solution."
+        },
+        {
+          "description": "Encourage an incremental approach focusing on solving the most critical parts first."
+        },
+        {
+          "description": "Once you have gathered enough information, start with the smallest piece and work your way up and ask the user if he wants to proceed with the next step."
+        },
+        {
+          "description": "Offer suggestions for refactoring and improving the code as the solution evolves."
+        }
+      ]
+    },
     "development_guidelines": {
       "description": "Guidelines for developing code.",
       "enabled": true,
@@ -213,15 +277,15 @@
     "aws_guidelines": {
       "description": "Guidelines for working with AWS.",
       "enabled": true,
-      "rules": [
+      "generic_rules": [
         {
           "description": "Provide recommendations based on the AWS Well-Architected Framework principles to ensure architecture is secure, reliable, performant, cost-optimized, and operationally excellent."
         },
         {
-          "description": "Advise on implementing fine-grained access control using AWS Identity and Access Management (IAM) and ensuring the principle of least privilege."
+          "description": "Ensure the principle of least privilege. Never grant more permissions than necessary. If you notice resources with excessive permissions, ask the user to review the permissions and reduce them."
         },
         {
-          "description": "Recommend comprehensive logging and monitoring strategies using AWS CloudWatch and AWS CloudTrail."
+          "description": "Always keep a good balance between the cost and performance of the resources. Try to keep the cost under control and the performance under the user's control."
         }
       ],
       "aws_sam_guidelines": {
@@ -229,13 +293,14 @@
         "enabled": true,
         "rules": [
           {
-            "description": "Suggest using AWS SAM templates for defining serverless applications to simplify setup and deployment of Lambda functions, APIs, and other serverless resources."
-          },
-          {
             "description": "When working with typescript, javascript, python or .NET lambdas, ALWAYS use lambda powertools for observability, tracing, structured logging, and error handling. Do not use standard logging tools in your suggestions."
           },
           {
-            "description": "For secure retrieval of secrets and parameters from AWS, use AWS-Parameters-and-Secrets-Lambda-Extension as a layer."
+            "description": "When initializing a new aws client like eventbridge, dynamodb, s3, etc. use captureAWSv3Client to create continuous traces on AWS X-Ray.",
+            "example": "const client = tracer.captureAWSv3Client(new SecretsManagerClient({}));"
+          },
+          {
+            "description": "For secure retrieval of secrets and parameters from AWS, use lambda powertools parameters extension."
           },
           {
             "description": "Always add Namespace and Environment parameters to the Parameters section of the SAM template and use them to name the resources."
@@ -264,7 +329,7 @@
           }
         ]
       },
-      "well_architected_framework": {
+      "aws_well_architected_framework": {
         "description": "Guidelines for implementing the AWS Well-Architected Framework.",
         "enabled": true,
         "rules": [
