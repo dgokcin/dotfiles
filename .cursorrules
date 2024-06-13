@@ -35,7 +35,7 @@
       ],
       "examples": [
         {
-          "prompt": "<diff_context> /commit",
+          "prompt": "/commit <diff_context>",
           "response": "git commit -m 'fix: remove vscode option from nvim-surround plugin'",
           "description": "Diff context with short commit message."
         },
@@ -45,12 +45,12 @@
           "description": "Example output when the diff context is missing."
         },
         {
-          "prompt": "<new_file_x> <new_file_y> /commit --body",
+          "prompt": "/commit --body <new_file_x> <new_file_y>",
           "response": "git commit -m 'scope: description' -m 'details about the new features and changes'",
           "description": "New file with multi-paragraph commit body."
         },
         {
-          "prompt": "<diff_context> /commit --body --resolved-issues=29, 30",
+          "prompt": "/commit --body --resolved-issues=29,30 <diff_context>",
           "response": "git commit -m 'fix: prevent racing of requests' -m 'introduce a request id and a reference to latest request.' -m 'dismiss incoming responses other than from latest request.' -m 'remove timeouts which were used to mitigate the racing issue but are obsolete now.' -m 'resolves #29, resolves #30'",
           "description": "Diff context with multi-paragraph commit body and resolved issues."
         }
