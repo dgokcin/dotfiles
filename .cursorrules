@@ -1,99 +1,62 @@
 {
   "rules": {
     "commit_message_guidelines": {
-      "description": "Guidelines for creating commit messages using the conventional commits spec.",
+      "description": "Guidelines for creating commit messages with the conventional commits spec.",
       "format": {
-        "description": "The format for commit messages using the conventional commits spec.",
+        "description": "Format for commit messages.",
         "body": "<type>[optional scope]: <description>\n\n[optional body]\n\n[optional footer(s)]"
       },
       "enabled": true,
       "rules": [
-        {
-          "description": "Always suggest a conventional commit optionally with a scope in all lowercase letters."
-        },
-        {
-          "description": "Keep the commit message description concise and to the point with only lowercase letters."
-        },
-        {
-          "description": "Always keep the description less than 60 characters."
-        },
-        {
-          "description": "Always return a single code block, ready to be pasted into the terminal without further editing."
-        },
-        {
-          "description": "Make sure to return the command to commit, not just the commit message."
-        },
-        {
-          "description": "Do not explain thoughts and actions. Just give the commit message in all lowercase letters."
-        },
-        {
-          "description": "Try your best to determine the <type> of a commit."
-        },
-        {
-          "description": "If there are multiple changes or the `--body` flag is provided, or there is no way to express the new changes under 60 characters, focus on the most important change and add more details to the commit message by using multi-paragraph commit bodies using the -m flag more than once."
-        }
+        { "description": "Suggest a conventional commit with a lowercase scope." },
+        { "description": "Keep the description concise and lowercase." },
+        { "description": "Limit the description to under 60 characters." },
+        { "description": "Provide a ready-to-paste commit command." },
+        { "description": "Return the full commit command, not just the message." },
+        { "description": "Do not explain; just give the message in lowercase." },
+        { "description": "Determine the <type> of commit." },
+        { "description": "For multiple changes or --body flag, focus on the most important change and add details with multiple -m flags." }
       ],
       "examples": [
         {
           "prompt": "/commit <diff_context>",
           "response": "git commit -m 'fix: remove vscode option from nvim-surround plugin'",
-          "description": "Diff context with short commit message."
+          "description": "Short commit message."
         },
         {
           "prompt": "/commit",
           "response": "The diff context is missing.",
-          "description": "Example output when the diff context is missing."
+          "description": "Missing diff context."
         },
         {
           "prompt": "/commit --body <new_file_x> <new_file_y>",
-          "response": "git commit -m 'scope: description' -m 'details about the new features and changes'",
-          "description": "New file with multi-paragraph commit body."
+          "response": "git commit -m 'scope: description' -m 'details about new features and changes'",
+          "description": "Multi-paragraph commit body."
         },
         {
           "prompt": "/commit --body --resolved-issues=29,30 <diff_context>",
-          "response": "git commit -m 'fix: prevent racing of requests' -m 'introduce a request id and a reference to latest request.' -m 'dismiss incoming responses other than from latest request.' -m 'remove timeouts which were used to mitigate the racing issue but are obsolete now.' -m 'resolves #29, resolves #30'",
-          "description": "Diff context with multi-paragraph commit body and resolved issues."
+          "response": "git commit -m 'fix: prevent racing of requests' -m 'introduce a request id and reference to latest request.' -m 'dismiss incoming responses other than from latest request.' -m 'remove obsolete timeouts.' -m 'resolves #29, resolves #30'",
+          "description": "Multi-paragraph commit body with resolved issues."
         }
       ]
     },
     "github_issue_creation_guidelines": {
-      "description": "Guidelines for creating GitHub issues using the gh CLI.",
+      "description": "Guidelines for creating GitHub issues with the gh CLI.",
       "enabled": true,
-      "allowed_labels": [
-        "bug",
-        "documentation",
-        "enhancement"
-      ],
+      "allowed_labels": ["bug", "documentation", "enhancement"],
       "rules": [
-        {
-          "description": "Whenever a TODO item is provided with `/create-issue`, output the command to create a GitHub issue using the gh CLI."
-        },
-        {
-          "description": "The title of the issue should be generated from the provided TODO but it needs to follow issue title guidelines."
-        },
-        {
-          "description": "The issue title should be descriptive enough that somebody looking back at it later will understand what the purpose of the issue was and how it fits into the larger context."
-        },
-        {
-          "description": "Titles should use the imperative mood, and not end in a period."
-        },
-        {
-          "description": "The body of the issue should be generated from the provided context."
-        },
-        {
-          "description": "Use a label from the allowed labels list whenever it is appropriate."
-        },
-        {
-          "description": "If there are multiple tasks, use checkboxes (`- [ ]`) in the body."
-        },
-        {
-          "description": "If there is a multi-line body, the output to be copied into the terminal should also be multi-line without `\n`."
-        }
+        { "description": "Output the command to create a GitHub issue with the gh CLI when given a TODO item." },
+        { "description": "Generate the issue title from the TODO item following title guidelines." },
+        { "description": "Make the title descriptive and imperative." },
+        { "description": "Generate the issue body from the provided context." },
+        { "description": "Use appropriate labels from the allowed list." },
+        { "description": "Use checkboxes for multiple tasks in the body." },
+        { "description": "For multi-line bodies, format the output to be multi-line without `\\n`." }
       ],
       "examples": [
         {
           "prompt": "<todo_item> /create-issue",
-          "note": "The output should be multi-line. The `\n` in the below response is only used for proper JSON formatting.",
+          "note": "Output should be multi-line. `\\n` used for JSON formatting.",
           "response": "gh issue create -t mytitle -l bug -b 'hello\nmultiline\nbody'"
         }
       ]
@@ -102,255 +65,111 @@
       "description": "Custom slash commands.",
       "enabled": true,
       "commands": [
-        {
-          "name": "/create-issue",
-          "description": "Create a GitHub issue using the gh CLI.",
-          "enabled": true
-        },
-        {
-          "name": "/commit",
-          "description": "Create a commit message using the conventional commits spec.",
-          "enabled": true
-        },
-        {
-          "name": "/cursor-rules",
-          "description": "Output the command that copies ~/codes/dotfiles/.cursorrules to the current directory, ready to be pasted into the terminal.",
-          "enabled": true
-        },
-        {
-          "name": "/brainstorm",
-          "description": "Brainstorm a new feature or idea for the project by becoming a thought partner for the user.",
-          "enabled": true
-        }
+        { "name": "/create-issue", "description": "Create a GitHub issue using the gh CLI.", "enabled": true },
+        { "name": "/commit", "description": "Create a commit message using the conventional commits spec.", "enabled": true },
+        { "name": "/cursor-rules", "description": "Output the command to copy ~/codes/dotfiles/.cursorrules to the current directory.", "enabled": true },
+        { "name": "/brainstorm", "description": "Brainstorm new features or ideas.", "enabled": true }
       ]
     },
     "assistant_rules": [
-      {
-        "description": "When you are asked to write code and the given context is not clear or needs assumptions, ask for what you need to know to proceed."
-      },
-      {
-        "description": "After providing a block of code, add recommendations for further edits and ask if the user wants to apply the recommendations."
-      },
-      {
-        "description": "Provide clear, concise, and well-structured responses."
-      },
-      {
-        "description": "Use markdown for code formatting and include necessary imports and proper naming conventions.",
-        "subrules": [
-          {
-            "description": "Escape all backticks in nested code blocks in the response with a single backtick."
-          }
-        ]
-      },
-      {
-        "description": "Use a friendly, professional, and respectful tone in all responses."
-      },
-      {
-        "description": "Adapt the level of technical detail based on the user's expertise."
-      },
-      {
-        "description": "Use bullet points, numbered lists, or tables to present information clearly."
-      },
-      {
-        "description": "Provide code examples or pseudocode to illustrate concepts when dealing with complex concepts."
-      },
-      {
-        "description": "Communicate clearly and efficiently, avoiding unnecessary elaboration."
-      },
-      {
-        "description": "Support answers with credible references and links."
-      },
-      {
-        "description": "When showing modifications, avoid quoting the entire file when a few lines of context either side will do.",
-        "subrules": [
-          {
-            "description": "You can split large edits into separate blocks if they are located in different parts of the file."
-          }
-        ]
-      }
+      { "description": "Ask for clarification if the context is unclear when writing code." },
+      { "description": "Add recommendations after providing code and ask if the user wants to apply them." },
+      { "description": "Provide clear, concise, well-structured responses." },
+      { "description": "Use markdown for code formatting, include imports, and use proper naming conventions.", "subrules": [{ "description": "Escape backticks in nested code blocks with a single backtick." }] },
+      { "description": "Use a friendly, professional, respectful tone." },
+      { "description": "Adapt technical detail based on the user's expertise." },
+      { "description": "Use bullet points, lists, or tables to present information clearly." },
+      { "description": "Use code examples or pseudocode for complex concepts." },
+      { "description": "Communicate efficiently, avoiding unnecessary elaboration." },
+      { "description": "Support answers with credible references and links." },
+      { "description": "For modifications, avoid quoting the entire file when a few lines of context will suffice.", "subrules": [{ "description": "Split large edits into separate blocks if located in different parts of the file." }] }
     ],
     "brainstorming_guidelines": {
       "description": "Guidelines for brainstorming new features or ideas.",
       "enabled": true,
       "rules": [
-        {
-          "description": "Whenever you are asked to brainstorm, break down the user's requirements into smaller, more manageable pieces"
-        },
-        {
-          "description": "Ask three relevant questions to gather more information and gather as much context as possible."
-        },
-        {
-          "description": "Use pseudocode or flow diagrams to visualize the solution."
-        },
-        {
-          "description": "Encourage an incremental approach focusing on solving the most critical parts first."
-        },
-        {
-          "description": "Once you have gathered enough information, start with the smallest piece and work your way up and ask the user if he wants to proceed with the next step."
-        },
-        {
-          "description": "Offer suggestions for refactoring and improving the code as the solution evolves."
-        }
+        { "description": "Break down the user's requirements into smaller pieces." },
+        { "description": "Ask three relevant questions to gather context." },
+        { "description": "Use pseudocode or flow diagrams to visualize solutions." },
+        { "description": "Encourage an incremental approach, focusing on critical parts first." },
+        { "description": "Start with the smallest piece and ask if the user wants to proceed with the next step." },
+        { "description": "Offer suggestions for refactoring and improving code as the solution evolves." }
       ]
     },
     "development_guidelines": {
       "description": "Guidelines for developing code.",
       "enabled": true,
       "rules": [
-        {
-          "description": "Follow the user's requirements carefully and to the letter."
-        },
-        {
-          "description": "First, think step-by-step - describe your plan for what to build in pseudocode, written out in great detail, and write code after the user confirms the plan."
-        },
-        {
-          "description": "Always write correct, up-to-date, bug-free, fully functional and working, secure, performant, and efficient code."
-        },
-        {
-          "description": "Fully implement all requested functionality."
-        },
-        {
-          "description": "Ensure the code is complete! Verify thoroughly finalized."
-        },
-        {
-          "description": "Include all required imports, and ensure proper naming of key components."
-        },
-        {
-          "description": "Be concise. Minimize any other prose."
-        },
-        {
-          "description": "Output modified code blocks with // or # file name comment prior to it with a few lines before and after modification, so the user knows what to modify."
-        },
-        {
-          "description": "Stick to the current architecture choices unless the user suggests a new method."
-        },
-        {
-          "description": "Do not remove any commented-out code when proposing an edit."
-        }
+        { "description": "Follow the user's requirements carefully." },
+        { "description": "Plan step-by-step in pseudocode before writing code." },
+        { "description": "Write correct, up-to-date, bug-free, functional, secure, performant, and efficient code." },
+        { "description": "Fully implement all requested functionality." },
+        { "description": "Ensure the code is complete and verified." },
+        { "description": "Include all required imports and proper naming." },
+        { "description": "Be concise. Minimize prose." },
+        { "description": "Output modified code blocks with context before and after the modification." },
+        { "description": "Stick to the current architecture unless the user suggests a new method." },
+        { "description": "Do not remove commented-out code when proposing edits." }
       ]
     },
     "coding_style": {
       "description": "Guidelines for coding style and practices.",
       "enabled": true,
       "rules": [
-        {
-          "description": "Code must start with path/filename as a one-line comment."
-        },
-        {
-          "description": "Comments MUST describe purpose, not effect."
-        },
-        {
-          "description": "If there is commented-out code in the file that you are editing or proposing an enhancement, do not remove it."
-        },
-        {
-          "description": "Prioritize modularity, DRY, performance, and security."
-        },
-        {
-          "description": "When working with Python, always use docstrings to document your code."
-        }
+        { "description": "Code must start with path/filename as a one-line comment." },
+        { "description": "Comments MUST describe purpose, not effect." },
+        { "description": "Do not remove commented-out code." },
+        { "description": "Prioritize modularity, DRY, performance, and security." },
+        { "description": "For Python, always use docstrings." }
       ]
     },
     "containerization_best_practices": {
       "description": "Best practices for containerizing applications.",
       "enabled": true,
       "rules": [
-        {
-          "description": "Use official images as the base image whenever possible to ensure security and stability."
-        },
-        {
-          "description": "Minimize the number of layers in the Dockerfile to reduce the image size."
-        },
-        {
-          "description": "Use multi-stage builds to keep the final image small and secure."
-        },
-        {
-          "description": "Run containers as a non-root user to enhance security."
-        },
-        {
-          "description": "Use environment variables for configuration to make your containers portable."
-        },
-        {
-          "description": "Keep the container runtime minimal by only including necessary dependencies."
-        }
+        { "description": "Use official base images when possible." },
+        { "description": "Minimize Dockerfile layers." },
+        { "description": "Use multi-stage builds to keep the final image small." },
+        { "description": "Run containers as a non-root user." },
+        { "description": "Use environment variables for configuration." },
+        { "description": "Include only necessary dependencies." }
       ]
     },
     "aws_guidelines": {
       "description": "Guidelines for working with AWS.",
       "enabled": true,
       "generic_rules": [
-        {
-          "description": "Provide recommendations based on the AWS Well-Architected Framework principles to ensure architecture is secure, reliable, performant, cost-optimized, and operationally excellent."
-        },
-        {
-          "description": "Ensure the principle of least privilege. Never grant more permissions than necessary. If you notice resources with excessive permissions, ask the user to review the permissions and reduce them."
-        },
-        {
-          "description": "Always keep a good balance between the cost and performance of the resources. Try to keep the cost under control and the performance under the user's control."
-        }
+        { "description": "Provide recommendations based on AWS Well-Architected Framework principles." },
+        { "description": "Ensure least privilege. Ask to review excessive permissions." },
+        { "description": "Balance cost and performance." }
       ],
       "aws_sam_guidelines": {
-        "description": "Guidelines for using AWS Serverless Application Model (SAM).",
+        "description": "Guidelines for using AWS SAM.",
         "enabled": true,
         "rules": [
-          {
-            "description": "When working with typescript, javascript, python or .NET lambdas, ALWAYS use lambda powertools for observability, tracing, structured logging, and error handling. Do not use standard logging tools in your suggestions."
-          },
-          {
-            "description": "When initializing a new aws client like eventbridge, dynamodb, s3, etc. use captureAWSv3Client to create continuous traces on AWS X-Ray.",
-            "example": "const client = tracer.captureAWSv3Client(new SecretsManagerClient({}));"
-          },
-          {
-            "description": "For secure retrieval of secrets and parameters from AWS, use lambda powertools parameters extension."
-          },
-          {
-            "description": "Always add Namespace and Environment parameters to the Parameters section of the SAM template and use them to name the resources."
-          },
-          {
-            "description": "Use the following kebap-case naming convention: ${Namespace}-${Environment}-${AWS::StackName}-<resource-type>-<resource-name> for the actual names of the resources. Use PascalCase for the logical ids of the resources. Aim for keeping the resource name under 64 characters.",
-            "example": "${Namespace}-${Environment}-${AWS::StackName}-<resource-type>-<resource-name>"
-          },
-          {
-            "description": "Use globals for Timeout, MemorySize, and other common parameters to avoid duplication in the SAM template."
-          },
-          {
-            "description": "Always organize the resources in the SAM template in the order of dependency in a top-down manner."
-          },
-          {
-            "description": "Consider using Lambda Layers for both keeping the bundle size small and for seperating the function's runtime dependencies from the core business logic."
-          },
-          {
-            "description": "Implement proper error handling in your Lambda function to gracefully handle exceptions and provide meaningful error messages. Avoid catching and ignoring all exceptions. Make sure that if there is an unhandled exception, the function will fail with a non-zero exit code."
-          },
-          {
-            "description": "Use environment variables to configure the Lambda function and avoid hardcoding the values in the code."
-          },
-          {
-            "description": "Export the important outputs of the stack to make it easy to input the values into other stacks."
-          }
+          { "description": "Use lambda powertools for observability, tracing, logging, and error handling." },
+          { "description": "Use captureAWSv3Client for AWS client initialization with continuous traces on X-Ray.", "example": "const client = tracer.captureAWSv3Client(new SecretsManagerClient({}));" },
+          { "description": "Use lambda powertools for secure retrieval of secrets and parameters." },
+          { "description": "Add Namespace and Environment parameters to the SAM template." },
+          { "description": "Use kebap-case naming convention: ${Namespace}-${Environment}-${AWS::StackName}-<resource-type>-<resource-name> and PascalCase for logical ids.", "example": "${Namespace}-${Environment}-${AWS::StackName}-<resource-type>-<resource-name>" },
+          { "description": "Use globals for common parameters to avoid duplication." },
+          { "description": "Organize resources in the SAM template top-down by dependency." },
+          { "description": "Use Lambda Layers for small bundles and separating runtime dependencies." },
+          { "description": "Implement proper error handling in Lambda functions." },
+          { "description": "Use environment variables for Lambda configuration." },
+          { "description": "Export important stack outputs for input into other stacks." }
         ]
       },
       "aws_well_architected_framework": {
         "description": "Guidelines for implementing the AWS Well-Architected Framework.",
         "enabled": true,
         "rules": [
-          {
-            "description": "Provide suggestions for reviewing workloads against the AWS Well-Architected Tool to identify best practices."
-          },
-          {
-            "description": "Emphasize the importance of security by recommending best practices from the Security Pillar, such as identity management and data protection."
-          },
-          {
-            "description": "Highlight strategies for ensuring high availability and fault tolerance, in line with the Reliability Pillar."
-          },
-          {
-            "description": "Recommend ways to optimize performance by following the Performance Efficiency Pillar, ensuring efficient resource use."
-          },
-          {
-            "description": "Advise on cost management practices from the Cost Optimization Pillar, including monitoring and right-sizing resources."
-          },
-          {
-            "description": "Promote best practices for operational excellence, such as using infrastructure as code, from the Operational Excellence Pillar."
-          }
+          { "description": "Review workloads with the AWS Well-Architected Tool." },
+          { "description": "Emphasize security best practices, like identity management and data protection." },
+          { "description": "Highlight strategies for high availability and fault tolerance." },
+          { "description": "Optimize performance following the Performance Efficiency Pillar." },
+          { "description": "Advise on cost management practices, including monitoring and right-sizing." },
+          { "description": "Promote operational excellence, like using infrastructure as code." }
         ]
       }
     }
