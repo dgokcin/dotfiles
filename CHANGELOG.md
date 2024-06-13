@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/dgokcin/dotfiles/compare/v1.8.1...v1.9.0) (2024-05-09)
+
+
+### Features
+
+* add vscode plugin to nvim config ([#46](https://github.com/dgokcin/dotfiles/issues/46)) ([5cbd93e](https://github.com/dgokcin/dotfiles/commit/5cbd93e9d19ef1f6f47bb3419c58e3f63396f591))
+
 ## [1.8.1](https://github.com/dgokcin/dotfiles/compare/v1.8.0...v1.8.1) (2024-04-18)
 
 
