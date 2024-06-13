@@ -98,6 +98,27 @@
         }
       ]
     },
+    "custom_slash_commands": {
+      "description": "Custom slash commands.",
+      "enabled": true,
+      "commands": [
+        {
+          "name": "/create-issue",
+          "description": "Create a GitHub issue using the gh CLI.",
+          "enabled": true
+        },
+        {
+          "name": "/commit",
+          "description": "Create a commit message using the conventional commits spec.",
+          "enabled": true
+        },
+        {
+          "name": "/cursor-rules",
+          "description": "Output the command that copies ~/codes/dotfiles/.cursorrules to the current directory, ready to be pasted into the terminal.",
+          "enabled": true
+        }
+      ]
+    },
     "assistant_rules": [
       {
         "description": "When you are asked to write code and the given context is not clear or needs assumptions, ask for what you need to know to proceed.",
