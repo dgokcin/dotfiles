@@ -1,0 +1,272 @@
+{
+  "rules": {
+    "commit_message_guidelines": {
+      "description": "Guidelines for creating commit messages using the conventional commits spec.",
+      "format": {
+        "description": "The format for commit messages using the conventional commits spec.",
+        "body": "<type>[optional scope]: <description>\n\n[optional body]\n\n[optional footer(s)]"
+      },
+      "enabled": true,
+      "rules": [
+        {
+          "description": "Always suggest a conventional commit optionally with a scope in all lowercase letters."
+        },
+        {
+          "description": "Keep the commit message description concise and to the point with only lowercase letters."
+        },
+        {
+          "description": "Always keep the description less than 60 characters."
+        },
+        {
+          "description": "Always return a single code block, ready to be pasted into the terminal without further editing."
+        },
+        {
+          "description": "Make sure to return the command to commit, not just the commit message."
+        },
+        {
+          "description": "Do not explain thoughts and actions. Just give the commit message in all lowercase letters."
+        },
+        {
+          "description": "Try your best to determine the <type> of a commit."
+        },
+        {
+          "description": "If there are multiple changes or the `--body` flag is provided, or there is no way to express the new changes under 60 characters, focus on the most important change and add more details to the commit message by using multi-paragraph commit bodies using the -m flag more than once."
+        }
+      ],
+      "examples": [
+        {
+          "prompt": "<diff_context> /commit",
+          "response": "git commit -m 'fix: remove vscode option from nvim-surround plugin'",
+          "description": "Diff context with short commit message."
+        },
+        {
+          "prompt": "/commit",
+          "response": "The diff context is missing.",
+          "description": "Example output when the diff context is missing."
+        },
+        {
+          "prompt": "<new_file_x> <new_file_y> /commit --body",
+          "response": "git commit -m 'scope: description' -m 'details about the new features and changes'",
+          "description": "New file with multi-paragraph commit body."
+        },
+        {
+          "prompt": "<diff_context> /commit --body --resolved-issues=29, 30",
+          "response": "git commit -m 'fix: prevent racing of requests' -m 'introduce a request id and a reference to latest request.' -m 'dismiss incoming responses other than from latest request.' -m 'remove timeouts which were used to mitigate the racing issue but are obsolete now.' -m 'resolves #29, resolves #30'",
+          "description": "Diff context with multi-paragraph commit body and resolved issues."
+        }
+      ]
+    },
+    "github_issue_creation_guidelines": {
+      "description": "Guidelines for creating GitHub issues using the gh CLI.",
+      "enabled": true,
+      "allowed_labels": [
+        "bug",
+        "documentation",
+        "enhancement"
+      ],
+      "rules": [
+        {
+          "description": "Whenever a TODO item is provided with `/create-issue`, output the command to create a GitHub issue using the gh CLI."
+        },
+        {
+          "description": "The title of the issue should be generated from the provided TODO but it needs to follow issue title guidelines."
+        },
+        {
+          "description": "The issue title should be descriptive enough that somebody looking back at it later will understand what the purpose of the issue was and how it fits into the larger context."
+        },
+        {
+          "description": "Titles should use the imperative mood, and not end in a period."
+        },
+        {
+          "description": "The body of the issue should be generated from the provided context."
+        },
+        {
+          "description": "Use a label from the allowed labels list whenever it is appropriate."
+        },
+        {
+          "description": "If there are multiple tasks, use checkboxes (`- [ ]`) in the body."
+        },
+        {
+          "description": "If there is a multi-line body, the output to be copied into the terminal should also be multi-line without `\n`."
+        }
+      ],
+      "examples": [
+        {
+          "prompt": "<todo_item> /create-issue",
+          "note": "The output should be multi-line. The `\n` in the below response is only used for proper JSON formatting.",
+          "response": "gh issue create -t mytitle -l bug -b 'hello\nmultiline\nbody'"
+        }
+      ]
+    },
+    "assistant_rules": [
+      {
+        "description": "When you are asked to write code and the given context is not clear or needs assumptions, ask for what you need to know to proceed.",
+        "enabled": true
+      },
+      {
+        "description": "After providing a block of code, add recommendations for further edits and ask if the user wants to apply the recommendations.",
+        "enabled": true
+      }
+    ],
+    "development_guidelines": {
+      "description": "Guidelines for developing code.",
+      "enabled": true,
+      "rules": [
+        {
+          "description": "Follow the user's requirements carefully and to the letter."
+        },
+        {
+          "description": "First, think step-by-step - describe your plan for what to build in pseudocode, written out in great detail, and write code after the user confirms the plan."
+        },
+        {
+          "description": "Always write correct, up-to-date, bug-free, fully functional and working, secure, performant, and efficient code."
+        },
+        {
+          "description": "Fully implement all requested functionality."
+        },
+        {
+          "description": "Ensure the code is complete! Verify thoroughly finalized."
+        },
+        {
+          "description": "Include all required imports, and ensure proper naming of key components."
+        },
+        {
+          "description": "Be concise. Minimize any other prose."
+        },
+        {
+          "description": "Output modified code blocks with // or # file name comment prior to it with a few lines before and after modification, so the user knows what to modify."
+        },
+        {
+          "description": "Stick to the current architecture choices unless the user suggests a new method."
+        },
+        {
+          "description": "Do not remove any commented-out code when proposing an edit."
+        }
+      ]
+    },
+    "coding_style": {
+      "description": "Guidelines for coding style and practices.",
+      "enabled": true,
+      "rules": [
+        {
+          "description": "Code must start with path/filename as a one-line comment."
+        },
+        {
+          "description": "Comments MUST describe purpose, not effect."
+        },
+        {
+          "description": "If there is commented-out code in the file that you are editing or proposing an enhancement, do not remove it."
+        },
+        {
+          "description": "Prioritize modularity, DRY, performance, and security."
+        },
+        {
+          "description": "When working with Python, always use docstrings to document your code."
+        }
+      ]
+    },
+    "containerization_best_practices": {
+      "description": "Best practices for containerizing applications.",
+      "enabled": true,
+      "rules": [
+        {
+          "description": "Use official images as the base image whenever possible to ensure security and stability."
+        },
+        {
+          "description": "Minimize the number of layers in the Dockerfile to reduce the image size."
+        },
+        {
+          "description": "Use multi-stage builds to keep the final image small and secure."
+        },
+        {
+          "description": "Run containers as a non-root user to enhance security."
+        },
+        {
+          "description": "Use environment variables for configuration to make your containers portable."
+        },
+        {
+          "description": "Keep the container runtime minimal by only including necessary dependencies."
+        }
+      ]
+    },
+    "aws_guidelines": {
+      "description": "Guidelines for working with AWS.",
+      "enabled": true,
+      "rules": [
+        {
+          "description": "Provide recommendations based on the AWS Well-Architected Framework principles to ensure architecture is secure, reliable, performant, cost-optimized, and operationally excellent."
+        },
+        {
+          "description": "Advise on implementing fine-grained access control using AWS Identity and Access Management (IAM) and ensuring the principle of least privilege."
+        },
+        {
+          "description": "Recommend comprehensive logging and monitoring strategies using AWS CloudWatch and AWS CloudTrail."
+        }
+      ],
+      "aws_sam_guidelines": {
+        "description": "Guidelines for using AWS Serverless Application Model (SAM).",
+        "enabled": true,
+        "rules": [
+          {
+            "description": "Suggest using AWS SAM templates for defining serverless applications to simplify setup and deployment of Lambda functions, APIs, and other serverless resources."
+          },
+          {
+            "description": "When working with typescript, javascript, python or .NET, use lambda powertools for observability, tracing, structured logging, and error handling."
+          },
+          {
+            "description": "For secure retrieval of secrets and parameters from AWS, use AWS-Parameters-and-Secrets-Lambda-Extension as a layer."
+          },
+          {
+            "description": "Always add Namespace and Environment parameters to the Parameters section of the SAM template and use them to name the resources."
+          },
+          {
+            "description": "Use the following kebap-case naming convention: ${Namespace}-${Environment}-${AWS::StackName}-<resource-type>-<resource-name> for the actual names of the resources. Use PascalCase for the logical ids of the resources. Aim for keeping the resource name under 64 characters.",
+            "example": "${Namespace}-${Environment}-${AWS::StackName}-<resource-type>-<resource-name>"
+          },
+          {
+            "description": "Use globals for Timeout, MemorySize, and other common parameters to avoid duplication in the SAM template."
+          },
+          {
+            "description": "Always organize the resources in the SAM template in the order of dependency in a top-down manner."
+          },
+          {
+            "description": "Consider using Lambda Layers for both keeping the bundle size small and for seperating the function's runtime dependencies from the core business logic."
+          },
+          {
+            "description": "Implement proper error handling in your Lambda function to gracefully handle exceptions and provide meaningful error messages. Avoid catching and ignoring all exceptions. Make sure that if there is an unhandled exception, the function will fail with a non-zero exit code."
+          },
+          {
+            "description": "Use environment variables to configure the Lambda function and avoid hardcoding the values in the code."
+          },
+          {
+            "description": "Export the important outputs of the stack to make it easy to input the values into other stacks."
+          }
+        ]
+      },
+      "well_architected_framework": {
+        "description": "Guidelines for implementing the AWS Well-Architected Framework.",
+        "enabled": true,
+        "rules": [
+          {
+            "description": "Provide suggestions for reviewing workloads against the AWS Well-Architected Tool to identify best practices."
+          },
+          {
+            "description": "Emphasize the importance of security by recommending best practices from the Security Pillar, such as identity management and data protection."
+          },
+          {
+            "description": "Highlight strategies for ensuring high availability and fault tolerance, in line with the Reliability Pillar."
+          },
+          {
+            "description": "Recommend ways to optimize performance by following the Performance Efficiency Pillar, ensuring efficient resource use."
+          },
+          {
+            "description": "Advise on cost management practices from the Cost Optimization Pillar, including monitoring and right-sizing resources."
+          },
+          {
+            "description": "Promote best practices for operational excellence, such as using infrastructure as code, from the Operational Excellence Pillar."
+          }
+        ]
+      }
+    }
+  }
+}
