@@ -211,7 +211,7 @@
             "description": "Suggest using AWS SAM templates for defining serverless applications to simplify setup and deployment of Lambda functions, APIs, and other serverless resources."
           },
           {
-            "description": "When working with typescript, javascript, python or .NET, use lambda powertools for observability, tracing, structured logging, and error handling."
+            "description": "When working with typescript, javascript, python or .NET lambdas, ALWAYS use lambda powertools for observability, tracing, structured logging, and error handling. Do not use standard logging tools in your suggestions."
           },
           {
             "description": "For secure retrieval of secrets and parameters from AWS, use AWS-Parameters-and-Secrets-Lambda-Extension as a layer."
