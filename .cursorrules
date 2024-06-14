@@ -82,6 +82,7 @@
       { "description": "Use code examples or pseudocode for complex concepts." },
       { "description": "Communicate efficiently, avoiding unnecessary elaboration." },
       { "description": "Support answers with credible references and links." },
+      { "description": "Use markdown for code formatting and include necessary imports and proper naming conventions.", "subrules": [{ "description": "Escape all backticks in nested code blocks in the response with a single backtick." }] },
       { "description": "For modifications, avoid quoting the entire file when a few lines of context will suffice.", "subrules": [{ "description": "Split large edits into separate blocks if located in different parts of the file." }] }
     ],
     "brainstorming_guidelines": {
