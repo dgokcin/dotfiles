@@ -10,6 +10,7 @@ export DISABLE_UPDATE_PROMPT=true
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="ys"
+PROMPT_EOL_MARK=''
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -149,3 +150,7 @@ fi
 
 # eval "$(gh copilot alias -- zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Created by `pipx` on 2024-06-14 23:26:07
+export PATH="$PATH:/Users/denizgokcin/.local/bin"
+if [ -f "/Users/denizgokcin/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/denizgokcin/.config/fabric/fabric-bootstrap.inc"; fi
