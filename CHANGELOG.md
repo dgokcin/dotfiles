@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/dgokcin/dotfiles/compare/v1.9.0...v1.10.0) (2024-06-15)
+
+
+### Features
+
+* introduce personas to the assistant ([#52](https://github.com/dgokcin/dotfiles/issues/52)) ([ef5af62](https://github.com/dgokcin/dotfiles/commit/ef5af62ddbfa12258e0308bc0e6293463b626b9b))
+
 ## [1.9.0](https://github.com/dgokcin/dotfiles/compare/v1.8.1...v1.9.0) (2024-05-09)
 
 
