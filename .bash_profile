@@ -4,4 +4,4 @@
 for file in ~/.{aliases,functions,path,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
-unset file;
+if [ -f "/Users/denizgokcin/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/denizgokcin/.config/fabric/fabric-bootstrap.inc"; fi
