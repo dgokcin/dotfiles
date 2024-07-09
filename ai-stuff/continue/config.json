@@ -1,0 +1,98 @@
+{
+  "models": [
+    {
+      "title": "Codestral",
+      "provider": "mistral",
+      "model": "codestral-latest",
+      "apiKey": "aFJAAt0XckRMkVMeeAzIioEKacFBRSSe"
+    },
+    {
+      "title": "ollama - llama 3",
+      "provider": "ollama",
+      "model": "llama3"
+    },
+    {
+      "title": "Gemini 1.5 Pro",
+      "model": "gemini-pro",
+      "contextLength": 1000000,
+      "apiKey": "<API_KEY>",
+      "provider": "free-trial"
+    },
+    {
+      "model": "gpt-4o",
+      "contextLength": 128000,
+      "title": "GPT-4o",
+      "systemMessage": "You are an expert software developer. You give helpful and concise responses.",
+      "provider": "free-trial"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Codestral",
+    "provider": "mistral",
+    "model": "codestral-latest",
+    "apiKey": "aFJAAt0XckRMkVMeeAzIioEKacFBRSSe"
+  },
+  "slashCommands": [
+    {
+      "name": "edit",
+      "description": "Edit highlighted code"
+    },
+    {
+      "name": "comment",
+      "description": "Write comments for the highlighted code"
+    },
+    {
+      "name": "share",
+      "description": "Export the current chat session to markdown",
+      "params": { "ouputDir": "~/.continue/session-transcripts" }
+    },
+    {
+      "name": "cmd",
+      "description": "Generate a shell command"
+    },
+    {
+      "name": "http",
+      "description": "Does something custom",
+      "params": { "url": "<my server endpoint>" }
+    },
+    {
+      "name": "issue",
+      "description": "Generate a link to a drafted GitHub issue",
+      "params": { "repositoryUrl": "https://github.com/continuedev/continue" }
+    }
+  ],
+  "customCommands": [
+    {
+      "name": "conventional-commit",
+      "description": "Create a custom git commit message based on the provided git diff output and flags",
+      "prompt": "The expected input format is command line output from git diff that compares all the changes of the current branch with the main repository branch, followed by two optional flags. The syntax of the output of `git diff` is a series of lines that indicate changes made to files in a repository. Each line represents a change, and the format of each line depends on the type of change being made.\n\n### Steps:\n- Read the input and figure out what the major changes and upgrades were that happened.\n- Create the git commands needed to add the changes to the repo, and a git commit to reflect the changes\n- If there are a lot of changes include more bullets. If there are only a few changes, be more terse. Use the provided flags to determine how much detail to include in the commit message.\n\n### Output Instructions:\n- Use conventional commits - i.e. prefix the commit title with \"chore:\" (if it's a minor change like refactoring or linting), \"feat:\" (if it's a new feature), \"fix:\" if its a bug fix\n- Types other than feat and fix are allowed. build, chore, ci, docs, style, test, perf, refactor, and others.\n- Only use lowercase letters in the the title, body and the footer of the commit message.\n- Keep the commit message title under 60 characters.\n- Use present tense in both the title and body of the commit.\n- You only output human readable Markdown, except for the links, which should be in HTML format.\n- The output should only be the shell commands needed to update git.\n- Do not place the output in a code block\n\n### Example Template:\nFor the current changes, replace `<file_name>` with `temp.py`, `<commit_message>` with `add --newswitch switch to temp.py to do newswitch behavior` and `<resolved_issues>` in the input message with `10`:\n\ngit add temp.py\ngit commit -m \"add --newswitch switch to temp.py to do newswitch behavior\" -m \"this commit adds a new switch to the temp.py file to allow for the newswitch behavior to be implemented.\" -m \"resolves #10, resolves #11\"\n\nInput: {{{ input }}}"
+    },
+    {
+      "name": "create-issue",
+      "description": "Create a GitHub issue using the gh CLI based on the provided TODO item and context.",
+      "prompt": "You are an experienced analyst with a keen eye for detail, specializing in crafting well-structured and comprehensive GitHub issues using the gh CLI.\n\n### Steps:\n1. Read the input to understand the TODO item and the context provided.\n2. Create the gh CLI command to create a GitHub issue.\n\n### Output Instructions:\n- Make the title descriptive and imperative.\n- For multi-line bodies, format the output to be multi-line without using a \\n.\n- Only output the command to create a GitHub issue with the gh CLI.\n- Use one of the following labels: bug, documentation, enhancement.\n\n### Example Template:\nFor the TODO item, replace `<title>` with the title, `<label>` with the label, and `<body>` with the body. Output the command to create a GitHub issue with the gh CLI:\n\ngh issue create -t <title> -l <label> -b <body>\n\nInput: {{{ input }}}"
+    },
+    {
+      "name": "explain-code",
+      "description": "Explain code, configuration text, or security tool output.",
+      "prompt": "You are an expert developer and you specialize in explaining code to other developers.\n\n### Output Sections:\n- EXPLANATION: Explain what the code does.\n- SECURITY IMPLICATIONS: Explain the implications of security tool output.\n- CONFIGURATION EXPLANATION: Explain what the configuration settings do.\n- ANSWER: Answer any specific questions about the input.\n\n### Output Instructions:\n- Do not output warnings or notes—just the requested sections.\n\n### Example Template:\nFor the input code, replace `<explanation>` with the explanation, `<security_implications>` with the security implications, `<configuration_explanation>` with the configuration explanation, and `<answer>` with the answer. Output the sections as specified:\n\nEXPLANATION: <explanation>\nSECURITY IMPLICATIONS: <security_implications>\nCONFIGURATION EXPLANATION: <configuration_explanation>\nANSWER: <answer>\n\nInput: {{{ input }}}",
+      "params": {}
+    },
+    {
+      "name": "create-pr",
+      "description": "Create a GitHub pull request using the gh CLI based on the provided changes and context.",
+      "prompt": "You are an experienced software engineer about to open a PR. Your goal is to provide a clear and concise explanation of the changes made and create the corresponding gh cli pull request creation command.\n\n### Flags:\n--draft: Create a draft pull request.\n--title: Specify the title of the pull request.\n\n### Steps:\n1. Read the input to understand the changes made.\n2. Draft a brief summary of the changes made.\n3. Create the gh CLI command to create a GitHub pull request.\n\n### Output Instructions:\n- Output only the the command and summary.\n- Use single quotes for surrounding the inputs.\n- Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project.\n\nInput: {{{ input }}}"
+    },
+    {
+      "name": "improve-writing",
+      "description": "Refine the input text to enhance clarity, coherence, grammar, and style.",
+      "prompt": "You are a writing expert. You refine the input text to enhance clarity, coherence, grammar, and style.\n\n### Steps:\n1. Analyze the input text for grammatical errors, stylistic inconsistencies, clarity issues, and coherence.\n2. Apply corrections and improvements directly to the text.\n3. Maintain the original meaning and intent of the user's text, ensuring that the improvements are made within the context of the input language's grammatical norms and stylistic conventions.\n\n### Output Instructions:\n- Refined and improved text that has no grammar mistakes.\n- Return in the same language as the input.\n- Include NO additional commentary or explanation in the response.\n\n### Example Template:\nFor the input text, replace `<refined_text>` with the refined text. Output the refined text as specified:\n\n<refined_text>\n\nInput: {{{ input }}}",
+      "params": {}
+    }
+  ],
+  "allowAnonymousTelemetry": true,
+  "embeddingsProvider": {
+    "provider": "transformers.js"
+  }
+}
+

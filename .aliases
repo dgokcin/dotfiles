@@ -3,10 +3,10 @@ alias la="ls -a"
 
 # Go back on directory level
 alias cd..='cd ../'
-alias ..='cd ../' 
-alias ....='cd ../../' 
-alias ......='cd ../../../' 
-alias ........='cd ../../../../' 
+alias ..='cd ../'
+alias ....='cd ../../'
+alias ......='cd ../../../'
+alias ........='cd ../../../../'
 
 # Quickly search for file
 alias qfind='find . -name'
@@ -20,8 +20,10 @@ alias creds='vim ~/.aws/credentials'
 alias pip=pip3
 alias python=python3
 
+alias code='code-insiders'
+alias f='fabric'
+
 # Copilot CLI aliases
 alias 'git?'='eval_git_question'
 alias 'gh?'='eval_gh_question'
 alias '??'='eval_shell_question'
-alias code='code-insiders'
