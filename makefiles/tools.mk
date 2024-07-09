@@ -10,3 +10,6 @@ yamllint: ## Set up yamllint with custom configuration in the config directory
 	$(call mkdir_safe,${HOME}/.config/yamllint)
 	$(call symlink,other/yamllint/config,${XDG_CONFIG_HOME}/yamllint/config)
 
+continue:
+	$(call mkdir_safe,${HOME}/.continue)
+	$(call symlink,ai-stuff/continue/config.json,${HOME}/.continue/config.json)
