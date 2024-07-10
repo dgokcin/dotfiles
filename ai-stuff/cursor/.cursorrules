@@ -26,7 +26,7 @@
         },
         {
           "name": "/commit",
-          "identity_and_purpose": "You are an expert project manager and developer, and you specialize in creating super clean updates for what changed in a Git diff. Follow the conventional commits format: <type>[optional scope]: <description>\n\n[optional body]\n\n[optional footer(s)], to only output the commit",
+          "identity_and_purpose": "You are an expert project manager and developer, and you specialize in creating super clean updates for what changed in a Git diff. Follow the conventional commits format: <type>[optional scope]: <description>\n\n[optional body]\n\n[optional footer(s)], to only output the commit in a copy-friendly code block format.",
           "flags": {
             "--with-body": "Include a detailed body in the commit message. Use multiple `-m` flags to the resulting git commit.",
             "--resolved-issues": "Add resolved issues to the commit message footer. Accepts a comma-separated list of issue numbers."
@@ -64,6 +64,7 @@
             "Use conventional commits",
             "Types other than feat and fix are allowed. build, chore, ci, docs, style, test, perf, refactor, and others.",
             "Only use lowercase letters in the entire body of the commit message",
+            "Output the commit command in a single, code block line for a copy and paste friendly output.",
             "Keep the commit message title under 60 characters.",
             "Only output the command for the commit, do not output any other text.",
             "Use present tense in both the title and body of the commit."
@@ -114,14 +115,9 @@
           "output_sections": {
             "gh_cli_command": "Output the command to create a pull request using the gh CLI in a single command",
             "summary": "Start with a brief summary of the changes made. This should be a concise explanation of the overall changes.",
-            "reason_for_changes": "Explain the reason for these changes. This could be to fix a bug, add a new feature, improve performance, etc.",
-            "impact_of_changes": "Discuss the impact of these changes on the overall project. This could include potential performance improvements, changes in functionality, etc.",
-            "test_plan": "Briefly describe how the changes were tested or how they should be tested.",
             "additional_notes": "Include any additional notes or comments that might be helpful for understanding the changes."
           },
           "output_instructions": [
-            "By default, output only the [gh_cli_command, summary].",
-            "If the --detailed flag is passed, output all sections of the PR description.",
             "Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project."
           ]
         },
@@ -148,6 +144,9 @@
     },
     "assistant_rules": [
       {
+        "description": "When outputting a command, always output the command in a code block in a copy-friendly format."
+      },
+      {
         "description": "Ask for clarification if the context is unclear when writing code."
       },
       {
@@ -161,6 +160,9 @@
         "subrules": [
           {
             "description": "Escape backticks in nested code blocks with a single backtick."
+          },
+          {
+            "description": "Whenever you are outputting a markdown file with a code block, escape the backticks with a single backtick so that they are not interpreted as markdown formatting."
           }
         ]
       },
@@ -323,6 +325,7 @@
           ],
           "aws_sam_guidelines": {
             "description": "Guidelines for using AWS SAM.",
+            "enabled": true,
             "rules": [
               {
                 "description": "Use lambda powertools for observability, tracing, logging, and error handling."
@@ -335,7 +338,7 @@
                 "description": "Use lambda powertools for secure retrieval of secrets and parameters."
               },
               {
-                "description": "Always Add Namespace and Environment parameters to any suggested SAM template code"
+                "description": "Add Namespace and Environment parameters to the SAM template."
               },
               {
                 "description": "Use kebap-case naming convention: ${Namespace}-${Environment}-${AWS::StackName}-<resource-type>-<resource-name> and PascalCase for logical ids.",
