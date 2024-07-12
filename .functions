@@ -105,3 +105,12 @@ eval_gh_question() {
 eval_shell_question() {
   eval "gh copilot suggest -t shell \"$1\""
 }
+
+# Function to create a pull request with the base branch set to the current main branch of the repository
+function create_pr() {
+    # Get the current main branch of the repository
+    current_main_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+
+    # Execute the gh pr create command with the base set to the current main branch
+    gh pr create --base "$current_main_branch"
+}
