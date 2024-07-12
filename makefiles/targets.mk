@@ -5,3 +5,5 @@ personal: vim vscodevim ideavim gvim nvim vsvim bash zsh personal-git yamllint c
 
 # Setup work environment
 work: vim vscodevim ideavim gvim nvim vsvim bash zsh work-git yamllint continue
+
+PHONY: nvim
