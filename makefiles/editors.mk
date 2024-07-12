@@ -1,9 +1,15 @@
 # Editor configuration setups
 
+.PHONY: nvim
+
 nvim: ## Setup Neovim configuration by linking dotfiles
 	@$(call mkdir_safe,${XDG_CONFIG_HOME}/nvim)
-	@for file in $(DOTFILES)/nvim/*; do \
-		ln -f $$file ${XDG_CONFIG_HOME}/nvim/; \
+	@for item in $(DOTFILES)/nvim/*; do \
+		if [ -d "$$item" ]; then \
+			ln -sfn $$item ${XDG_CONFIG_HOME}/nvim/; \
+		else \
+			ln -sf $$item ${XDG_CONFIG_HOME}/nvim/; \
+		fi; \
 	done
 
 vim: ## Setup Vim configuration and update submodules
