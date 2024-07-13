@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.11.0](https://github.com/dgokcin/dotfiles/compare/v1.10.0...v1.11.0) (2024-07-13)
+
+
+### Features
+
+* add create_pr function ([#58](https://github.com/dgokcin/dotfiles/issues/58)) ([f4beab3](https://github.com/dgokcin/dotfiles/commit/f4beab3e737e6781b07d4b5193d5330efd9818d7))
+* disable vi-mode if running inside neovim ([#59](https://github.com/dgokcin/dotfiles/issues/59)) ([9931dd1](https://github.com/dgokcin/dotfiles/commit/9931dd163c7dac512fb49345332a756423d42638))
+
+
+### Bug Fixes
+
+* remove redundant rules from cursor ([#55](https://github.com/dgokcin/dotfiles/issues/55)) ([80c3406](https://github.com/dgokcin/dotfiles/commit/80c34069a0bc9278d9a2aeae687f4c199f11e9f0))
+* update nvim path, correct symlinks ([#57](https://github.com/dgokcin/dotfiles/issues/57)) ([8caeb4a](https://github.com/dgokcin/dotfiles/commit/8caeb4a1f6dac77af0b28c7e14db7943ef403d01))
+
 ## [1.10.0](https://github.com/dgokcin/dotfiles/compare/v1.9.0...v1.10.0) (2024-06-15)
 
 
