@@ -1,0 +1,66 @@
+Before:
+  runtime ale_linters/go/golangci_lint.vim
+
+After:
+  call ale#linter#Reset()
+
+Execute (The golangci-lint handler should handle names with spaces):
+  " We can't test Windows paths with the path resovling on Linux, but we can
+  " test the regex.
+  AssertEqual
+  \ [
+  \   [
+  \     'C:\something\file with spaces.go',
+  \     '12',
+  \     '3',
+  \     'expected ''package'', found ''IDENT'' gibberish',
+  \     'staticcheck',
+  \   ],
+  \ ],
+  \ map(ale_linters#go#golangci_lint#GetMatches([
+  \   'C:\something\file with spaces.go:12:3: expected ''package'', found ''IDENT'' gibberish (staticcheck)',
+  \ ]), 'v:val[1:5]')
+
+Execute (The golangci-lint handler should handle paths correctly):
+  call ale#test#SetFilename('app/test.go')
+
+  let file = ale#path#GetAbsPath(expand('%:p:h'), 'test.go')
+
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 12,
+  \     'col': 3,
+  \     'text': 'expected ''package'', found ''IDENT'' gibberish (staticcheck)',
+  \     'type': 'W',
+  \     'filename': ale#path#Simplify(expand('%:p:h') . '/test.go'),
+  \   },
+  \ ],
+  \ ale_linters#go#golangci_lint#Handler(bufnr(''), [
+  \   file . ':12:3: expected ''package'', found ''IDENT'' gibberish (staticcheck)',
+  \ ])
+
+Execute (The golangci-lint handler should handle only typecheck lines as errors):
+  call ale#test#SetFilename('app/main.go')
+
+  AssertEqual
+  \ [
+  \   {
+  \     'lnum': 30,
+  \     'col': 5,
+  \     'text': 'variable ''err'' is not used (typecheck)',
+  \     'type': 'E',
+  \     'filename': ale#path#Simplify(expand('%:p:h') . '/test.go'),
+  \   },
+  \   {
+  \     'lnum': 505,
+  \     'col': 75,
+  \     'text': 'Magic number: 404, in <argument> detected (gomnd)',
+  \     'type': 'W',
+  \     'filename': ale#path#Simplify(expand('%:p:h') . '/test.go'),
+  \   }
+  \ ],
+  \ ale_linters#go#golangci_lint#Handler(bufnr(''), [
+  \   ale#path#GetAbsPath(expand('%:p:h'), 'test.go') . ':30:5: variable ''err'' is not used (typecheck)',
+  \   ale#path#GetAbsPath(expand('%:p:h'), 'test.go') . ':505:75: Magic number: 404, in <argument> detected (gomnd)',
+  \ ])
