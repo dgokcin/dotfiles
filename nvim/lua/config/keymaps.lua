@@ -49,12 +49,21 @@ vim.keymap.set("n", "<leader>w", "viw", { noremap = true, desc = "Select Word" }
 vim.keymap.set("n", "<Tab>", "$", { noremap = true, desc = "Move to end of line" })
 vim.keymap.set("n", "<S-Tab>", "^", { noremap = true, desc = "Move to start of line" })
 
+-- Use <Tab> and <S-Tab> in operator-pending mode
+vim.keymap.set("o", "<Tab>", "$", { noremap = true, desc = "Move to end of line" })
+vim.keymap.set("o", "<S-Tab>", "^", { noremap = true, desc = "Move to start of line" })
+
+-- Use <Tab> and <S-Tab> in visual mode
+vim.keymap.set("v", "<Tab>", "$", { noremap = true, desc = "Move to end of line" })
+vim.keymap.set("v", "<S-Tab>", "^", { noremap = true, desc = "Move to start of line" })
+
 -- Insert blank line above/below without losing cursor position
 vim.keymap.set("n", "<Enter>", "m`o<Esc>``", { noremap = true, silent = true, desc = "Insert blank line below" })
 vim.keymap.set("n", "<BS>", "m`O<Esc>``", { noremap = true, silent = true, desc = "Insert blank line above" })
 
 -- Move current line 1 line down in v-line mode and remember cursor position with gv
-vim.api.nvim_set_keymap( "v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines down" })
+vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv",
+    { noremap = true, silent = true, desc = "Move selected lines down" })
 vim.api.nvim_set_keymap("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines up" })
 
 -- Terminal Mappings
@@ -87,4 +96,5 @@ vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous
 -- File Explorer
 -- Toggle NvimTree
 vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Toggle file explorer" })
-vim.keymap.set( "n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" })
+vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>",
+    { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" })
