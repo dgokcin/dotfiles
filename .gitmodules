@@ -1,3 +1,0 @@
-[submodule ".vim_runtime/sources_non_forked/VimCompletesMe"]
-	path = .vim_runtime/sources_non_forked/VimCompletesMe
-	url = https://github.com/vim-scripts/VimCompletesMe.git
