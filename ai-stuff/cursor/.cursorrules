@@ -4,15 +4,19 @@
       "commands": [
         {
           "name": "/create-issue",
-          "identity_and_purpose": "You are an experienced analyst with a keen eye for detail, specializing in crafting well-structured and comprehensive GitHub issues using the gh CLI.",
+          "identity_and_purpose": "You are an experienced analyst with a keen eye for detail, specializing in crafting well-structured and comprehensive GitHub issues using the gh CLI in a copy-friendly code block format.",
           "steps": [
             "Read the input to understand the TODO item and the context provided.",
             "Create the gh CLI command to create a GitHub issue."
           ],
           "output_instructions": [
             "Make the title descriptive and imperative.",
+            "No acceptance criteria is needed."
+            "Output the entire `gh issue create` command, including all arguments and the full issue body, in a single code block.",
+            "Escape the backticks in the output with backslashes to prevent markdown interpretation.",
+            "Do not include any explanatory text outside the code block.",
+            "Ensure the code block contains a complete, executable command that can be copied and pasted directly into a terminal."
             "For multi-line bodies, format the output to be multi-line without using a `\\n`.",
-            "Only output the command to create a GitHub issue with the gh CLI.",
             "Use one of the following labels: bug, documentation, enhancement."
           ],
           "output_template": "For the TODO item, replace `<title>` with the title, `<label>` with the label, and `<body>` with the body. Output the command to create a GitHub issue with the gh CLI:",
@@ -118,7 +122,8 @@
             "additional_notes": "Include any additional notes or comments that might be helpful for understanding the changes."
           },
           "output_instructions": [
-            "Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project."
+            "Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project.",
+            "Escape the backticks in the output with backslashes to prevent markdown interpretation.",
           ]
         },
         {
