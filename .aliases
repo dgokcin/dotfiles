@@ -13,7 +13,6 @@ alias qfind='find . -name'
 alias qsearch='grep -rnw . -e'
 
 # Quickly edit config files
-alias vimrc='vim ~/.vim_runtime/my_configs.vim'
 alias bashrc='vim ~/.bash_profile'
 alias creds='vim ~/.aws/credentials'
 
