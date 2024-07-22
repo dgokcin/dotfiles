@@ -13,6 +13,8 @@ clean: ## Clean up all configurations
 	$(call remove_file,${HOME}/.vscodesettings.json)
 	$(call remove_file,${HOME}/.gvimrc)
 	$(call remove_file,${XDG_CONFIG_HOME}/nvim)
+	$(call remove_file,${HOME}/.local/share/nvim)
+	$(call remove_file,${HOME}/.local/state/nvim)
 	$(call remove_file,${XDG_CONFIG_HOME}/terminator/config)
 	$(call remove_file,${HOME}/.ideavimrc)
 	$(call remove_file,${HOME}/.gvimrc)
