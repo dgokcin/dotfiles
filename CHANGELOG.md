@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.12.0](https://github.com/dgokcin/dotfiles/compare/v1.11.0...v1.12.0) (2024-07-22)
+
+
+### Features
+
+* add functions for handling common nvim typos and PR management ([#63](https://github.com/dgokcin/dotfiles/issues/63)) ([2a4870a](https://github.com/dgokcin/dotfiles/commit/2a4870a89be88d86b5d5051bd44ef46b91cd667f))
+* introduce task difficulties ([#64](https://github.com/dgokcin/dotfiles/issues/64)) ([bd61252](https://github.com/dgokcin/dotfiles/commit/bd61252022787f34aa89650905f4f4f7f484c279))
+* update .cursorrules ([#61](https://github.com/dgokcin/dotfiles/issues/61)) ([daa6011](https://github.com/dgokcin/dotfiles/commit/daa601178bbea716219405355847070b579ed82a))
+
 ## [1.11.0](https://github.com/dgokcin/dotfiles/compare/v1.10.0...v1.11.0) (2024-07-13)
 
 
