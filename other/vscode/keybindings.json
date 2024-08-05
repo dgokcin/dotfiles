@@ -142,21 +142,8 @@
   },
   {
     "key": "alt+cmd+b",
-    "command": "-workbench.action.toggleAuxiliaryBar"
-  },
-  {
-    "key": "ctrl+r",
-    "command": "redo",
-    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
-  },
-  {
-    "key": "shift+cmd+z",
-    "command": "-redo"
-  },
-  {
-    "key": "ctrl+r",
-    "command": "-extension.vim_ctrl+r",
-    "when": "editorTextFocus && vim.active && vim.use<C-r> && !inDebugRepl"
+    // "key": "cmd+shift+b",
+    "command": "workbench.action.toggleAuxiliaryBar"
   },
   {
     "key": "enter",
@@ -167,15 +154,6 @@
     "key": "enter",
     "command": "-renameFile",
     "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-  },
-  {
-    "key": "u",
-    "command": "undo",
-    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal'"
-  },
-  {
-    "key": "cmd+z",
-    "command": "-undo"
   },
   // multi-cursor support for classic vim plugin
   {
@@ -257,13 +235,32 @@
     "when": "neovim.init && neovim.mode == 'cmdline'"
   },
   {
-    "command": "cursorDown",
-    "key": "j",
-    "when": "editorTextFocus && neovim.mode == normal"
+    "key": "shift+cmd+b",
+    "command": "-workbench.action.tasks.build",
+    "when": "taskCommandsRegistered"
   },
   {
-    "command": "cursorUp",
-    "key": "k",
-    "when": "editorTextFocus && neovim.mode == normal"
+    "key": "backspace",
+
+    "command": "-markdown.extension.onBackspaceKey",
+    "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && !suggestWidgetVisible && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+  },
+  {
+    "key": "enter",
+    "command": "-markdown.extension.onEnterKey",
+    "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && !suggestWidgetVisible && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/ || editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && config.editor.acceptSuggestionOnEnter == 'off' && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+  },
+  {
+    "key": "escape",
+    "command": "-aws.amazonq.rejectCodeSuggestion",
+    "when": "aws.codewhisperer.connected && inlineSuggestionVisible && !editorReadonly"
+  },
+  {
+    "key": "shift+cmd+l",
+    "command": "continue.focusContinueInput"
+  },
+  {
+    "key": "cmd+l",
+    "command": "-continue.focusContinueInput"
   },
 ]
