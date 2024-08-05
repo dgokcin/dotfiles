@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/dgokcin/dotfiles/compare/v1.12.0...v2.0.0) (2024-08-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* some keybindings have been removed or altered, which may affect user workflows
+
+### Bug Fixes
+
+* update release-please action and vscode keybindings ([a8c7852](https://github.com/dgokcin/dotfiles/commit/a8c7852fb9b56749e2d33e1303ef0a8ec232a9e0))
+
 ## [1.12.0](https://github.com/dgokcin/dotfiles/compare/v1.11.0...v1.12.0) (2024-07-22)
 
 
