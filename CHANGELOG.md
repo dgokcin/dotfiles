@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/dgokcin/dotfiles/compare/v2.0.0...v2.1.0) (2024-08-08)
+
+
+### Features
+
+* update pull request prompt to use commitizen style title ([#73](https://github.com/dgokcin/dotfiles/issues/73)) ([acc6a87](https://github.com/dgokcin/dotfiles/commit/acc6a8778e03c39c03ee282369a6c625002b693a))
+
 ## [2.0.0](https://github.com/dgokcin/dotfiles/compare/v1.12.0...v2.0.0) (2024-08-05)
 
 
