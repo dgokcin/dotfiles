@@ -17,6 +17,7 @@ local prompts = {
   Spelling = "Please correct any grammar and spelling errors in the following text.",
   Wording = "Please improve the grammar and wording of the following text.",
   Concise = "Please rewrite the following text to make it more concise.",
+  PullRequest = "Please write a pull request for the following code.",
 }
 
 return {
@@ -89,14 +90,20 @@ return {
       opts.prompts.Commit = {
         prompt = "Write commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`.",
         selection = select.gitdiff,
-        mapping = "<leader>gcc",
+        mapping = "<leader>gccd",
       }
       opts.prompts.CommitStaged = {
         prompt = "Write commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`.",
         selection = function(source)
           return select.gitdiff(source, true)
         end,
-        mapping = "<leader>gcs",
+        mapping = "<leader>gccs",
+      }
+      opts.prompts.PullRequest = {
+        system_prompt = "You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.",
+        prompt = "Write a pull request for the following code. Read the input to understand the changes made. Draft a description of the pull request based on the input. Create the gh CLI command to create a GitHub issue. Output sections should include: 1) gh_cli_command: Output the command to create a pull request using the gh CLI in a single multi-line command. Aside from the body and title, only add the --base main flag. 2) summary: Start with a brief summary of the changes made. This should be a concise explanation of the overall changes, 3) additional_notes: Include any additional notes or comments that might be helpful for understanding the changes. Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project. Escape the backticks in the output with backslashes to prevent markdown interpretation.",
+        selection = select.gitdiff,
+        mapping = "<leader>gccp",
       }
 
       chat.setup(opts)
@@ -144,11 +151,16 @@ return {
       -- Add which-key mappings
       local wk = require("which-key")
       wk.add({
-        { "<leader>gm", group = "+Copilot Chat" }, -- group
-        { "<leader>gmd", desc = "Show diff" },
-        { "<leader>gmp", desc = "System prompt" },
-        { "<leader>gms", desc = "Show selection" },
-        { "<leader>gmy", desc = "Yank diff" },
+        { "<leader>gc", group = "+Copilot Chat" }, -- group
+        { "<leader>gcd", desc = "Show diff" },
+        { "<leader>gcp", desc = "System prompt" },
+        { "<leader>gcs", desc = "Show selection" },
+        { "<leader>gcy", desc = "Yank diff" },
+        -- Custom Prompt Mappings
+        { "<leader>gcc", group = "+Create" }, -- group
+        { "<leader>gccd", desc = "Diff Commit" },
+        { "<leader>gccs", desc = "Staged Files Commit" },
+        { "<leader>gccp", desc = "Pull Request" },
       })
     end,
     event = "VeryLazy",
