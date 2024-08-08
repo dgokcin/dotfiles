@@ -87,14 +87,16 @@ return {
 
       -- Override the git prompts message
       opts.prompts.Commit = {
-        prompt = "Write commit message for the change with commitizen convention, only use lower-case letters",
+        prompt = "Write commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`.",
         selection = select.gitdiff,
+        mapping = "<leader>gcc",
       }
       opts.prompts.CommitStaged = {
-        prompt = "Write commit message for the change with commitizen convention, only use lower-case letters",
+        prompt = "Write commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`.",
         selection = function(source)
           return select.gitdiff(source, true)
         end,
+        mapping = "<leader>gcs",
       }
 
       chat.setup(opts)
