@@ -35,7 +35,7 @@ return {
       error_header = "## Error ",
       prompts = prompts,
       auto_follow_cursor = false, -- Don't follow the cursor after getting response
-      show_help = false, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
+      show_help = false,          -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
       mappings = {
         -- Use tab for completion
         complete = {
@@ -86,23 +86,82 @@ return {
       -- Use unnamed register for the selection
       opts.selection = select.unnamed
 
+      local commit_prompt =
+      "Take a deep breath and analyze the changes made in the git diff. Then, write a commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`."
+
       -- Override the git prompts message
       opts.prompts.Commit = {
-        prompt = "Write commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`.",
+        prompt = commit_prompt,
         selection = select.gitdiff,
         mapping = "<leader>gccd",
       }
       opts.prompts.CommitStaged = {
-        prompt = "Write commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`.",
+        prompt = commit_prompt,
         selection = function(source)
           return select.gitdiff(source, true)
         end,
         mapping = "<leader>gccs",
       }
+
+      -- Custom function to get diff between current branch and main
+      local function pr_diff(source)
+        local select_buffer = require("CopilotChat.select").buffer(source)
+        if not select_buffer then
+          return nil
+        end
+
+        local current_branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
+        local cmd = string.format("git diff --no-color --no-ext-diff origin/main...%s", current_branch)
+        local handle = io.popen(cmd)
+        if not handle then
+          return nil
+        end
+
+        local result = handle:read("*a")
+        handle:close()
+
+        if not result or result == "" then
+          return nil
+        end
+
+        select_buffer.filetype = "diff"
+        select_buffer.lines = result
+        return select_buffer
+      end
+
+
       opts.prompts.PullRequest = {
-        system_prompt = "You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.",
-        prompt = "Write a pull request for the following code. Read the input to understand the changes made. Draft a description of the pull request based on the input. Create the gh CLI command to create a GitHub issue. Output sections should include: 1) gh_cli_command: Output the command to create a pull request using the gh CLI in a single multi-line command, escaping from the backticks properly so that the command is ready to be pasted. Use commitzen style title so that automatic release notes can be generated. Aside from the body and title, only add the --base main flag. 2) summary: Start with a brief summary of the changes made. This should be a concise explanation of the overall changes, 3) additional_notes: Include any additional notes or comments that might be helpful for understanding the changes. Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project. Escape the backticks in the output with backslashes to prevent markdown interpretation.",
-        selection = select.gitdiff,
+        system_prompt = [[
+          You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.
+
+          Your task is to create a pull request for the given code changes. Follow these steps:
+
+          1. Analyze the git diff changes provided.
+          2. Draft a comprehensive description of the pull request based on the input.
+          3. Create the gh CLI command to create a GitHub pull request.
+
+          Output Instructions:
+          - The command should start with `gh pr create`.
+          - Do not use the new line character in the command since it does not work
+          - Include the `--base main` flag.
+          - Use the `--title` flag with a concise, descriptive title.
+          - Use the `--body` flag for the PR description.
+          - Include the following sections in the body:
+            - '## Summary' with a brief overview of changes
+            - '## Changes' listing specific modifications
+            - '## Additional Notes' for any extra information
+          - Escape any backticks within the command using backslashes. i.e. \` text with backticks \`
+          - Wrap the entire command in a code block for easy copy-pasting.
+
+          Example Output:
+          ```sh
+          gh pr create --base main --title mytitle --body 'hello
+          multiline
+          body'
+          ```
+        ]],
+        prompt = "Please create a pull request for the following code changes.",
+        selection = pr_diff,
         mapping = "<leader>gccp",
       }
 
@@ -151,13 +210,13 @@ return {
       -- Add which-key mappings
       local wk = require("which-key")
       wk.add({
-        { "<leader>gc", group = "+Copilot Chat" }, -- group
-        { "<leader>gcd", desc = "Show diff" },
-        { "<leader>gcp", desc = "System prompt" },
-        { "<leader>gcs", desc = "Show selection" },
-        { "<leader>gcy", desc = "Yank diff" },
+        { "<leader>gc",   group = "+Copilot Chat" }, -- group
+        { "<leader>gcd",  desc = "Show diff" },
+        { "<leader>gcp",  desc = "System prompt" },
+        { "<leader>gcs",  desc = "Show selection" },
+        { "<leader>gcy",  desc = "Yank diff" },
         -- Custom Prompt Mappings
-        { "<leader>gcc", group = "+Create" }, -- group
+        { "<leader>gcc",  group = "+Create" }, -- group
         { "<leader>gccd", desc = "Diff Commit" },
         { "<leader>gccs", desc = "Staged Files Commit" },
         { "<leader>gccp", desc = "Pull Request" },
@@ -190,10 +249,10 @@ return {
         desc = "CopilotChat - Prompt actions",
       },
       -- Code related commands
-      { "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-      { "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-      { "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
-      { "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
+      { "<leader>ae", "<cmd>CopilotChatExplain<cr>",       desc = "CopilotChat - Explain code" },
+      { "<leader>at", "<cmd>CopilotChatTests<cr>",         desc = "CopilotChat - Generate tests" },
+      { "<leader>ar", "<cmd>CopilotChatReview<cr>",        desc = "CopilotChat - Review code" },
+      { "<leader>aR", "<cmd>CopilotChatRefactor<cr>",      desc = "CopilotChat - Refactor code" },
       { "<leader>an", "<cmd>CopilotChatBetterNamings<cr>", desc = "CopilotChat - Better Naming" },
       -- Chat with Copilot in visual mode
       {
@@ -242,15 +301,15 @@ return {
         desc = "CopilotChat - Quick chat",
       },
       -- Debug
-      { "<leader>ad", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
+      { "<leader>ad", "<cmd>CopilotChatDebugInfo<cr>",     desc = "CopilotChat - Debug Info" },
       -- Fix the issue with diagnostic
       { "<leader>af", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "CopilotChat - Fix Diagnostic" },
       -- Clear buffer and chat history
-      { "<leader>al", "<cmd>CopilotChatReset<cr>", desc = "CopilotChat - Clear buffer and chat history" },
+      { "<leader>al", "<cmd>CopilotChatReset<cr>",         desc = "CopilotChat - Clear buffer and chat history" },
       -- Toggle Copilot Chat Vsplit
-      { "<leader>av", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
+      { "<leader>av", "<cmd>CopilotChatToggle<cr>",        desc = "CopilotChat - Toggle" },
       -- Copilot Chat Models
-      { "<leader>a?", "<cmd>CopilotChatModels<cr>", desc = "CopilotChat - Select Models" },
+      { "<leader>a?", "<cmd>CopilotChatModels<cr>",        desc = "CopilotChat - Select Models" },
     },
   },
 }
