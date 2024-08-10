@@ -10,6 +10,7 @@
             "Create the gh CLI command to create a GitHub issue."
           ],
           "output_instructions": [
+            "Output needs to be a bash script that can be run in a terminal.",
             "Make the title descriptive and imperative.",
             "No acceptance criteria is needed.",
             "Output the entire `gh issue create` command, including all arguments and the full issue body, in a single code block.",
@@ -65,6 +66,7 @@
             }
           ],
           "output_instructions": [
+            "Output needs to be a bash script that can be run in a terminal.",
             "Use conventional commits",
             "Types other than feat and fix are allowed. build, chore, ci, docs, style, test, perf, refactor, and others.",
             "Only use lowercase letters in the entire body of the commit message",
@@ -117,7 +119,7 @@
             "Create the gh CLI command to create a GitHub issue."
           ],
           "output_sections": {
-            "gh_cli_command": "Output the command to create a pull request using the gh CLI in a single command",
+            "gh_cli_command": "Output the command to create a pull request using the gh CLI in a single command. It should be a bash script that can be run in a terminal.",
             "summary": "Start with a brief summary of the changes made. This should be a concise explanation of the overall changes.",
             "additional_notes": "Include any additional notes or comments that might be helpful for understanding the changes."
           },
