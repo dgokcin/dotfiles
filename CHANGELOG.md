@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/dgokcin/dotfiles/compare/v2.1.0...v2.2.0) (2024-08-10)
+
+
+### Features
+
+* update nvim-surround and telescope configurations ([#77](https://github.com/dgokcin/dotfiles/issues/77)) ([8b0ae42](https://github.com/dgokcin/dotfiles/commit/8b0ae42bc715bbde1df3d31aa3ef39762f5b2a98))
+
 ## [2.1.0](https://github.com/dgokcin/dotfiles/compare/v2.0.0...v2.1.0) (2024-08-08)
 
 
