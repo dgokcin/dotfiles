@@ -102,12 +102,20 @@ return {
         end,
         mapping = "<leader>gccs",
       }
+
+      -- Custom function to get diff between current branch and main
+      local function pr_diff()
+        local current_branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
+        local diff_command = string.format("git diff main...%s", current_branch)
+        return vim.fn.system(diff_command)
+      end
+
       opts.prompts.PullRequest = {
         system_prompt =
         "You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.",
         prompt =
         "Take a deep breath and analyze the changes made in the git diff. Then, write a pull request for the following code. Read the input to understand the changes made. Draft a description of the pull request based on the input. Create the gh CLI command to create a GitHub issue. Output sections should include: 1) gh_cli_command: Output the command to create a pull request using the gh CLI in a single multi-line command, escaping from the backticks properly so that the command is ready to be pasted. Use commitzen style title so that automatic release notes can be generated. Aside from the body and title, only add the --base main flag. 2) summary: Start with a brief summary of the changes made. This should be a concise explanation of the overall changes, 3) additional_notes: Include any additional notes or comments that might be helpful for understanding the changes. Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project. Escape the backticks in the output with backslashes to prevent markdown interpretation.",
-        selection = select.gitdiff,
+        selection = pr_diff,
         mapping = "<leader>gccp",
       }
 
