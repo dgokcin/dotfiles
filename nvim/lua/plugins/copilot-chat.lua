@@ -102,12 +102,59 @@ return {
         end,
         mapping = "<leader>gccs",
       }
+
+      -- Custom function to get diff between current branch and main
+      local function pr_diff(source)
+        local select_buffer = require("CopilotChat.select").buffer(source)
+        if not select_buffer then
+          return nil
+        end
+
+        local current_branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
+        local cmd = string.format("git diff --no-color --no-ext-diff main...%s", current_branch)
+        local handle = io.popen(cmd)
+        if not handle then
+          return nil
+        end
+
+        local result = handle:read("*a")
+        handle:close()
+
+        if not result or result == "" then
+          return nil
+        end
+
+        select_buffer.filetype = "diff"
+        select_buffer.lines = result
+        return select_buffer
+      end
+
+
       opts.prompts.PullRequest = {
-        system_prompt =
-        "You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.",
-        prompt =
-        "Take a deep breath and analyze the changes made in the git diff. Then, write a pull request for the following code. Read the input to understand the changes made. Draft a description of the pull request based on the input. Create the gh CLI command to create a GitHub issue. Output sections should include: 1) gh_cli_command: Output the command to create a pull request using the gh CLI in a single multi-line command, escaping from the backticks properly so that the command is ready to be pasted. Use commitzen style title so that automatic release notes can be generated. Aside from the body and title, only add the --base main flag. 2) summary: Start with a brief summary of the changes made. This should be a concise explanation of the overall changes, 3) additional_notes: Include any additional notes or comments that might be helpful for understanding the changes. Ensure the output is clear, concise, and understandable even for someone who is not familiar with the project. Escape the backticks in the output with backslashes to prevent markdown interpretation.",
-        selection = select.gitdiff,
+        system_prompt = string.format(
+          [[You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.
+
+          Your task is to create a pull request for the given code changes. Follow these steps:
+
+          1. Analyze the git diff changes provided.
+          2. Draft a comprehensive description of the pull request based on the input.
+          3. Create the gh CLI command to create a GitHub pull request.
+
+          Output Instructions:
+          - Generate a single-line gh CLI command that escapes backticks in the body with a single backslash.
+          - The command should start with `gh pr create`.
+          - Include the `--base main` flag.
+          - Use the `--title` flag with a concise, descriptive title.
+          - Use the `--body` flag for the PR description.
+          - Include the following sections in the body:
+            - '## Summary' with a brief overview of changes
+            - '## Changes' listing specific modifications
+            - '## Additional Notes' for any extra information
+          - Escape any backticks within the command using backslashes.
+          - Wrap the entire command in a code block for easy copy-pasting.
+          ]]
+          ),
+        selection = pr_diff,
         mapping = "<leader>gccp",
       }
 
