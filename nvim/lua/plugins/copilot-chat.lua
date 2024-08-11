@@ -111,7 +111,7 @@ return {
         end
 
         local current_branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
-        local cmd = string.format("git diff --no-color --no-ext-diff main...%s", current_branch)
+        local cmd = string.format("git diff --no-color --no-ext-diff origin/main...%s", current_branch)
         local handle = io.popen(cmd)
         if not handle then
           return nil
@@ -131,8 +131,8 @@ return {
 
 
       opts.prompts.PullRequest = {
-        system_prompt = string.format(
-          [[You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.
+        system_prompt = [[
+          You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.
 
           Your task is to create a pull request for the given code changes. Follow these steps:
 
@@ -141,8 +141,8 @@ return {
           3. Create the gh CLI command to create a GitHub pull request.
 
           Output Instructions:
-          - Generate a single-line gh CLI command that escapes backticks in the body with a single backslash.
           - The command should start with `gh pr create`.
+          - Do not use the new line character in the command since it does not work
           - Include the `--base main` flag.
           - Use the `--title` flag with a concise, descriptive title.
           - Use the `--body` flag for the PR description.
@@ -150,10 +150,17 @@ return {
             - '## Summary' with a brief overview of changes
             - '## Changes' listing specific modifications
             - '## Additional Notes' for any extra information
-          - Escape any backticks within the command using backslashes.
+          - Escape any backticks within the command using backslashes. i.e. \` text with backticks \`
           - Wrap the entire command in a code block for easy copy-pasting.
-          ]]
-          ),
+
+          Example Output:
+          ```sh
+          gh pr create --base main --title mytitle --body 'hello
+          multiline
+          body'
+          ```
+        ]],
+        prompt = "Please create a pull request for the following code changes.",
         selection = pr_diff,
         mapping = "<leader>gccp",
       }
