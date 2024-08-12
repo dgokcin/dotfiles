@@ -6,7 +6,7 @@ These are my personal dotfiles and configurations, carefully crafted to optimize
 
 - **vim**: Configurations for Vim, including plugins and key mappings for efficient text editing. This is now deprecated in favor of neovim.
 - **neovim**: Configurations for neovim, including plugins and key mappings for efficient text editing. LazyVim is used as the baseline configuration.
-- **vsvim, ideavim, gvim,**: Additional configurations for various text editors to improve coding experience.
+- **vsvim, ideavim, gvim,**: Additional configurations for various text editors to improve coding experience. No longer used.
 - **vscodevim**: Legacy configuration for the VSCode Vim Plugin is no longer necessary, as the VSCode Neovim extension offers better compatibility and speed.
 - **lazygit**: Configuration for the lazygit tool, simplifying Git interactions.
 - **bash, zsh**: Shell configurations with aliases and functions for improved command-line usage.
