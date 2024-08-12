@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/dgokcin/dotfiles/compare/v2.3.0...v2.4.0) (2024-08-12)
+
+
+### Features
+
+* **vscode:** refactor vscode spevific keymaps ([#89](https://github.com/dgokcin/dotfiles/issues/89)) ([6e09121](https://github.com/dgokcin/dotfiles/commit/6e09121a0f3a1725a847a13f07665c315c0bc6e7))
+
+
+### Bug Fixes
+
+* remove commented-out disabled plugins ([6e09121](https://github.com/dgokcin/dotfiles/commit/6e09121a0f3a1725a847a13f07665c315c0bc6e7))
+
 ## [2.3.0](https://github.com/dgokcin/dotfiles/compare/v2.2.0...v2.3.0) (2024-08-11)
 
 
