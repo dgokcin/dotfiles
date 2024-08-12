@@ -14,4 +14,4 @@ These are my personal dotfiles and configurations, carefully crafted to optimize
 - **yamllint**: Configuration for YAML linting to maintain consistent YAML file formatting.
 - **iterm2, terminator, winterm**: Terminal configurations for different platforms to customize terminal settings.
 
-Feel free to explore each dotfile to understand how it works.
+Feel free to explore the configurations and adapt them to your needs. If you have any suggestions or improvements, please let me know!
