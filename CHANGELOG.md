@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.2.0](https://github.com/dgokcin/dotfiles/compare/v3.1.0...v3.2.0) (2024-08-12)
+
+
+### Features
+
+* add new key mappings and improve prompts ([#97](https://github.com/dgokcin/dotfiles/issues/97)) ([61b5aa8](https://github.com/dgokcin/dotfiles/commit/61b5aa874f7872d18537cb5008ef5107e0ebc13f))
+* use diff with main branch for pr ([61b5aa8](https://github.com/dgokcin/dotfiles/commit/61b5aa874f7872d18537cb5008ef5107e0ebc13f))
+
+
+### Bug Fixes
+
+* update git diff command to use origin/main branch ([61b5aa8](https://github.com/dgokcin/dotfiles/commit/61b5aa874f7872d18537cb5008ef5107e0ebc13f))
+
 ## [3.1.0](https://github.com/dgokcin/dotfiles/compare/v3.0.0...v3.1.0) (2024-08-12)
 
 
