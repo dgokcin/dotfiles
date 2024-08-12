@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.0.0](https://github.com/dgokcin/dotfiles/compare/v2.4.0...v3.0.0) (2024-08-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **utils:** encode method no longer throws.
+
+### Features
+
+* adds v4 UUID to crypto ([#91](https://github.com/dgokcin/dotfiles/issues/91)) ([6d19866](https://github.com/dgokcin/dotfiles/commit/6d198664255a3e4c3d06203c475d2251520add11))
+* **utils:** update encode to support unicode ([6d19866](https://github.com/dgokcin/dotfiles/commit/6d198664255a3e4c3d06203c475d2251520add11))
+
+
+### Bug Fixes
+
+* **utils:** unicode no longer throws exception ([6d19866](https://github.com/dgokcin/dotfiles/commit/6d198664255a3e4c3d06203c475d2251520add11))
+
 ## [2.4.0](https://github.com/dgokcin/dotfiles/compare/v2.3.0...v2.4.0) (2024-08-12)
 
 
