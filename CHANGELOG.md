@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/dgokcin/dotfiles/compare/v3.0.0...v3.1.0) (2024-08-12)
+
+
+### Features
+
+* add new key mappings and improve prompts ([#94](https://github.com/dgokcin/dotfiles/issues/94)) ([1486ac1](https://github.com/dgokcin/dotfiles/commit/1486ac1ea9559b9046911d916368f533de54b243))
+
 ## [3.0.0](https://github.com/dgokcin/dotfiles/compare/v2.4.0...v3.0.0) (2024-08-12)
 
 
