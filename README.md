@@ -10,6 +10,7 @@ These are my personal dotfiles and configurations, carefully crafted to optimize
 - **vscodevim**: Legacy configuration for the VSCode Vim Plugin is no longer necessary, as the VSCode Neovim extension offers better compatibility and speed.
 - **lazygit**: Configuration for the lazygit tool, simplifying Git interactions.
 - **bash, zsh**: Shell configurations with aliases and functions for improved command-line usage.
+
 - **base.gitconfig, personal.gitconfig, work.gitconfig**: Git configurations tailored for enhancing git workflows. Due to the precedence in git config, the base configuration is the most generic one. The personal and work configurations are meant to be used for personal and work-related tasks.
 - **yamllint**: Configuration for YAML linting to maintain consistent YAML file formatting.
 - **iterm2, terminator, winterm**: Terminal configurations for different platforms to customize terminal settings.
