@@ -28,6 +28,8 @@ if not vim.g.vscode then
       -- Undo/Redo Correction for VSCode
       vim.keymap.set("n", "u", "<Cmd>call VSCodeNotify('undo')<CR>")
       vim.keymap.set("n", "<C-r>", "<Cmd>call VSCodeNotify('redo')<CR>")
+
+      -- Toggle Terminal
       vim.keymap.set("n", "<leader>t", "<Cmd>call VSCodeNotify('workbench.action.terminal.toggleTerminal')<CR>")
 
       -- VSCode-specific keymaps for search and navigation
