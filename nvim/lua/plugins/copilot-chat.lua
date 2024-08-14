@@ -87,7 +87,7 @@ return {
       opts.selection = select.unnamed
 
       local commit_prompt =
-      "Take a deep breath and analyze the changes made in the git diff. Then, write a commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`."
+      "Take a deep breath and analyze the changes made in the git diff. Then, write a commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`. When there are multiple changes, use the -m flag to include the changes in an organized manner."
 
       -- Override the git prompts message
       opts.prompts.Commit = {
