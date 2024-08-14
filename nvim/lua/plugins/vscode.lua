@@ -40,6 +40,10 @@ if not vim.g.vscode then
       -- Tab navigation for VSCode
       vim.keymap.set("n", "<S-h>", "<Cmd>call VSCodeNotify('workbench.action.previousEditor')<CR>")
       vim.keymap.set("n", "<S-l>", "<Cmd>call VSCodeNotify('workbench.action.nextEditor')<CR>")
+
+      -- Toggle Primary Sidebar Like nvim-tree
+      vim.keymap.set("n", "<C-b>", "<Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
+      vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
     end,
   })
 
