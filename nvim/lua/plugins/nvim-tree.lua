@@ -34,6 +34,11 @@ return {
           timeout = 500,
         },
       })
+      -- File Explorer Keymaps
+      vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>",
+        { noremap = true, silent = true, desc = "Toggle file explorer" })
+      vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>",
+        { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" })
     end,
   },
 }
