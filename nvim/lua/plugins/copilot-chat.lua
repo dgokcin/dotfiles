@@ -35,7 +35,7 @@ return {
       error_header = "## Error ",
       prompts = prompts,
       auto_follow_cursor = false, -- Don't follow the cursor after getting response
-      show_help = false,          -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
+      show_help = false, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
       mappings = {
         -- Use tab for completion
         complete = {
@@ -87,7 +87,7 @@ return {
       opts.selection = select.unnamed
 
       local commit_prompt =
-      "Take a deep breath and analyze the changes made in the git diff. Then, write a commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`. When there are multiple changes, use the -m flag to include the changes in an organized manner."
+        "Take a deep breath and analyze the changes made in the git diff. Then, write a commit message for the change with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are backticks in the message, escape them with `\\`."
 
       -- Override the git prompts message
       opts.prompts.Commit = {
@@ -129,7 +129,6 @@ return {
         return select_buffer
       end
 
-
       opts.prompts.PullRequest = {
         system_prompt = [[
           You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.
@@ -144,7 +143,7 @@ return {
           - The command should start with `gh pr create`.
           - Do not use the new line character in the command since it does not work
           - Include the `--base main` flag.
-          - Use the `--title` flag with a concise, descriptive title.
+          - Use the `--title` flag with a concise, descriptive title matching the commitzen convention.
           - Use the `--body` flag for the PR description.
           - Include the following sections in the body:
             - '## Summary' with a brief overview of changes
@@ -210,13 +209,13 @@ return {
       -- Add which-key mappings
       local wk = require("which-key")
       wk.add({
-        { "<leader>gc",   group = "+Copilot Chat" }, -- group
-        { "<leader>gcd",  desc = "Show diff" },
-        { "<leader>gcp",  desc = "System prompt" },
-        { "<leader>gcs",  desc = "Show selection" },
-        { "<leader>gcy",  desc = "Yank diff" },
+        { "<leader>gc", group = "+Copilot Chat" }, -- group
+        { "<leader>gcd", desc = "Show diff" },
+        { "<leader>gcp", desc = "System prompt" },
+        { "<leader>gcs", desc = "Show selection" },
+        { "<leader>gcy", desc = "Yank diff" },
         -- Custom Prompt Mappings
-        { "<leader>gcc",  group = "+Create" }, -- group
+        { "<leader>gcc", group = "+Create" }, -- group
         { "<leader>gccd", desc = "Diff Commit" },
         { "<leader>gccs", desc = "Staged Files Commit" },
         { "<leader>gccp", desc = "Pull Request" },
@@ -249,10 +248,10 @@ return {
         desc = "CopilotChat - Prompt actions",
       },
       -- Code related commands
-      { "<leader>ae", "<cmd>CopilotChatExplain<cr>",       desc = "CopilotChat - Explain code" },
-      { "<leader>at", "<cmd>CopilotChatTests<cr>",         desc = "CopilotChat - Generate tests" },
-      { "<leader>ar", "<cmd>CopilotChatReview<cr>",        desc = "CopilotChat - Review code" },
-      { "<leader>aR", "<cmd>CopilotChatRefactor<cr>",      desc = "CopilotChat - Refactor code" },
+      { "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
+      { "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
+      { "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
+      { "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
       { "<leader>an", "<cmd>CopilotChatBetterNamings<cr>", desc = "CopilotChat - Better Naming" },
       -- Chat with Copilot in visual mode
       {
@@ -301,15 +300,15 @@ return {
         desc = "CopilotChat - Quick chat",
       },
       -- Debug
-      { "<leader>ad", "<cmd>CopilotChatDebugInfo<cr>",     desc = "CopilotChat - Debug Info" },
+      { "<leader>ad", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
       -- Fix the issue with diagnostic
       { "<leader>af", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "CopilotChat - Fix Diagnostic" },
       -- Clear buffer and chat history
-      { "<leader>al", "<cmd>CopilotChatReset<cr>",         desc = "CopilotChat - Clear buffer and chat history" },
+      { "<leader>al", "<cmd>CopilotChatReset<cr>", desc = "CopilotChat - Clear buffer and chat history" },
       -- Toggle Copilot Chat Vsplit
-      { "<leader>av", "<cmd>CopilotChatToggle<cr>",        desc = "CopilotChat - Toggle" },
+      { "<leader>av", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
       -- Copilot Chat Models
-      { "<leader>a?", "<cmd>CopilotChatModels<cr>",        desc = "CopilotChat - Select Models" },
+      { "<leader>a?", "<cmd>CopilotChatModels<cr>", desc = "CopilotChat - Select Models" },
     },
   },
 }
