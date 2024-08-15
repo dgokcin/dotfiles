@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/dgokcin/dotfiles/compare/v3.2.0...v3.3.0) (2024-08-15)
+
+
+### Features
+
+* add toggle terminal keymap for vscode integration ([#100](https://github.com/dgokcin/dotfiles/issues/100)) ([1892024](https://github.com/dgokcin/dotfiles/commit/1892024f74057d82fffe6fe80e4c8dfe06583ac8))
+
 ## [3.2.0](https://github.com/dgokcin/dotfiles/compare/v3.1.0...v3.2.0) (2024-08-12)
 
 
