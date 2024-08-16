@@ -154,7 +154,7 @@ return {
 
           Example Output:
           ```sh
-          gh pr create --base main --title mytitle --body 'hello
+          gh pr create --base main --title 'commitzen style title' --body 'hello
           multiline
           body'
           ```
