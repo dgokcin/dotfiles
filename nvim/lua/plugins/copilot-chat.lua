@@ -152,6 +152,44 @@ return {
           - Escape any backticks within the command using backslashes. i.e. \` text with backticks \`
           - Wrap the entire command in a code block for easy copy-pasting.
 
+          Input Format:
+          The expected input format is command line output from git diff that compares all the changes of the current branch with the main repository branch. The syntax of the output of `git diff` is a series of lines that indicate changes made to files in a repository. Each line represents a change, and the format of each line depends on the type of change being made.
+
+          Examples:
+
+          Adding a file:
+          +++ b/newfile.txt
+          @@ -0,0 +1 @@
+          +This is the contents of the new file.
+
+          Deleting a file:
+          --- a/oldfile.txt
+          +++ b/deleted
+          @@ -1 +0,0 @@
+          -This is the contents of the old file.
+
+          Modifying a file:
+          --- a/oldfile.txt
+          +++ b/newfile.txt
+          @@ -1,3 +1,4 @@
+           This is an example of how to modify a file.
+          -The first line of the old file contains this text.
+           The second line contains this other text.
+          +This is the contents of the new file.
+
+          Moving a file:
+          --- a/oldfile.txt
+          +++ b/newfile.txt
+          @@ -1 +1 @@
+           This is an example of how to move a file.
+
+          Renaming a file:
+          --- a/oldfile.txt
+          +++ b/newfile.txt
+          @@ -1 +1,2 @@
+           This is an example of how to rename a file.
+          +This is the contents of the new file.
+
           Example Output:
           ```sh
           gh pr create --base main --title 'commitzen style title' --body 'hello
