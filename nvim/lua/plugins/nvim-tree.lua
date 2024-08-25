@@ -4,7 +4,10 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    event = "VeryLazy",
+    keys = {
+      { "<C-b>", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file explorer" },
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer NvimTree (root dir)" },
+    },
     config = function()
       local status_ok, tree = pcall(require, "nvim-tree")
       local api = require("nvim-tree.api")
@@ -34,10 +37,13 @@ return {
           timeout = 500,
         },
       })
-      -- File Explorer Keymaps
-      vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>",
+
+      -- Override the existing <C-b> mapping
+      vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>",
         { noremap = true, silent = true, desc = "Toggle file explorer" })
-      vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>",
+
+      -- Keep <leader>e as an alternative
+      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>",
         { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" })
     end,
   },
