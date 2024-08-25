@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.4.0](https://github.com/dgokcin/dotfiles/compare/v3.3.0...v3.4.0) (2024-08-25)
+
+
+### Features
+
+* **nvim-tree:** add key mappings for file explorer ([#108](https://github.com/dgokcin/dotfiles/issues/108)) ([09c8f3e](https://github.com/dgokcin/dotfiles/commit/09c8f3ead3cd71f5c3e98fd08d7a66de8ffe40a9))
+
+
+### Bug Fixes
+
+* update gh pr create command example to use commitzen style title ([#105](https://github.com/dgokcin/dotfiles/issues/105)) ([237dbe9](https://github.com/dgokcin/dotfiles/commit/237dbe98dac17362f660a642bbf481cdf862d8b9))
+
 ## [3.3.0](https://github.com/dgokcin/dotfiles/compare/v3.2.0...v3.3.0) (2024-08-15)
 
 
