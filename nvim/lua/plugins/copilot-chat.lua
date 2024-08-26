@@ -110,6 +110,9 @@ return {
           return nil
         end
 
+        -- Fetch the latest changes from the remote repository
+        vim.fn.system("git fetch origin main")
+
         local current_branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
         local cmd = string.format("git diff --no-color --no-ext-diff origin/main...%s", current_branch)
         local handle = io.popen(cmd)
