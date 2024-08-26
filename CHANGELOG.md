@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.5.0](https://github.com/dgokcin/dotfiles/compare/v3.4.0...v3.5.0) (2024-08-26)
+
+
+### Features
+
+* disable convert to uppercase and lowercase in visual mode ([#109](https://github.com/dgokcin/dotfiles/issues/109)) ([8b1cee2](https://github.com/dgokcin/dotfiles/commit/8b1cee26b6d9e353a1db78509511f2b1d04f48bd))
+
+
+### Bug Fixes
+
+* **keymap:** separate disabling of convert to uppercase and lowercase in visual mode ([#111](https://github.com/dgokcin/dotfiles/issues/111)) ([5844832](https://github.com/dgokcin/dotfiles/commit/5844832338d003722341bd6e0f34cdefc12090dc))
+
 ## [3.4.0](https://github.com/dgokcin/dotfiles/compare/v3.3.0...v3.4.0) (2024-08-25)
 
 
