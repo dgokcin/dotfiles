@@ -192,9 +192,11 @@ return {
 
           Example Output:
           ```sh
-          gh pr create --base main --title 'commitzen style title' --body 'hello
+          gh pr create --base main --title "commitzen style title" --body "hello
           multiline
-          body'
+          body
+          with \`escaped backticks\`
+          "
           ```
         ]],
         prompt = "Please create a pull request for the following code changes.",
