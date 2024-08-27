@@ -46,8 +46,8 @@ if not vim.g.vscode then
       vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
 
       -- Disable convert to uppercase and lowercase in visual mode
-      vim.keymap.set('v', 'u', '<Nop>', { noremap = true, silent = true })
-      vim.keymap.set('v', 'U', '<Nop>', { noremap = true, silent = true })
+      vim.keymap.set('v', 'u', '<Esc>', { noremap = true, silent = true })
+      vim.keymap.set('v', 'U', '<Esc>', { noremap = true, silent = true })
     end,
   })
 
