@@ -13,3 +13,7 @@ yamllint: ## Set up yamllint with custom configuration in the config directory
 continue:
 	$(call mkdir_safe,${HOME}/.continue)
 	$(call symlink,ai-stuff/continue/config.json,${HOME}/.continue/config.json)
+
+karabiner:
+	$(call mkdir_safe,${HOME}/.config/karabiner)
+	$(call symlink,other/karabiner/karabiner.json,${HOME}/.config/karabiner/karabiner.json)
