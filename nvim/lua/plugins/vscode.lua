@@ -42,7 +42,6 @@ if not vim.g.vscode then
       vim.keymap.set("n", "<S-l>", "<Cmd>call VSCodeNotify('workbench.action.nextEditor')<CR>")
 
       -- Toggle Primary Sidebar Like nvim-tree
-      vim.keymap.set("n", "<C-b>", "<Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
       vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
 
       -- Disable convert to uppercase and lowercase in visual mode
