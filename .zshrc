@@ -160,6 +160,7 @@ fi
 
 # eval "$(gh copilot alias -- zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+eval $(thefuck --alias)
 
 # Created by `pipx` on 2024-06-14 23:26:07
 export PATH="$PATH:/Users/denizgokcin/.local/bin"
