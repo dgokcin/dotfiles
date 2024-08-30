@@ -37,3 +37,7 @@ Take a step back and think step-by-step about how to achieve the best possible r
 - Write a final INPUT section with just the value 'INPUT:' inside it.
 
 - Ensure you follow ALL these instructions when creating your output.
+
+# INPUT
+
+INPUT:
