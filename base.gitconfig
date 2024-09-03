@@ -138,6 +138,8 @@
     # a.k.a. ‘delete merged’
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
+
+
     # List contributors with number of commits
     contributors = shortlog --summary --numbered
 
@@ -173,6 +175,26 @@
 
     # Fixup with fzf
     fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
+
+    # Delete all local branches except the excluded ones
+    prune = "!f() { \
+        exclude_branches=(main master $@); \
+        branches_to_delete=$(git branch | grep -v -E \"($(IFS='|'; echo "${exclude_branches[*]}"))\"); \
+        if [ -z \"$branches_to_delete\" ]; then \
+            echo \"No branches to delete.\"; \
+            return 0; \
+        fi; \
+        echo \"Branches to delete:\"; \
+        echo \"$branches_to_delete\"; \
+        read -p \"Are you sure you want to delete these branches? (y/n) \" -n 1 -r; \
+        echo; \
+        if [[ $REPLY =~ ^[Yy]$ ]]; then \
+            echo \"$branches_to_delete\" | xargs git branch -D; \
+            echo \"Branches deleted.\"; \
+        else \
+            echo \"Operation cancelled.\"; \
+        fi; \
+    }; f"
 
 [help]
 
