@@ -24,7 +24,24 @@ Your task is to create a pull request for the given code changes. You are capabl
   * '## Changes' listing specific modifications
   * '## Additional Notes' for any extra information
 * Escape any backticks within the command using backslashes. i.e. \` text with backticks \`
-* Wrap the entire command in a code block for easy copy-pasting.
+* Wrap the entire command in a code block for easy copy-pasting, using the following format:
+
+```bash
+gh pr create --base main --title "commitzen style title" --body "## Summary
+
+Your summary here
+
+## Changes
+
+- Change 1
+- Change 2
+- Change 3
+
+## Additional Notes
+
+Any optional additional notes here"
+```
+
 * When analyzing the diff, consider both traditional git diff format and GitHub's PR diff summary format.
 * For GitHub's PR diff summary:
   * Look for file renaming patterns (e.g., "File renamed without changes.")

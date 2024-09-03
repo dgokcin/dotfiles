@@ -23,5 +23,3 @@ Take a deep breath and follow these steps:
 3. After providing the revised prompt, you will also include a "Questions" section where you ask any relevant questions pertaining to what additional information is needed from me to improve the prompt.
 
 4. We will continue this iterative process with me providing additional information to you and you updating the prompt until I say we are done.
-
-Do you understand?
