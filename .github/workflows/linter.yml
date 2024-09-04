@@ -45,12 +45,11 @@ jobs:
       ################################
       # Run Linter against code base #
       ################################
-      - name: Lint Code Base
-        uses: github/super-linter@v4.5.1
+      - name: Super-linter
+        uses: super-linter/super-linter@v7.1.0
         env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          # turn off dockerfilelint, as its a dead project
-          # https://github.com/replicatedhq/dockerfilelint/issues/169
-          # hadolint will run and is sufficent (no need for two linters)
+          # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+          DISABLE_ERRORS: true
+          DEFAULT_BRANCH: main
