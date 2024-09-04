@@ -35,7 +35,7 @@ Your summary here
 ## Changes
 
 - Change 1
-- Change 2
+- Change 2 with escaped \`backticks\`
 - Change 3
 
 ## Additional Notes
