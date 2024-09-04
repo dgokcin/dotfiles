@@ -19,6 +19,7 @@ Your task is to create a pull request for the given code changes. You are capabl
 * Include the `--base main` flag.
 * Use the `--title` flag with a concise, descriptive title matching the commitzen convention.
 * Use the `--body` flag for the PR description.
+* Output only the git commit command in a single `bash` code block.
 * Include the following sections in the body:
   * '## Summary' with a brief overview of changes
   * '## Changes' listing specific modifications

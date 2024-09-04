@@ -31,7 +31,7 @@ Take a deep breath and follow these steps:
    [Enhanced steps]
 
    # INPUT
-   [Input section, if applicable]
+   [Input section, always empty and as the last section]
    ```
 
 5. Explain the key changes and improvements made.
