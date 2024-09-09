@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.6.0](https://github.com/dgokcin/dotfiles/compare/v3.5.0...v3.6.0) (2024-09-09)
+
+
+### Features
+
+* add karabiner configuration and update clean task ([#114](https://github.com/dgokcin/dotfiles/issues/114)) ([4100e44](https://github.com/dgokcin/dotfiles/commit/4100e4468856e24447abc01b1225b79ac9a7dafc))
+* enhance prompts and add git prune alias ([#122](https://github.com/dgokcin/dotfiles/issues/122)) ([3525a14](https://github.com/dgokcin/dotfiles/commit/3525a14746d5abce00041d2db6b09ec25fa35343))
+
+
+### Bug Fixes
+
+* fetch latest changes and update key mappings ([#112](https://github.com/dgokcin/dotfiles/issues/112)) ([48dc110](https://github.com/dgokcin/dotfiles/commit/48dc11037dbdf08fa57a0f420036c2f6c4753375))
+* **keymap:** change visual mode 'u' and 'U' keymaps to escape instead of no operation ([#115](https://github.com/dgokcin/dotfiles/issues/115)) ([d7d57b3](https://github.com/dgokcin/dotfiles/commit/d7d57b3580f844e39024ed2befcb0e98dd7c7c8b))
+* update commit message examples to use multiline strings ([#127](https://github.com/dgokcin/dotfiles/issues/127)) ([1b2f67d](https://github.com/dgokcin/dotfiles/commit/1b2f67d2426a59d71834c50dcff9115507d1c061))
+
 ## [3.5.0](https://github.com/dgokcin/dotfiles/compare/v3.4.0...v3.5.0) (2024-08-26)
 
 
