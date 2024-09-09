@@ -1,17 +1,114 @@
 # dotfiles
 
-These are my personal dotfiles and configurations, carefully crafted to optimize my development environment. Each dotfile is tailored to a specific task, designed to streamline my workflow and maximize productivity.
+This repository contains my personal dotfiles and configuration scripts for setting up development environments across different contexts (personal and work).
+
+## Table of Contents
+
+- [dotfiles](#dotfiles)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Components](#components)
+    - [Git Configuration](#git-configuration)
+    - [Shell Configuration](#shell-configuration)
+    - [Editors](#editors)
+    - [Tools](#tools)
+  - [AI-Stuff Directory](#ai-stuff-directory)
+  - [Customization](#customization)
 
 ## Overview
 
-- **vim**: Configurations for Vim, including plugins and key mappings for efficient text editing. This is now deprecated in favor of neovim.
-- **neovim**: Configurations for neovim, including plugins and key mappings for efficient text editing. LazyVim is used as the baseline configuration.
-- **vsvim, ideavim, gvim,**: Additional configurations for various text editors to improve coding experience. No longer used.
-- **vscodevim**: Legacy configuration for the VSCode Vim Plugin is no longer necessary, as the VSCode Neovim extension offers better compatibility and speed.
-- **lazygit**: Configuration for the lazygit tool, simplifying Git interactions.
-- **bash, zsh**: Shell configurations with aliases and functions for improved command-line usage.
-- **base.gitconfig, personal.gitconfig, work.gitconfig**: Git configurations tailored for enhancing git workflows. Due to the precedence in git config, the base configuration is the most generic one. The personal and work configurations are meant to be used for personal and work-related tasks.
-- **yamllint**: Configuration for YAML linting to maintain consistent YAML file formatting.
-- **iterm2, terminator, winterm**: Terminal configurations for different platforms to customize terminal settings.
+This dotfiles repository is designed to provide a modular and flexible setup for both personal and work environments. It uses a Makefile-based system to manage various configurations and tools, allowing for easy installation and customization.
 
-Feel free to explore the configurations and adapt them to your needs. If you have any suggestions or improvements, please let me know!
+Key features:
+
+- Modular configuration for different editors and environments
+- Separate Git configurations for personal and work setups
+- Shell configuration with Oh My Zsh and custom plugins
+- Various development tools and utilities
+- AI-assisted development tools and prompts
+
+## Installation
+
+1. Clone this repository:
+
+   ```
+   git clone https://github.com/yourusername/dotfiles.git
+   cd dotfiles
+   ```
+
+2. Run the appropriate make command for your setup:
+
+   ```
+   make personal  # For personal setup
+   make work      # For work setup
+   ```
+
+## Usage
+
+The repository uses a Makefile to manage different aspects of the setup. Here are some common commands:
+
+- `make help`: Display all available targets
+- `make personal`: Set up personal environment
+- `make work`: Set up work environment
+- `make personal-git`: Configure Git for personal use
+- `make work-git`: Configure Git for work use
+- `make zsh`: Set up Zsh configuration
+- `make nvim`: Set up Neovim configuration
+- `make vscode`: Set up Visual Studio Code configuration
+
+For a full list of available commands, run `make help`.
+
+## Components
+
+### Git Configuration
+
+- `base.gitconfig`: Common Git configuration
+- `personal.gitconfig`: Personal Git settings
+- `work.gitconfig`: Work-specific Git settings
+
+### Shell Configuration
+
+- `.zshrc`: Zsh configuration file
+- Oh My Zsh with custom plugins
+
+### Editors
+
+- Neovim configuration
+- Visual Studio Code settings
+
+### Tools
+
+- Lazygit
+- Yamllint
+- Continue AI
+- Karabiner (for macOS)
+
+## AI-Stuff Directory
+
+The `ai-stuff` directory contains various AI-assisted development tools and prompts:
+
+- `cursor/prompts`: Custom prompts for AI-powered coding assistants
+  - `create-pr`: Prompt for generating pull request descriptions
+  - `create-commit`: System prompt for generating standardized Git commit messages
+  - `explain-project`: Prompt for explaining project structure and approach
+  - `create-issue`: Prompt for creating well-structured GitHub issues
+  - `create-summary`: Prompt for summarizing content
+  - `explain-code`: Prompt for explaining code snippets or configurations
+  - `terraform-expert`: Prompt for Terraform and Terragrunt expertise
+  - `gha-expert`: Prompt for GitHub Actions expertise
+  - `containerization-expert`: Prompt for Docker-related queries
+- `continue`: Configuration for the Continue AI tool
+- `fabric`: Additional AI-related scripts or configurations
+
+These AI-assisted tools and prompts are designed to enhance your development workflow by providing intelligent suggestions, explanations, and automations.
+
+## Customization
+
+You can customize the setup by modifying the relevant configuration files:
+
+- Edit `.zshrc` for shell customizations
+- Modify Git configs in `base.gitconfig`, `personal.gitconfig`, or `work.gitconfig`
+- Adjust editor settings in their respective configuration files
+- Customize AI prompts in the `ai-stuff/cursor/prompts` directory
