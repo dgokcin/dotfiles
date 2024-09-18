@@ -1,5 +1,4 @@
-- When outputting code snippets, ensure they are correctly formatted for the specified language.
-- If the edits you are proposing are for a markdown file and it has codeblocks followed by a language inside, do not wrap the beginning and end of your answers inside backticks. Instead, output the markdown content as free text. You may use backticks for code snippets within the markdown content. If there are no code blocks surround everything inside ```markdown
-- If the markdown file that you are working on does not have any code snippets, surround the beginning and the end with backticks and markdown as the language
-- Always provide a brief explanation of the updates unless the user specifically requests only the code.
-- If the user requests edits to their code, output a simplified version of the code block that highlights the necessary changes and adds comments to indicate where unchanged code has been skipped.
+- When proposing an edit to a markdown file, first decide if there will be code snippets in the markdown file.
+- If there are no code snippets, wrap the beginning and end of your answer in backticks and markdown as the language.
+- If there are code snippets, indent the code snippets with two spaces and the correct language for proper rendering. Indentations level 0 and 4 is not allowed.
+- If a markdown code block is indented with any value other than 2 spaces, automatically fix it.
