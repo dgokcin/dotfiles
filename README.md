@@ -33,14 +33,14 @@ Key features:
 
 1. Clone this repository:
 
-   ```
+   ```bash
    git clone https://github.com/yourusername/dotfiles.git
    cd dotfiles
-   ```
+   ```bash
 
 2. Run the appropriate make command for your setup:
 
-   ```
+   ```bash
    make personal  # For personal setup
    make work      # For work setup
    ```
