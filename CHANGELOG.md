@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.7.0](https://github.com/dgokcin/dotfiles/compare/v3.6.0...v3.7.0) (2024-09-18)
+
+
+### Features
+
+* add command to get the parent branch of the current branch ([#129](https://github.com/dgokcin/dotfiles/issues/129)) ([9b10eae](https://github.com/dgokcin/dotfiles/commit/9b10eaed1dc80ff98c02cde14c8d60e457760160))
+* update cursor rules and improve markdown handling ([#132](https://github.com/dgokcin/dotfiles/issues/132)) ([59c483b](https://github.com/dgokcin/dotfiles/commit/59c483bd70ebec999e0dfda5a212ace8759409c5))
+
 ## [3.6.0](https://github.com/dgokcin/dotfiles/compare/v3.5.0...v3.6.0) (2024-09-09)
 
 
