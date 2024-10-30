@@ -1,10 +1,6 @@
 local IS_DEV = false
 
-local prompts = {
-  -- Code related prompts
-  Explain = "Please explain how the following code works.",
-  Review = "Please review the following code and provide suggestions for improvement.",
-  Tests = "Please explain how the selected code works, then generate unit tests for it.",
+local prompts = { -- Code related prompts Explain = "Please explain how the following code works.", Review = "Please review the following code and provide suggestions for improvement.", Tests = "Please explain how the selected code works, then generate unit tests for it.",
   Refactor = "Please refactor the following code to improve its clarity and readability.",
   FixCode = "Please fix the following code to make it work as intended.",
   FixError = "Please explain the error in the following text and provide a solution.",
@@ -111,10 +107,17 @@ return {
         end
 
         -- Fetch the latest changes from the remote repository
-        vim.fn.system("git fetch origin main")
+        vim.fn.system("git fetch origin")
 
         local current_branch = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n", "")
-        local cmd = string.format("git diff --no-color --no-ext-diff origin/main...%s", current_branch)
+        -- Get the parent branch (either main or master)
+        local parent_branch = vim.fn.system("git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1"):gsub("\n", "")
+
+        if parent_branch == "" then
+          return nil -- No common parent branch found
+        end
+
+        local cmd = string.format("git diff --no-color --no-ext-diff origin/%s...%s", parent_branch, current_branch)
         local handle = io.popen(cmd)
         if not handle then
           return nil
