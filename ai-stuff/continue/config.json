@@ -1,6 +1,16 @@
 {
   "models": [
     {
+      "title": "Llama 3",
+      "provider": "ollama",
+      "model": "llama3"
+    },
+    {
+      "title": "Ollama",
+      "provider": "ollama",
+      "model": "AUTODETECT"
+    },
+    {
       "title": "Codestral",
       "provider": "mistral",
       "model": "codestral-latest",
@@ -10,27 +20,12 @@
       "title": "ollama - llama 3",
       "provider": "ollama",
       "model": "llama3"
-    },
-    {
-      "title": "Gemini 1.5 Pro",
-      "model": "gemini-pro",
-      "contextLength": 1000000,
-      "apiKey": "<API_KEY>",
-      "provider": "free-trial"
-    },
-    {
-      "model": "gpt-4o",
-      "contextLength": 128000,
-      "title": "GPT-4o",
-      "systemMessage": "You are an expert software developer. You give helpful and concise responses.",
-      "provider": "free-trial"
     }
   ],
   "tabAutocompleteModel": {
-    "title": "Codestral",
-    "provider": "mistral",
-    "model": "codestral-latest",
-    "apiKey": "aFJAAt0XckRMkVMeeAzIioEKacFBRSSe"
+    "title": "Starcoder 3b",
+    "provider": "ollama",
+    "model": "starcoder2:3b"
   },
   "slashCommands": [
     {
@@ -44,7 +39,9 @@
     {
       "name": "share",
       "description": "Export the current chat session to markdown",
-      "params": { "ouputDir": "~/.continue/session-transcripts" }
+      "params": {
+        "ouputDir": "~/.continue/session-transcripts"
+      }
     },
     {
       "name": "cmd",
@@ -53,12 +50,16 @@
     {
       "name": "http",
       "description": "Does something custom",
-      "params": { "url": "<my server endpoint>" }
+      "params": {
+        "url": "<my server endpoint>"
+      }
     },
     {
       "name": "issue",
       "description": "Generate a link to a drafted GitHub issue",
-      "params": { "repositoryUrl": "https://github.com/continuedev/continue" }
+      "params": {
+        "repositoryUrl": "https://github.com/continuedev/continue"
+      }
     }
   ],
   "customCommands": [
@@ -88,4 +89,3 @@
     "provider": "transformers.js"
   }
 }
-
