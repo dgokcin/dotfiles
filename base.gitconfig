@@ -3,14 +3,14 @@
     name = Deniz Gökçin
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 [merge]
     ff = false
     tool = intellij
 
 [mergetool]
-	keepBackup = false
+    keepBackup = false
 
 # Use intellij as git mergetool
 [mergetool "intellij"]
@@ -36,10 +36,10 @@
     whitespace = cr-at-eol
 
 [pull]
-	rebase = true
+  rebase = true
 
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 
 [alias]
     # Add
@@ -140,18 +140,18 @@
 
     # Get the parent branch of the current branch
     parent = "!f() { \
-    branch=$(git symbolic-ref --short HEAD); \
-    if [[ $branch =~ ^(main|master|develop)$ ]]; then \
-      echo \"You're already on a main branch: $branch\"; \
-    else \
-      parent_branch=$(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1); \
-      if [ -z \"$parent_branch\" ]; then \
-        echo \"No common parent branch (main/master/develop) found.\"; \
-      else \
-        echo \"$parent_branch\"; \
-      fi; \
-    fi; \
-  }; f"
+        branch=$(git symbolic-ref --short HEAD); \
+        if [[ $branch =~ ^(main|master|develop)$ ]]; then \
+            echo \"You're already on a main branch: $branch\"; \
+        else \
+            parent_branch=$(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1); \
+            if [ -z \"$parent_branch\" ]; then \
+                echo \"No common parent branch (main/master/develop) found.\"; \
+            else \
+                echo \"$parent_branch\"; \
+            fi; \
+        fi; \
+    }; f"
 
     # List contributors with number of commits
     contributors = shortlog --summary --numbered
@@ -189,28 +189,7 @@
     # Fixup with fzf
     fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
 
-    # Delete all local branches except the excluded ones
-    prune = "!f() { \
-        exclude_branches=(main master $@); \
-        branches_to_delete=$(git branch | grep -v -E \"($(IFS='|'; echo "${exclude_branches[*]}"))\"); \
-        if [ -z \"$branches_to_delete\" ]; then \
-            echo \"No branches to delete.\"; \
-            return 0; \
-        fi; \
-        echo \"Branches to delete:\"; \
-        echo \"$branches_to_delete\"; \
-        read -p \"Are you sure you want to delete these branches? (y/n) \" -n 1 -r; \
-        echo; \
-        if [[ $REPLY =~ ^[Yy]$ ]]; then \
-            echo \"$branches_to_delete\" | xargs git branch -D; \
-            echo \"Branches deleted.\"; \
-        else \
-            echo \"Operation cancelled.\"; \
-        fi; \
-    }; f"
-
 [help]
-
     # Automatically correct and execute mistyped commands
     autocorrect = 1
 
