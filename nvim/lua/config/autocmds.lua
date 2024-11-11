@@ -32,3 +32,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
   pattern = { "terraform", "hcl", "tf" },
 })
+
+-- auto-recognize gitconfig filetypes
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.gitconfig", ".gitconfig", "gitconfig", ".gitconfig.*" },
+  callback = function()
+    vim.opt_local.filetype = "gitconfig"
+  end,
+})
