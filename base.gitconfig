@@ -142,19 +142,7 @@
     dc = "!git diff --staged | pbcopy"
 
     # Get the parent branch of the current branch
-    parent = "!f() { \
-        branch=$(git symbolic-ref --short HEAD); \
-        if [[ $branch =~ ^(main|master|develop)$ ]]; then \
-            echo \"You're already on a main branch: $branch\"; \
-        else \
-            parent_branch=$(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1); \
-            if [ -z \"$parent_branch\" ]; then \
-                echo \"No common parent branch (main/master/develop) found.\"; \
-            else \
-                echo \"$parent_branch\"; \
-            fi; \
-        fi; \
-    }; f"
+    parent = "!git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1"
 
     # List contributors with number of commits
     contributors = shortlog --summary --numbered
