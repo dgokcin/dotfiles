@@ -138,6 +138,9 @@
     # a.k.a. ‘delete merged’
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
+    # Copy the diff of the staged files to the clipboard
+    dc = "!git diff --staged | pbcopy"
+
     # Get the parent branch of the current branch
     parent = "!f() { \
         branch=$(git symbolic-ref --short HEAD); \
