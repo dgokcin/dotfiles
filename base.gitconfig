@@ -138,9 +138,6 @@
     # a.k.a. ‘delete merged’
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
-    # Echoes hello deniz
-    hello = "echo 'Hello Deniz'"
-
     # Copy the diff of the staged files to the clipboard
     dc = "!git diff --staged | pbcopy"
 
