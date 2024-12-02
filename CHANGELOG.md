@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.7.0](https://github.com/dgokcin/dotfiles/compare/v3.6.0...v3.7.0) (2024-12-02)
+
+
+### Features
+
+* add  to multi cursor event types ([#134](https://github.com/dgokcin/dotfiles/issues/134)) ([0aa4326](https://github.com/dgokcin/dotfiles/commit/0aa43260e2aa94a1a642e405e75b41e759992e7d))
+* add command to get the parent branch of the current branch ([#129](https://github.com/dgokcin/dotfiles/issues/129)) ([9b10eae](https://github.com/dgokcin/dotfiles/commit/9b10eaed1dc80ff98c02cde14c8d60e457760160))
+* stop media buttons from starting apple music ([#133](https://github.com/dgokcin/dotfiles/issues/133)) ([a0b459d](https://github.com/dgokcin/dotfiles/commit/a0b459d28576b5813dea5584f3c1b6c18018ef73))
+* update cursor rules and improve markdown handling ([#132](https://github.com/dgokcin/dotfiles/issues/132)) ([59c483b](https://github.com/dgokcin/dotfiles/commit/59c483bd70ebec999e0dfda5a212ace8759409c5))
+
 ## [3.6.0](https://github.com/dgokcin/dotfiles/compare/v3.5.0...v3.6.0) (2024-09-09)
 
 
