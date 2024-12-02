@@ -26,3 +26,5 @@ alias f='fabric'
 alias 'git?'='eval_git_question'
 alias 'gh?'='eval_gh_question'
 alias '??'='eval_shell_question'
+
+alias ansible-playbook='SSH_AUTH_SOCK=/dev/null pythonw ansible-playbook'
