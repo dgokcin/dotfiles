@@ -1,2 +1,5 @@
 [user]
-    email = deniz.gokcin@devoteam.com
+    email = deniz.gokcin@treatwell.com
+
+[url "git@git.treatwell.net:"]
+	insteadOf = https://git.treatwell.net/

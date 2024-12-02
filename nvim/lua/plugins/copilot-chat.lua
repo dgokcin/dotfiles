@@ -23,7 +23,7 @@ local prompts = {
 return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary", -- Use the canary branch if you want to test the latest features but it might be unstable
+    branch = "main", -- Use the canary branch if you want to test the latest features but it might be unstable
     -- Do not use branch and version together, either use branch or version
     dependencies = {
       { "nvim-telescope/telescope.nvim" }, -- Use telescope for help actions
