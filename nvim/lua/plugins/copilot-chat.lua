@@ -35,6 +35,7 @@ return {
       -- Register custom contexts
       contexts = {
         pr_diff = {
+          description = "Get the diff between the current branch and main",
           resolve = function()
             -- Check if we're in a git repository
             local is_git = vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null")
@@ -137,7 +138,7 @@ return {
           system_prompt = "You are an expert in writing clear, concise git commit messages following best practices.",
         },
         CommitUnstaged = {
-        prompt = "> #git:unstaged\n\n" .. string.format(commit_prompt, "unstaged changes"),
+          prompt = "> #git:unstaged\n\n" .. string.format(commit_prompt, "unstaged changes"),
           system_prompt = "You are an expert in writing clear, concise git commit messages following best practices.",
         },
         PullRequest = {
