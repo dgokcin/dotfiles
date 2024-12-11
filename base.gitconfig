@@ -184,3 +184,11 @@
     # Automatically correct and execute mistyped commands
     autocorrect = 1
 
+# Default personal config loaded first relative to the git config directory
+[include]
+    path = personal.gitconfig
+
+# Work config will override personal settings when in work directories
+[includeIf "gitdir:~/codes/work/"]
+    path = work.gitconfig
+
