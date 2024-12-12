@@ -65,7 +65,6 @@ For a full list of available commands, run `make help`.
 ### Git Configuration
 
 - `base.gitconfig`: Common Git configuration
-- `personal.gitconfig`: Personal Git settings
 - `work.gitconfig`: Work-specific Git settings
 
 ### Shell Configuration
@@ -109,6 +108,6 @@ These AI-assisted tools and prompts are designed to enhance your development wor
 You can customize the setup by modifying the relevant configuration files:
 
 - Edit `.zshrc` for shell customizations
-- Modify Git configs in `base.gitconfig`, `personal.gitconfig`, or `work.gitconfig`
+- Modify Git configs in `base.gitconfig`, or `work.gitconfig`
 - Adjust editor settings in their respective configuration files
 - Customize AI prompts in the `ai-stuff/cursor/prompts` directory
