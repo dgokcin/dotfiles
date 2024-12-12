@@ -17,7 +17,6 @@ clean:
 	$(call remove_file,${HOME}/.gvimrc)
 	$(call remove_file,${HOME}/.gitconfig)
 	$(call remove_file,${XDG_CONFIG_HOME}/git/config)
-	$(call remove_file,${XDG_CONFIG_HOME}/git/personal.gitconfig)
 	$(call remove_file,${XDG_CONFIG_HOME}/git/work.gitconfig)
 	$(call remove_file,${HOME}/.bash_profile)
 	$(call remove_file,${HOME}/.aliases)
