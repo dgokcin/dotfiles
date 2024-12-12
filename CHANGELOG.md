@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.7.0](https://github.com/dgokcin/dotfiles/compare/v3.6.0...v3.7.0) (2024-12-12)
+
+
+### Features
+
+* add  to multi cursor event types ([#134](https://github.com/dgokcin/dotfiles/issues/134)) ([0aa4326](https://github.com/dgokcin/dotfiles/commit/0aa43260e2aa94a1a642e405e75b41e759992e7d))
+* add command to get the parent branch of the current branch ([#129](https://github.com/dgokcin/dotfiles/issues/129)) ([9b10eae](https://github.com/dgokcin/dotfiles/commit/9b10eaed1dc80ff98c02cde14c8d60e457760160))
+* enhance CopilotChat.nvim plugin with new features and improvements ([#140](https://github.com/dgokcin/dotfiles/issues/140)) ([cf03e9f](https://github.com/dgokcin/dotfiles/commit/cf03e9f48dde1313ca26e7d1c3632b5c142d9789))
+* stop media buttons from starting apple music ([#133](https://github.com/dgokcin/dotfiles/issues/133)) ([a0b459d](https://github.com/dgokcin/dotfiles/commit/a0b459d28576b5813dea5584f3c1b6c18018ef73))
+* update cursor rules and improve markdown handling ([#132](https://github.com/dgokcin/dotfiles/issues/132)) ([59c483b](https://github.com/dgokcin/dotfiles/commit/59c483bd70ebec999e0dfda5a212ace8759409c5))
+* update git configuration setup ([#142](https://github.com/dgokcin/dotfiles/issues/142)) ([4719483](https://github.com/dgokcin/dotfiles/commit/47194837b57d35f2d46b53c849ee25cd36c5c4c6))
+
 ## [3.6.0](https://github.com/dgokcin/dotfiles/compare/v3.5.0...v3.6.0) (2024-09-09)
 
 
