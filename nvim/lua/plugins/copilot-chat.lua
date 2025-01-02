@@ -165,8 +165,7 @@ return {
           - The command should start with `gh pr create`.
           - Do not use the new line character in the command since it does not work
           - Output needs to be a multi-line command
-          - Include the `--base [branch]` flag
-          - Compute the branch name by running `git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1`
+          - Include the `--base $(git parent)` flag
           - Use the `--title` flag with a concise, descriptive title matching the commitzen convention.
           - Use the `--body` flag for the PR description.
           - Include the following sections in the body:
@@ -179,7 +178,7 @@ return {
           Desired Output:
           ```sh
           gh pr create \
-            --base [result of git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1] \
+            --base $(git parent) \
             --title "feat: your title here" \
             --body "## Summary
           Your summary here
