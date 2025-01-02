@@ -35,7 +35,7 @@ return {
       -- Register custom contexts
       contexts = {
         pr_diff = {
-          description = "Get the diff between the current branch and main",
+          description = "Get the diff between the current branch and target branch",
           resolve = function()
             -- Check if we're in a git repository
             local is_git = vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null")
@@ -43,8 +43,16 @@ return {
               return { { content = "Not in a git repository", filename = "error", filetype = "text" } }
             end
 
+            -- Get target branch (main/master/develop)
+            local target_branch = vim.fn.system(
+              "git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1"
+            ):gsub("\n", "")
+            if vim.v.shell_error ~= 0 or target_branch == "" then
+              return { { content = "Failed to determine target branch", filename = "error", filetype = "text" } }
+            end
+
             -- Fetch the latest changes from the remote repository
-            local fetch_result = vim.fn.system("git fetch origin main 2>&1")
+            local fetch_result = vim.fn.system("git fetch origin " .. target_branch .. " 2>&1")
             if vim.v.shell_error ~= 0 then
               return { { content = "Failed to fetch from remote: " .. fetch_result, filename = "error", filetype = "text" } }
             end
@@ -56,7 +64,7 @@ return {
             end
 
             -- Get the diff
-            local cmd = string.format("git diff --no-color --no-ext-diff origin/main...%s 2>&1", current_branch)
+            local cmd = string.format("git diff --no-color --no-ext-diff origin/%s...%s 2>&1", target_branch, current_branch)
             local handle = io.popen(cmd)
             if not handle then
               return { { content = "Failed to execute git diff", filename = "error", filetype = "text" } }
@@ -67,7 +75,7 @@ return {
 
             -- If there's no diff, return a meaningful message
             if not result or result == "" then
-              return { { content = "No changes found between current branch and main", filename = "info", filetype = "text" } }
+              return { { content = "No changes found between current branch and " .. target_branch, filename = "info", filetype = "text" } }
             end
 
             return {
@@ -157,7 +165,7 @@ return {
           - The command should start with `gh pr create`.
           - Do not use the new line character in the command since it does not work
           - Output needs to be a multi-line command
-          - Include the `--base main` flag.
+          - Include the `--base $(git parent)` flag
           - Use the `--title` flag with a concise, descriptive title matching the commitzen convention.
           - Use the `--body` flag for the PR description.
           - Include the following sections in the body:
@@ -170,7 +178,7 @@ return {
           Desired Output:
           ```sh
           gh pr create \
-            --base main \
+            --base $(git parent) \
             --title "feat: your title here" \
             --body "## Summary
           Your summary here
