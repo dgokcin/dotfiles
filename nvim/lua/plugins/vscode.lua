@@ -13,11 +13,11 @@ local enabled = {
   "mini.move",
   "mini.pairs",
   "mini.surround",
-  "nvim-treesitter",
-  "nvim-treesitter-textobjects",
-  "nvim-ts-context-commentstring",
+  -- "nvim-treesitter",
+  -- "nvim-treesitter-textobjects",
+  -- "nvim-ts-context-commentstring",
   "snacks.nvim",
-  "ts-comments.nvim",
+  -- "ts-comments.nvim",
   "vim-repeat",
   "yanky.nvim",
 }
@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd("User", {
     vim.keymap.set("n", "<S-l>", "<Cmd>call VSCodeNotify('workbench.action.nextEditor')<CR>")
 
     -- Toggle Primary Sidebar Like nvim-tree
-    vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<CR>")
+    vim.keymap.set("n", "<leader>e", "<Cmd>call VSCodeNotify('workbench.explorer.fileView.focus')<CR>")
 
     -- Disable convert to uppercase and lowercase in visual mode
     vim.keymap.set("v", "u", "<Esc>", { noremap = true, silent = true })
@@ -72,4 +72,3 @@ return {
     opts = { highlight = { enable = false } },
   },
 }
-
