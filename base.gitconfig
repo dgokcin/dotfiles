@@ -1,6 +1,7 @@
 [user]
-    name = Deniz Gökçin
+    name = deniz gökçin
     email = 33603535+dgokcin@users.noreply.github.com
+	signingkey = 27194672F4140F41
 
 [init]
     defaultBranch = main
@@ -187,3 +188,7 @@
 # Work config will override personal settings when in work directories
 [includeIf "gitdir:~/codes/work/"]
     path = work.gitconfig
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
