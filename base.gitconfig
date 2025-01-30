@@ -151,6 +151,9 @@
     # Show the user email for the current repository.
     whoami = config user.email
 
+    # Print latest commits with committer
+    lc = "!git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -n 10"
+
     # Create a release branch from the current branch named release/DDMMYYY. If a release branch already exists, a new one will not be created with -1 appended to the name. if it exists as well -2 will be appended and so on.
     release = "!f() { \
         local branch=$(git rev-parse --abbrev-ref HEAD); \
