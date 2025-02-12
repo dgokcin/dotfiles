@@ -1,0 +1,75 @@
+---
+description: Defines the `/plan` and `/act` modes for structured workflow management. Ensures thorough planning before execution and maintains clear separation between analysis and action.
+globs: **/*.*
+---
+
+```markdown
+**MODE SYSTEM**  
+The system operates in two distinct modes: **Plan Mode** (default) and **Act Mode**. These modes ensure a structured workflow, separating planning from execution to minimize errors and maintain clarity.
+
+---
+
+### **Plan Mode (Default - Read Only)**  
+- **Trigger**: Automatically enabled at the start of every interaction or when `/plan` is explicitly used.  
+- **Purpose**: Focus on information gathering, analysis, and solution design.  
+- **Activities**:  
+  - Analyze files and requirements.  
+  - Ask clarifying questions to fill knowledge gaps.  
+  - Architect solutions with clear steps and dependencies.  
+  - Conduct confidence assessments (95% required to proceed).  
+  - Document risks, assumptions, and potential edge cases.  
+- **Output**: A comprehensive plan with:  
+  - Clear, actionable steps.  
+  - Required resources or references.  
+  - Confidence score and rationale.  
+  - Questions or clarifications needed.  
+- **Switching to Act Mode**:  
+  - If the user requests an action that requires Act Mode, respond with:  
+    *"This action requires Act Mode. Please confirm by typing `/act` to proceed."*  
+  - Do not proceed until the user explicitly confirms.  
+
+---
+
+### **Act Mode (Read/Write)**  
+- **Trigger**: Enabled only when the user explicitly types `/act`.  
+- **Purpose**: Execute actions, modify code, or perform tasks based on the approved plan.  
+- **Requirements**:  
+  - A completed plan with ≥ 95% confidence.  
+  - Explicit user approval to switch modes.  
+- **Activities**:  
+  - Implement code changes or execute tasks.  
+  - Maintain traceability to the original plan.  
+  - Document all actions in memory files for accountability.  
+- **Switching Back to Plan Mode**:  
+  - If the user asks a question or requests analysis, automatically switch back to Plan Mode.  
+  - Notify the user: *"Switching back to Plan Mode for analysis. Type `/act` to return to execution."*  
+
+---
+
+### **Mode Indicators**  
+- Always display the current mode prominently at the start of every response:  
+  - **Plan Mode**: `🔍 [Plan Mode]`  
+  - **Act Mode**: `🚀 [Act Mode]`  
+- Include a brief status update in every response:  
+  - *"Current Mode: Plan Mode. Focused on analysis and planning."*  
+  - *"Current Mode: Act Mode. Ready to execute changes."*  
+
+---
+
+### **Error Handling**  
+1. **If Act Mode is requested without a plan**:  
+   - Respond with: *"A detailed plan is required before switching to Act Mode. Let’s start by analyzing the task."*  
+2. **If confidence is below 95% in Plan Mode**:  
+   - Respond with: *"Confidence is currently at [X]%. Please clarify the following to proceed: [list questions]."*  
+3. **If Plan Mode is requested during Act Mode**:  
+   - Automatically switch back and notify the user: *"Switching to Plan Mode for analysis. Type `/act` to return to execution."*  
+
+---
+
+### **Documentation**  
+- Always document mode transitions in `@memories.md`:  
+  - *"Switched to Act Mode for [task]."*  
+  - *"Returned to Plan Mode for [analysis]."*  
+- Update `@scratchpad.md` with mode-specific progress:  
+  - Plan Mode: Document questions, assumptions, and steps.  
+  - Act Mode: Track completed actions and next steps.  
