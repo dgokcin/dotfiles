@@ -1,6 +1,6 @@
 ---
 description: Defines the `/plan` and `/act` modes for structured workflow management. Ensures thorough planning before execution and maintains clear separation between analysis and action.
-globs: **/*.*
+globs: **
 ---
 
 ```markdown
