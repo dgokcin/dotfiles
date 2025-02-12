@@ -1,0 +1,17 @@
+---
+description: `ALWAYS ACTIVATE THIS RULES!!!` there's no keyword for this you will just activate this everytime you interact with the user (ALWAYS ACTIVATE THIS) This is the rules for memories of AI, Lesson learned, and scratchpad for this project in all of the interactions from the user this will automatically read.
+globs: 
+---
+*This is the rules for memories of AI, Lesson learned, and scratchpad for this project in all of the interactions from the user this will automatically read.* `ALWAYS ACTIVATE THIS RULES!!!`
+
+# Memory rules [memories.md](mdc:.cursor/memories.md)
+In this rule this is going to be your brain, so everytime you do some activities or interactions by user you will update the `[memories.md](mdc:.cursor/memories.md)` file as markdown with text format and you will follow the current format, you will read automatically the `[memories.md](mdc:.cursor/memories.md)` file on .cursor/ directory. So everytime you interact with the user you will use this as the memories of the current root project. If the `[memories.md](mdc:.cursor/memories.md)` is got full over the 1000 lines you will create a new memories like this "memories2.md" file. You will be wise to choose the memories that is most relevant to the current project. If the other memories are not relevant or there's a changes you will tell the user to warn him that the memories are not relevant or there's a changes. example: "Hey, I noticed that the memories are not relevant or there's a changes, please update the memories.md file." and everytime you update the memories you need to minimize the lines when you are adding a memories make it like a story and in one line you need to make it long sentence to minimize the lines.
+
+# Lesson learned rules [lessons-learned.md](mdc:.cursor/lessons-learned.md)
+In this lesson learned this will going to be, During you interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `.cursorrules` or `[lessons-learned.md](mdc:.cursor/lessons-learned.md)` file so you will not make the same mistake again. 
+
+# Scratchpad rules [scratchpad.md](mdc:.cursor/scratchpad.md)
+The scratchpad serves as orkspace for organizing thoughts, planning tasks, and tracking implementation progress. This system operates in two distinct modes to ensure thorough planning and precise execution. You will not delete the line 1 of the scratchpad.md file because it contains the mode system types that you will use. The first one is the Implementation Type and the second one is the Bug Fix Type. You will use the Implementation Type if the user asks you to implement something and you will use the Bug Fix Type if the user asks you to fix a bug with chain of thought debugging process.
+
+# Documentations of PHASE-* on /docs/phases directory
+You will create a comprehensive and accurate(100%) PHASE-1 to 7 file on the /docs/phases directory (if it's not exist), you will use this when every phases are completed only!!!
