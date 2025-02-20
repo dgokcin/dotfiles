@@ -1,0 +1,80 @@
+---
+description: ALWAYS use when storing or retrieving lessons learned from user interactions to maintain knowledge and improve AI responses
+globs: .ai/lessons/**/*.md
+---
+
+# Lessons Learned Documentation Standards
+
+## Context
+- When capturing important lessons, preferences, or insights from user interactions
+- When needing to reference past learnings to improve future responses
+- When maintaining a knowledge base of user-specific preferences and requirements
+
+## Requirements
+
+### Directory Structure
+- All lessons must be stored in `.ai/lessons/` directory
+- Use categorized subdirectories for better organization
+- File naming: `YYYY-MM-DD-brief-description.md`
+
+### Document Structure
+
+#### 1. Header
+- Title describing the lesson
+- Date of learning
+- Context of interaction
+
+#### 2. Lesson Category
+Must be one of:
+- Code Style
+- Project Structure
+- Communication Preferences
+- Technical Requirements
+- Process Requirements
+- Best Practices
+- Other (with justification)
+
+#### 3. Lesson Content
+- Clear description of the lesson
+- Original context or trigger
+- Impact on future interactions
+- Examples if applicable
+- Any related lessons or dependencies
+
+#### 4. Application Guidelines
+- When to apply this lesson
+- How to apply this lesson
+- Any exceptions or special cases
+
+#### 5. Status
+- Active (default)
+- Superseded (reference to new lesson)
+- Deprecated (with reason)
+
+## Examples
+
+<example>
+# Git Commit Message Format
+Date: 2024-03-20
+Category: Process Requirements
+
+## Context
+User expressed specific preferences for git commit message formatting during a code review session.
+
+## Lesson
+- Always use conventional commit format
+- Include ticket number in parentheses at end
+- Keep first line under 72 characters
+- Add detailed description when needed
+
+## Application
+Apply this format for all commit-related suggestions and when discussing version control.
+
+## Status: Active
+</example>
+
+<example type="invalid">
+Learned today:
+User likes specific commit messages
+Should remember this
+</example>
