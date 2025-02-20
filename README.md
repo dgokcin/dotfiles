@@ -15,6 +15,11 @@ This repository contains my personal dotfiles and configuration scripts for sett
     - [Editors](#editors)
     - [Tools](#tools)
   - [AI-Stuff Directory](#ai-stuff-directory)
+  - [Cursor Rules and Workflows](#cursor-rules-and-workflows)
+    - [Core Rule Templates](#core-rule-templates)
+    - [Workflow Automation](#workflow-automation)
+    - [Key Features](#key-features)
+    - [Configuration](#configuration)
   - [Customization](#customization)
 
 ## Overview
@@ -102,6 +107,40 @@ The `ai-stuff` directory contains various AI-assisted development tools and prom
 - `fabric`: Additional AI-related scripts or configurations
 
 These AI-assisted tools and prompts are designed to enhance your development workflow by providing intelligent suggestions, explanations, and automations.
+
+## Cursor Rules and Workflows
+
+> This section is adapted from [bmadcode's cursor-auto-rules-agile-workflow](https://github.com/bmadcode/cursor-auto-rules-agile-workflow) repository and [Meh-S-Eze's best practices guide](https://forum.cursor.com/t/my-best-practices-for-mdc-rules-and-troubleshooting/50526/3) on the Cursor forum. Credit to the original authors for their excellent work on Cursor rules implementation and best practices.
+
+The repository includes a comprehensive set of Cursor rules and workflow templates to standardize development practices with my flavor of customizations.
+
+### Core Rule Templates
+
+- Located in `.cursor/rules/*.mdc`
+- Implements standardized formats for:
+  - Product Requirements Documents (PRD)
+  - Architecture Documentation
+  - Story Templates
+  - Documentation Standards
+
+### Workflow Automation
+
+- `bin/apply-rules.sh`: Automation script for rule deployment
+- `docs/workflow-rules.md`: Detailed documentation of workflow rules
+- `xnotes/*`: Workflow templates for various development scenarios
+
+### Key Features
+
+- Standardized cursor rule format for consistency
+- Integrated memory bank system for AI interactions
+- Agile workflow templates and documentation
+- Documentation standards for PRDs, architecture, and stories
+
+### Configuration
+
+- `.cursorignore`: Configured to exclude workflow templates (xnotes)
+- `.gitignore`: Set up to protect private rules
+- `.path`: Includes DOTFILES_DIR configuration
 
 ## Customization
 
