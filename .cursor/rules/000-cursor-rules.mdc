@@ -1,0 +1,133 @@
+---
+description: Use ALWAYS when asked to CREATE A RULE or UPDATE A RULE or taught a lesson from the user that should be retained as a new rule for Cursor
+globs: .cursor/rules/*.mdc
+---
+# Cursor Rules Format
+---
+description: Use ALWAYS when asked to CREATE A RULE or UPDATE A RULE or taught a lesson from the user that should be retained as a new rule for Cursor
+author: BMad
+date: 2025-02-17
+status: approved
+version: 3.1.0
+---
+## Core Structure
+
+```mdc
+---
+description: ACTION when TRIGGER to OUTCOME
+globs: *.mdc
+tags: [tag1, tag2]  # New: For improved AI categorization
+priority: 1-5       # New: For conflict resolution
+version: Major.Minor.Patch
+---
+
+# Rule Title
+
+## Context
+- When to apply this rule
+- Prerequisites or conditions
+
+## Requirements
+- Concise, actionable items
+- Each requirement must be testable
+
+## Examples
+<example>
+Good concise example with explanation
+</example>
+
+<example type="invalid">
+Invalid concise example with explanation
+</example>
+```
+
+## File Organization
+
+### Location
+- Path: `.cursor/rules/`
+- Extension: `.mdc`
+
+### Naming Convention
+PREFIX-name.mdc where PREFIX is:
+- 0XX: Core standards
+- 1XX: Tool configs
+- 3XX: Testing standards
+- 1XXX: Language rules
+- 2XXX: Framework rules
+- 8XX: Workflows
+- 9XX: Templates
+- _name.mdc: Private rules
+
+### Glob Pattern Examples
+Common glob patterns for different rule types:
+- Core standards: .cursor/rules/*.mdc
+- Language rules: src/**/*.{js,ts}
+- Testing standards: **/*.test.{js,ts}
+- React components: src/components/**/*.tsx
+- Documentation: docs/**/*.md
+- Configuration files: *.config.{js,json}
+- Build artifacts: dist/**/*
+- Multiple extensions: src/**/*.{js,jsx,ts,tsx}
+- Multiple files: dist/**/*, docs/**/*.md
+
+## Required Fields
+
+### Frontmatter
+- description: ACTION TRIGGER OUTCOME format
+- globs: `glob pattern for files and folders`
+- tags: Categorization keywords
+- priority: 1 (highest) to 5 (lowest)
+- version: Semantic versioning
+
+### Body
+- context: Usage conditions
+- requirements: Actionable items
+- examples: Both valid and invalid
+
+## Formatting Guidelines
+
+- Use Concise Markdown primarily
+- XML tags limited to:
+  - <example>
+  - <danger>
+  - <required>
+  - <rules>
+  - <rule>
+  - <critical>
+- Always indent content within XML or nested XML tags by 2 spaces
+- Keep rules as short as possbile
+- Use Mermaid syntax if it will be shorter or clearer than describing a complex rule
+- Use Emojis where appropriate to convey meaning that will improve rule understanding by the AI Agent
+- Keep examples as short as possible to clearly convey the positive or negative example
+
+## Version Control when Updating an Existing Rule
+
+- Follow semantic versioning (MAJOR.MINOR.PATCH)
+- Document changes in commit messages
+- Start at version 1.0.0 for new rule
+- Always update the version if modifying an existing rule - use your judgement of the impact of the change to the rule to determin if its a major minor or patch increment.
+
+## AI Optimization Tips
+
+1. Use precise, deterministic ACTION TRIGGER OUTCOME format in descriptions
+2. Include only essential tags that directly impact rule application
+3. Set clear priority levels to resolve conflicts efficiently
+4. Provide concise positive and negative example of rule application in practice
+5. Optimize for AI context window efficiency
+6. Remove any non-essential or redundant information
+7. Use standard glob patterns without quotes (e.g., *.js, src/**/*.ts)
+
+## AI Context Efficiency
+
+1. Keep frontmatter description under 120 characters (or less) while maintaining clear intent for rule selection by AI AGent
+2. Limit examples to essential patterns only
+3. Use hierarchical structure for quick parsing
+4. Remove redundant information across sections
+5. Maintain high information density with minimal tokens
+6. Focus on machine-actionable instructions over human explanations
+
+<critical>
+  - NEVER include verbose explanations or redundant context that increases AI token overhead
+  - Keep file as short and to the point as possible BUT NEVER at the expense of sacrificing rule impact and usefulness for the AI Agent.
+</critical>
+

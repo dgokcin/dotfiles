@@ -5,3 +5,6 @@ vscode-settings.json
 !.vim_runtime/temp_dirs/undodir/.gitkeep
 *.DS_Store
 .vscode
+
+# Private individual user cursor rules
+.cursor/rules/_*.mdc
