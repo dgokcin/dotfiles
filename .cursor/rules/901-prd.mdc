@@ -1,0 +1,150 @@
+---
+description: ALWAYS use when creating a new PRD or modifying an existing one to ensure consistent structure and completeness. This rule enforces standardized PRD format with all required sections and proper documentation hierarchy.
+globs: **/prd.md
+---
+# PRD Template Standards
+
+<version>1.0.0</version>
+
+## Requirements
+
+- Follow standardized PRD structure
+- Include all required sections
+- Maintain proper documentation hierarchy
+- Use consistent formatting
+
+## PRD Structure
+
+### Required Sections
+
+#### 1. Header
+- Title: "Product Requirements Document (PRD) for {project-name}"
+
+#### 2. Status
+- Draft (default)
+- Approved
+
+#### 3. Introduction
+- Clear description of {project-name}
+- Overview of the project scope
+- Business context and drivers
+- Target users/stakeholders
+
+#### 4. Goals
+- Clear project objectives
+- Measurable outcomes
+- Success criteria
+- Key performance indicators (KPIs)
+
+#### 5. Features and Requirements
+- Functional requirements
+- Non-functional requirements
+- User experience requirements
+- Integration requirements
+- Compliance requirements
+
+#### 6. Epic Structure
+- At least one Epic must be defined
+- Format: Epic-{N}: {Title} ({Status})
+  - Status can be: Current, Future, Complete
+- Only one Epic can be "Current" at a time
+- Each Epic represents a major feature or functionality
+- Epics must be implemented sequentially
+
+#### 7. Story List
+- Stories are organized under Epics
+- Format: Story-{N}: {Description of story/task}
+- Granular steps and milestones
+- Clear sequential progression path
+- Implementable chunks
+- Dependencies between stories
+
+#### 8. Future Enhancements
+- Potential Epics for future consideration
+- Ideas collected during Epic progression
+- Prioritization guidelines
+- Impact assessment
+
+## Examples
+
+<example>
+# Product Requirements Document (PRD) for Chess Game Platform
+
+## Status: Draft
+
+## 1. Introduction
+This PRD outlines the implementation of a modern chess gaming platform that will provide both single and multiplayer chess experiences. The system will evolve from a basic chess game to a full-featured online platform.
+
+## 2. Goals
+- Create an engaging chess platform
+- Support multiple play modes
+- Ensure fair and rules-compliant gameplay
+- Build a thriving online chess community
+
+## 3. Features and Requirements
+### Functional Requirements
+- Chess game rules enforcement
+- Multiple game modes
+- User profiles
+- Match history
+
+### Non-functional Requirements
+- Response time < 100ms for moves
+- 99.9% uptime
+- Cross-platform compatibility
+- Secure gameplay
+
+## 4. Epic Structure
+
+Epic-1: Basic Chess Game (Current)
+- Implement core 2-player chess game in web browser
+- Enforce all basic chess rules
+- Provide move validation
+- Support basic game saving
+
+Epic-2: AI Opponent (Future)
+- Single player vs computer
+- Multiple AI difficulty levels
+- AI move explanation system
+
+Epic-3: Online Direct Play (Future)
+- Direct IP-to-IP gameplay
+- Real-time move synchronization
+- Basic chat functionality
+
+Epic-4: Online Matchmaking (Future)
+- User accounts and profiles
+- Lobby system
+- Matchmaking algorithm
+- Rating system
+
+## 5. Story List
+
+Epic-1: Basic Chess Game (Current)
+Story-1: Project Setup
+Story-2: Chessboard UI
+Story-3: Piece Movement
+Story-4: Rules Engine
+Story-5: Game State Management
+Story-6: Production Release
+
+Epic-2: AI Opponent (Future)
+Story-7: Basic AI Implementation
+Story-8: Difficulty Levels
+Story-9: AI Analytics
+
+[Additional Epics' stories to be detailed when they become current]
+
+## 6. Future Enhancements
+- Tournament organization system
+- Chess puzzle system
+- Professional streaming integration
+- Mobile apps
+</example>
+
+<example type="invalid">
+Chess Game
+- Add basic game
+- Maybe add AI later
+- Other features we might need
+</example>

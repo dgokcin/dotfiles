@@ -1,3 +1,5 @@
+export DOTFILES_DIR="$HOME/codes/dotfiles"
+export PATH="$DOTFILES_DIR/bin:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
 export EDITOR=nvim
 export VISUAL=nvim
