@@ -1,4 +1,16 @@
 {
-    "release-type": "simple",
-    "release-as": "4.0.0"
-}
+    "packages": {
+      ".": {
+        "changelog-path": "CHANGELOG.md",
+        "release-type": "simple",
+        "bump-minor-pre-major": false,
+        "bump-patch-for-minor-pre-major": false,
+        "draft": false,
+        "prerelease": false,
+        "latest-tag-sha": "112ccb5f51f76e34f6a26c35790b80fd1dc7fb4a",
+        "latest-tag-name": "v3.6.0",
+        "release-notes-generator": "v3.7.0"
+      }
+    },
+    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+  }
