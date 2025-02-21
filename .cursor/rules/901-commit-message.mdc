@@ -1,0 +1,168 @@
+---
+description: USE when creating git commits to ensure standardized, conventional commit messages
+globs: ["*"]
+---
+
+# Git Commit Message Template Standards
+
+<version>1.0.0</version>
+
+## Requirements
+- Follow conventional commits specification
+- Use standardized commit structure
+- Include all required sections when applicable
+- Maintain consistent formatting
+
+## Commit Structure
+
+### 1. Header Format
+```
+type(scope): description
+```
+
+#### Types
+- feat: New features
+- fix: Bug fixes
+- build: Build system changes
+- chore: Maintenance tasks
+- ci: CI configuration
+- docs: Documentation
+- style: Code style changes
+- test: Test additions/updates
+- perf: Performance improvements
+- refactor: Code restructuring
+
+#### Scope Guidelines
+- Optional component/module name
+- Use lowercase, no spaces
+- Examples: auth, api, core, ui
+- Keep consistent across project
+
+#### Description Rules
+- Start with lowercase
+- Use imperative mood
+- No period at end
+- Maximum 60 characters
+- Be specific and clear
+
+### 2. Body Format (Optional)
+```
+<blank line>
+detailed explanation
+- bullet point 1
+- bullet point 2
+```
+
+#### Body Guidelines
+- Leave one blank line after title
+- Wrap text at 72 characters
+- Use bullet points for multiple items
+- Explain "what" and "why"
+- Reference issues/PRs
+
+### 3. Footer Format (Optional)
+```
+<blank line>
+BREAKING CHANGE: description
+Closes #123
+Co-authored-by: name <email>
+```
+
+#### Footer Types
+- BREAKING CHANGE: API changes
+- Closes/Fixes/Resolves: Issue links
+- Co-authored-by: Contributors
+- Refs: Related references
+
+### 4. Special Commits
+
+#### Breaking Changes
+```
+feat(api)!: change authentication endpoints
+
+BREAKING CHANGE: Authentication endpoints now use OAuth2
+```
+
+#### Multiple Scopes
+```
+feat(api,auth): implement oauth endpoints
+```
+
+#### Revert Commits
+```
+revert: feat(api): add new endpoint
+
+This reverts commit abc123
+```
+
+## Examples
+
+<example>
+# Simple Bug Fix
+```bash
+git commit -m "fix(auth): correct password validation regex"
+```
+
+# Feature with Breaking Change
+```bash
+git commit -m "feat(api)!: implement graphql endpoints
+
+- Add GraphQL schema in \`schema/\`
+- Create resolvers for existing REST endpoints
+- Add DataLoader for efficient queries
+- Implement cursor-based pagination
+
+BREAKING CHANGE: REST endpoints will be deprecated in v2.0.0
+Related to #234"
+```
+
+# Documentation Update
+```bash
+git commit -m "docs(readme): update installation steps
+
+- Add Docker setup instructions
+- Update environment variables table
+- Include troubleshooting guide
+- Add architecture diagram
+
+Closes #567"
+```
+</example>
+
+<example type="invalid">
+```bash
+# No type
+git commit -m "updated the code"
+
+# Wrong format
+git commit -m "FEAT - New Feature Added!"
+
+# Too long
+git commit -m "feat(auth): implement comprehensive user authentication system with multiple providers and advanced security features"
+
+# Wrong tense
+git commit -m "fix(db): updated the database schema"
+```
+</example>
+
+## Critical Considerations
+<critical>
+- NEVER include sensitive data
+- ALWAYS use allowed commit types
+- KEEP title under 60 characters
+- USE present tense consistently
+- INCLUDE breaking change marker (!)
+- SEPARATE title/body with blank line
+</critical>
+
+## Validation Checklist
+- [ ] Uses valid commit type
+- [ ] Title is under 60 characters
+- [ ] Uses imperative mood
+- [ ] Scope is appropriate
+- [ ] Breaking changes marked
+- [ ] Body explains why/what
+- [ ] References issues if applicable
+- [ ] No sensitive information
+- [ ] Proper line wrapping
+- [ ] Consistent formatting
