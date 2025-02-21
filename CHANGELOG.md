@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.9.0](https://github.com/dgokcin/dotfiles/compare/v3.8.0...v3.9.0) (2025-02-21)
+
+
+### Features
+
+* **rules:** add pr creation and commit message standards ([#166](https://github.com/dgokcin/dotfiles/issues/166)) ([a48889e](https://github.com/dgokcin/dotfiles/commit/a48889e6449749d90d3d623c90aa2447de1f09e6))
+
 ## [3.8.0](https://github.com/dgokcin/dotfiles/compare/v3.6.0...v3.8.0) (2025-02-20)
 
 
