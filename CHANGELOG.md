@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.10.0](https://github.com/dgokcin/dotfiles/compare/v3.9.0...v3.10.0) (2025-02-22)
+
+
+### Features
+
+* implement comprehensive lessons learned tracking system ([#168](https://github.com/dgokcin/dotfiles/issues/168)) ([69b836f](https://github.com/dgokcin/dotfiles/commit/69b836f97a01879f1ef3ee2371fa1f5bc05047d0))
+
 ## [3.9.0](https://github.com/dgokcin/dotfiles/compare/v3.8.0...v3.9.0) (2025-02-21)
 
 
