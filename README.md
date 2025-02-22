@@ -1,152 +1,156 @@
-# dotfiles
+# Dotfiles & Development Environment Configuration
 
-This repository contains my personal dotfiles and configuration scripts for setting up development environments across different contexts (personal and work).
+A comprehensive dotfiles repository featuring an advanced Cursor rules system, development environment configurations, and AI-assisted workflows. This repository is designed to provide a consistent, maintainable, and intelligent development environment across different contexts.
 
-## Table of Contents
+## 🌟 Key Features
 
-- [dotfiles](#dotfiles)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Components](#components)
-    - [Git Configuration](#git-configuration)
-    - [Shell Configuration](#shell-configuration)
-    - [Editors](#editors)
-    - [Tools](#tools)
-  - [AI-Stuff Directory](#ai-stuff-directory)
-  - [Cursor Rules and Workflows](#cursor-rules-and-workflows)
-    - [Core Rule Templates](#core-rule-templates)
-    - [Workflow Automation](#workflow-automation)
-    - [Key Features](#key-features)
-    - [Configuration](#configuration)
-  - [Customization](#customization)
+- **Advanced Cursor Rules System**: Intelligent workflow automation and standardization
+- **Modular Configuration**: Separate setups for personal and work environments
+- **AI-Assisted Development**: Integrated AI tools and custom prompts
+- **Shell & Editor Setup**: Comprehensive ZSH, Neovim, and VSCode configurations
+- **Git Workflow**: Standardized commit messages and PR templates
 
-## Overview
+## 📁 Repository Structure
 
-This dotfiles repository is designed to provide a modular and flexible setup for both personal and work environments. It uses a Makefile-based system to manage various configurations and tools, allowing for easy installation and customization.
+```
+.
+├── .cursor/           # Cursor rules and AI workflow configurations
+├── ai-stuff/          # AI-related configurations and prompts
+├── bin/              # Utility scripts and tools
+├── docs/             # Documentation and guides
+├── makefiles/        # Modular make configurations
+├── nvim/             # Neovim configuration
+├── xnotes/           # Extended workflow templates
+└── various dotfiles  # (.zshrc, .gitconfig, etc.)
+```
 
-Key features:
+## 🎯 Cursor Rules System
 
-- Modular configuration for different editors and environments
-- Separate Git configurations for personal and work setups
-- Shell configuration with Oh My Zsh and custom plugins
-- Various development tools and utilities
-- AI-assisted development tools and prompts
+Our Cursor rules system, inspired by [cursor-auto-rules-agile-workflow](https://github.com/bmadcode/cursor-auto-rules-agile-workflow), provides an intelligent framework for standardizing development practices.
 
-## Installation
+### Rule Categories
 
-1. Clone this repository:
+- **000-cursor-rules**: Core rule format and management
+- **400-md-docs**: Markdown documentation standards
+- **901-commit-message**: Git commit message formatting
+- **902-arch**: Architecture documentation standards
+- **903-story**: User story templates
+- **904-lessons**: Knowledge retention system
+- **905-pr-creation**: Pull request standards
+- **906-prd**: Product requirement documents
+
+### Rule Structure
+
+Each rule follows a standardized format:
+
+```yaml
+---
+description: ACTION when TRIGGER to OUTCOME
+globs: pattern to match files
+tags: [categorization tags]
+priority: 1-5
+version: Major.Minor.Patch
+---
+```
+
+## 🚀 Getting Started
+
+1. **Clone the Repository**
 
    ```bash
    git clone https://github.com/yourusername/dotfiles.git
    cd dotfiles
-   ```bash
-
-2. Run the appropriate make command for your setup:
-
-   ```bash
-   make personal  # For personal setup
-   make work      # For work setup
    ```
 
-## Usage
+2. **Choose Your Setup**
 
-The repository uses a Makefile to manage different aspects of the setup. Here are some common commands:
+   ```bash
+   make personal  # For personal environment
+   make work     # For work environment
+   ```
 
-- `make help`: Display all available targets
-- `make personal`: Set up personal environment
-- `make work`: Set up work environment
-- `make personal-git`: Configure Git for personal use
-- `make work-git`: Configure Git for work use
-- `make zsh`: Set up Zsh configuration
-- `make nvim`: Set up Neovim configuration
-- `make vscode`: Set up Visual Studio Code configuration
+3. **Individual Components**
 
-For a full list of available commands, run `make help`.
+   ```bash
+   make zsh      # Configure ZSH
+   make nvim     # Setup Neovim
+   make vscode   # Configure VSCode
+   ```
 
-## Components
+## 🛠 Components
 
 ### Git Configuration
 
-- `base.gitconfig`: Common Git configuration
-- `work.gitconfig`: Work-specific Git settings
+- `base.gitconfig`: Common Git settings
+- `work.gitconfig`: Work-specific configurations
 
-### Shell Configuration
+### Shell Environment
 
-- `.zshrc`: Zsh configuration file
-- Oh My Zsh with custom plugins
+- `.zshrc`: ZSH configuration with custom plugins
+- `.aliases`: Useful command aliases
+- `.functions`: Custom shell functions
 
-### Editors
+### Development Tools
 
 - Neovim configuration
-- Visual Studio Code settings
+- VSCode settings
+- Lazygit setup
+- Continue AI integration
+- Karabiner (macOS)
 
-### Tools
+## 🤖 AI Integration
 
-- Lazygit
-- Yamllint
-- Continue AI
-- Karabiner (for macOS)
+The repository includes various AI-assisted development tools:
 
-## AI-Stuff Directory
+### Cursor Prompts
 
-The `ai-stuff` directory contains various AI-assisted development tools and prompts:
+- PR description generation
+- Commit message standardization
+- Code explanation
+- Project structure analysis
+- Infrastructure expertise (Terraform, Docker, GHA)
 
-- `cursor/prompts`: Custom prompts for AI-powered coding assistants
-  - `create-pr`: Prompt for generating pull request descriptions
-  - `create-commit`: System prompt for generating standardized Git commit messages
-  - `explain-project`: Prompt for explaining project structure and approach
-  - `create-issue`: Prompt for creating well-structured GitHub issues
-  - `create-summary`: Prompt for summarizing content
-  - `explain-code`: Prompt for explaining code snippets or configurations
-  - `terraform-expert`: Prompt for Terraform and Terragrunt expertise
-  - `gha-expert`: Prompt for GitHub Actions expertise
-  - `containerization-expert`: Prompt for Docker-related queries
-- `continue`: Configuration for the Continue AI tool
-- `fabric`: Additional AI-related scripts or configurations
+### AI Tools Configuration
 
-These AI-assisted tools and prompts are designed to enhance your development workflow by providing intelligent suggestions, explanations, and automations.
+- Continue AI setup
+- Custom AI workflows
+- Memory bank system
 
-## Cursor Rules and Workflows
+## 📋 Workflow Automation
 
-> This section is adapted from [bmadcode's cursor-auto-rules-agile-workflow](https://github.com/bmadcode/cursor-auto-rules-agile-workflow) repository and [Meh-S-Eze's best practices guide](https://forum.cursor.com/t/my-best-practices-for-mdc-rules-and-troubleshooting/50526/3) on the Cursor forum. Credit to the original authors for their excellent work on Cursor rules implementation and best practices.
+- Standardized documentation templates
+- Automated rule application
+- Integrated memory system for AI interactions
+- Agile workflow templates
 
-The repository includes a comprehensive set of Cursor rules and workflow templates to standardize development practices with my flavor of customizations.
+## 🔧 Customization
 
-### Core Rule Templates
+1. **Shell Customization**
+   - Edit `.zshrc` for shell behavior
+   - Modify `.aliases` for custom commands
 
-- Located in `.cursor/rules/*.mdc`
-- Implements standardized formats for:
-  - Product Requirements Documents (PRD)
-  - Architecture Documentation
-  - Story Templates
-  - Documentation Standards
+2. **Git Setup**
+   - Adjust `base.gitconfig` for common settings
+   - Configure `work.gitconfig` for work-specific needs
 
-### Workflow Automation
+3. **AI Workflows**
+   - Customize prompts in `ai-stuff/cursor/prompts`
+   - Modify rule templates in `.cursor/rules`
 
-- `bin/apply-rules.sh`: Automation script for rule deployment
-- `docs/workflow-rules.md`: Detailed documentation of workflow rules
-- `xnotes/*`: Workflow templates for various development scenarios
+## 📚 Documentation
 
-### Key Features
+- Check `docs/` for detailed guides
+- Review `.cursor/rules/*.mdc` for workflow standards
+- Explore `xnotes/` for workflow templates
 
-- Standardized cursor rule format for consistency
-- Integrated memory bank system for AI interactions
-- Agile workflow templates and documentation
-- Documentation standards for PRDs, architecture, and stories
+## 🤝 Contributing
 
-### Configuration
+Contributions are welcome! Please read our contributing guidelines and follow our commit message conventions (see rule 901-commit-message).
 
-- `.cursorignore`: Configured to exclude workflow templates (xnotes)
-- `.gitignore`: Set up to protect private rules
-- `.path`: Includes DOTFILES_DIR configuration
+## 📄 License
 
-## Customization
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-You can customize the setup by modifying the relevant configuration files:
+---
 
-- Edit `.zshrc` for shell customizations
-- Modify Git configs in `base.gitconfig`, or `work.gitconfig`
-- Adjust editor settings in their respective configuration files
-- Customize AI prompts in the `ai-stuff/cursor/prompts` directory
+> **Note**: This repository is continuously evolving. Check the CHANGELOG.md for recent updates and improvements.
