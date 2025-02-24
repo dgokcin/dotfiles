@@ -3,22 +3,12 @@ description: Use ALWAYS when asked to CREATE A RULE or UPDATE A RULE or taught a
 globs: .cursor/rules/*.mdc
 ---
 # Cursor Rules Format
----
-description: Use ALWAYS when asked to CREATE A RULE or UPDATE A RULE or taught a lesson from the user that should be retained as a new rule for Cursor
-author: BMad
-date: 2025-02-17
-status: approved
-version: 3.1.0
----
 ## Core Structure
 
 ```mdc
 ---
 description: ACTION when TRIGGER to OUTCOME
 globs: *.mdc
-tags: [tag1, tag2]  # New: For improved AI categorization
-priority: 1-5       # New: For conflict resolution
-version: Major.Minor.Patch
 ---
 
 # Rule Title
@@ -75,11 +65,9 @@ Common glob patterns for different rule types:
 ### Frontmatter
 - description: ACTION TRIGGER OUTCOME format
 - globs: `glob pattern for files and folders`
-- tags: Categorization keywords
-- priority: 1 (highest) to 5 (lowest)
-- version: Semantic versioning
 
 ### Body
+- <version>X.Y.Z</version>
 - context: Usage conditions
 - requirements: Actionable items
 - examples: Both valid and invalid
@@ -94,28 +82,20 @@ Common glob patterns for different rule types:
   - <rules>
   - <rule>
   - <critical>
+  - <version>
 - Always indent content within XML or nested XML tags by 2 spaces
 - Keep rules as short as possbile
 - Use Mermaid syntax if it will be shorter or clearer than describing a complex rule
 - Use Emojis where appropriate to convey meaning that will improve rule understanding by the AI Agent
 - Keep examples as short as possible to clearly convey the positive or negative example
 
-## Version Control when Updating an Existing Rule
-
-- Follow semantic versioning (MAJOR.MINOR.PATCH)
-- Document changes in commit messages
-- Start at version 1.0.0 for new rule
-- Always update the version if modifying an existing rule - use your judgement of the impact of the change to the rule to determin if its a major minor or patch increment.
-
 ## AI Optimization Tips
 
 1. Use precise, deterministic ACTION TRIGGER OUTCOME format in descriptions
-2. Include only essential tags that directly impact rule application
-3. Set clear priority levels to resolve conflicts efficiently
-4. Provide concise positive and negative example of rule application in practice
-5. Optimize for AI context window efficiency
-6. Remove any non-essential or redundant information
-7. Use standard glob patterns without quotes (e.g., *.js, src/**/*.ts)
+2. Provide concise positive and negative example of rule application in practice
+3. Optimize for AI context window efficiency
+4. Remove any non-essential or redundant information
+5. Use standard glob patterns without quotes (e.g., *.js, src/**/*.ts)
 
 ## AI Context Efficiency
 
@@ -129,5 +109,6 @@ Common glob patterns for different rule types:
 <critical>
   - NEVER include verbose explanations or redundant context that increases AI token overhead
   - Keep file as short and to the point as possible BUT NEVER at the expense of sacrificing rule impact and usefulness for the AI Agent.
+  - the front matter can ONLY have the fields description and globs.
 </critical>
 
