@@ -3,11 +3,16 @@
 # Check if target directory is provided
 if [ $# -eq 0 ]; then
     echo "Error: Please provide the target project directory"
-    echo "Usage: ./apply-rules.sh <target-project-directory>"
+    echo "Usage: ./apply-rules.sh <target-project-directory> [-f|--force]"
     exit 1
 fi
 
+# Parse arguments
 TARGET_DIR="$1"
+FORCE_MODE=false
+if [ "$2" = "-f" ] || [ "$2" = "--force" ]; then
+    FORCE_MODE=true
+fi
 
 # Create target directory if it doesn't exist
 if [ ! -d "$TARGET_DIR" ]; then
@@ -27,9 +32,49 @@ fi
 # Create .cursor/rules directory if it doesn't exist
 mkdir -p "$TARGET_DIR/.cursor/rules"
 
-# Copy core rule files
+# Copy core rule files with optional override
 echo "📦 Copying core rule files..."
-cp -n $DOTFILES_DIR/.cursor/rules/*.mdc "$TARGET_DIR/.cursor/rules/"
+for rule_file in $DOTFILES_DIR/.cursor/rules/*.mdc; do
+    filename=$(basename "$rule_file")
+    target_path="$TARGET_DIR/.cursor/rules/$filename"
+
+    if [ -f "$target_path" ]; then
+        if [ "$FORCE_MODE" = true ]; then
+            # Check if files are different
+            if ! cmp -s "$target_path" "$rule_file"; then
+                while true; do
+                    read -p "Override existing file $filename? (y/N/d to show diff) " confirm
+                    case $confirm in
+                        [Yy]* )
+                            cp "$rule_file" "$target_path"
+                            echo "✔️ Updated: $filename"
+                            break
+                            ;;
+                        [Nn]* | "" )
+                            echo "⏭️ Skipped: $filename"
+                            break
+                            ;;
+                        [Dd]* )
+                            echo "📊 Showing diff for $filename:"
+                            diff -u "$target_path" "$rule_file"
+                            echo "----------------------------------------"
+                            ;;
+                        * )
+                            echo "Please answer y, n (or enter), or d for diff"
+                            ;;
+                    esac
+                done
+            else
+                echo "⏭️ Skipped: $filename (files are identical)"
+            fi
+        else
+            echo "⏭️ Skipped existing file: $filename"
+        fi
+    else
+        cp "$rule_file" "$target_path"
+        echo "✔️ Created: $filename"
+    fi
+done
 
 # Create docs directory if it doesn't exist
 mkdir -p "$TARGET_DIR/docs"
