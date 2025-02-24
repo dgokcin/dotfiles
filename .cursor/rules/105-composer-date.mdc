@@ -1,0 +1,34 @@
+---
+description: EXECUTE date command when DATE_NEEDED to get current date in YYYY-MM-DD format
+globs: **/*.{json,md}
+tags: [composer, date, formatting]
+priority: 3
+version: 1.0.0
+---
+
+# Composer Date Handling
+
+## Context
+- When working with composer files or documentation that requires current date
+- When date formatting needs to be consistent across the project
+- When automated date insertion is needed
+
+## Requirements
+- Execute `date +%Y-%m-%d` to get the current date in YYYY-MM-DD format
+- Store the date result in context for use in the current session
+- Use the stored date consistently across all files that need it
+- Update the date when a new session starts or when explicitly requested
+
+## Examples
+<example>
+When asked about the current date or needing to insert it:
+1. Execute: `date +%Y-%m-%d`
+2. Store result (e.g., "2024-03-21")
+3. Use stored date in files or responses
+</example>
+
+<example type="invalid">
+- Do not hardcode dates
+- Do not use different date formats
+- Do not skip executing the date command when a new date is needed
+</example>

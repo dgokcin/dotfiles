@@ -13,7 +13,7 @@ globs: .ai/lessons/*.md
 ## Requirements
 
 ### File Structure
-- Before creating a lesson file, execute `date +%Y-%m-%d` to get the current date
+- Before creating a lesson file, use [105-composer-date.mdc](mdc:.cursor/rules/105-composer-date.mdc) to get the date in the YYYY-MM-DD format
 - Keep the current date in context and use it when creating the file
 - Lessons must be stored in `.ai/lessons/YYYY-MM-DD-lesson-title.md` where YYYY-MM-DD is the actual current date
 - Each lesson should be a separate file
