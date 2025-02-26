@@ -13,11 +13,11 @@ local enabled = {
   "mini.move",
   "mini.pairs",
   "mini.surround",
-  -- "nvim-treesitter",
-  -- "nvim-treesitter-textobjects",
-  -- "nvim-ts-context-commentstring",
+  "nvim-treesitter",
+  "nvim-treesitter-textobjects",
+  "nvim-ts-context-commentstring",
   "snacks.nvim",
-  -- "ts-comments.nvim",
+  "ts-comments.nvim",
   "vim-repeat",
   "yanky.nvim",
 }
@@ -28,7 +28,9 @@ Config.options.change_detection.enabled = false
 Config.options.defaults.cond = function(plugin)
   return vim.tbl_contains(enabled, plugin.name) or plugin.vscode
 end
+vim.g.snacks_animate = false
 
+-- Add some vscode specific keymaps
 vim.api.nvim_create_autocmd("User", {
   pattern = "LazyVimKeymapsDefaults",
   callback = function()
@@ -57,7 +59,25 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+function LazyVim.terminal()
+  require("vscode").action("workbench.action.terminal.toggleTerminal")
+end
+
 return {
+  {
+    "snacks.nvim",
+    opts = {
+      bigfile = { enabled = false },
+      dashboard = { enabled = false },
+      indent = { enabled = false },
+      input = { enabled = false },
+      notifier = { enabled = false },
+      picker = { enabled = false },
+      quickfile = { enabled = false },
+      scroll = { enabled = false },
+      statuscolumn = { enabled = false },
+    },
+  },
   {
     "LazyVim/LazyVim",
     config = function(_, opts)
