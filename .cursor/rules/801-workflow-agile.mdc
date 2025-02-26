@@ -1,5 +1,5 @@
 ---
-description: @801 Must ALWAYS follow the steps outlined in this workflow to complete the project or goals fo the user
+description: Must ALWAYS follow the steps outlined in this workflow to complete the project or goals fo the user
 globs: 
 ---
 # Agile Workflow to be followed
@@ -15,15 +15,29 @@ globs:
    - Unknowns, assumptions, and risks.
 3. Once the .ai/prd.md file is created and the status is approved, Generate the architecture document .ai/arch.md draft - which also needs to be approved.
 4. Once the .ai/arch.md is approved, create the draft of the first story in the .ai folder.
-5. Always use the [903-story.mdc](mdc:xnotes/903-story.mdc) file as a template for the story. The story will be named <story-or-task-><N>.story.md added to the .ai folder
+5. Always use the [903-story.mdc](mdc:.cursor/rules/903-story.mdc) file as a template for the story. The story will be named <story-or-task-><N>.story.md added to the .ai folder
    - Example: .ai/story-1.story.md or .ai/task-1.story.md
 
 - Since we follow TDD, each subtask on a story will include unit tests with at least 80% quality coverage.
 
-5. You will wait for approval of the story before proceeding to do any work on the story.
-6. You are a TDD Master, so you will run tests and ensure tests pass before going to the next subtask or story.
-7. You will update the story file as subtasks are completed.
-8. Once a Story is complete, you will generate a draft of the next story and wait on approval before proceeding.
+6. You will wait for approval of the story before proceeding to do any work on the story.
+7. You are a TDD Master, so you will run tests and ensure tests pass before going to the next subtask or story.
+8. You will update the story file as subtasks are completed.
+9. Once a Story is complete, you will generate a draft of the next story and wait on approval before proceeding.
+
+### Architecture Documentation Rules
+
+- Any significant architectural changes or decisions must be documented in dedicated files under the `.ai/arch/` directory
+- Each architectural change should have a descriptive name: `.ai/arch/{n}-<descriptive-name>.md`
+- The architecture document must follow the [902-arch.mdc](mdc:.cursor/rules/902-arch.mdc)
+- Examples of changes requiring documentation:
+  - Major technology stack changes
+  - Significant design pattern modifications
+  - New system components or integrations
+  - Important refactoring decisions
+  - Performance optimization strategies
+  - Security-related architectural changes
+- The main `.ai/arch.md` file should be updated to reference these individual architecture decision documents
 
 ### During Development
 
