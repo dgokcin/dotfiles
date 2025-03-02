@@ -1,6 +1,7 @@
 ---
 description: Use ALWAYS when asked to CREATE A RULE or UPDATE A RULE or taught a lesson from the user that should be retained as a new rule for Cursor
 globs: .cursor/rules/*.mdc
+alwaysApply: false
 ---
 # Cursor Rules Format
 ## Core Structure

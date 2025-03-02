@@ -1,11 +1,26 @@
 ---
 description: Must ALWAYS follow the steps outlined in this workflow to complete the project or goals fo the user
 globs: 
+alwaysApply: true
 ---
 # Agile Workflow to be followed
 
 **Critical Rule**: First Ensure a .ai/prd.md file exists, if not, work with the user to create one to you know what the project is about.
 **Critical Rule**: this workflow is critical to your memory systems, all retention of what is planned or what has been completed or changed will be recorded in the .ai folder. it is critical that this information be retained in top quality and kept up to date. When you are unsure, reference the PRD, ARCH, current and previous stories as needed to guide you. If still unsure, dont ever guess - ask the user for help.
+
+### File Structure
+
+```
+.ai/
+├── prd.md                                    # Product Requirements Document
+├── arch.md                                   # Main Architecture Document
+├── arch/                                     # Architectural Decision Records
+│   └── {n}-<descriptive-name>.md            # Individual architectural decisions
+├── epic-{n}/                                # Epic-specific directories
+│   └── story-{m}.story.md                   # Stories within epics
+└── lessons/                                  # Lessons Learned
+    └── YYYY-MM-DD-lesson-title.md           # Individual lessons
+```
 
 1. When coming online, you will first check if a .ai/prd.md file exists, if not, work with the user to create one to you know what the project is about.
 2. Help Improve the .ai/prd.md file as needed if not marked approved to ensure it is the best possible document include the following:
@@ -27,17 +42,29 @@ globs:
 
 ### Architecture Documentation Rules
 
-- Any significant architectural changes or decisions must be documented in dedicated files under the `.ai/arch/` directory
-- Each architectural change should have a descriptive name: `.ai/arch/{n}-<descriptive-name>.md`
-- The architecture document must follow the [902-arch.mdc](mdc:.cursor/rules/902-arch.mdc)
-- Examples of changes requiring documentation:
+- All significant architectural decisions MUST be documented in dedicated files under the `.ai/arch/` directory
+- Each architectural decision record (ADR) should follow the naming convention: `.ai/arch/{n}-<descriptive-name>.md`
+- The architecture document must follow the [902-arch.mdc](mdc:.cursor/rules/902-arch.mdc) template
+- The main `.ai/arch.md` file should be updated to reference these individual architecture decision records
+- Examples of changes requiring an ADR:
   - Major technology stack changes
   - Significant design pattern modifications
   - New system components or integrations
   - Important refactoring decisions
   - Performance optimization strategies
   - Security-related architectural changes
-- The main `.ai/arch.md` file should be updated to reference these individual architecture decision documents
+
+### Lessons Learned Documentation
+
+- All significant learning moments, mistakes, and improvements MUST be documented under `.ai/lessons/`
+- Follow the [005-lessons-learned.mdc](mdc:.cursor/rules/005-lessons-learned.mdc) template for lesson documentation
+- Use the naming convention: `.ai/lessons/YYYY-MM-DD-lesson-title.md`
+- Document lessons immediately when:
+  - Encountering significant issues
+  - Making important improvements
+  - Discovering better patterns
+  - Learning from mistakes
+- Review lessons regularly to improve future development
 
 ### During Development
 

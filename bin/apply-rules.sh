@@ -124,7 +124,6 @@ For a more flexible approach, use the templates in `xnotes/`:
 2. Choose your preferred workflow approach
 3. Start using the AI with confidence!
 
-For demos and tutorials, visit: [BMad Code Videos](https://youtube.com/bmadcode)
 EOL
 
 # Update .gitignore if needed
@@ -135,6 +134,10 @@ if [ -f "$TARGET_DIR/.gitignore" ]; then
 else
     echo -e "# Private individual user cursor rules\n.cursor/rules/_*.mdc" > "$TARGET_DIR/.gitignore"
 fi
+
+# Create .ai, .ai/arch, .ai/lessons directories
+echo "🤖 Creating AI directories..."
+mkdir -p "$TARGET_DIR/.ai"/{arch,lessons}
 
 # Create xnotes directory and copy templates
 echo "📝 Setting up Notepad templates..."
