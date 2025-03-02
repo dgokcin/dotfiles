@@ -1,10 +1,9 @@
 ---
 description: ALWAYS use when creating or updating story files to ensure proper tracking and implementation. This rule enforces consistent story structure with tasks, context, and progress tracking.
 globs: **/*.story.md
+alwaysApply: false
 ---
 # Story Template Standards
-
-<version>1.0.0</version>
 
 ## Requirements
 
