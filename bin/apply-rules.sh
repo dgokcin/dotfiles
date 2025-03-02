@@ -56,7 +56,7 @@ for rule_file in $DOTFILES_DIR/.cursor/rules/*.mdc; do
                             ;;
                         [Dd]* )
                             echo "📊 Showing diff for $filename:"
-                            diff -u "$target_path" "$rule_file"
+                            echo -e "\033[1;37m$(diff -u "$target_path" "$rule_file" | sed -e 's/^-/\x1b[1;31m-/;s/^+/\x1b[1;32m+/;s/^@/\x1b[1;36m@/')\033[0m"
                             echo "----------------------------------------"
                             ;;
                         * )
