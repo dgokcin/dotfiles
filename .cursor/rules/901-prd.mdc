@@ -1,10 +1,9 @@
 ---
 description: ALWAYS use when creating a new PRD or modifying an existing one to ensure consistent structure and completeness. This rule enforces standardized PRD format with all required sections and proper documentation hierarchy.
 globs: **/prd.md
+alwaysApply: false
 ---
 # PRD Template Standards
-
-<version>1.0.0</version>
 
 ## Requirements
 

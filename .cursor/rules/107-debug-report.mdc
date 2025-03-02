@@ -1,0 +1,149 @@
+---
+description: ALWAYS use when asked to create a debugging session report to ensure comprehensive documentation of troubleshooting steps, findings, and resolutions
+globs: **/*debug*.md
+---
+
+# Debugging Session Report Generator
+
+## Context
+- When user requests a summary of a debugging session
+- When troubleshooting has completed and findings need to be documented
+- When debugging commands and outputs need to be preserved for future reference
+
+## Requirements
+- CREATE a well-structured markdown report in the `.ai/debug-reports/` directory
+- USE an appropriate filename with date prefix (YYYY-MM-DD-issue-name.md)
+- INCLUDE all critical commands executed during debugging with their outputs
+- DOCUMENT the root cause analysis and resolution steps
+- ORGANIZE the report in a logical sequence from problem statement to resolution
+- HIGHLIGHT key findings and important diagnostic information
+- PRESERVE terminal outputs that were critical to diagnosis
+- INCLUDE environment information where relevant
+
+## Report Structure
+1. Title and Issue Summary
+2. Environment Information
+3. Problem Statement
+4. Troubleshooting Steps (with commands and outputs)
+5. Root Cause Analysis
+6. Resolution
+7. Verification Steps
+8. Lessons Learned/Future Prevention
+
+## Example
+
+<example>
+# Debugging Report: Redis Connection Failures in Production
+
+## Date: 2023-09-15
+
+## Environment Information
+- Kubernetes Cluster: production-east
+- Application Version: v2.4.3
+- Redis Version: 6.2.5
+
+## Problem Statement
+Application pods were experiencing intermittent connection timeouts when attempting to connect to Redis, causing service disruptions. Error logs showed `RedisConnectionError: Connection refused` errors occurring approximately every 30 minutes.
+
+## Troubleshooting Steps
+
+### 1. Verified application pod status and logs
+
+```bash
+$ kubectl get pods -n application
+NAME                         READY   STATUS    RESTARTS   AGE
+application-85f7d9b6b-t2xq5   1/1     Running   0          2d
+application-85f7d9b6b-j4d9w   1/1     Running   0          2d
+
+$ kubectl logs application-85f7d9b6b-t2xq5 -n application --tail=100
+2023-09-15T14:23:45Z ERROR RedisConnectionError: Connection refused
+2023-09-15T14:23:46Z ERROR Failed to process request: could not retrieve user data
+```
+
+### 2. Checked Redis pod status
+
+```bash
+$ kubectl get pods -n redis
+NAME                   READY   STATUS    RESTARTS   AGE
+redis-master-0         1/1     Running   0          5d
+redis-replica-0        1/1     Running   2          5d
+redis-replica-1        1/1     Running   2          5d
+
+$ kubectl describe pod redis-master-0 -n redis
+...
+Events:
+  Type     Reason     Age                  From     Message
+  ----     ------     ----                 ----     -------
+  Warning  Unhealthy  15m (x3 over 45m)    kubelet  Readiness probe failed: EOF
+```
+
+### 3. Examined Redis logs during failure period
+
+```bash
+$ kubectl logs redis-master-0 -n redis --since=1h
+[14:20:32] WARNING: # Server memory usage is nearing maxmemory limit
+[14:22:45] WARNING: # Server memory usage hit maxmemory limit
+[14:23:40] WARNING: # Redis is now rejecting connections
+```
+
+### 4. Checked Redis memory configuration and usage
+
+```bash
+$ kubectl exec -it redis-master-0 -n redis -- redis-cli info memory
+# Memory
+used_memory:8950122304
+maxmemory:8589934592
+maxmemory_policy:noeviction
+```
+
+## Root Cause Analysis
+The Redis master was configured with a maxmemory limit of 8GB but had no eviction policy set (noeviction). When memory usage exceeded this limit, Redis was rejecting new connections, causing the application connection failures. The memory usage pattern correlated with a cron job that runs every 30 minutes, adding significant data to the cache.
+
+## Resolution
+1. Updated Redis configuration to use a more appropriate eviction policy:
+
+```bash
+$ kubectl edit configmap redis-config -n redis
+# Changed maxmemory_policy from "noeviction" to "volatile-lru"
+```
+
+2. Restarted Redis with the new configuration:
+
+```bash
+$ kubectl rollout restart statefulset redis-master -n redis
+statefulset.apps/redis-master restarted
+```
+
+3. Increased Redis monitoring and added memory usage alerts:
+
+```bash
+$ kubectl apply -f redis-memory-alerts.yaml
+prometheusrule.monitoring.coreos.com/redis-memory-alerts created
+```
+
+## Verification Steps
+After implementing the changes:
+
+```bash
+$ kubectl exec -it redis-master-0 -n redis -- redis-cli info memory
+# Memory
+used_memory:8512045056
+maxmemory:8589934592
+maxmemory_policy:volatile-lru
+```
+
+Monitored application logs for 2 hours and confirmed no further connection errors occurred. The cron job executed successfully multiple times without triggering Redis connection issues.
+
+## Lessons Learned
+1. Always configure an appropriate eviction policy for Redis when setting maxmemory limits
+2. Add memory usage monitoring and alerts to detect approaching memory limits before they cause outages
+3. Review memory usage patterns when setting up scheduled jobs that may impact cache size
+</example>
+
+<example type="invalid">
+# Redis Issue Fixed
+
+We had some issue with Redis today. I checked the logs and found out it was running out of memory. I changed some config settings and restarted it.
+
+The problem is fixed now.
+</example>

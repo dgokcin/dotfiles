@@ -12,16 +12,6 @@ globs: **/*.{md,mdx}
 - Use Mermaid diagrams for visual documentation where appropriate
 - Always Include YAML front matter for metadata but Keep metadata concise
 
-<example>
----
-title: Document Title
-author: BMad
-date: 2024-02-16
-status: draft
-version: 1.2.0
----
-</example>
-
 ## Markdown Reference
 
 For all basic and extended Markdown syntax, refer to:
@@ -141,4 +131,3 @@ B-->C
 
 No title, unclear labels, no context
 </example>
-

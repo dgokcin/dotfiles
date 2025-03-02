@@ -1,10 +1,9 @@
 ---
 description: ALWAYS use when creating or updating Architecture document to ensure consistent documentation of architectural decisions. This rule enforces standardized arch format with proper context, consequences, and status tracking.
 globs: **/arch*.md
+alwaysApply: false
 ---
 # Architecture Template Standards
-
-<version>1.0.0</version>
 
 ## Requirements
 
