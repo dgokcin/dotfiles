@@ -1,9 +1,7 @@
 ---
 description: ALWAYS use when debugging Kubernetes problems to ensure proper context verification and systematic troubleshooting
-globs: **/*.{yaml,yml}
-tags: [kubernetes, k8s, debugging, devops]
-priority: 2
-version: 1.0.0
+globs: 
+alwaysApply: false
 ---
 
 # Kubernetes Debugging Protocol

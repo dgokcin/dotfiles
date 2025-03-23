@@ -1,0 +1,25 @@
+{
+    "mcpServers": {
+        "memory": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "-v",
+                "insert-repo-name-here:/app/dist",
+                "--rm",
+                "mcp/memory"
+            ]
+        },
+        "notion": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@suekou/mcp-notion-server"
+            ],
+            "env": {
+                "NOTION_API_TOKEN": "ntn_add_your_token_here"
+            }
+        }
+    }
+}
