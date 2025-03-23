@@ -1,9 +1,7 @@
 ---
-description: EXECUTE date command when DATE_NEEDED to get current date in YYYY-MM-DD format
-globs: **/*.{json,md}
-tags: [composer, date, formatting]
-priority: 3
-version: 1.0.0
+description: 
+globs: 
+alwaysApply: false
 ---
 
 # Composer Date Handling

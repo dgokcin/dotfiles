@@ -1,6 +1,7 @@
 ---
 description: ALWAYS use when asked to create a debugging session report to ensure comprehensive documentation of troubleshooting steps, findings, and resolutions
-globs: **/*debug*.md
+globs: 
+alwaysApply: false
 ---
 
 # Debugging Session Report Generator
