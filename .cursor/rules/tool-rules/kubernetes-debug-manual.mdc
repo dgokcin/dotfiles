@@ -1,3 +1,9 @@
+---
+description: ALWAYS use when debugging Kubernetes problems to ensure proper context verification and systematic troubleshooting
+globs: **/*.{yaml,yml}
+alwaysApply: false
+---
+
 # Kubernetes Debugging Protocol
 
 ## Context
