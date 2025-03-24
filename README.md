@@ -20,7 +20,6 @@ A comprehensive dotfiles repository featuring an advanced Cursor rules system, d
 ├── docs/             # Documentation and guides
 ├── makefiles/        # Modular make configurations
 ├── nvim/             # Neovim configuration
-├── xnotes/           # Extended workflow templates
 └── various dotfiles  # (.zshrc, .gitconfig, etc.)
 ```
 
@@ -141,7 +140,6 @@ The repository includes various AI-assisted development tools:
 
 - Check `docs/` for detailed guides
 - Review `.cursor/rules/*.mdc` for workflow standards
-- Explore `xnotes/` for workflow templates
 
 ## 🤝 Contributing
 
