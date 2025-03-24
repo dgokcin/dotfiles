@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.10.0](https://github.com/dgokcin/dotfiles/compare/v3.9.0...v3.10.0) (2025-03-24)
+
+
+### Features
+
+* implement comprehensive lessons learned tracking system ([#168](https://github.com/dgokcin/dotfiles/issues/168)) ([69b836f](https://github.com/dgokcin/dotfiles/commit/69b836f97a01879f1ef3ee2371fa1f5bc05047d0))
+* some mcp guidelines ([#173](https://github.com/dgokcin/dotfiles/issues/173)) ([ce879f7](https://github.com/dgokcin/dotfiles/commit/ce879f7f55e335dceb12b6de8876478a2d149336))
+* update some lazyvim plugins ([#170](https://github.com/dgokcin/dotfiles/issues/170)) ([6d07026](https://github.com/dgokcin/dotfiles/commit/6d07026e2544a94bc0498aa327e1e2d55c9fa522))
+
 ## [3.9.0](https://github.com/dgokcin/dotfiles/compare/v3.8.0...v3.9.0) (2025-02-21)
 
 
