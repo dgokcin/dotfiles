@@ -1,0 +1,70 @@
+---
+description: ALWAYS use when debugging Kubernetes problems to ensure proper context verification and systematic troubleshooting
+globs: **/*.{yaml,yml}
+alwaysApply: false
+---
+
+# Kubernetes Debugging Protocol
+
+## Context
+
+- Debugging Kubernetes-related issues
+- Diagnosing pod, deployment, service problems
+- Investigating resource availability issues
+
+## Critical Rules
+
+- Verify current Kubernetes context first
+- Check cluster connectivity status
+- Gather complete resource state information
+- Follow systematic debugging approach
+- Document findings and resolution steps
+- Validate fixes with appropriate commands
+
+### Required Verification Steps
+
+```bash
+# Context and Access
+kubectl config current-context
+kubectl cluster-info
+
+# Resource State
+kubectl get namespaces
+kubectl get nodes
+kubectl describe deployment ${name}
+kubectl get events --sort-by='.lastTimestamp'
+```
+
+## Examples
+
+<example>
+# Debugging Deployment Issues
+
+1. Verify Context:
+```bash
+kubectl config current-context
+kubectl get namespaces
+```
+
+2. Check Deployment:
+```bash
+kubectl describe deployment app-deployment
+kubectl get events --sort-by='.lastTimestamp'
+```
+
+3. Analyze and Fix:
+- Review error events
+- Check resource constraints
+- Verify image pull status
+</example>
+
+<example type="invalid">
+# Direct Pod Log Check
+
+```bash
+kubectl logs failing-pod
+kubectl edit deployment app-deployment
+```
+
+[Invalid: No context verification, direct modification without analysis]
+</example>
