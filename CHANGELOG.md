@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.10.1](https://github.com/dgokcin/dotfiles/compare/v3.10.0...v3.10.1) (2025-03-27)
+
+
+### Bug Fixes
+
+* resolve conflicting zsh plugins ([78fcb55](https://github.com/dgokcin/dotfiles/commit/78fcb5582d7c31279c317a15a7e0b406bc60074a))
+
 ## [3.10.0](https://github.com/dgokcin/dotfiles/compare/v3.9.0...v3.10.0) (2025-03-24)
 
 
