@@ -25,7 +25,6 @@ if [ ! -d "$TARGET_DIR" ]; then
 
 This project has been initialized with agile workflow support and auto rule generation configured from [cursor-auto-rules-agile-workflow](https://github.com/bmadcode/cursor-auto-rules-agile-workflow).
 
-For workflow documentation, see [Workflow Rules](docs/workflow-rules.md).
 EOL
 fi
 
@@ -94,9 +93,6 @@ echo "📦 Copying rules and templates..."
 copy_files "$DOTFILES_DIR/.cursor/rules" "$TARGET_DIR/.cursor/rules" "**/*.mdc"
 copy_files "$DOTFILES_DIR/.cursor/templates" "$TARGET_DIR/.cursor/templates" "*.mdc"
 
-# Create docs directory if it doesn't exist
-mkdir -p "$TARGET_DIR/docs"
-
 # Create workflow documentation
 cat > "$TARGET_DIR/docs/workflow-rules.md" << 'EOL'
 # Cursor Workflow Rules
@@ -144,10 +140,8 @@ mkdir -p "$TARGET_DIR/.ai"/{arch,lessons}
 echo "✨ Deployment Complete!"
 echo "📁 Core rules: $TARGET_DIR/.cursor/rules/"
 echo "📝 Templates: $TARGET_DIR/.cursor/templates/"
-echo "📄 Documentation: $TARGET_DIR/docs/workflow-rules.md"
-echo "🔒 Updated .gitignore"
+echo " Updated .gitignore"
 echo ""
 echo "Next steps:"
-echo "1. Review the documentation in docs/workflow-rules.md"
-echo "2. Start with creating a PRD using the template"
-echo "3. Follow the agile workflow steps"
+echo "1. Start with creating a PRD using the template"
+echo "2. Follow the agile workflow steps"
