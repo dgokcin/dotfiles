@@ -18,6 +18,7 @@ alwaysApply: true
 - Verify/create `.ai/prd.md` using `prd-manual.mdc` template
 - Document architecture using `arch-manual.mdc` template
 - Create stories using `story-manual.mdc` template
+- Use `timestamp-auto.mdc` to update timestamps on all documents
 - Follow TDD with 80% test coverage
 - Track lessons learned
 - Update story files as work progresses
