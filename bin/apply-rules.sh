@@ -93,6 +93,10 @@ echo "📦 Copying rules and templates..."
 copy_files "$DOTFILES_DIR/.cursor/rules" "$TARGET_DIR/.cursor/rules" "**/*.mdc"
 copy_files "$DOTFILES_DIR/.cursor/templates" "$TARGET_DIR/.cursor/templates" "*.mdc"
 
+# Copy mcp.example.json to ~/.cursor if it exists
+echo "📦 Copying MCP configuration..."
+copy_files "$DOTFILES_DIR/.cursor" "$HOME/.cursor" "mcp.example.json"
+
 # Create workflow documentation
 cat > "$TARGET_DIR/docs/workflow-rules.md" << 'EOL'
 # Cursor Workflow Rules
@@ -139,9 +143,9 @@ mkdir -p "$TARGET_DIR/.ai"/{arch,lessons}
 
 echo "✨ Deployment Complete!"
 echo "📁 Core rules: $TARGET_DIR/.cursor/rules/"
-echo "📝 Templates: $TARGET_DIR/.cursor/templates/"
-echo " Updated .gitignore"
-echo ""
+echo "📄 Templates: $TARGET_DIR/.cursor/templates/"
+echo "🔒 Updated .gitignore"
+echo "⚙️ Copied MCP configuration to ~/.cursor/mcp.json"
 echo "Next steps:"
 echo "1. Start with creating a PRD using the template"
 echo "2. Follow the agile workflow steps"

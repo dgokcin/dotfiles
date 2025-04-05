@@ -20,6 +20,20 @@
             "env": {
                 "NOTION_API_TOKEN": "ntn_add_your_token_here"
             }
+        },
+        "github": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "-e",
+                "GITHUB_PERSONAL_ACCESS_TOKEN",
+                "ghcr.io/github/github-mcp-server"
+            ],
+            "env": {
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "<github_pat_token>"
+            }
         }
     }
 }
