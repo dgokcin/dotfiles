@@ -29,14 +29,11 @@ Our Cursor rules system, inspired by [cursor-auto-rules-agile-workflow](https://
 
 ### Rule Categories
 
-- **000-cursor-rules**: Core rule format and management
-- **400-md-docs**: Markdown documentation standards
-- **901-commit-message**: Git commit message formatting
-- **902-arch**: Architecture documentation standards
-- **903-story**: User story templates
-- **904-lessons**: Knowledge retention system
-- **905-pr-creation**: Pull request standards
-- **906-prd**: Product requirement documents
+- **core-rules**: Core rule format and management, foundational rules for the system
+- **documentation**: Documentation standards and formatting rules
+- **global-rules**: Global rules that apply across all contexts
+- **tool-rules**: Tool-specific rules and configurations
+- **workflows**: Workflow templates and process standards
 
 ### Rule Structure
 
@@ -44,13 +41,20 @@ Each rule follows a standardized format:
 
 ```yaml
 ---
-description: ACTION when TRIGGER to OUTCOME
-globs: pattern to match files
-tags: [categorization tags]
-priority: 1-5
-version: Major.Minor.Patch
+name: Name of the rule
+description: ACTION when TRIGGER to OUTCOME  # Critical for agent-selected rules, blank for others
+globs: pattern to match files  # Critical glob pattern for auto rules, blank for others
+alwaysApply: true|false  # Determines if rule is applied to every request
 ---
 ```
+
+#### Rule Types
+
+- **Agent Selected**: Agent sees description and chooses when to apply
+- **Always**: Applied to every chat and cmd-k request
+- **Auto Select**: Applied to matching existing files
+- **Auto Select+desc**: Better for new files, includes description
+- **Manual**: User must reference in chat
 
 ## 🚀 Getting Started
 
