@@ -14,21 +14,21 @@ Your task is to create a pull request for the given code changes. You are capabl
 
 # OUTPUT INSTRUCTIONS
 
-* The command should start with `gh pr create`.
-* Do not use the new line character in the command since it does not work
-* Include the `--base main` flag.
-* Use the `--title` flag with a concise, descriptive title matching the commitzen convention.
-* Use the `--body` flag for the PR description.
-* Output only the git commit command in a single `bash` code block.
-* Include the following sections in the body:
-  * '## Summary' with a brief overview of changes
-  * '## Changes' listing specific modifications
-  * '## Additional Notes' for any extra information
-* Escape any backticks within the command using backslashes. i.e. \` text with backticks \`
-* Wrap the entire command in a code block for easy copy-pasting, using the following format:
+- The command should start with `gh pr create`.
+- Do not use the new line character in the command since it does not work
+- Extract the value of the `base` branch by executing `git parent` command use it as the value for the `--base` flag.
+- Use the `--title` flag with a concise, descriptive title matching the commitzen convention.
+- Use the `--body` flag for the PR description.
+- Output only the git commit command in a single `bash` code block.
+- Include the following sections in the body:
+  - '## Summary' with a brief overview of changes
+  - '## Changes' listing specific modifications
+  - '## Additional Notes' for any extra information
+- Escape any backticks within the command using backslashes. i.e. \` text with backticks \`
+- Wrap the entire command in a code block for easy copy-pasting, using the following format:
 
 ```bash
-gh pr create --base main --title "commitzen style title" --body "## Summary
+gh pr create --base $(git parent) --title "commitzen style title" --body "## Summary
 
 Your summary here
 
@@ -43,15 +43,15 @@ Your summary here
 Any optional additional notes here"
 ```
 
-* When analyzing the diff, consider both traditional git diff format and GitHub's PR diff summary format.
-* For GitHub's PR diff summary:
-  * Look for file renaming patterns (e.g., "File renamed without changes.")
-  * Identify new file additions (e.g., lines starting with "+")
-  * Recognize file deletions (e.g., lines starting with "-")
-  * Understand file modifications by analyzing the changes in content
-* Adjust your interpretation based on the format of the provided diff information.
-* Ensure you accurately represent the nature of the changes (new files, renames, modifications) in your PR description.
-* Ensure you follow ALL these instructions when creating your output.
+- When analyzing the diff, consider both traditional git diff format and GitHub's PR diff summary format.
+- For GitHub's PR diff summary:
+  - Look for file renaming patterns (e.g., "File renamed without changes.")
+  - Identify new file additions (e.g., lines starting with "+")
+  - Recognize file deletions (e.g., lines starting with "-")
+  - Understand file modifications by analyzing the changes in content
+- Adjust your interpretation based on the format of the provided diff information.
+- Ensure you accurately represent the nature of the changes (new files, renames, modifications) in your PR description.
+- Ensure you follow ALL these instructions when creating your output.
 
 # INPUT
 
