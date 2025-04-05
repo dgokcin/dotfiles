@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.11.0](https://github.com/dgokcin/dotfiles/compare/v3.10.0...v3.11.0) (2025-04-05)
+
+
+### Features
+
+* add github mcp integration ([06b4263](https://github.com/dgokcin/dotfiles/commit/06b4263e53fa8281d8c8c93d2ace0a1fcc3b5814))
+
+
+### Bug Fixes
+
+* enhance the gh pr create command ([8e7711e](https://github.com/dgokcin/dotfiles/commit/8e7711e95cc6deae7c8dc62ddc46644734abba4c))
+* force correct timestamp creation in the agile workflow ([4df34c4](https://github.com/dgokcin/dotfiles/commit/4df34c44983d2a4b009e4f10e9afba91bbeed321))
+* get rid of unneeded docs ([d765339](https://github.com/dgokcin/dotfiles/commit/d76533913de6566c270adffc0b3dca7e777606eb))
+* only output the workflow docs ([cac7628](https://github.com/dgokcin/dotfiles/commit/cac7628eae3df515a31133a48500b253e2df005a))
+* optimize agile workflow rule for claude-3.7 ([b30ae3a](https://github.com/dgokcin/dotfiles/commit/b30ae3a1e2df04ea615d60b578641c9d8374bb2f))
+* resolve conflicting zsh plugins ([78fcb55](https://github.com/dgokcin/dotfiles/commit/78fcb5582d7c31279c317a15a7e0b406bc60074a))
+
 ## [3.10.0](https://github.com/dgokcin/dotfiles/compare/v3.9.0...v3.10.0) (2025-03-24)
 
 
