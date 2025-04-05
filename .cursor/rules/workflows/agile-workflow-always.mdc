@@ -34,11 +34,15 @@ alwaysApply: true
 ├── prd.md              # Product Requirements
 ├── arch.md             # Architecture
 ├── arch/               # Architecture Decisions
-│   └── {n}-name.md
-├── epic-{n}/          # Epics
-│   └── story-{m}.md   # Stories
+│   └── {n}-descriptive-decision-name.md
+├── epics/              # Epics
+│   ├── epic-{n}-descriptive-epic-name/     # Example: epic-1-user-authentication/
+│   │   ├── story-{m}-descriptive-story-name.md  # Example: story-1-oauth-setup.md
+│   │   └── story-{m}-descriptive-story-name.md  # Example: story-2-user-roles.md
+│   │   └── story-{m}-descriptive-story-name.md  # Example: story-3-user-roles.md
+│   └── epic-{n}-descriptive-epic-name/     # Example: epic-2-payment-processing/
 └── lessons/           # Lessons Learned
-    └── YYYY-MM-DD-*.md
+    └── YYYY-MM-DD-descriptive-lesson-name.md
 ```
 
 ### Workflow Steps
@@ -73,12 +77,13 @@ Develop inventory management system
 
 2. Create Story:
 ```markdown
-# Story-1: Basic Setup
+# Story-1-project-setup: Initial Project Configuration
 
 ## Tasks
-- [ ] Initialize project
-- [ ] Add dependencies
-- [ ] Create DB schema
+- [ ] Initialize project structure
+- [ ] Configure development environment
+- [ ] Set up database schema
+- [ ] Implement basic CI/CD pipeline
 ```
 </example>
 
