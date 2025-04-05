@@ -24,8 +24,8 @@ alwaysApply: false
 ### Required Structure
 
 1. Header
-   - Epic-{N}: {Title}
-   - Story-{M}: {Title}
+   - Epic-{N}-{descriptive-epic-name}: {Title}
+   - Story-{M}-{descriptive-story-name}: {Title}
 
 2. Core Content
    - User Story Format
@@ -37,13 +37,13 @@ alwaysApply: false
    - Chat Log
 
 ### File Location
-`.ai/epic-{n}/story-{m}.story.md`
+`.ai/epics/epic-{n}-descriptive-epic-name/story-{m}-descriptive-story-name.md`
 
 ## Examples
 
 <example>
-# Epic-1: Chess Game
-# Story-2: Chessboard UI
+# Epic-1-chess-game: Interactive Chess Platform
+# Story-2-chessboard-ui: Interactive Chessboard Implementation
 
 ## Story
 **As a** player
