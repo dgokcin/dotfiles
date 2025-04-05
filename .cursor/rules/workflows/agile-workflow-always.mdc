@@ -17,8 +17,10 @@ alwaysApply: true
 - Use templates from `.cursor/templates/` for new documents
 - Verify/create `.ai/prd.md` using `prd-manual.mdc` template
 - Document architecture using `arch-manual.mdc` template
+- Ask the user if they want to use the github mcp for managing the epics and stories.
 - Create stories using `story-manual.mdc` template
-- Use `timestamp-auto.mdc` to update timestamps on all documents
+- If the github mcp is being used, than ALWAYS sync the local epics and stories with github mcp
+- Use `timestamp-auto.mdc` whenever you need to use a timestamp in any document
 - Wait for the users approval in between each step
 - Follow TDD with 80% test coverage
 - Track lessons learned
