@@ -19,6 +19,7 @@ alwaysApply: true
 - Document architecture using `arch-manual.mdc` template
 - Create stories using `story-manual.mdc` template
 - Use `timestamp-auto.mdc` to update timestamps on all documents
+- Wait for the users approval in between each step
 - Follow TDD with 80% test coverage
 - Track lessons learned
 - Update story files as work progresses
