@@ -97,8 +97,8 @@ copy_files "$DOTFILES_DIR/.cursor/templates" "$TARGET_DIR/.cursor/templates" "*.
 echo "📦 Copying MCP configuration..."
 copy_files "$DOTFILES_DIR/.cursor" "$HOME/.cursor" "mcp.example.json"
 
-# Create workflow documentation
-cat > "$TARGET_DIR/docs/workflow-rules.md" << 'EOL'
+# Output the workflow documentation wo creating a file
+cat << 'EOL'
 # Cursor Workflow Rules
 
 This project has been updated to use the auto rule generator from [cursor-auto-rules-agile-workflow](https://github.com/bmadcode/cursor-auto-rules-agile-workflow).
