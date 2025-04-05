@@ -1,7 +1,7 @@
 ---
 description:
 globs: docs/**/*.md, reports/**/*.md, .ai/**/*.md
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Documentation Timestamp Standards

@@ -68,7 +68,7 @@ graph TD
 ## Changes
 | Change | Story | Notes |
 |--------|-------|-------|
-| Initial| S-1   | Setup |
+| Initial| story-1-project-setup | Initial architecture setup |
 </example>
 
 <example type="invalid">

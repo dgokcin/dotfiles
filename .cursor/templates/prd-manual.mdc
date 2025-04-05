@@ -34,7 +34,7 @@ alwaysApply: false
    - Future Enhancements
 
 ### Epic Format
-- Epic-{N}: {Title} ({Status})
+- Epic-{N}-{descriptive-name}: {Title} ({Status})
 - Status: Current/Future/Complete
 - Only one "Current" Epic
 
@@ -55,14 +55,14 @@ single/multiplayer support.
 - Fair play
 - Community building
 
-## Epic-1: Basic Game (Current)
-Story-1: Setup
-Story-2: UI
-Story-3: Rules
+## Epic-1-basic-game: Core Chess Game Implementation (Current)
+story-1-project-setup: Initial Project Setup
+story-2-chessboard-ui: Interactive Chessboard Implementation
+story-3-game-rules: Chess Rules Engine Implementation
 
-## Epic-2: AI (Future)
-Story-4: Basic AI
-Story-5: Difficulty Levels
+## Epic-2-ai-features: AI Gameplay Features (Future)
+story-4-basic-ai: Basic AI Player Implementation
+story-5-difficulty-levels: Multiple AI Difficulty Levels
 </example>
 
 <example type="invalid">
