@@ -1,6 +1,6 @@
 ---
 description: ALWAYS use when working with existing projects to establish agile workflow and documentation
-globs: .ai/**/*.md
+globs:
 alwaysApply: false
 ---
 
