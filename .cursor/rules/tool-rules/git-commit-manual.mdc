@@ -8,18 +8,16 @@ alwaysApply: false
 - If the user has asked you to commit based on staged files, execute git `git diff --staged | cat` to understand the diff context.
 - If the user has asked you to commit based on unstaged files, execute git `git diff | cat` to understand the diff context.
 - If the user has not specified, always use the staged files for the diff context.
+- You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
 </critical-rules>
 
 # Git Commit Message Standards
-
-## Critical Rules
 
 - Adhere strictly to the Conventional Commits format
 - Use allowed types: `feat`, `fix`, `build`, `chore`, `ci`, `docs`, `style`, `test`, `perf`, `refactor`
 - Write commit messages entirely in lowercase
 - Keep the commit message title under 60 characters
 - Use present tense in both title and body
-- Format commit with a command in a single `bash` code block
 - Tailor message detail to the extent of changes:
   - For few changes: Be concise
   - For many changes: Include more details in the body
@@ -83,4 +81,11 @@ git commit -m "fix: corrected input validation in user registration"
 ```bash
 git commit -m "fix: implement comprehensive input validation strategy for the user registration workflow"
 ```
+
+# Not in bash code block
+```
+git commit -m "fix: correct input validation in user registration"
+```
+
+
 </example>
