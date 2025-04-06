@@ -1,5 +1,5 @@
 ---
-description:
+description: ALWAYS use when there is a need to add a timestamp to a document.
 globs: docs/**/*.md, reports/**/*.md, .ai/**/*.md
 alwaysApply: true
 ---
