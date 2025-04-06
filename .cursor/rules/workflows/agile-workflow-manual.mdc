@@ -1,8 +1,16 @@
 ---
-description: Must ALWAYS follow the steps outlined in this workflow to complete the project or goals of the user
-globs: .ai/**/*.md
-alwaysApply: true
+description:
+globs:
+alwaysApply:
 ---
+# Agile Workflow and core memory procedure RULES that MUST be followed EXACTLY!
+
+<critical-rules>
+- First Ensure a .ai/prd.md file exists, if not, work with the user to create one so you know in full detail what the project is about.
+- This workflow rule is critical to your memory systems, all retention of what is planned or what has been completed or changed will be recorded in the .ai folder.
+- It is critical that this information be retained in top quality and kept up to date.
+- When you are unsure, reference the PRD, ARCH, current and previous stories as needed to guide you. If still unsure, don't ever guess - ask the user for help.
+</critical-rules>
 
 # Agile Workflow Protocol
 
