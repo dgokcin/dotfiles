@@ -1,0 +1,64 @@
+---
+description: ALWAYS use when you are asked to create a pull request. This rule guides generating GitHub PR creation commands to ensure standardized PR structure with proper formatting, comprehensive descriptions, and adherence to commitizen conventions. This rule ensures consistent PR structure with detailed summaries, change lists, and additional notes.
+globs:
+alwaysApply: false
+---
+
+<critical-rules>
+- Before interpreting the Diff context, execute `git parent` command to dynamically get the base branch which will be used as the value for the `--base` flag.
+- You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
+</critical-rules>
+
+# GitHub Pull Request Creation Standards
+
+## Critical Rules
+
+- Always use `gh pr create` as the base command
+- Use the `--title` flag with a concise title following the commitizen convention
+- Use the `--body` flag to provide a comprehensive description
+- Structure the PR body with these mandatory sections:
+  - `## Summary` - Brief overview of changes
+  - `## Changes` - Bullet list of specific modifications
+  - `## Additional Notes` - Extra information, limitations, or follow-ups
+- Escape all backticks within the PR body using backslashes (`\``)
+- Never use newline characters in the command itself
+- Always wrap the entire command in a ```bash code block for easy copy-pasting
+
+## Examples
+
+<example>
+User: "Create a pull request based on @PR Diff"
+Agent: Getting the base branch
+```bash
+git parent
+```
+
+Agent: Analyzing the diff context
+
+```bash
+gh pr create --base <base-branch> --title "feat: implement user authentication" --body "## Summary
+
+Added user authentication functionality using JWT tokens.
+
+## Changes
+
+- Created AuthService for token generation and validation
+- Added login and register endpoints
+- Implemented middleware for protected routes
+- Added unit tests for auth functionality
+
+## Additional Notes
+
+Future work: Add refresh token capability"
+```
+</example>
+
+<example type="invalid">
+gh pr create --base main --title "User auth" --body "Added authentication"
+
+// Problems:
+// - Not wrapped in code block
+// - Hardcoded base branch
+// - Insufficient title (not following commitizen)
+// - Inadequate body without proper sections
+</example>

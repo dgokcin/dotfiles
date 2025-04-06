@@ -8,7 +8,7 @@ alwaysApply: false
 - If the user has asked you to commit based on staged files, execute git `git diff --staged | cat` to understand the diff context.
 - If the user has asked you to commit based on unstaged files, execute git `git diff | cat` to understand the diff context.
 - If the user has not specified, always use the staged files for the diff context.
-<critical-rules>
+</critical-rules>
 
 # Git Commit Message Standards
 
