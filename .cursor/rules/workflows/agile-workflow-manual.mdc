@@ -1,5 +1,5 @@
 ---
-description:
+description: ALWAYS use when asked to use the agile workflow protocol
 globs:
 alwaysApply:
 ---
@@ -10,6 +10,9 @@ alwaysApply:
 - This workflow rule is critical to your memory systems, all retention of what is planned or what has been completed or changed will be recorded in the .ai folder.
 - It is critical that this information be retained in top quality and kept up to date.
 - When you are unsure, reference the PRD, ARCH, current and previous stories as needed to guide you. If still unsure, don't ever guess - ask the user for help.
+- Follow `.cursor/rules/documentation/timestamp-auto.mdc` for all timestamps.
+- Ask the user if they want to use the github mcp for managing the epics and stories.
+- If the github mcp is being used, than ALWAYS sync the local epics and stories with github mcp after creating/updating epics and stories locally.
 </critical-rules>
 
 # Agile Workflow Protocol
@@ -25,10 +28,7 @@ alwaysApply:
 - Use templates from `.cursor/templates/` for new documents
 - Verify/create `.ai/prd.md` using `prd-manual.mdc` template
 - Document architecture using `arch-manual.mdc` template
-- Ask the user if they want to use the github mcp for managing the epics and stories.
 - Create stories using `story-manual.mdc` template
-- If the github mcp is being used, than ALWAYS sync the local epics and stories with github mcp
-- Use `timestamp-auto.mdc` whenever you need to use a timestamp in any document
 - Wait for the users approval in between each step
 - Follow TDD with 80% test coverage
 - Track lessons learned
