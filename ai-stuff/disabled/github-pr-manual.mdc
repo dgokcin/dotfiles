@@ -5,6 +5,7 @@ alwaysApply: false
 ---
 
 <critical-rules>
+- Before interpreting the Diff context, execute `git parent` command to dynamically get the base branch which will be used as the value for the `--base` flag.
 - You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
 </critical-rules>
 
@@ -27,10 +28,15 @@ alwaysApply: false
 
 <example>
 User: "Create a pull request based on @PR Diff"
+Agent: Getting the base branch
+```bash
+git parent
+```
+
 Agent: Analyzing the diff context
 
 ```bash
-gh pr create --title "feat: implement user authentication" --body "## Summary
+gh pr create --base <base-branch> --title "feat: implement user authentication" --body "## Summary
 
 Added user authentication functionality using JWT tokens.
 
