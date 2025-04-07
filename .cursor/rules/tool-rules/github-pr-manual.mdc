@@ -6,6 +6,7 @@ alwaysApply: false
 
 <critical-rules>
 - You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
+- You will NOT use the `create_pull_request` tool, you will generate the command in text format surrounded with ```bash code block.
 - Always escape all backticks within the PR body using backslashes (`\`)
 - Before interpreting the Diff context, execute `git parent` command to dynamically get the base branch which will be used as the value for the `--base` flag.
 </critical-rules>

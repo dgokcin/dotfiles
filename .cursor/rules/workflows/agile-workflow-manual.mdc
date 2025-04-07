@@ -13,8 +13,9 @@ alwaysApply:
 - Follow `.cursor/rules/documentation/timestamp-auto.mdc` for all timestamps.
 - Ask the user if they want to use the github mcp for managing the epics and stories.
 - If the github mcp is being used, than ALWAYS sync the local epics and stories with github mcp after creating/updating epics and stories locally.
-- Do not use issue numbers from `.ai/epics/epic-n-descriptive-epic-name/` for the stories you will create with the github mcp as github will automatically add issue numbers to the stories you create.
+- Do NOT use any issue numbers from `.ai/epics/epic-n-descriptive-epic-name/` for the stories you will create with the github mcp as github will automatically add issue numbers to the stories you create.
 - Make sure you reference the issues with the `#<issue_number>` syntax in GitHub instead of hardcoding the issue number in the story file.
+- You will NOT use the `add_issue_comment` tool when referencing issues in the stories or epics, you will use the `#<issue_number>` syntax in GitHub instead.
 </critical-rules>
 
 # Agile Workflow Protocol
