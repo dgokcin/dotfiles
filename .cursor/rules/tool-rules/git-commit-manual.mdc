@@ -9,6 +9,7 @@ alwaysApply: false
 - If the user has asked you to commit based on unstaged files, execute git `git diff | cat` to understand the diff context.
 - If the user has not specified, always use the staged files for the diff context.
 - You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
+- Always escape all backticks within the commit message using backslashes (`\`)
 </critical-rules>
 
 # Git Commit Message Standards
