@@ -51,9 +51,9 @@ alwaysApply:
 │   └── {n}-descriptive-decision-name.md
 ├── epics/              # Epics
 │   ├── epic-{n}-descriptive-epic-name/     # Example: epic-1-user-authentication/
-│   │   ├── story-{m}-descriptive-story-name.md  # Example: story-1-oauth-setup.md
-│   │   └── story-{m}-descriptive-story-name.md  # Example: story-2-user-roles.md
-│   │   └── story-{m}-descriptive-story-name.md  # Example: story-3-user-roles.md
+│   │   ├── story-descriptive-story-name.md  # Example: story-oauth-setup.md
+│   │   └── story-descriptive-story-name.md  # Example: story-user-roles.md
+│   │   └── story-descriptive-story-name.md  # Example: story-user-roles.md
 │   └── epic-{n}-descriptive-epic-name/     # Example: epic-2-payment-processing/
 └── lessons/           # Lessons Learned
     └── YYYY-MM-DD-descriptive-lesson-name.md
@@ -91,7 +91,7 @@ Develop inventory management system
 
 2. Create Story:
 ```markdown
-# Story-1-project-setup: Initial Project Configuration
+# story-project-setup: Initial Project Configuration
 
 ## Tasks
 - [ ] Initialize project structure
