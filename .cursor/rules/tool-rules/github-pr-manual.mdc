@@ -6,6 +6,7 @@ alwaysApply: false
 
 <critical-rules>
 - You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
+- Always escape all backticks within the PR body using backslashes (`\`)
 </critical-rules>
 
 # GitHub Pull Request Creation Standards
@@ -19,7 +20,7 @@ alwaysApply: false
   - `## Summary` - Brief overview of changes
   - `## Changes` - Bullet list of specific modifications
   - `## Additional Notes` - Extra information, limitations, or follow-ups
-- Escape all backticks within the PR body using backslashes (`\``)
+- Escape all backticks within the PR body using backslashes (`\`)
 - Never use newline characters in the command itself
 - Always wrap the entire command in a ```bash code block for easy copy-pasting
 
@@ -40,6 +41,7 @@ Added user authentication functionality using JWT tokens.
 - Added login and register endpoints
 - Implemented middleware for protected routes
 - Added unit tests for auth functionality
+- Correctly escaped file paths in the PR body \`file.txt\`
 
 ## Additional Notes
 
