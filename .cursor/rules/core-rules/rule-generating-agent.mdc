@@ -3,6 +3,11 @@ description: This rule is essential for maintaining consistency and quality in r
 globs:
 alwaysApply: true
 ---
+<critical-rules>
+  - NEVER use quotes around glob patterns, NEVER group glob extensions with `{}`
+  - ALWAYS check the glob pattern examples AND critical rules section below to ensure correct rule application
+</critical-rules>
+
 # Cursor Rules Format
 
 ## Template Structure for Rules Files
