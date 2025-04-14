@@ -5,6 +5,7 @@ alwaysApply: false
 ---
 
 <critical-rules>
+- Alwaysa generate a multi-line command for the output of the `gh pr create` command.
 - You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
 - You will NOT use the `create_pull_request` tool, you will generate the command in text format surrounded with ```bash code block.
 - Always escape all backticks within the PR body using backslashes (`\`)
