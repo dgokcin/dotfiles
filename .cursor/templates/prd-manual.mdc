@@ -56,13 +56,13 @@ single/multiplayer support.
 - Community building
 
 ## Epic-1-basic-game: Core Chess Game Implementation (Current)
-story-1-project-setup: Initial Project Setup
-story-2-chessboard-ui: Interactive Chessboard Implementation
-story-3-game-rules: Chess Rules Engine Implementation
+story-project-setup: Initial Project Setup
+story-chessboard-ui: Interactive Chessboard Implementation
+story-game-rules: Chess Rules Engine Implementation
 
 ## Epic-2-ai-features: AI Gameplay Features (Future)
-story-4-basic-ai: Basic AI Player Implementation
-story-5-difficulty-levels: Multiple AI Difficulty Levels
+story-basic-ai: Basic AI Player Implementation
+story-difficulty-levels: Multiple AI Difficulty Levels
 </example>
 
 <example type="invalid">

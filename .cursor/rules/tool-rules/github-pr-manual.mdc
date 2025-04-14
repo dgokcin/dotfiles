@@ -5,8 +5,11 @@ alwaysApply: false
 ---
 
 <critical-rules>
+- Alwaysa generate a multi-line command for the output of the `gh pr create` command.
 - You will NOT use the `run_terminal_cmd` tool, you will generate the command in text format surrounded with ```bash code block.
+- You will NOT use the `create_pull_request` tool, you will generate the command in text format surrounded with ```bash code block.
 - Always escape all backticks within the PR body using backslashes (`\`)
+- Use the `git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'` command to dynamically get the base branch which will be used as the value for the `--base` flag.
 </critical-rules>
 
 # GitHub Pull Request Creation Standards
@@ -31,7 +34,7 @@ User: "Create a pull request based on @PR Diff"
 Agent: Analyzing the diff context
 
 ```bash
-gh pr create --title "feat: implement user authentication" --body "## Summary
+gh pr create --title "feat: implement user authentication" --base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') --body "## Summary
 
 Added user authentication functionality using JWT tokens.
 
@@ -50,7 +53,7 @@ Future work: Add refresh token capability"
 </example>
 
 <example type="invalid">
-gh pr create --base main --title "User auth" --body "Added authentication"
+gh pr create --base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') --title "User auth" --body "Added authentication"
 
 // Problems:
 // - Not wrapped in code block
