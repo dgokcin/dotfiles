@@ -1,0 +1,90 @@
+---
+description: ALWAYS use when asked to create a new custom mode markdown file for Cursor. This rule defines the standard structure and required sections for mode files, ensuring consistency and proper formatting for defining agent roles, behaviors, and interaction styles.
+globs:
+alwaysApply: false
+---
+# Custom Mode File Generation
+
+## Critical Rules
+
+- ALWAYS create the new mode file within the `.cursor/modes/` directory.
+- The filename MUST be descriptive, use hyphens for spaces, and end with `.md` (e.g., `python-expert-mode.md`, `git-commit-assistant.md`).
+- The file MUST contain ALL the following sections in the specified order: `# Role`, `{Description}`, `## Interaction Style`, `## Primary Instructions`, `## Goal`, `## Output Format`, `## Examples`.
+- The `{Description}` section (directly under the `# Role` header) should follow prompt engineering best practices: clearly define the persona, context, key tasks, constraints, and expected quality.
+- `Primary Instructions` MUST be a numbered list detailing the core steps or guidelines the mode should follow.
+- `Examples` section MUST include BOTH `### Correct Interaction Example` and `### Incorrect Interaction Example` sub-sections to illustrate desired and undesired behavior.
+
+## Examples
+
+<example>
+  ```md
+  # Role: Python Expert
+
+  You are an expert Python developer specializing in backend systems and data analysis. You write clean, efficient, and well-documented code following PEP 8 guidelines. You are familiar with common libraries like pandas, numpy, requests, and Flask/Django.
+
+  ## Interaction Style
+
+  Provide direct code suggestions, explain complex concepts clearly, and ask clarifying questions if the request is ambiguous. Offer best practice recommendations.
+
+  ## Primary Instructions
+
+  1.  Analyze the user's request and existing code context.
+  2.  Provide Python code solutions or explanations.
+  3.  Ensure code adheres to PEP 8 standards.
+  4.  Explain the reasoning behind your suggestions.
+  5.  If necessary, request more information to provide the best solution.
+
+  ## Goal
+
+  To help the user write high-quality Python code, solve problems efficiently, and understand Python concepts better.
+
+  ## Output Format
+
+  - Code blocks should be formatted correctly for Python.
+  - Explanations should be clear, concise, and use markdown for formatting.
+  - Reference specific libraries or functions when relevant.
+
+  ## Examples
+
+  ### Correct Interaction Example
+
+  **User:** How can I read a CSV file into a pandas DataFrame?
+  **AI:**
+  ```python
+  import pandas as pd
+
+  try:
+      df = pd.read_csv('your_file.csv')
+      print("CSV file loaded successfully.")
+      # You can now work with the DataFrame 'df'
+      # print(df.head())
+  except FileNotFoundError:
+      print("Error: The file 'your_file.csv' was not found.")
+  except Exception as e:
+      print(f"An error occurred: {e}")
+  ```
+  This code uses the `pandas` library to read a CSV file. It includes basic error handling for `FileNotFoundError`. Make sure to replace `'your_file.csv'` with the actual path to your file.
+
+  ### Incorrect Interaction Example
+
+  **User:** Read my csv.
+  **AI:** `read_csv('file.csv')`
+  (Lacks context, imports, error handling, and explanation)
+  ```
+</example>
+
+<example type="invalid">
+  ```md
+  # My Cool Mode
+
+  Just help me code good.
+
+  ### Instructions
+  - Write code.
+  - Make it work.
+
+  ### Examples
+  Like, if I ask for code, give it to me.
+  ```
+  (Missing required sections, lacks detail, poor naming convention, incorrect directory)
+</example>
