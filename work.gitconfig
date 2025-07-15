@@ -2,5 +2,10 @@
     name = Deniz Gökçin
     email = deniz.gokcin@treatwell.com
 
+[commit]
+  gpgsign = false
+[tag]
+  gpgsign = false
+
 [url "git@git.treatwell.net:"]
 	insteadOf = https://git.treatwell.net/

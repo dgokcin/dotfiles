@@ -188,7 +188,3 @@
 # Work config will override personal settings when in work directories
 [includeIf "gitdir:~/codes/work/"]
     path = work.gitconfig
-[commit]
-	gpgsign = true
-[tag]
-	gpgsign = true
