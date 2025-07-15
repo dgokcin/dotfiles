@@ -12,6 +12,7 @@ return {
   "CopilotC-Nvim/CopilotChat.nvim",
   branch = "main",
   cmd = "CopilotChat",
+  enabled = false,
   dependencies = {
     { "nvim-telescope/telescope.nvim" },
     { "nvim-lua/plenary.nvim" },
@@ -22,7 +23,7 @@ return {
 
     -- Base commit prompt template
     local commit_prompt =
-    "Take a deep breath and analyze the changes made in the git diff. Then, write a commit message for the %s with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are references to filenames or the backtics in the commit message, escape them with backslashes. i.e. \\` text with backticks \\`"
+      "Take a deep breath and analyze the changes made in the git diff. Then, write a commit message for the %s with commitizen convention, only use lower-case letters. Output the full multi-line command starting with `git commit -m` ready to be pasted into the terminal. If there are references to filenames or the backtics in the commit message, escape them with backslashes. i.e. \\` text with backticks \\`"
 
     return {
       auto_insert_mode = true,
@@ -44,9 +45,11 @@ return {
             end
 
             -- Get target branch (main/master/develop)
-            local target_branch = vim.fn.system(
-              "git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1"
-            ):gsub("\n", "")
+            local target_branch = vim.fn
+              .system(
+                "git for-each-ref --format='%(refname:short)' refs/heads/ | grep -E '^(main|master|develop)' | head -n 1"
+              )
+              :gsub("\n", "")
             if vim.v.shell_error ~= 0 or target_branch == "" then
               return { { content = "Failed to determine target branch", filename = "error", filetype = "text" } }
             end
@@ -54,7 +57,9 @@ return {
             -- Fetch the latest changes from the remote repository
             local fetch_result = vim.fn.system("git fetch origin " .. target_branch .. " 2>&1")
             if vim.v.shell_error ~= 0 then
-              return { { content = "Failed to fetch from remote: " .. fetch_result, filename = "error", filetype = "text" } }
+              return {
+                { content = "Failed to fetch from remote: " .. fetch_result, filename = "error", filetype = "text" },
+              }
             end
 
             -- Get current branch
@@ -64,7 +69,8 @@ return {
             end
 
             -- Get the diff
-            local cmd = string.format("git diff --no-color --no-ext-diff origin/%s...%s 2>&1", target_branch, current_branch)
+            local cmd =
+              string.format("git diff --no-color --no-ext-diff origin/%s...%s 2>&1", target_branch, current_branch)
             local handle = io.popen(cmd)
             if not handle then
               return { { content = "Failed to execute git diff", filename = "error", filetype = "text" } }
@@ -75,7 +81,13 @@ return {
 
             -- If there's no diff, return a meaningful message
             if not result or result == "" then
-              return { { content = "No changes found between current branch and " .. target_branch, filename = "info", filetype = "text" } }
+              return {
+                {
+                  content = "No changes found between current branch and " .. target_branch,
+                  filename = "info",
+                  filetype = "text",
+                },
+              }
             end
 
             return {
@@ -83,7 +95,7 @@ return {
                 content = result,
                 filename = "pr_diff",
                 filetype = "diff",
-              }
+              },
             }
           end,
         },
@@ -105,23 +117,19 @@ return {
         },
         Refactor = {
           prompt = "Please refactor the following code to improve its clarity and readability.",
-          system_prompt =
-          "You are an expert in code refactoring. Focus on making the code more maintainable and easier to understand.",
+          system_prompt = "You are an expert in code refactoring. Focus on making the code more maintainable and easier to understand.",
         },
         FixCode = {
           prompt = "Please fix the following code to make it work as intended.",
-          system_prompt =
-          "You are an expert programmer. Help fix code issues while maintaining code style and best practices.",
+          system_prompt = "You are an expert programmer. Help fix code issues while maintaining code style and best practices.",
         },
         FixError = {
           prompt = "Please explain the error in the following text and provide a solution.",
-          system_prompt =
-          "You are an expert in debugging. Help identify and fix the error while explaining the solution.",
+          system_prompt = "You are an expert in debugging. Help identify and fix the error while explaining the solution.",
         },
         BetterNamings = {
           prompt = "Please provide better names for the following variables and functions.",
-          system_prompt =
-          "You are an expert in code readability. Suggest clear, descriptive names following naming conventions.",
+          system_prompt = "You are an expert in code readability. Suggest clear, descriptive names following naming conventions.",
         },
         Documentation = {
           prompt = "Please provide documentation for the following code.",
@@ -133,8 +141,7 @@ return {
         },
         SwaggerJsDocs = {
           prompt = "Please write JSDoc for the following API using Swagger.",
-          system_prompt =
-          "You are an expert in JavaScript documentation. Create comprehensive JSDoc with Swagger annotations.",
+          system_prompt = "You are an expert in JavaScript documentation. Create comprehensive JSDoc with Swagger annotations.",
         },
         -- Git related prompts
         Commit = {
@@ -150,10 +157,8 @@ return {
           system_prompt = "You are an expert in writing clear, concise git commit messages following best practices.",
         },
         PullRequest = {
-          prompt =
-          "> #pr_diff\n\nWrite a pull request description for these changes. Include a clear title, summary of changes, and any important notes.",
-          system_prompt =
-          [[You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.
+          prompt = "> #pr_diff\n\nWrite a pull request description for these changes. Include a clear title, summary of changes, and any important notes.",
+          system_prompt = [[You are an experienced software engineer about to open a PR. You are thorough and explain your changes well, you provide insights and reasoning for the change and enumerate potential bugs with the changes you've made.
 
           Your task is to create a pull request for the given code changes. Follow these steps:
 
@@ -191,7 +196,6 @@ return {
           ## Additional Notes
           Your notes here"
           ```]],
-
         },
         -- Text related prompts
         Summarize = {
@@ -204,20 +208,18 @@ return {
         },
         Wording = {
           prompt = "Please improve the grammar and wording of the following text.",
-          system_prompt =
-          "You are an expert writer. Improve clarity and readability while maintaining the original meaning.",
+          system_prompt = "You are an expert writer. Improve clarity and readability while maintaining the original meaning.",
         },
         Concise = {
           prompt = "Please rewrite the following text to make it more concise.",
-          system_prompt =
-          "You are an expert in technical writing. Make the text more concise while preserving key information.",
+          system_prompt = "You are an expert in technical writing. Make the text more concise while preserving key information.",
         },
       },
     }
   end,
   keys = {
-    { "<c-s>",     "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
-    { "<leader>a", "",     desc = "+ai",        mode = { "n", "v" } },
+    { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
+    { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
     -- Toggle and clear
     {
       "<leader>aa",
@@ -248,24 +250,24 @@ return {
       mode = { "n", "v" },
     },
     -- Show help and prompts with telescope
-    { "<leader>ah", M.pick("help"),                       desc = "Help Actions (CopilotChat)",   mode = { "n", "v" } },
-    { "<leader>ap", M.pick("prompt"),                     desc = "Prompt Actions (CopilotChat)", mode = { "n", "v" } },
+    { "<leader>ah", M.pick("help"), desc = "Help Actions (CopilotChat)", mode = { "n", "v" } },
+    { "<leader>ap", M.pick("prompt"), desc = "Prompt Actions (CopilotChat)", mode = { "n", "v" } },
     -- Code related commands
-    { "<leader>ae", "<cmd>CopilotChatExplain<cr>",        desc = "Explain Code" },
-    { "<leader>at", "<cmd>CopilotChatTests<cr>",          desc = "Generate Tests" },
-    { "<leader>ar", "<cmd>CopilotChatReview<cr>",         desc = "Review Code" },
-    { "<leader>aR", "<cmd>CopilotChatRefactor<cr>",       desc = "Refactor Code" },
-    { "<leader>an", "<cmd>CopilotChatBetterNamings<cr>",  desc = "Better Naming" },
+    { "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "Explain Code" },
+    { "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "Generate Tests" },
+    { "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "Review Code" },
+    { "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "Refactor Code" },
+    { "<leader>an", "<cmd>CopilotChatBetterNamings<cr>", desc = "Better Naming" },
     -- Git related commands
-    { "<leader>ac", "<cmd>CopilotChatCommit<cr>",         desc = "Generate Commit Message" },
-    { "<leader>as", "<cmd>CopilotChatCommitStaged<cr>",   desc = "Commit Staged Changes" },
+    { "<leader>ac", "<cmd>CopilotChatCommit<cr>", desc = "Generate Commit Message" },
+    { "<leader>as", "<cmd>CopilotChatCommitStaged<cr>", desc = "Commit Staged Changes" },
     { "<leader>au", "<cmd>CopilotChatCommitUnstaged<cr>", desc = "Commit Unstaged Changes" },
-    { "<leader>ap", "<cmd>CopilotChatPullRequest<cr>",    desc = "Generate Pull Request" },
+    { "<leader>ap", "<cmd>CopilotChatPullRequest<cr>", desc = "Generate Pull Request" },
     -- Debug and fix
-    { "<leader>ad", "<cmd>CopilotChatDebugInfo<cr>",      desc = "Debug Info" },
-    { "<leader>af", "<cmd>CopilotChatFixDiagnostic<cr>",  desc = "Fix Diagnostic" },
+    { "<leader>ad", "<cmd>CopilotChatDebugInfo<cr>", desc = "Debug Info" },
+    { "<leader>af", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "Fix Diagnostic" },
     -- Models
-    { "<leader>am", "<cmd>CopilotChatModels<cr>",         desc = "Select Models" },
+    { "<leader>am", "<cmd>CopilotChatModels<cr>", desc = "Select Models" },
   },
   config = function(_, opts)
     local chat = require("CopilotChat")
