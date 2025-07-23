@@ -175,3 +175,5 @@ if [ -f '/Users/denizgokcin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/den
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/denizgokcin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/denizgokcin/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/opt/homebrew/bin:$PATH"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
