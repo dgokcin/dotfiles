@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.12.0](https://github.com/dgokcin/dotfiles/compare/v3.11.0...v3.12.0) (2025-10-01)
+
+
+### Features
+
+* **ai:** introduce dedicated cursor modes for gitboi and jira-ninja ([faaae6a](https://github.com/dgokcin/dotfiles/commit/faaae6a08a78276f0e2848d4fc0c869345135c35))
+* introduce modes.json ([f928684](https://github.com/dgokcin/dotfiles/commit/f9286846b0a20333f37401476f33ed9af7216026))
+
+
+### Bug Fixes
+
+* ad some critical rules ([111f53d](https://github.com/dgokcin/dotfiles/commit/111f53d2a584d7e546adc5b15e25926a9a7f71d4))
+* disable copilot related nvim plugins ([bd63352](https://github.com/dgokcin/dotfiles/commit/bd63352f252c274e1d0da5a3c78974e2a5bf5112))
+* escape properly for commits ([8748f08](https://github.com/dgokcin/dotfiles/commit/8748f081cfdf9902d52f0cf90e33b978562e75eb))
+* existing workflow glob fix ([edf0928](https://github.com/dgokcin/dotfiles/commit/edf0928740934ef01350e6cd417fcfabce539e58))
+* issue numbering problems ([fa66407](https://github.com/dgokcin/dotfiles/commit/fa66407b68663753e3eea6090a06854aeac9b840))
+* minor fixes in the fucked gitconfig ([898e473](https://github.com/dgokcin/dotfiles/commit/898e4736739106e69b9296361f3b52f54f47d2f2))
+* **pr-workflow:** remove git parent dependency from github pr rule ([198018e](https://github.com/dgokcin/dotfiles/commit/198018e3618743f50baac65fd1a2aa86de422cc7))
+* should solve the date problem ([60bf622](https://github.com/dgokcin/dotfiles/commit/60bf622b8a938769e20c0e830013000f4a277738))
+* try forcing frontmatter for new rule creation ([b1bebbd](https://github.com/dgokcin/dotfiles/commit/b1bebbdb8005a40de64e8b78ee31842b9568edc2))
+* working on the pr generation command ([81b26f9](https://github.com/dgokcin/dotfiles/commit/81b26f99b395afbd69fed66a3176de3b648bbd8d))
+
 ## [3.11.0](https://github.com/dgokcin/dotfiles/compare/v3.10.0...v3.11.0) (2025-04-05)
 
 
