@@ -67,7 +67,7 @@ function tgc() {
     echo "Are you sure you want to delete .terragrunt-cache directory and .terraform.lock.hcl file? (y/n)"
     read answer
     if [ "$answer" != "${answer#[Yy]}" ] ;then
-        find . -iname ".terragrunt-cache" -type d -exec rm -rf {} +;
+        find . -iname ".terragrunt-cache" -type f -exec rm -rf {} +;
         find . -iname ".terraform.lock.hcl" -type f -exec rm -rf {} +;
     else
         echo "Exiting..."
