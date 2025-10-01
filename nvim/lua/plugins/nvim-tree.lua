@@ -39,12 +39,24 @@ return {
       })
 
       -- Override the existing <C-b> mapping
-      vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<CR>",
-        { noremap = true, silent = true, desc = "Toggle file explorer" })
+      vim.keymap.set(
+        "n",
+        "<C-b>",
+        "<cmd>NvimTreeToggle<CR>",
+        { noremap = true, silent = true, desc = "Toggle file explorer" }
+      )
 
       -- Keep <leader>e as an alternative
-      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>",
-        { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" })
+      vim.keymap.set(
+        "n",
+        "<leader>e",
+        "<cmd>NvimTreeToggle<CR>",
+        { noremap = true, silent = true, desc = "Explorer NvimTree (root dir)" }
+      )
+
+      -- Focus to current file
+      vim.keymap.set("n", "<leader>nf", ":NvimTreeFindFile!<CR>", { desc = "NvimTree: focus current file & set root" })
     end,
   },
 }
+

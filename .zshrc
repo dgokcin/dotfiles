@@ -100,7 +100,8 @@ source <(kubectl completion zsh)
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+# HISTFILE=~/.cache/zsh/history
+HISTFILE=$HOME/.zsh_history
 
 # vi mode
 bindkey -v
