@@ -1,6 +1,7 @@
 return {
   "xTacobaco/cursor-agent.nvim",
   vscode = "false",
+  enabled = false,
   config = function()
     vim.keymap.set("n", "<leader>ca", ":CursorAgent<CR>", { desc = "Cursor Agent: Toggle terminal" })
     vim.keymap.set("v", "<leader>ca", ":CursorAgentSelection<CR>", { desc = "Cursor Agent: Send selection" })
