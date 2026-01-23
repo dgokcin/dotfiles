@@ -1,6 +1,8 @@
 ---
 name: dev-story
-description: Fetch a Jira story and prepare development context using Jira Girl
+description: Fetch a Jira story and prepare development context. Use when starting work on a ticket, need to understand requirements, or want to prepare for implementation
+context: fork
+agent: jiragirl
 allowed-tools: mcp__atlassian-mcp__getJiraIssue, mcp__atlassian-mcp__getJiraIssueRemoteIssueLinks, mcp__atlassian-mcp__searchJiraIssuesUsingJql, Read, Glob, Grep
 argument-hint: <DEVX-XXX or issue key>
 ---

@@ -1,6 +1,8 @@
 ---
 name: get-story
-description: Fetch and display a Jira issue with all details using Jira Girl
+description: Fetch and display a Jira issue with all details using Jira Girl. Use when user asks about a ticket, wants issue details, or says "what's in DEVX-123"
+context: fork
+agent: jiragirl
 allowed-tools: mcp__atlassian-mcp__getJiraIssue, mcp__atlassian-mcp__getJiraIssueRemoteIssueLinks, mcp__atlassian-mcp__searchJiraIssuesUsingJql
 argument-hint: <DEVX-XXX or issue number>
 ---

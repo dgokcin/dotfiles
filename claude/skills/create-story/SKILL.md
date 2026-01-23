@@ -1,6 +1,9 @@
 ---
 name: create-story
 description: Create a Jira story with proper ADF formatting using Jira Girl persona
+disable-model-invocation: true
+context: fork
+agent: jiragirl
 allowed-tools: mcp__atlassian-mcp__createJiraIssue, mcp__atlassian-mcp__getJiraIssue, Read
 argument-hint: <story description or requirements>
 ---
