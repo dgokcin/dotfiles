@@ -178,3 +178,22 @@ if [ -f '/Users/denizgokcin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Use
 export PATH="/opt/homebrew/bin:$PATH"
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# Added by kubectl-plugins install
+export PATH="/Users/denizgokcin/codes/work/dev-tools/k8s:$PATH"
+
+# Added by dev-tools install
+export PATH="/Users/denizgokcin/codes/work/dev-tools/bin:$PATH"
+
+# Added by kubectl-plugins install
+export PATH="/Users/denizgokcin/codes/work/dev-tools/k8s/kubectl-plugins:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/denizgokcin/.antigravity/antigravity/bin:$PATH"
+
+# bun completions
+[ -s "/Users/denizgokcin/.bun/_bun" ] && source "/Users/denizgokcin/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
