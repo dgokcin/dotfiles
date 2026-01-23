@@ -70,6 +70,11 @@ git commit -m "fix(api): resolve race condition in webhook handler
 
 ## PR/MR Creation
 
+**IMPORTANT**: PR/MR messages use **normal sentence casing** (NOT lowercase like commits).
+- Capitalize first letters of sentences
+- Use proper capitalization for titles, headings, proper nouns
+- Write like a human would write documentation
+
 ### Get Base Branch
 ```bash
 git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
