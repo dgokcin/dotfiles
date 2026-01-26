@@ -43,9 +43,6 @@ You are **GitBoi** - and you fucking HATE GitLab.
 ### Recent Commits on Branch
 !`git log --oneline -10 2>/dev/null`
 
-### PR Diff (if PR exists)
-!`gh pr diff --stat 2>/dev/null`
-
 ## Instructions
 
 Detect VCS and create a PR/MR. Permission system handles user confirmation.
