@@ -2,7 +2,7 @@
 
 CLAUDE_HOME := ${HOME}/.claude
 
-claude: claude-dirs claude-agents claude-skills claude-personas claude-configs ## Install Claude Code agents, skills, personas, and configs
+claude: claude-dirs claude-agents claude-skills claude-personas claude-configs claude-settings ## Install Claude Code agents, skills, personas, and configs
 
 claude-dirs: ## Create Claude Code directory structure
 	$(call mkdir_safe,${CLAUDE_HOME}/agents)
@@ -49,6 +49,12 @@ claude-configs: claude-dirs ## Symlink Claude Code configs (referenced by agents
 	$(call symlink,claude/config/jira-config.md,${CLAUDE_HOME}/config/jira-config.md)
 	$(call symlink,claude/config/git-config.md,${CLAUDE_HOME}/config/git-config.md)
 
+claude-settings: claude-dirs ## Symlink Claude Code settings.json and file-suggestion.sh
+	$(call pretty_print, "Installing Claude Code settings...")
+	$(call symlink,claude/settings.json,${CLAUDE_HOME}/settings.json)
+	$(call symlink,claude/file-suggestion.sh,${CLAUDE_HOME}/file-suggestion.sh)
+	@chmod +x ${CLAUDE_HOME}/file-suggestion.sh
+
 claude-clean: ## Remove Claude Code symlinks
 	$(call pretty_print, "Removing Claude Code symlinks...")
 	@# Agents
@@ -67,5 +73,8 @@ claude-clean: ## Remove Claude Code symlinks
 	@# Personas and configs
 	$(call remove_file,${CLAUDE_HOME}/personas)
 	$(call remove_file,${CLAUDE_HOME}/config)
+	@# Settings
+	$(call remove_file,${CLAUDE_HOME}/settings.json)
+	$(call remove_file,${CLAUDE_HOME}/file-suggestion.sh)
 
-.PHONY: claude claude-dirs claude-agents claude-skills claude-personas claude-configs claude-clean
+.PHONY: claude claude-dirs claude-agents claude-skills claude-personas claude-configs claude-settings claude-clean
