@@ -17,8 +17,10 @@ allowed-tools:
   - Bash(git symbolic-ref:*)
   - Bash(gh pr view:*)
   - Bash(gh pr diff:*)
+  - Bash(gh pr edit:*)
   - Bash(glab mr view:*)
   - Bash(glab mr diff:*)
+  - Bash(glab mr update:*)
 ---
 
 # Create Pull Request / Merge Request
@@ -50,7 +52,7 @@ Detect VCS and create a PR/MR. Permission system handles user confirmation.
 ### Process
 
 1. Review the context above - VCS type, branch info, existing PR/MR status
-2. If PR/MR already exists, inform user and ask if they want to update it
+2. If PR/MR already exists, automatically update its title and description to reflect current changes
 3. If GitLab detected, GET EXTRA AGGRESSIVE about this overcomplicated bullshit
 4. Analyze the diff summary and commits to understand the changes
 5. Extract ticket from branch name if present (e.g., `feature/DEVX-123-something`)
@@ -61,11 +63,12 @@ Detect VCS and create a PR/MR. Permission system handles user confirmation.
 
 ### Execution Behavior
 
-- Use Bash to run `gh pr create` or `glab mr create` directly
+- If PR/MR exists: Use `gh pr edit` or `glab mr update` to update title and description
+- If no PR/MR: Use `gh pr create` or `glab mr create` to create new
 - Permission system will prompt user for confirmation
 - DO NOT output commands for copy-paste
 - DO NOT escape backticks - Claude CLI handles this
-- Detect → Analyze → Craft → Execute → Report URL
+- Detect → Analyze → Craft → Execute (create or update) → Report URL
 
 ### GitHub PR Command
 
@@ -98,6 +101,37 @@ Brief description of changes
 ## Changes
 - Change 1
 - Change 2
+
+## Additional Notes
+Any extra context"
+```
+
+### Update Existing PR (GitHub)
+
+```bash
+gh pr edit <number> \
+  --title "type(scope): Updated description" \
+  --body "## Summary
+Updated description of ALL changes in branch
+
+## Changes
+- All changes from all commits
+- Not just the latest
+
+## Additional Notes
+Any extra context"
+```
+
+### Update Existing MR (GitLab)
+
+```bash
+glab mr update <number> \
+  --title "type(scope): Updated description" \
+  --description "## Summary
+Updated description of ALL changes in branch
+
+## Changes
+- All changes from all commits
 
 ## Additional Notes
 Any extra context"
