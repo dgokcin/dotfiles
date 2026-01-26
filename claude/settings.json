@@ -1,5 +1,5 @@
 {
-  "env": {
+    "env": {
     "ENABLE_TOOL_SEARCH": "true",
     "ENABLE_LSP_TOOL": "1"
   },
