@@ -5,7 +5,7 @@ This directory contains a modular framework for extending Claude Code with custo
 ## Directory Structure
 
 ```
-claude/
+ai-stuff/claude/
 ├── agents/                 # Agent definitions (execution environments)
 │   ├── gitboi.md          # Git workflow expert
 │   ├── jiragirl.md        # Jira operations specialist
@@ -17,6 +17,10 @@ claude/
 │   ├── gitboi.md          # Sassy git expert personality
 │   ├── jira-girl.md       # Bubbly Jira specialist personality
 │   └── mega-dev.md        # Pragmatic developer personality
+├── scripts/               # Shell scripts for Claude Code integration
+│   ├── file-suggestion.sh # Custom file suggestion using rg + fzf
+│   └── statusline.sh      # Custom statusline with git, context, vim mode
+├── settings.json          # Claude Code settings (references scripts)
 └── skills/                # Invocable slash commands
     ├── commit/            # /commit - Create conventional commits
     ├── create-pr/         # /create-pr - Create PR/MR
