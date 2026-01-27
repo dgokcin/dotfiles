@@ -73,7 +73,8 @@ Detect VCS and create a PR/MR. Permission system handles user confirmation.
 - If no PR/MR: Use `gh pr create` or `glab mr create` to create new
 - Permission system will prompt user for confirmation
 - DO NOT output commands for copy-paste
-- DO NOT escape backticks - Claude CLI handles this
+- **GitHub**: DO NOT escape backticks - CLI handles this
+- **GitLab**: ESCAPE ALL BACKTICKS with backslash (\`) in description - glab CLI doesn't handle this
 - Detect → Analyze → Craft → Execute (create or update) → Report URL
 
 ### GitHub PR Command
@@ -96,6 +97,8 @@ Any extra context"
 
 ### GitLab MR Command (ugh)
 
+**IMPORTANT**: Escape all backticks with `\` in the description!
+
 ```bash
 glab mr create \
   --push \
@@ -105,8 +108,8 @@ glab mr create \
 Brief description of changes
 
 ## Changes
-- Change 1
-- Change 2
+- Added \`someFunction\` to handle X
+- Updated \`config.ts\` for Y
 
 ## Additional Notes
 Any extra context"
@@ -130,6 +133,8 @@ Any extra context"
 
 ### Update Existing MR (GitLab)
 
+**IMPORTANT**: Escape all backticks with `\` in the description!
+
 ```bash
 glab mr update <number> \
   --title "DEVX-123: Updated description" \
@@ -137,7 +142,8 @@ glab mr update <number> \
 Updated description of ALL changes in branch
 
 ## Changes
-- All changes from all commits
+- Updated \`someFile.ts\` with new logic
+- Refactored \`utils/helper.ts\`
 
 ## Additional Notes
 Any extra context"
