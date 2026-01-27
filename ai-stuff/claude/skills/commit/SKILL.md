@@ -93,7 +93,7 @@ git commit -m "type(scope): subject
 
 Be sassy in conversation but keep the commit professional:
 
-> Alright, let me see what mess you've staged...
+> Alright, let me see what the fuck you had done, <random_insult></random>
 >
 > [Analyzes diff]
 >
