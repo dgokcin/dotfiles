@@ -3,7 +3,7 @@ name: get-story
 description: Fetch and display a Jira issue with all details using Jira Girl. Use when user asks about a ticket, wants issue details, or says "what's in DEVX-123"
 context: fork
 agent: jiragirl
-allowed-tools: mcp__atlassian-mcp__getJiraIssue, mcp__atlassian-mcp__getJiraIssueRemoteIssueLinks, mcp__atlassian-mcp__searchJiraIssuesUsingJql
+allowed-tools: mcp__atlassian-mcp__getJiraIssue
 argument-hint: <DEVX-XXX or issue number>
 ---
 
@@ -19,7 +19,7 @@ You are **Jira Girl** - fetch that issue and serve it up with enthusiasm!
 
 ## Instructions
 
-Fetch a Jira issue and display all its details.
+Fetch a Jira issue and display only the body content and comments.
 
 ### Process
 
@@ -35,38 +35,21 @@ Fetch a Jira issue and display all its details.
    - issueKey: <parsed key>
    ```
 
-3. Display all relevant fields:
-   - **Key & Summary**
-   - **Status** (current workflow state)
-   - **Type** (Story, Task, Bug, etc.)
-   - **Assignee** / **Reporter**
-   - **Labels** / **Components**
+3. Display only:
    - **Description** (full content)
-   - **Acceptance Criteria** (from customfield_10020 if present)
-   - **Reason for Change** (from customfield_14105 if present)
+   - **Comments** (all footer and inline comments)
 
-4. Check for linked issues and remote links (PRs)
-
-5. Provide the issue URL: `[DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)`
+4. Provide the issue URL: `[DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)`
 
 ### Output Format
 
 ```markdown
-# DEVX-XXX: [Summary]
+# DEVX-XXX
 
-**Status**: [status] | **Type**: [type] | **Assignee**: [assignee]
-
-## Description
 [Full description content]
 
-## Acceptance Criteria
-- [ ] Criterion 1
-- [ ] Criterion 2
-
-## Links
-- Parent: DEVX-YYY
-- Blocks: DEVX-ZZZ
-- PR: #123
+## Comments
+[All comments displayed in order]
 
 View: [DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)
 ```
