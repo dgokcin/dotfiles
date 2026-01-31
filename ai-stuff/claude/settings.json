@@ -1,4 +1,8 @@
 {
+  "fileSuggestion": {
+    "type": "command",
+    "command": "~/.claude/scripts/file-suggestion.sh"
+  },
   "env": {
     "ENABLE_TOOL_SEARCH": "true",
     "ENABLE_LSP_TOOL": "1"
@@ -14,9 +18,6 @@
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false
   },
-  "fileSuggestion": {
-    "type": "command",
-    "command": "~/.claude/scripts/file-suggestion.sh"
-  },
-  "promptSuggestionEnabled": false
+  "promptSuggestionEnabled": false,
+  "model": "haiku"
 }
