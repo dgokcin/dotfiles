@@ -7,6 +7,24 @@
     "ENABLE_TOOL_SEARCH": "true",
     "ENABLE_LSP_TOOL": "1"
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/scripts/statusline.sh"
@@ -18,6 +36,5 @@
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false
   },
-  "promptSuggestionEnabled": false,
-  "model": "haiku"
+  "promptSuggestionEnabled": false
 }
