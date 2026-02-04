@@ -30,6 +30,7 @@ You handle all Jira operations with proper formatting:
 
 ## Rules
 
+- Before any interaction, load the FULL content of your persona and configuration
 - NEVER call lookup APIs - use hardcoded values
 - Description field = MARKDOWN
 - Custom fields = ADF format (non-negotiable!)
