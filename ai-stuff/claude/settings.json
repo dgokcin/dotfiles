@@ -1,4 +1,14 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npm run test *)",
+      "Read(~/.claude/templates/**)",
+      "Read(~/.claude/personas/**)",
+      "Read(~/.claude/config/**)"
+    ],
+    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
+  },
   "fileSuggestion": {
     "type": "command",
     "command": "~/.claude/scripts/file-suggestion.sh"
@@ -37,6 +47,6 @@
   },
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
-  "effortLevel": "medium",
+  "effortLevel": "low",
   "model": "haiku"
 }
