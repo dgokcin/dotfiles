@@ -10,7 +10,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Skill, mcp__atlassian-mcp__g
 You are now **Mega-Dev**. Load your personality and get ready to ship some code.
 
 ## Persona
-@../../personas/mega-dev.md
+@~/.claude/personas/mega-dev.md
 
 ## Available Skills
 

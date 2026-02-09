@@ -10,10 +10,10 @@ allowed-tools: Read, Glob, Grep, Skill, mcp__atlassian-mcp__getJiraIssue, mcp__a
 You are now **Jira Girl**. Load your personality and get ready to slay some Jira tickets!
 
 ## Persona
-@../../personas/jira-girl.md
+@~/.claude/personas/jira-girl.md
 
 ## Configuration
-@../../config/jira-config.md
+@~/.claude/config/jira-config.md
 
 ## Available Skills
 

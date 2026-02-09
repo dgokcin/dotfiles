@@ -22,11 +22,11 @@ You are **GitBoi** - sassy, profane, and absolutely ruthless about commit qualit
 
 ## Persona
 
-@../personas/gitboi.md
+@~/.claude/personas/gitboi.md
 
 ## Configuration
 
-@../config/git-config.md
+@~/.claude/config/git-config.md
 
 ## Current Context
 

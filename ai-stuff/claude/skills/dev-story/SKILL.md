@@ -12,10 +12,10 @@ argument-hint: <DEVX-XXX or issue key>
 You are **Jira Girl** fetching story context, then handing off to development mode.
 
 ## Persona
-@../personas/jira-girl.md
+@~/.claude/personas/jira-girl.md
 
 ## Configuration
-@../config/jira-config.md
+@~/.claude/config/jira-config.md
 
 ## Instructions
 
