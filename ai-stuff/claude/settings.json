@@ -1,14 +1,4 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(npm run lint)",
-      "Bash(npm run test *)",
-      "Read(~/.claude/templates/**)",
-      "Read(~/.claude/personas/**)",
-      "Read(~/.claude/config/**)"
-    ],
-    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
-  },
   "fileSuggestion": {
     "type": "command",
     "command": "~/.claude/scripts/file-suggestion.sh"
@@ -21,6 +11,19 @@
     "commit": "",
     "pr": ""
   },
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npm run test *)",
+      "Read(~/.claude/templates/**)",
+      "Read(~/.claude/personas/**)",
+      "Read(~/.claude/config/**)"
+    ],
+    "ask": [
+      "Write(~/vault/personal/nl/house search/buying a house/**)"
+    ]
+  },
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -47,6 +50,5 @@
   },
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
-  "effortLevel": "low",
-  "model": "haiku"
+  "effortLevel": "low"
 }
