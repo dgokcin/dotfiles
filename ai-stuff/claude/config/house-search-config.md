@@ -4,16 +4,18 @@
 
 Sensitive financial and contact information is in the private config:
 
-@./_house-search-private.md
+@~/.claude/config/_house-search-private.md
 
 ## Vault Paths
 
-| Path              | Purpose                                                            |
-| ----------------- | ------------------------------------------------------------------ |
-| **Base**          | `personal/nl/house search/buying a house/`                         |
-| **Properties**    | `personal/nl/house search/buying a house/properties/`              |
-| **Neighborhoods** | `personal/nl/house search/buying a house/neighborhoods/`           |
-| **MoC**           | `personal/nl/house search/buying a house/00 - House Search MoC.md` |
+The Obsidian vault is symlinked at `~/vault/`. All paths below are absolute.
+
+| Path              | Purpose                                                                       |
+| ----------------- | ----------------------------------------------------------------------------- |
+| **Base**          | `~/vault/personal/nl/house search/buying a house/`                            |
+| **Properties**    | `~/vault/personal/nl/house search/buying a house/properties/`                 |
+| **Neighborhoods** | `~/vault/personal/nl/house search/buying a house/neighborhoods/`              |
+| **MoC**           | `~/vault/personal/nl/house search/buying a house/00 - House Search MoC.md`    |
 
 ## Templates
 
