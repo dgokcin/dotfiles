@@ -4,18 +4,18 @@
 
 Sensitive financial and contact information is in the private config:
 
-@~/.claude/config/_house-search-private.md
+@~/.claude/config/\_house-search-private.md
 
 ## Vault Paths
 
 The Obsidian vault is symlinked at `~/vault/`. All paths below are absolute.
 
-| Path              | Purpose                                                                       |
-| ----------------- | ----------------------------------------------------------------------------- |
-| **Base**          | `~/vault/personal/nl/house search/buying a house/`                            |
-| **Properties**    | `~/vault/personal/nl/house search/buying a house/properties/`                 |
-| **Neighborhoods** | `~/vault/personal/nl/house search/buying a house/neighborhoods/`              |
-| **MoC**           | `~/vault/personal/nl/house search/buying a house/00 - House Search MoC.md`    |
+| Path              | Purpose                                                                    |
+| ----------------- | -------------------------------------------------------------------------- |
+| **Base**          | `~/vault/personal/nl/house search/buying a house/`                         |
+| **Properties**    | `~/vault/personal/nl/house search/buying a house/properties/`              |
+| **Neighborhoods** | `~/vault/personal/nl/house search/buying a house/neighborhoods/`           |
+| **MoC**           | `~/vault/personal/nl/house search/buying a house/00 - House Search MoC.md` |
 
 ## Templates
 
@@ -76,18 +76,17 @@ To move a property between tiers, just change the `tier` field in the property n
 
 ## Preferred Locations
 
-| Tier  | Areas                                                             |
-| ----- | ----------------------------------------------------------------- |
-| Top   | De Pijp, Oud-Zuid, Overtoom area, Vondelpark surroundings         |
-| Great | Spaarndammerbuurt, Houthavens, KNSM-eiland, Westerdok             |
-| Good  | Other non-touristy ring neighborhoods with character              |
-| Avoid | Deep tourist zones (Centrum/Red Light), isolated industrial edges |
+| Tier  | Areas                                                                        |
+| ----- | ---------------------------------------------------------------------------- |
+| Top   | De Pijp, Oud-Zuid, Overtoom area, Vondelpark surroundings, Spaarndammerbuurt |
+| Great | Houthavens, KNSM-eiland, Westerdok                                           |
+| Good  | Other non-touristy ring neighborhoods with character                         |
+| Avoid | Deep tourist zones (Centrum/Red Light), isolated industrial edges,           |
 
 ## Property Requirements
 
 - Energy label: C or better
-- Size: >50m² (ideally >70m²)
+- Size: >63m² (ideally >70m²)
 - Not ground floor
 - Near public transport and daily shopping
-- No carpet (allergies)
-- Bonuses: balcony, south-facing, bike storage, individual heating control
+- Bonuses: balcony, south-facing, bike storage, individual heating control, bathtub
