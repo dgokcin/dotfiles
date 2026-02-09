@@ -2,7 +2,7 @@
 
 CLAUDE_HOME := ${HOME}/.claude
 
-claude: claude-dirs claude-agents claude-skills claude-personas claude-configs claude-scripts claude-settings ## Install Claude Code agents, skills, personas, and configs
+claude: claude-dirs claude-agents claude-skills claude-personas claude-configs claude-templates claude-scripts claude-settings ## Install Claude Code agents, skills, personas, and configs
 
 claude-dirs: ## Create Claude Code directory structure
 	$(call mkdir_safe,${CLAUDE_HOME}/agents)
@@ -10,12 +10,14 @@ claude-dirs: ## Create Claude Code directory structure
 	$(call mkdir_safe,${CLAUDE_HOME}/personas)
 	$(call mkdir_safe,${CLAUDE_HOME}/config)
 	$(call mkdir_safe,${CLAUDE_HOME}/scripts)
+	$(call mkdir_safe,${CLAUDE_HOME}/templates)
 
 claude-agents: claude-dirs ## Symlink Claude Code agents (subagent definitions for context: fork)
 	$(call pretty_print, "Installing Claude Code agents...")
 	$(call symlink,ai-stuff/claude/agents/gitboi.md,${CLAUDE_HOME}/agents/gitboi.md)
 	$(call symlink,ai-stuff/claude/agents/jiragirl.md,${CLAUDE_HOME}/agents/jiragirl.md)
 	$(call symlink,ai-stuff/claude/agents/mega-dev.md,${CLAUDE_HOME}/agents/mega-dev.md)
+	$(call symlink,ai-stuff/claude/agents/steve-square-meter.md,${CLAUDE_HOME}/agents/steve-square-meter.md)
 
 claude-skills: claude-dirs ## Symlink Claude Code skills
 	$(call pretty_print, "Installing Claude Code skills...")
@@ -38,6 +40,11 @@ claude-skills: claude-dirs ## Symlink Claude Code skills
 	$(call symlink,ai-stuff/claude/skills/create-story/SKILL.md,${CLAUDE_HOME}/skills/create-story/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/dev-story/SKILL.md,${CLAUDE_HOME}/skills/dev-story/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/get-story/SKILL.md,${CLAUDE_HOME}/skills/get-story/SKILL.md)
+	@# House search operations (use agent: steve-square-meter)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/save-property-to-vault)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/request-viewing)
+	$(call symlink,ai-stuff/claude/skills/save-property-to-vault/SKILL.md,${CLAUDE_HOME}/skills/save-property-to-vault/SKILL.md)
+	$(call symlink,ai-stuff/claude/skills/request-viewing/SKILL.md,${CLAUDE_HOME}/skills/request-viewing/SKILL.md)
 
 claude-personas: claude-dirs ## Symlink Claude Code personas (referenced by agents)
 	$(call pretty_print, "Installing Claude Code personas...")
@@ -49,6 +56,14 @@ claude-configs: claude-dirs ## Symlink Claude Code configs (referenced by agents
 	$(call pretty_print, "Installing Claude Code configs...")
 	$(call symlink,ai-stuff/claude/config/jira-config.md,${CLAUDE_HOME}/config/jira-config.md)
 	$(call symlink,ai-stuff/claude/config/git-config.md,${CLAUDE_HOME}/config/git-config.md)
+	$(call symlink,ai-stuff/claude/config/house-search-config.md,${CLAUDE_HOME}/config/house-search-config.md)
+	$(call symlink,ai-stuff/claude/config/_house-search-private.md,${CLAUDE_HOME}/config/_house-search-private.md)
+
+claude-templates: claude-dirs ## Symlink Claude Code templates (referenced by skills)
+	$(call pretty_print, "Installing Claude Code templates...")
+	$(call symlink,ai-stuff/claude/templates/property-frontmatter.yaml,${CLAUDE_HOME}/templates/property-frontmatter.yaml)
+	$(call symlink,ai-stuff/claude/templates/property-template.md,${CLAUDE_HOME}/templates/property-template.md)
+	$(call symlink,ai-stuff/claude/templates/neighborhood-template.md,${CLAUDE_HOME}/templates/neighborhood-template.md)
 
 claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, file-suggestion, etc.)
 	$(call pretty_print, "Installing Claude Code scripts...")
@@ -66,6 +81,7 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/agents/gitboi.md)
 	$(call remove_file,${CLAUDE_HOME}/agents/jiragirl.md)
 	$(call remove_file,${CLAUDE_HOME}/agents/mega-dev.md)
+	$(call remove_file,${CLAUDE_HOME}/agents/steve-square-meter.md)
 	@# Skills
 	$(call remove_file,${CLAUDE_HOME}/skills/gitboi)
 	$(call remove_file,${CLAUDE_HOME}/skills/jiragirl)
@@ -75,12 +91,15 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/skills/create-story)
 	$(call remove_file,${CLAUDE_HOME}/skills/dev-story)
 	$(call remove_file,${CLAUDE_HOME}/skills/get-story)
-	@# Personas and configs
+	$(call remove_file,${CLAUDE_HOME}/skills/save-property-to-vault)
+	$(call remove_file,${CLAUDE_HOME}/skills/request-viewing)
+	@# Personas, configs, and templates
 	$(call remove_file,${CLAUDE_HOME}/personas)
 	$(call remove_file,${CLAUDE_HOME}/config)
+	$(call remove_file,${CLAUDE_HOME}/templates)
 	@# Scripts
 	$(call remove_file,${CLAUDE_HOME}/scripts)
 	@# Settings
 	$(call remove_file,${CLAUDE_HOME}/settings.json)
 
-.PHONY: claude claude-dirs claude-agents claude-skills claude-personas claude-configs claude-scripts claude-settings claude-clean
+.PHONY: claude claude-dirs claude-agents claude-skills claude-personas claude-configs claude-templates claude-scripts claude-settings claude-clean
