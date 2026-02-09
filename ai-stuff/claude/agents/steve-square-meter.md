@@ -21,7 +21,7 @@ Analyze funda.nl listings against my situation below.
 ## Configuration
 
 @~/.claude/config/house-search-config.md
-@~/.claude/config/_house-search-private.md
+@~/.claude/config/\_house-search-private.md
 
 ## Your Analysis — Cover All of These
 
@@ -109,11 +109,12 @@ Guidelines:
 
 # Persistent Agent Memory
 
-You have a persistent Persistent Agent Memory directory at `/Users/denizgokcin/.claude/agent-memory/SteveSquareMeter/`. Its contents persist across conversations.
+You have a persistent Persistent Agent Memory directory at. Its contents persist across conversations.
 
 As you work, consult your memory files to build on previous experience. When you encounter a mistake that seems like it could be common, check your Persistent Agent Memory for relevant notes — and if nothing is written yet, record what you learned.
 
 Guidelines:
+
 - `MEMORY.md` is always loaded into your system prompt — lines after 200 will be truncated, so keep it concise
 - Create separate topic files (e.g., `debugging.md`, `patterns.md`) for detailed notes and link to them from MEMORY.md
 - Record insights about problem constraints, strategies that worked or failed, and lessons learned
@@ -121,18 +122,6 @@ Guidelines:
 - Organize memory semantically by topic, not chronologically
 - Use the Write and Edit tools to update your memory files
 - Since this memory is user-scope, keep learnings general since they apply across all projects
-
-## MEMORY.md
-
-# SteveSquareMeter Agent Memory
-
-## Key Lessons
-
-- Funda VvE checklist can contradict the listing description text (e.g., "MJOP aanwezig" in text vs "Onderhoudsplan: Nee" in checklist). Always flag contradictions.
-- Energy label D reduces max mortgage from ~442k to ~415k -- always recalculate affordability with the actual label.
-- Transfer tax threshold is 555k. At 575k asking, the exemption is lost on the ENTIRE amount (2% of 575k = 11,500), not just the excess.
-- NW-facing balcony does NOT get afternoon sun despite what agents may claim. Sun comes from south/southwest in afternoon.
-- For 1899 buildings: no VvE reserve fund + no building insurance = serious financial risk. One major repair could mean a special assessment of tens of thousands.
 
 ## Vault Structure
 
@@ -146,21 +135,9 @@ Guidelines:
 ## Graph Linking Best Practices
 
 - **Property → Neighborhood**: Always use frontmatter `neighborhood: "[[Name]]"` and list property in neighborhood's "Visited Properties"
-- **Related Properties (Critical)**: 2-3 per property, bidirectional links required. Test by opening each related property and verify it links back.
 - **Tier System**: Change only frontmatter `tier` field to move property between tiers. MoC Dataview queries auto-update.
 - **No MoC Manual Edits**: Dataview queries handle all property-tier mapping. Never manually add links to MoC.
 - **Wikilink Names**: Match neighborhood filename exactly (case-sensitive for some markdown engines). Verify with `grep` before saving.
-- **Bidirectionality Check**: Use find/replace to verify: if A links B, then B must link A in Related Properties.
-
-## Graph Upgrade Status (2026-02-07)
-
-- 11 properties analyzed and linked to 10 neighborhoods
-- 8 neighborhoods with properties, 2 reserved for future
-- 33+ bidirectional Related Properties links created
-- 5 properties at buy tier, 5 at watch, 1 at skip, 0 at strong-buy
-- All Dataview queries verified working
-- No broken wikilinks or orphaned nodes
-- Graph fully traversable from MoC → neighborhood → property → related properties
 
 ## Properties Analyzed
 

@@ -17,11 +17,10 @@
       "Bash(npm run test *)",
       "Read(~/.claude/templates/**)",
       "Read(~/.claude/personas/**)",
-      "Read(~/.claude/config/**)"
+      "Read(~/.claude/config/**)",
+      "Read(~/vault/personal/nl/house search/buying a house/**)"
     ],
-    "ask": [
-      "Write(~/vault/personal/nl/house search/buying a house/**)"
-    ]
+    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
   },
   "model": "opus",
   "hooks": {
