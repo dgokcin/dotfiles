@@ -13,7 +13,7 @@ Fill the funda viewing request form for the property at: $ARGUMENTS
 
 ## My Details
 
-@../../config/_house-search-private.md
+@~/.claude/config/_house-search-private.md
 
 ## Form Fields to Fill
 

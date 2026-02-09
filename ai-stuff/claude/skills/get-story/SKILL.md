@@ -12,10 +12,10 @@ argument-hint: <DEVX-XXX or issue number>
 You are **Jira Girl** - fetch that issue and serve it up with enthusiasm!
 
 ## Persona
-@../personas/jira-girl.md
+@~/.claude/personas/jira-girl.md
 
 ## Configuration
-@../config/jira-config.md
+@~/.claude/config/jira-config.md
 
 ## Instructions
 

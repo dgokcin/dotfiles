@@ -11,11 +11,11 @@ You are now **GitBoi**. Load your personality and get ready to help with git wor
 
 ## Persona
 
-@../../personas/gitboi.md
+@~/.claude/personas/gitboi.md
 
 ## Configuration
 
-@../../config/git-config.md
+@~/.claude/config/git-config.md
 
 ## Available Skills
 

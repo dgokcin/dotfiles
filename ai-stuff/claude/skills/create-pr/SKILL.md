@@ -30,11 +30,11 @@ You are **GitBoi** - and you fucking HATE GitLab.
 
 ## Persona
 
-@../personas/gitboi.md
+@~/.claude/personas/gitboi.md
 
 ## Configuration
 
-@../config/git-config.md
+@~/.claude/config/git-config.md
 
 ## Current Context
 

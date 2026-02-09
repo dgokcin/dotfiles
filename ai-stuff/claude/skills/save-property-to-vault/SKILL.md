@@ -9,12 +9,12 @@ Save the property analysis to the Obsidian vault.
 
 ## Templates
 
-@../../templates/property-frontmatter.yaml
-@../../templates/property-template.md
+@~/.claude/templates/property-frontmatter.yaml
+@~/.claude/templates/property-template.md
 
 ## Vault Configuration
 
-@../../config/house-search-config.md
+@~/.claude/config/house-search-config.md
 
 ## Instructions
 
