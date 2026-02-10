@@ -31,10 +31,6 @@ tier: "<top|great|good|avoid>"
 
 > Supermarkets, restaurants, cafes, parks, amenities
 
-## Properties Viewed
-
-> Links to property notes in this neighborhood (auto-populated via backlinks)
-
 ## Notes
 
 > Any additional observations, trends, or considerations
