@@ -20,9 +20,11 @@
       "Read(~/.claude/config/**)",
       "Read(~/vault/personal/nl/house search/buying a house/**)"
     ],
-    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
+    "ask": [
+      "Write(~/vault/personal/nl/house search/buying a house/**)"
+    ]
   },
-  "model": "opus",
+  "model": "haiku",
   "hooks": {
     "Notification": [
       {
