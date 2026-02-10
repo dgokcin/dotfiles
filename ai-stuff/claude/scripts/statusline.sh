@@ -133,13 +133,23 @@ fetch_usage_data() {
   local token
   token=$(get_oauth_token)
   if [ -z "$token" ]; then return 1; fi
-  curl -s --max-time 5 \
+  local tmp_file="${CACHE_FILE}.tmp"
+  if curl -s --max-time 5 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $token" \
     -H "anthropic-beta: oauth-2025-04-20" \
     -H "User-Agent: claude-code/2.1.34" \
-    "https://api.anthropic.com/api/oauth/usage" >"$CACHE_FILE" 2>/dev/null
+    "https://api.anthropic.com/api/oauth/usage" >"$tmp_file" 2>/dev/null; then
+    # Only update cache if we got valid JSON with utilization data
+    if jq -e '.five_hour.utilization' "$tmp_file" >/dev/null 2>&1; then
+      mv "$tmp_file" "$CACHE_FILE"
+    else
+      rm -f "$tmp_file"
+    fi
+  else
+    rm -f "$tmp_file"
+  fi
 }
 
 needs_refresh=true
@@ -197,11 +207,13 @@ format_reset_time() {
 }
 
 if [ -n "$usage_data" ]; then
-  five_hour_pct=$(echo "$usage_data" | jq -r '.five_hour.utilization // 0' 2>/dev/null | xargs printf "%.0f" 2>/dev/null || echo 0)
+  five_hour_pct=$(echo "$usage_data" | jq -r '(.five_hour.utilization // 0) | round' 2>/dev/null)
+  [ -z "$five_hour_pct" ] && five_hour_pct=0
   five_hour_reset_iso=$(echo "$usage_data" | jq -r '.five_hour.resets_at // empty' 2>/dev/null)
   five_hour_reset=$(format_reset_time "$five_hour_reset_iso" "time")
 
-  seven_day_pct=$(echo "$usage_data" | jq -r '.seven_day.utilization // 0' 2>/dev/null | xargs printf "%.0f" 2>/dev/null || echo 0)
+  seven_day_pct=$(echo "$usage_data" | jq -r '(.seven_day.utilization // 0) | round' 2>/dev/null)
+  [ -z "$seven_day_pct" ] && seven_day_pct=0
   seven_day_reset_iso=$(echo "$usage_data" | jq -r '.seven_day.resets_at // empty' 2>/dev/null)
   seven_day_reset=$(format_reset_time "$seven_day_reset_iso" "datetime")
 fi
