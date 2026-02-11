@@ -76,12 +76,12 @@ To move a property between tiers, just change the `tier` field in the property n
 
 ## Preferred Locations
 
-| Tier  | Areas                                                                        |
-| ----- | ---------------------------------------------------------------------------- |
-| Top   | De Pijp, Oud-Zuid, Overtoom area, Vondelpark surroundings, Spaarndammerbuurt |
-| Great | Houthavens, KNSM-eiland, Westerdok                                           |
-| Good  | Other non-touristy ring neighborhoods with character                         |
-| Avoid | Deep tourist zones (Centrum/Red Light), isolated industrial edges,           |
+| Tier  | Areas                                                                                    |
+| ----- | ---------------------------------------------------------------------------------------- |
+| Top   | De Pijp, Oud-Zuid, Overtoom area, Vondelpark surroundings, Spaarndammerbuurt, Westerpark |
+| Great | Houthavens, KNSM-eiland, Westerdok                                                       |
+| Good  | Other non-touristy ring neighborhoods with character                                     |
+| Avoid | Deep tourist zones (Centrum/Red Light), isolated industrial edges,                       |
 
 ## Property Requirements
 

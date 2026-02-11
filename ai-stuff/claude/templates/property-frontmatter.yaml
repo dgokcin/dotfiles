@@ -7,7 +7,7 @@ tags:
 address: "<street> <number>"
 postcode: "<1234 AB>"
 city: Amsterdam
-neighborhood: "<neighborhood name>"
+neighborhood: "<[[neighborhood name]]>"
 price: <number>
 price_per_m2: <number>
 size_m2: <number>
