@@ -24,7 +24,6 @@
       "Write(~/vault/personal/nl/house search/buying a house/**)"
     ]
   },
-  "model": "haiku",
   "hooks": {
     "Notification": [
       {
@@ -51,5 +50,6 @@
   },
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
-  "effortLevel": "low"
+  "effortLevel": "low",
+  "model": "haiku"
 }
