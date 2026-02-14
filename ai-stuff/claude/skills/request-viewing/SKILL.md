@@ -13,35 +13,37 @@ Fill the funda viewing request form for the property at: $ARGUMENTS
 
 ## My Details
 
-@~/.claude/config/_house-search-private.md
+@~/.claude/config/\_house-search-private.md
 
-## Form Fields to Fill
+## Form Fields & Selectors
 
-The funda viewing form has these fields:
+### Textboxes & Text Fields
+- `textarea[placeholder*="question"]`: I really liked the apartment and would like to request a viewing.
+- `input[type="email"]`: REDACTED@example.com
+- `input[type="text"][placeholder*="First"]`: Deniz
+- `input[type="text"][placeholder*="Last"]`: Gokcin
+- `input[type="tel"]`: +31000000000
+- `input[type="text"][placeholder*="Post code"]`: 0000XX
+- `input[type="text"][placeholder*="House number"]`: 000
+- `input[type="text"][placeholder*="Addition"]`: (leave empty)
 
-1. **Question textarea**: Leave empty (optional field)
-2. **Request viewing checkbox**: Check "I would like to request a viewing of this house"
-3. **Days available**: Select ALL days (Mo, Tu, We, Th, Fr)
-4. **Part of day**: Select BOTH (Morning, Afternoon)
-5. **Email**: REDACTED@example.com (may be pre-filled from login)
-6. **First name**: Deniz
-7. **Last name**: Gokcin
-8. **Phone number**: +31000000000
-9. **Postcode**: 0000XX
-10. **House number**: 000
-11. **Addition**: (leave empty)
-12. **Selling current house**: Select "No"
-13. **Financial consultation**: Select "Yes"
+### Checkboxes (use getElementById with ID)
+- `#checkbox-viewingRequest`: Check
+- **Days (select ALL)**: `#checkbox-Mo`, `#checkbox-Tu`, `#checkbox-We`, `#checkbox-Th`, `#checkbox-Fr`
+- **Time (select BOTH)**: `#checkbox-Morning`, `#checkbox-Afternoon`
+
+### Radio Groups
+- **Selling house**: Select No (second option)
+- **Financial consultation**: Select Yes (first option)
 
 ## Steps
 
-1. Navigate to the funda listing URL if not already there
-2. Find and click the "Plan bezichtiging" or "Plan viewing" button
-3. Wait for the form to load
-4. Fill all form fields as specified above
-5. Take a screenshot of the filled form for verification
-6. Submit the form
-7. After successful submission, update the property note in Obsidian:
+1. Navigate directly to the viewing request URL (form is pre-loaded)
+2. Fill all textbox fields using CSS selectors as specified
+3. Check all checkbox IDs listed (use `document.getElementById(id).checked = true`)
+4. Select radio options by label text or data attribute
+5. Submit form with button containing "Send message" text
+6. After successful submission, update the property note in Obsidian:
    - Set `viewing_requested: true`
    - Set `viewing_requested_date: <today's date in YYYY-MM-DD format>`
-8. Report success with confirmation details
+7. Report success

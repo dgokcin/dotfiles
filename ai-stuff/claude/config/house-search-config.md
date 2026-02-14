@@ -10,12 +10,12 @@ Sensitive financial and contact information is in the private config:
 
 The Obsidian vault is symlinked at `~/vault/`. All paths below are absolute.
 
-| Path              | Purpose                                                                    |
-| ----------------- | -------------------------------------------------------------------------- |
-| **Base**          | `~/vault/personal/nl/house search/buying a house/`                         |
-| **Properties**    | `~/vault/personal/nl/house search/buying a house/properties/`              |
-| **Neighborhoods** | `~/vault/personal/nl/house search/buying a house/neighborhoods/`           |
-| **MoC**           | `~/vault/personal/nl/house search/buying a house/00 - House Search MoC.md` |
+| Path              | Purpose                                                          |
+| ----------------- | ---------------------------------------------------------------- |
+| **Base**          | `~/vault/personal/nl/house search/buying a house/`               |
+| **Properties**    | `~/vault/personal/nl/house search/buying a house/properties/`    |
+| **Neighborhoods** | `~/vault/personal/nl/house search/buying a house/neighborhoods/` |
+| **MoC**           | `~/vault/personal/nl/house search/buying a house/moc.md`         |
 
 ## Templates
 
@@ -33,27 +33,6 @@ Templates for Obsidian notes are in the `templates/` directory:
 | Buy        | `buy`             | Good option worth considering                  |
 | Watch      | `watch`           | Interesting but not urgent                     |
 | Skip       | `skip`            | Analyzed and rejected                          |
-
-## MoC — Dataview Integration
-
-The MoC at `00 - House Search MoC.md` uses Dataview TABLE queries to auto-display properties by tier. **Do NOT manually add property links to the MoC** — the Dataview queries handle this automatically based on the `tier` frontmatter field.
-
-Each tier section uses this query pattern:
-
-```
-TABLE
-  "€" + string(price/1000) + "k" AS Price,
-  string(size_m2) + " m²" AS Size,
-  neighborhood AS Neighborhood,
-  energy_label AS Energy,
-  choice(erfpacht, "Erfpacht", "Eigen grond") AS Ownership,
-  choice(viewing_requested, "✓", "") AS Viewing
-FROM "personal/nl/house search/buying a house/properties"
-WHERE tier = "<tier-value>"
-SORT price ASC
-```
-
-To move a property between tiers, just change the `tier` field in the property note's frontmatter.
 
 ## Buying Costs to Factor In
 
@@ -76,17 +55,18 @@ To move a property between tiers, just change the `tier` field in the property n
 
 ## Preferred Locations
 
-| Tier  | Areas                                                                                    |
-| ----- | ---------------------------------------------------------------------------------------- |
-| Top   | De Pijp, Oud-Zuid, Overtoom area, Vondelpark surroundings, Spaarndammerbuurt, Westerpark |
-| Great | Houthavens, KNSM-eiland, Westerdok                                                       |
-| Good  | Other non-touristy ring neighborhoods with character                                     |
-| Avoid | Deep tourist zones (Centrum/Red Light), isolated industrial edges,                       |
+| Tier  | Areas                                                                                                 |
+| ----- | ----------------------------------------------------------------------------------------------------- |
+| Top   | De Pijp, Oud-Zuid, Overtoom area, Vondelpark surroundings, Spaarndammerbuurt, Westerpark, West        |
+| Great | Houthavens, KNSM-eiland, Westerdok                                                                    |
+| Good  | Super Bos En Lommer streets with Moroccan vibes, other non-touristy ring neighborhoods with character |
+| Avoid | Deep tourist zones (Centrum/Red Light), isolated industrial edges,                                    |
 
 ## Property Requirements
 
 - Energy label: C or better
 - Size: >63m² (ideally >70m²)
 - Not ground floor
+- Bike Storage(Berging, or inside parking for bike)
 - Near public transport and daily shopping
-- Bonuses: balcony, south-facing, bike storage, individual heating control, bathtub
+- Bonuses: balcony, south-facing, individual heating control, bathtub

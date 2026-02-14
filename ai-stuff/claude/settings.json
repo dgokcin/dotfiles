@@ -46,7 +46,8 @@
     "pyright-lsp@claude-plugins-official": false,
     "playwright@claude-plugins-official": false,
     "context7@claude-plugins-official": false,
-    "ralph-loop@claude-plugins-official": false
+    "ralph-loop@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": true
   },
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
