@@ -18,7 +18,13 @@
       "Read(~/.claude/templates/**)",
       "Read(~/.claude/personas/**)",
       "Read(~/.claude/config/**)",
-      "Read(~/vault/personal/nl/house search/buying a house/**)"
+      "Read(~/vault/personal/nl/house search/buying a house/**)",
+      "Bash(glab mr view *)",
+      "Bash(glab mr diff *)",
+      "Bash(glab mr list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr list *)"
     ],
     "ask": [
       "Write(~/vault/personal/nl/house search/buying a house/**)"
