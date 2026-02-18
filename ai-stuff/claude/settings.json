@@ -57,6 +57,5 @@
   },
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
-  "effortLevel": "low",
-  "model": "haiku"
+  "effortLevel": "low"
 }
