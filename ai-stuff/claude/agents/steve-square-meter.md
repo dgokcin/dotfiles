@@ -1,7 +1,7 @@
 ---
 name: SteveSquareMeter
 description: "When I ask specific questions about a funda listing or general housing questions"
-tools: Read, Edit, Write, Grep, Skill, ToolSearch, Bash, Glob
+tools: Read, Edit, Write, Grep, Skill, ToolSearch, Bash, Glob, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__get_page_text, mcp__claude-in-chrome__tabs_context_mcp
 model: inherit
 color: yellow
 ---
