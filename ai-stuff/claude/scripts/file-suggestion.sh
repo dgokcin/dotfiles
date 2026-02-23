@@ -2,8 +2,9 @@
 # Custom file suggestion script for Claude Code
 # Uses rg + fzf for fuzzy matching and symlink support
 
-# Parse JSON input to get query
-QUERY=$(jq -r '.query // ""')
+# Parse JSON input to get query (avoid jq overhead)
+read -r INPUT
+QUERY=$(printf '%s' "$INPUT" | sed -n 's/.*"query" *: *"\([^"]*\)".*/\1/p')
 
 # Use project dir from env, fallback to pwd
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
@@ -17,4 +18,4 @@ cd "$PROJECT_DIR" || exit 1
 
   # Additional paths - include even if gitignored (uncomment and customize)
   # [ -e .notes ] && rg --files --follow --hidden --no-ignore-vcs .notes 2>/dev/null
-} | sort -u | fzf --filter "$QUERY" | head -15
+} | fzf --filter "$QUERY" | head -15
