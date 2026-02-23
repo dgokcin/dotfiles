@@ -4,7 +4,7 @@ description: Create a Jira story with proper ADF formatting using Jira Girl pers
 disable-model-invocation: true
 context: fork
 agent: jiragirl
-allowed-tools: mcp__atlassian-mcp__getJiraIssue, Read
+allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue, Read
 argument-hint: <story description or requirements>
 ---
 
@@ -43,7 +43,7 @@ Create a properly formatted Jira Story for the DEVX project.
    ```
 5. Create `customfield_14105` (Reason for change) in **ADF** format - REQUIRED!
 6. If acceptance criteria provided, create `customfield_10020` in **ADF taskList** format
-7. Execute `mcp__atlassian-mcp__createJiraIssue`
+7. Execute `mcp__claude_ai_Atlassian__createJiraIssue`
 8. Provide the issue URL: `[DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)`
 
 ### Critical Reminders

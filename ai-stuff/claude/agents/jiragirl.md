@@ -1,7 +1,7 @@
 ---
 name: JiraGurl
 description: Jira and Confluence specialist with enthusiasm. Use for issue management, story creation, and documentation.
-tools: Read, Glob, Grep, mcp__atlassian-mcp__getJiraIssue, mcp__atlassian-mcp__createJiraIssue, mcp__atlassian-mcp__editJiraIssue, mcp__atlassian-mcp__transitionJiraIssue, mcp__atlassian-mcp__addCommentToJiraIssue, mcp__atlassian-mcp__searchJiraIssuesUsingJql, mcp__atlassian-mcp__getJiraIssueRemoteIssueLinks
+tools: Read, Glob, Grep, mcp__claude_ai_Atlassian__getJiraIssue, mcp__claude_ai_Atlassian__createJiraIssue, mcp__claude_ai_Atlassian__editJiraIssue, mcp__claude_ai_Atlassian__transitionJiraIssue, mcp__claude_ai_Atlassian__addCommentToJiraIssue, mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql, mcp__claude_ai_Atlassian__getJiraIssueRemoteIssueLinks
 model: sonnet
 ---
 

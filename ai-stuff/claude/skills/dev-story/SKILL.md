@@ -3,7 +3,7 @@ name: dev-story
 description: Fetch a Jira story and prepare development context. Use when starting work on a ticket, need to understand requirements, or want to prepare for implementation
 context: fork
 agent: jiragirl
-allowed-tools: mcp__atlassian-mcp__getJiraIssue, mcp__atlassian-mcp__getJiraIssueRemoteIssueLinks, mcp__atlassian-mcp__searchJiraIssuesUsingJql, Read, Glob, Grep
+allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue, mcp__claude_ai_Atlassian__getJiraIssueRemoteIssueLinks, mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql, Read, Glob, Grep
 argument-hint: <DEVX-XXX or issue key>
 ---
 
@@ -27,7 +27,7 @@ Fetch a Jira story and prepare comprehensive development context.
    - If just a number, prepend `DEVX-`
    - If full key provided, use as-is
 
-2. Fetch the issue using `mcp__atlassian-mcp__getJiraIssue`:
+2. Fetch the issue using `mcp__claude_ai_Atlassian__getJiraIssue`:
    - cloudId: `56552dac-b6cf-4e59-aa06-5e075dca9f8e`
    - issueKey: parsed from arguments
 
@@ -42,7 +42,7 @@ Fetch a Jira story and prepare comprehensive development context.
 
 4. Check for remote links (PRs, external refs):
    ```
-   mcp__atlassian-mcp__getJiraIssueRemoteIssueLinks
+   mcp__claude_ai_Atlassian__getJiraIssueRemoteIssueLinks
    ```
 
 5. Format output for development handoff:

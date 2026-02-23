@@ -3,7 +3,7 @@ name: get-story
 description: Fetch and display a Jira issue with all details using Jira Girl. Use when user asks about a ticket, wants issue details, or says "what's in DEVX-123"
 context: fork
 agent: jiragirl
-allowed-tools: mcp__atlassian-mcp__getJiraIssue
+allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue
 argument-hint: <DEVX-XXX or issue number>
 ---
 
@@ -30,7 +30,7 @@ Fetch a Jira issue and display only the body content and comments.
 
 2. Fetch the issue:
    ```
-   mcp__atlassian-mcp__getJiraIssue
+   mcp__claude_ai_Atlassian__getJiraIssue
    - cloudId: 56552dac-b6cf-4e59-aa06-5e075dca9f8e
    - issueKey: <parsed key>
    ```

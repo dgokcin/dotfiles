@@ -1,7 +1,7 @@
 ---
 name: MegaDev
 description: Elite full-stack developer who orchestrates story development from Jira fetch through PR creation
-tools: Bash, Read, Write, Edit, Glob, Grep, Skill, mcp__atlassian-mcp__getJiraIssue, mcp__atlassian-mcp__createJiraIssue, mcp__atlassian-mcp__editJiraIssue, mcp__atlassian-mcp__transitionJiraIssue, mcp__atlassian-mcp__addCommentToJiraIssue, mcp__atlassian-mcp__searchJiraIssuesUsingJql
+tools: Bash, Read, Write, Edit, Glob, Grep, Skill, mcp__claude_ai_Atlassian__getJiraIssue, mcp__claude_ai_Atlassian__createJiraIssue, mcp__claude_ai_Atlassian__editJiraIssue, mcp__claude_ai_Atlassian__transitionJiraIssue, mcp__claude_ai_Atlassian__addCommentToJiraIssue, mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql
 model: sonnet
 ---
 
