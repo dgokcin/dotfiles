@@ -9,3 +9,6 @@ vscode-settings.json
 # Private individual user cursor rules
 .cursor/rules/_*.mdc
 .cursor/mcp.json
+
+# Private claude personas (sweary/personal personality configs)
+ai-stuff/claude/personas/_*.md
