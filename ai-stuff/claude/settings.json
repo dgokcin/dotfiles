@@ -20,6 +20,7 @@
       "Read(~/.claude/personas/**)",
       "Read(~/.claude/config/**)",
       "Read(~/vault/personal/nl/house search/buying a house/**)",
+      "Bash(git show *)",
       "Bash(glab mr view *)",
       "Bash(glab mr diff *)",
       "Bash(glab mr list *)",
@@ -27,9 +28,11 @@
       "Bash(gh pr diff *)",
       "Bash(gh pr list *)"
     ],
-    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
+    "ask": [
+      "Write(~/vault/personal/nl/house search/buying a house/**)"
+    ]
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -53,9 +56,19 @@
     "playwright@claude-plugins-official": false,
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
-    "feature-dev@claude-plugins-official": true
+    "feature-dev@claude-plugins-official": false,
+    "obsidian@obsidian-skills": false
   },
+  "extraKnownMarketplaces": {
+    "obsidian-skills": {
+      "source": {
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      }
+    }
+  },
+  "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
-  "effortLevel": "medium"
+  "voiceEnabled": true
 }

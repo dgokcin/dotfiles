@@ -62,9 +62,18 @@ vim.keymap.set("n", "<Enter>", "m`o<Esc>``", { noremap = true, silent = true, de
 vim.keymap.set("n", "<BS>", "m`O<Esc>``", { noremap = true, silent = true, desc = "Insert blank line above" })
 
 -- Move current line 1 line down in v-line mode and remember cursor position with gv
-vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv",
-    { noremap = true, silent = true, desc = "Move selected lines down" })
-vim.api.nvim_set_keymap("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines up" })
+vim.api.nvim_set_keymap(
+  "v",
+  "J",
+  ":m '>+1<CR>gv=gv",
+  { noremap = true, silent = true, desc = "Move selected lines down" }
+)
+vim.api.nvim_set_keymap(
+  "v",
+  "K",
+  ":m '<-2<CR>gv=gv",
+  { noremap = true, silent = true, desc = "Move selected lines up" }
+)
 
 -- Terminal Mappings
 -- Escape terminal mode with <C-\\><C-n>

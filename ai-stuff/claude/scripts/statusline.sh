@@ -9,6 +9,7 @@ input=$(cat)
 cwd=$(echo "$input" | jq -r ".workspace.current_dir")
 model=$(echo "$input" | jq -r ".model.display_name")
 time=$(date +%H:%M:%S)
+cost_usd=$(echo "$input" | jq -r ".cost_usd // empty")
 
 # Git info
 git_branch=""
@@ -25,16 +26,8 @@ if git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1; then
   fi
 fi
 
-# Vim mode
+# Vim mode (bracket indicator removed; Claude Code renders -- INSERT --/-- NORMAL -- natively)
 vim_mode=""
-vim_mode_json=$(echo "$input" | jq -r ".vim.mode // empty")
-if [ -n "$vim_mode_json" ]; then
-  if [ "$vim_mode_json" = "NORMAL" ]; then
-    vim_mode=" [N]"
-  else
-    vim_mode=" [I]"
-  fi
-fi
 
 # Reasoning effort from settings
 effort_level=""
@@ -218,6 +211,19 @@ if [ -n "$usage_data" ]; then
   seven_day_reset=$(format_reset_time "$seven_day_reset_iso" "datetime")
 fi
 
+# Format cost as $X.XXXX (4 decimal places), dropping trailing zeros after 2
+format_cost() {
+  local raw=$1
+  if [ -z "$raw" ]; then return; fi
+  # Use awk to format: show 4 sig decimals but drop trailing zeros beyond 2
+  echo "$raw" | awk '{
+    val = $1 + 0
+    printf "$%.4f", val
+  }' | sed 's/\(\.[0-9][0-9]\)0\+$/\1/'
+}
+
+cost_fmt=$(format_cost "$cost_usd")
+
 SEP=" ${C_DIM}|${C_RESET} "
 
 # ===== OUTPUT =====
@@ -260,9 +266,15 @@ esac
 printf "\n"
 printf "%b%s%b" "$C_BLUE" "$model" "$C_RESET"
 printf "%b" "$SEP"
-printf "%b%s / %s%b %b(%s%%)%b" "$C_ORANGE" "$used_fmt" "$total_fmt" "$C_RESET" "$C_GREEN" "$pct_used" "$C_RESET"
-printf "%b" "$SEP"
-printf "effort: %b%s%b" "$effort_color" "$effort_level" "$C_RESET"
+printf "ctx: %b%s / %s%b %b(%s%%)%b" "$C_ORANGE" "$used_fmt" "$total_fmt" "$C_RESET" "$C_GREEN" "$pct_used" "$C_RESET"
+if [ -n "$cost_fmt" ]; then
+  printf "%b" "$SEP"
+  printf "cost: %b%s%b" "$C_CYAN" "$cost_fmt" "$C_RESET"
+fi
+if [ "$effort_level" != "default" ]; then
+  printf "%b" "$SEP"
+  printf "effort: %b%s%b" "$effort_color" "$effort_level" "$C_RESET"
+fi
 
 # Line 2: Current (5h) bar | Weekly (7d) bar
 if [ -n "$usage_data" ]; then
@@ -277,7 +289,7 @@ if [ -n "$usage_data" ]; then
 
   # Line 3: Reset times
   printf "\n"
-  printf "%bresets %s%b" "$C_WHITE" "$five_hour_reset" "$C_RESET"
+  printf "%bresets:%b 5h @ %s" "$C_WHITE" "$C_RESET" "$five_hour_reset"
   printf "%b" "$SEP"
-  printf "%bresets %s%b" "$C_WHITE" "$seven_day_reset" "$C_RESET"
+  printf "7d @ %s" "$seven_day_reset"
 fi
