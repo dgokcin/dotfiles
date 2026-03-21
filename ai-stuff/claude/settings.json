@@ -13,7 +13,7 @@
   },
   "permissions": {
     "allow": [
-      "Read(~/.codes/work/**)",
+      "Read(~/codes/work/**)",
       "Bash(npm run lint)",
       "Bash(npm run test *)",
       "Read(~/.claude/templates/**)",
@@ -28,9 +28,7 @@
       "Bash(gh pr diff *)",
       "Bash(gh pr list *)"
     ],
-    "ask": [
-      "Write(~/vault/personal/nl/house search/buying a house/**)"
-    ]
+    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
   },
   "model": "opus[1m]",
   "hooks": {
@@ -67,7 +65,7 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "low",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true

@@ -18,6 +18,7 @@ claude-agents: claude-dirs ## Symlink Claude Code agents (subagent definitions f
 	$(call symlink,ai-stuff/claude/agents/jiragirl.md,${CLAUDE_HOME}/agents/jiragirl.md)
 	$(call symlink,ai-stuff/claude/agents/mega-dev.md,${CLAUDE_HOME}/agents/mega-dev.md)
 	$(call symlink,ai-stuff/claude/agents/steve-square-meter.md,${CLAUDE_HOME}/agents/steve-square-meter.md)
+	$(call symlink,ai-stuff/claude/agents/gitops-geezer.md,${CLAUDE_HOME}/agents/gitops-geezer.md)
 
 claude-skills: claude-dirs ## Symlink Claude Code skills
 	$(call pretty_print, "Installing Claude Code skills...")
@@ -28,6 +29,9 @@ claude-skills: claude-dirs ## Symlink Claude Code skills
 	$(call symlink,ai-stuff/claude/skills/gitboi/SKILL.md,${CLAUDE_HOME}/skills/gitboi/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/jiragirl/SKILL.md,${CLAUDE_HOME}/skills/jiragirl/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/mega-dev/SKILL.md,${CLAUDE_HOME}/skills/mega-dev/SKILL.md)
+	@# GitOps operations (use agent: gitops-geezer)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/gitops-geezer)
+	$(call symlink,ai-stuff/claude/skills/gitops-geezer/SKILL.md,${CLAUDE_HOME}/skills/gitops-geezer/SKILL.md)
 	@# Git operations (use agent: gitboi)
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/commit)
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/create-pr)
@@ -64,6 +68,7 @@ claude-personas: claude-dirs ## Symlink Claude Code personas (referenced by agen
 	$(call symlink,ai-stuff/claude/personas/gitboi.md,${CLAUDE_HOME}/personas/gitboi.md)
 	$(call symlink,ai-stuff/claude/personas/jira-girl.md,${CLAUDE_HOME}/personas/jira-girl.md)
 	$(call symlink,ai-stuff/claude/personas/mega-dev.md,${CLAUDE_HOME}/personas/mega-dev.md)
+	$(call symlink,ai-stuff/claude/personas/_gitops-geezer.md,${CLAUDE_HOME}/personas/_gitops-geezer.md)
 
 claude-configs: claude-dirs ## Symlink Claude Code configs (referenced by agents)
 	$(call pretty_print, "Installing Claude Code configs...")
@@ -71,6 +76,7 @@ claude-configs: claude-dirs ## Symlink Claude Code configs (referenced by agents
 	$(call symlink,ai-stuff/claude/config/git-config.md,${CLAUDE_HOME}/config/git-config.md)
 	$(call symlink,ai-stuff/claude/config/house-search-config.md,${CLAUDE_HOME}/config/house-search-config.md)
 	$(call symlink,ai-stuff/claude/config/_house-search-private.md,${CLAUDE_HOME}/config/_house-search-private.md)
+	$(call symlink,ai-stuff/claude/config/gitops-config.md,${CLAUDE_HOME}/config/gitops-config.md)
 
 claude-templates: claude-dirs ## Symlink Claude Code templates (referenced by skills)
 	$(call pretty_print, "Installing Claude Code templates...")
@@ -95,6 +101,7 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/agents/jiragirl.md)
 	$(call remove_file,${CLAUDE_HOME}/agents/mega-dev.md)
 	$(call remove_file,${CLAUDE_HOME}/agents/steve-square-meter.md)
+	$(call remove_file,${CLAUDE_HOME}/agents/gitops-geezer.md)
 	@# Skills
 	$(call remove_file,${CLAUDE_HOME}/skills/gitboi)
 	$(call remove_file,${CLAUDE_HOME}/skills/jiragirl)
@@ -112,6 +119,7 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/skills/add-vinyl)
 	$(call remove_file,${CLAUDE_HOME}/skills/weekly-review)
 	$(call remove_file,${CLAUDE_HOME}/skills/quick-note)
+	$(call remove_file,${CLAUDE_HOME}/skills/gitops-geezer)
 	@# Personas, configs, and templates
 	$(call remove_file,${CLAUDE_HOME}/personas)
 	$(call remove_file,${CLAUDE_HOME}/config)
