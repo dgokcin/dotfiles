@@ -58,12 +58,14 @@ claude-skills: claude-dirs ## Symlink Claude Code skills
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/add-vinyl)
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/weekly-review)
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/quick-note)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/daily-recap)
 	$(call symlink,ai-stuff/claude/skills/meeting-note/SKILL.md,${CLAUDE_HOME}/skills/meeting-note/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/spike/SKILL.md,${CLAUDE_HOME}/skills/spike/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/add-recipe/SKILL.md,${CLAUDE_HOME}/skills/add-recipe/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/add-vinyl/SKILL.md,${CLAUDE_HOME}/skills/add-vinyl/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/weekly-review/SKILL.md,${CLAUDE_HOME}/skills/weekly-review/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/quick-note/SKILL.md,${CLAUDE_HOME}/skills/quick-note/SKILL.md)
+	$(call symlink,ai-stuff/claude/skills/daily-recap/SKILL.md,${CLAUDE_HOME}/skills/daily-recap/SKILL.md)
 
 claude-personas: claude-dirs ## Symlink Claude Code personas (referenced by agents)
 	$(call pretty_print, "Installing Claude Code personas...")
@@ -122,6 +124,7 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/skills/add-vinyl)
 	$(call remove_file,${CLAUDE_HOME}/skills/weekly-review)
 	$(call remove_file,${CLAUDE_HOME}/skills/quick-note)
+	$(call remove_file,${CLAUDE_HOME}/skills/daily-recap)
 	$(call remove_file,${CLAUDE_HOME}/skills/gitops-geezer)
 	@# Personas, configs, and templates
 	$(call remove_file,${CLAUDE_HOME}/personas)

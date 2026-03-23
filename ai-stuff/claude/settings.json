@@ -28,7 +28,9 @@
       "Bash(gh pr diff *)",
       "Bash(gh pr list *)"
     ],
-    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
+    "ask": [
+      "Write(~/vault/personal/nl/house search/buying a house/**)"
+    ]
   },
   "model": "opus[1m]",
   "hooks": {
@@ -65,7 +67,7 @@
       }
     }
   },
-  "effortLevel": "low",
+  "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true
