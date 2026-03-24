@@ -32,7 +32,7 @@
       "Write(~/vault/personal/nl/house search/buying a house/**)"
     ]
   },
-  "model": "opus[1m]",
+  "model": "haiku",
   "hooks": {
     "Notification": [
       {
