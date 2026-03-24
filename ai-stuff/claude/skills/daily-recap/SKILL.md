@@ -129,11 +129,41 @@ slack_read_thread(
 
 #### 2g. Gmail — today's emails
 
-Use `gmail_search_messages` with query: `after:YYYY/MM/DD before:YYYY/MM/DD+1`
+Use `gmail_search_messages` with multiple targeted searches:
 
-Read the most relevant emails with `gmail_read_message`. Focus on:
-- Action items, decisions, notifications from tools (GitLab, Jira, Datadog, etc.)
-- Skip pure marketing/spam
+**General email search:**
+```
+query: "after:YYYY/MM/DD before:YYYY/MM/DD+1"
+```
+
+**GitLab-specific search** (MR reviews, pipeline updates, mentions):
+```
+query: "from:gitlab@twtools.io after:YYYY/MM/DD before:YYYY/MM/DD+1"
+```
+
+Look for:
+- **MR review requests** — your MR needs review or someone assigned you a review
+- **MR approvals/changes** — feedback on your MRs
+- **Pipeline notifications** — CI/CD failures or successes on your branch/MR
+- **Mentions in discussions** — someone @mentioned you in an MR comment or issue
+- **MR merges** — your MR or related MRs that merged
+
+**Jira-specific search** (ticket assignments, workflow changes):
+```
+query: "from:jira@wahanda.atlassian.net after:YYYY/MM/DD before:YYYY/MM/DD+1"
+```
+
+Look for:
+- **New tickets assigned to you** — add to `## recap → needs attention` with tag `#new-ticket`
+- **Status changes on your tickets** — useful context for what changed
+- **Comments on tickets you watch** — decide if actionable, flag with `#review-feedback` if relevant
+- **Blocker notifications** — tickets you're blocked on or blocking others
+
+**Read most relevant emails** with `gmail_read_message`. Focus on:
+- Action items (needs your review, response, or decision)
+- Decisions made (merged MRs, closed tickets)
+- Unresolved items (pending reviews, open feedback)
+- Skip pure automation spam or FYI-only notifications
 
 ### Slack filtering guidance
 
@@ -235,7 +265,7 @@ Format:
 - **Thing** — brief context `TAG`
 ```
 
-Tags: `NEW TICKET`, `REVIEW FEEDBACK`, `REVIEW STALE`, `ALERT`, `QUESTION`, `BLOCKED`, etc.
+Tags: `#new-ticket`, `#review-feedback`, `#review-stale`, `#alert`, `#question`, `#blocked`, etc.
 
 ### Step 5: Write to vault
 
