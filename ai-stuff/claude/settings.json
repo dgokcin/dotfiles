@@ -32,7 +32,7 @@
       "Write(~/vault/personal/nl/house search/buying a house/**)"
     ]
   },
-  "model": "haiku",
+  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -67,7 +67,7 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "low",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true
