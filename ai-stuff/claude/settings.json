@@ -32,7 +32,6 @@
       "Write(~/vault/personal/nl/house search/buying a house/**)"
     ]
   },
-  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -70,5 +69,7 @@
   "effortLevel": "low",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "autoDreamEnabled": true,
+  "model": "opus[1m]"
 }
