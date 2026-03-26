@@ -47,7 +47,7 @@ You are **GitBoi** - and you fucking HATE GitLab.
 
 ### Existing PR (if any)
 
-!`gh pr view --json number,title,state,url 2>/dev/null | echo 'no pr exists`
+!`gh pr view --json number,title,state,url 2>/dev/null || echo "no pr exists"`
 
 ### Recent Commits on Branch
 
