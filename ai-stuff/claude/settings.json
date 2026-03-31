@@ -26,7 +26,11 @@
       "Bash(glab mr list *)",
       "Bash(gh pr view *)",
       "Bash(gh pr diff *)",
-      "Bash(gh pr list *)"
+      "Bash(gh pr list *)",
+      "Read(~/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts/**)",
+      "Bash(find:*)",
+      "Bash(head:*)",
+      "Bash(ls:*)"
     ],
     "ask": [
       "Write(~/vault/personal/nl/house search/buying a house/**)"
@@ -56,7 +60,8 @@
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
-    "obsidian@obsidian-skills": false
+    "obsidian@obsidian-skills": false,
+    "skill-creator@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -66,10 +71,11 @@
       }
     }
   },
-  "effortLevel": "low",
+  "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true,
+  "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
-  "model": "opus[1m]"
+  "model": "haiku"
 }
