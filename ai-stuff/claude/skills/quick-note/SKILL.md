@@ -1,39 +1,35 @@
 ---
 name: quick-note
-description: Quick capture a note to work/random or personal/random. Use for ad-hoc ideas, links, or anything that needs a quick home.
-tools: Write, Read, Glob
+description: "Quick capture a note to work/random or personal/random. Use when the user says 'jot this down', 'save this thought', 'note to self', 'remember this idea', or mentions a random idea, link, or snippet they want to capture. Also trigger when the user wants to quickly save something without specifying a particular note type."
+tools: Bash, Read
 argument-hint: <note title> [--personal]
 ---
 
 # Quick Note
 
-Quickly capture a note to the vault's random folders.
+Quickly capture a note to the vault's random folders using the Obsidian CLI.
 
 ## Instructions
 
 1. Parse input from: `$ARGUMENTS`
-   - If `--personal` flag is present: file to `personal/random/`
+   - If `--personal` flag is present: target `personal/random/`
    - Otherwise: default to `work/random/`
    - The remaining text is the note title
    - If no arguments: ask what to capture
-2. Create the file at the appropriate path:
-   - Work: `~/vault/work/random/<title-slug>.md`
-   - Personal: `~/vault/personal/random/<title-slug>.md`
-   - Use the vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
-   - title-slug: lowercase with spaces (e.g., "devx support bot idea.md")
-
-### File Format
-
-```markdown
-# <Title>
-
-<content from conversation or user input>
-```
+2. Create the note using the Obsidian CLI:
+   ```bash
+   obsidian create path="<work|personal>/random/<title slug>.md" content="# <Title>"
+   ```
+   - title slug: lowercase with spaces (e.g., `devx support bot idea.md`)
+   - No template needed — quick notes are intentionally minimal
+3. If the user provided content in the same message, append it:
+   ```bash
+   obsidian append file="<title slug>" content="<the content>"
+   ```
+4. Report the created file path when done
 
 ### Rules
 
-- Minimal structure - no frontmatter needed (random notes don't use it)
-- Just a title and content
-- If the user provides content in the same message, include it
-- If only a title, create the note with the title and leave room for content
-- Report the created file path when done
+- Minimal structure — no frontmatter, just a title and content
+- If only a title is given, create the note with just the H1 heading
+- Use `\n` for newlines in content values passed to the CLI

@@ -13,6 +13,8 @@ allowed-tools:
   - Bash(obsidian create:*)
   - Bash(obsidian help:*)
   - Bash(sleep:*)
+  - Bash(ls:*)
+  - Bash(find:*)
   # Slack (read-only)
   - mcp__claude_ai_Slack__slack_search_public_and_private
   - mcp__claude_ai_Slack__slack_search_public
@@ -54,7 +56,7 @@ Parse from `$ARGUMENTS`:
 - If a date like `2026-03-23`: use that
 - If empty: use today's date
 
-### Step 2: Gather data (do ALL of these in parallel)
+### Step 2: Gather data (do ALL of these in parallel, including 2h)
 
 #### 2a. Today's calendar events
 
@@ -165,6 +167,30 @@ Look for:
 - Unresolved items (pending reviews, open feedback)
 - Skip pure automation spam or FYI-only notifications
 
+#### 2h. Dia browser — daily activity summary
+
+Dia is a browser that generates its own daily activity summaries as HTML artifacts. These often capture work context that Slack/Gmail misses (browsing activity, GitLab MR reviews done in the browser, etc.).
+
+**Find and read in one step:**
+
+```bash
+find "$HOME/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -print0 | xargs -0 ls -t 2>/dev/null | head -1
+```
+
+This returns the path to the most recently modified `index.html` across all contexts. **Read that file** using the Read tool.
+
+**Parse the HTML content** — look for these sections (the structure is consistent):
+- `.section` with section-label **"Completed"** → `.item h3` (title) + `.item p` (description) + `.tag` spans
+- `.section` with section-label **"Meetings"** → `.meeting` rows with time + title
+- `.section` with section-label **"Tomorrow"** → `.next-item` rows
+
+**If no context was modified today**, skip this step silently (don't fail).
+
+**Merge Dia data into synthesis (Step 4):**
+- Dia "Completed" items → merge into Bucket 1 (what you did today). Avoid duplicating items already captured from Slack/Gmail. Dia tends to have richer descriptions of browser-based work (MR reviews, Datadog investigations, etc.)
+- Dia "Tomorrow" items → merge into Bucket 2 (notes for tomorrow)
+- Dia tags (e.g. `DEVX-1111`, `Datadog`) → use as context when writing task descriptions, but don't include them literally as Obsidian tags
+
 ### Slack filtering guidance
 
 When synthesizing Slack data, apply these filters:
@@ -229,6 +255,8 @@ Write these like a human would — casual, concise, lowercase-ish. Examples from
 ```
 
 Keep the voice natural. Don't over-formalize. Use wikilinks for people: `[[ben minter]]`.
+
+**GitLab MR links**: When mentioning MRs, always include a markdown link using the full GitLab URL. GitLab is at `https://git.treatwell.net`. Derive the project path from the Slack/email context (e.g. `devx/k8s-gitops`). Format: `[!31](https://git.treatwell.net/devx/k8s-gitops/-/merge_requests/31)`. Never write bare `!31` without a link.
 
 #### Bucket 2: Forward-looking stuff (`## notes for tomorrow` section)
 
