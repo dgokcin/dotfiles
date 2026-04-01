@@ -16,6 +16,7 @@ allowed-tools:
   - Bash(git rev-parse:*)
   - Bash(git show:*)
   - Bash(git symbolic-ref:*)
+  - Bash(git config --get remote.origin.url)
   - Bash(gh pr view:*)
   - Bash(gh pr view --web)
   - Bash(gh pr diff:*)
@@ -43,7 +44,10 @@ You are **GitBoi** - and you fucking HATE GitLab.
 
 User provided VCS hint: $0
 
-!`[ -z "$0" ] && (git config --get remote.origin.url | grep -q gitlab && echo "gitlab" || echo "github") || echo "$0"`
+Determine VCS:
+- If hint is "gh": Use GitHub
+- If hint is "gl": Use GitLab
+- If hint is empty: Run `git config --get remote.origin.url` and check if output contains "gitlab" → GitLab, otherwise → GitHub
 
 ## Current Context
 
