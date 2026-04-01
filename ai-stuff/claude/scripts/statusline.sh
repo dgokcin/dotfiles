@@ -29,15 +29,21 @@ fi
 # Vim mode (bracket indicator removed; Claude Code renders -- INSERT --/-- NORMAL -- natively)
 vim_mode=""
 
-# Reasoning effort from settings
+# Reasoning effort: Claude Code does not pass effort_level in the statusline JSON.
+# Read effortLevel from settings.json, but only show it for models that support
+# extended thinking (Sonnet/Opus). Haiku and other non-thinking models → "n/a".
+model_id=$(echo "$input" | jq -r '.model.id // empty')
 effort_level=""
-settings_path="$HOME/.claude/settings.json"
-if [ -f "$settings_path" ]; then
-  effort_level=$(jq -r '.effortLevel // empty' "$settings_path" 2>/dev/null)
-fi
-if [ -z "$effort_level" ]; then
-  effort_level="default"
-fi
+case "$model_id" in
+  *haiku*) effort_level="n/a" ;;
+  *)
+    settings_path="$HOME/.claude/settings.json"
+    if [ -f "$settings_path" ]; then
+      effort_level=$(jq -r '.effortLevel // empty' "$settings_path" 2>/dev/null)
+    fi
+    [ -z "$effort_level" ] && effort_level="n/a"
+    ;;
+esac
 
 # Token calculations
 context_size=$(echo "$input" | jq -r ".context_window.context_window_size // 200000")
@@ -271,10 +277,8 @@ if [ -n "$cost_fmt" ]; then
   printf "%b" "$SEP"
   printf "cost: %b%s%b" "$C_CYAN" "$cost_fmt" "$C_RESET"
 fi
-if [ "$effort_level" != "default" ]; then
-  printf "%b" "$SEP"
-  printf "effort: %b%s%b" "$effort_color" "$effort_level" "$C_RESET"
-fi
+printf "%b" "$SEP"
+printf "effort: %b%s%b" "$effort_color" "$effort_level" "$C_RESET"
 
 # Line 2: Current (5h) bar | Weekly (7d) bar
 if [ -n "$usage_data" ]; then
