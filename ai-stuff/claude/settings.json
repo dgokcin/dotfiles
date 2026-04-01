@@ -47,6 +47,28 @@
           }
         ]
       }
+    ],
+    "WorktreeCreate": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/worktree-create.sh"
+          }
+        ]
+      }
+    ],
+    "WorktreeRemove": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/worktree-remove.sh"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -76,6 +98,5 @@
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true,
   "autoMemoryEnabled": true,
-  "autoDreamEnabled": true,
-  "model": "haiku"
+  "autoDreamEnabled": true
 }
