@@ -33,9 +33,7 @@
       "Bash(ls:*)",
       "Bash(obsidian *)"
     ],
-    "ask": [
-      "Write(~/vault/personal/nl/house search/buying a house/**)"
-    ]
+    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
   },
   "hooks": {
     "Notification": [
@@ -45,28 +43,6 @@
           {
             "type": "command",
             "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'"
-          }
-        ]
-      }
-    ],
-    "WorktreeCreate": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/scripts/worktree-create.sh"
-          }
-        ]
-      }
-    ],
-    "WorktreeRemove": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/scripts/worktree-remove.sh"
           }
         ]
       }
