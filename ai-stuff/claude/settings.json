@@ -30,7 +30,8 @@
       "Read(~/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts/**)",
       "Bash(find:*)",
       "Bash(head:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(obsidian *)"
     ],
     "ask": [
       "Write(~/vault/personal/nl/house search/buying a house/**)"
@@ -93,10 +94,11 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "low",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true,
   "autoMemoryEnabled": true,
-  "autoDreamEnabled": true
+  "autoDreamEnabled": true,
+  "model": "haiku"
 }
