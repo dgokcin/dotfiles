@@ -11,10 +11,17 @@ allowed-tools:
   - Bash(obsidian append:*)
   - Bash(obsidian templates:*)
   - Bash(obsidian create:*)
+  - Bash(obsidian file:*)
+  - Bash(obsidian files:*)
+  - Bash(obsidian folder:*)
+  - Bash(obsidian folders:*)
+  - Bash(obsidian search:*)
+  - Bash(obsidian outline:*)
+  - Bash(obsidian tags:*)
+  - Bash(obsidian properties:*)
   - Bash(obsidian help:*)
   - Bash(sleep:*)
   - Bash(ls:*)
-  - Bash(find:*)
   # Slack (read-only)
   - mcp__claude_ai_Slack__slack_search_public_and_private
   - mcp__claude_ai_Slack__slack_search_public
@@ -39,6 +46,11 @@ allowed-tools:
 # Daily Recap
 
 Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a daily recap and update the vault's daily note.
+
+## Injected context
+
+- Existing daily notes: !`ls "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes/" 2>/dev/null`
+- Dia context files: !`find "$HOME/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -exec ls -la {} \; 2>/dev/null`
 
 ## Constants
 
@@ -171,13 +183,9 @@ Look for:
 
 Dia is a browser that generates its own daily activity summaries as HTML artifacts. These often capture work context that Slack/Gmail misses (browsing activity, GitLab MR reviews done in the browser, etc.).
 
-**Find and read in one step:**
+**The Dia context files are injected in the "Injected context" section above.** Pick the one with the most recent date and read it using the Read tool.
 
-```bash
-find "$HOME/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -print0 | xargs -0 ls -t 2>/dev/null | head -1
-```
-
-This returns the path to the most recently modified `index.html` across all contexts. **Read that file** using the Read tool.
+**If no output is returned**, skip this step silently.
 
 **Parse the HTML content** — look for these sections (the structure is consistent):
 - `.section` with section-label **"Completed"** → `.item h3` (title) + `.item p` (description) + `.tag` spans
@@ -211,23 +219,16 @@ When synthesizing Slack data, apply these filters:
 
 ### Step 3: Ensure daily note exists
 
-**Note**: This vault uses the Periodic Notes community plugin, NOT the core Daily Notes plugin. The `obsidian daily:*` commands will NOT work. Always use `obsidian read` with explicit path instead.
+**Note**: This vault uses the Periodic Notes community plugin, NOT the core Daily Notes plugin. The `obsidian daily:*` commands will NOT work.
 
-Try to read today's daily note:
+Check the injected **"Existing daily notes"** list above:
 
-```bash
-obsidian read path="work/daily notes/YYYY-MM-DD.md"
-```
-
-- **If it exists**: great, we have the content
-- **If it does NOT exist**: create it using the Obsidian CLI from the daily template:
+- **If `YYYY-MM-DD.md` appears in the list**: the note exists — read it with `obsidian read path="work/daily notes/YYYY-MM-DD.md"`
+- **If it does NOT appear**: create it from template:
   ```bash
   obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent
   ```
-  Wait a few seconds (`sleep 3`) for Templater to process, then read it:
-  ```bash
-  obsidian read path="work/daily notes/YYYY-MM-DD.md"
-  ```
+  Wait (`sleep 3`) for Templater to process, then read it.
 
 ### Step 4: Synthesize into three buckets
 
