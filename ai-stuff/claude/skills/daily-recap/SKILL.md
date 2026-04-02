@@ -230,89 +230,25 @@ Check the injected **"Existing daily notes"** list above:
   ```
   Wait (`sleep 3`) for Templater to process, then read it.
 
-### Step 4: Synthesize into three buckets
+### Step 4: Synthesize and format output
 
-Analyze all gathered data and split into three categories:
-
-#### Bucket 1: What you did today (`## today` section)
-
-These become completed task lines in the existing `## today` section. Each line must follow the Obsidian Tasks format so the `doneYesterday` dataview picks them up next morning:
+Read the output template for the exact structure, formatting, examples, and rules:
 
 ```
-- [x] concise description of what you did ✅ YYYY-MM-DD
+Read file: ~/.claude/templates/daily-recap-output.md
 ```
 
-What qualifies as a "today" task:
-- Merged MRs, completed reviews
-- Support given (helped X with Y)
-- Meaningful discussions or decisions
-- Anything you actively did or contributed to
-
-Write these like a human would — casual, concise, lowercase-ish. Examples from a real daily note:
-```
-- [x] paired a little with mauri in the morning for looking into the drone - gh actions migration ✅ 2026-03-20
-- [x] increased the failure threshold for sft namespace, it is better now but still a little fucked? ✅ 2026-03-20
-- [x] reviewed rosarios mr about adding rum totally the wrong way :D ✅ 2026-03-20
-```
-
-Keep the voice natural. Don't over-formalize. Use wikilinks for people: `[[ben minter]]`.
-
-**GitLab MR links**: When mentioning MRs, always include a markdown link using the full GitLab URL. GitLab is at `https://git.treatwell.net`. Derive the project path from the Slack/email context (e.g. `devx/k8s-gitops`). Format: `[!31](https://git.treatwell.net/devx/k8s-gitops/-/merge_requests/31)`. Never write bare `!31` without a link.
-
-#### Bucket 2: Forward-looking stuff (`## notes for tomorrow` section)
-
-This goes into the existing `## notes for tomorrow` section. Include:
-
-**Tomorrow's calendar** (if notable events exist):
-- Format as a simple list: `- HH:mm — Event name`
-- Skip filler (lunch, focus time)
-
-**Standup draft**:
-- 3-5 concise first-person bullet points ready to paste
-- Cover what you did + what's next
-- Format: `> - bullet point` (blockquote so it's visually distinct)
-
-#### Bucket 3: Needs attention (`## recap` section)
-
-This is a new section appended at the very bottom of the daily note, **after `## notes for tomorrow`**. It contains things that need your attention but aren't tasks you completed today.
-
-What goes here:
-- New tickets assigned to you
-- Stale reviews waiting on you
-- Review feedback on your MRs
-- Alerts or incidents flagged
-- Unanswered questions directed at you
-- Anything that came *to* you that you haven't acted on yet
-
-Format:
-```markdown
-
-## recap
-
-### needs attention
-- **Thing** — brief context `TAG`
-- **Thing** — brief context `TAG`
-```
-
-Tags: `#new-ticket`, `#review-feedback`, `#review-stale`, `#alert`, `#question`, `#blocked`, etc.
+The template defines three sections to write. Analyze all gathered data and populate each one following the template exactly.
 
 ### Step 5: Write to vault
 
-Use the Obsidian CLI to write to the daily note. Three separate edits:
+Use the Obsidian CLI to write to the daily note. Three separate edits (see template for exact content format):
 
-#### 5a. Append completed tasks to `## today`
+1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, otherwise append after existing tasks)
+2. **`## notes for tomorrow`** — insert calendar + standup draft
+3. **`## recap`** — append as new section at the very bottom of the file
 
-The `## today` section already exists (possibly with a placeholder `- [ ]`). Use `Edit` tool to replace the placeholder or append after existing tasks.
-
-Read the daily note file directly to find the `## today` section, then use `Edit` to insert the `- [x]` lines.
-
-#### 5b. Append forward-looking content to `## notes for tomorrow`
-
-Use `Edit` to insert content into the `## notes for tomorrow` section.
-
-#### 5c. Append `## recap` at the bottom
-
-Use `Edit` to add the recap section at the very end of the file, after `## notes for tomorrow`.
+Read the daily note file directly to find each section, then use `Edit` to insert.
 
 ### Step 6: Summary
 
@@ -323,12 +259,9 @@ After writing, give a brief conversational summary:
 
 ## Rules
 
-- **Natural voice** — write tasks like a human, not a report. Casual, concise, lowercase
-- **Don't invent data** — only include what you found in Slack/Gmail/Calendar
+- **Follow the output template** — read `~/.claude/templates/daily-recap-output.md` for all formatting, voice, and structure rules
+- **Don't invent data** — only include what you found in Slack/Gmail/Calendar/Dia
 - **Skip noise** — ignore bot spam, automated notifications that aren't actionable
 - **Group intelligently** — multiple Slack messages on the same topic become one task line
-- **Wikilinks** — use `[[person name]]` for people mentioned (check `work/people/` for existing notes)
-- **No emojis** unless asked
 - **Respect existing content** — never overwrite existing tasks or notes, only append/insert
-- **Task format is sacred** — `- [x] description ✅ YYYY-MM-DD` exactly, so dataview picks it up
 - **NEVER create a daily note with Write tool** — always use `obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent` via Bash. The template has Templater logic that Obsidian must process. Writing the file manually will produce a broken note.

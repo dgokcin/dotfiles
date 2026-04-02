@@ -89,6 +89,7 @@ claude-templates: claude-dirs ## Symlink Claude Code templates (referenced by sk
 	$(call symlink,ai-stuff/claude/templates/property-frontmatter.yaml,${CLAUDE_HOME}/templates/property-frontmatter.yaml)
 	$(call symlink,ai-stuff/claude/templates/property-template.md,${CLAUDE_HOME}/templates/property-template.md)
 	$(call symlink,ai-stuff/claude/templates/neighborhood-template.md,${CLAUDE_HOME}/templates/neighborhood-template.md)
+	$(call symlink,ai-stuff/claude/templates/daily-recap-output.md,${CLAUDE_HOME}/templates/daily-recap-output.md)
 
 claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, file-suggestion, etc.)
 	$(call pretty_print, "Installing Claude Code scripts...")
