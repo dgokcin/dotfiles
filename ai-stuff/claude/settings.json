@@ -33,7 +33,9 @@
       "Bash(ls:*)",
       "Bash(obsidian *)"
     ],
-    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
+    "ask": [
+      "Write(~/vault/personal/nl/house search/buying a house/**)"
+    ]
   },
   "hooks": {
     "Notification": [
