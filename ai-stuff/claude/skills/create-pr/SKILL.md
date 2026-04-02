@@ -18,11 +18,11 @@ allowed-tools:
   - Bash(git symbolic-ref:*)
   - Bash(git config --get remote.origin.url)
   - Bash(gh pr view:*)
-  - Bash(gh pr view --web)
+
   - Bash(gh pr diff:*)
   - Bash(gh pr edit:*)
   - Bash(glab mr view:*)
-  - Bash(glab mr view --web)
+
   - Bash(glab mr diff:*)
   - Bash(glab mr update:*)
   - Bash(echo:*)
@@ -87,8 +87,6 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
 8. Build body with mandatory sections: Summary, Changes, Additional Notes
 9. Execute the pr/mr create command (permission system prompts user)
 10. Report the URL with appropriate sass (extra hostile for GitLab)
-11. Ask if they want to open it in their browser - wait for user response
-12. If yes, execute `gh pr view --web` (GitHub) or `glab mr view --web` (GitLab)
 
 ### Execution Behavior
 
@@ -98,17 +96,7 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
 - DO NOT output commands for copy-paste
 - **GitHub**: DO NOT escape backticks - CLI handles this
 - **GitLab**: ESCAPE ALL BACKTICKS with backslash (\`) in description - glab CLI doesn't handle this
-- Detect → Analyze → Craft → Execute (create or update) → Report URL → Ask about opening in browser
-
-### Post-Creation Browser Opening
-
-- After reporting the URL, ask if they want to open it in their browser
-- Accept variations: yes, y, sure, open, view, go, etc.
-- Ignore: no, n, nope, skip, etc.
-- If unclear, don't open (safer than guessing)
-- Execute appropriate command based on VCS:
-  - **GitHub**: `gh pr view --web`
-  - **GitLab**: `glab mr view --web`
+- Detect → Analyze → Craft → Execute (create or update) → Report URL
 
 ### GitHub PR Command
 
@@ -209,37 +197,21 @@ Any extra context"
 > Let me whip up this PR for you...
 > [Creates PR]
 > Done. Here's your PR: [DEVX-123: Add new feature](https://github.com/...)
->
-> Want me to fire it up in your browser?
-
-If yes: Execute `gh pr view --web`
 
 **GitHub (no ticket - uses conventional commits):**
 
 > Let me whip up this PR for you...
 > [Creates PR]
 > Done. Here's your PR: [feat: Add new feature](https://github.com/...)
->
-> Want me to fire it up in your browser?
-
-If yes: Execute `gh pr view --web`
 
 **GitLab (with Jira ticket):**
 
 > Oh for fuck's sake, GitLab? Fine, let me deal with this overcomplicated mess...
 > [Creates MR with extra aggression]
 > There. MR created despite GitLab's best efforts to make everything harder: [DEVX-123: Add new feature](https://gitlab.com/...)
->
-> Want me to fire it up in your browser (assuming it loads)?
-
-If yes: Execute `glab mr view --web`
 
 **GitLab (no ticket - uses conventional commits):**
 
 > Oh for fuck's sake, GitLab? Fine, let me deal with this overcomplicated mess...
 > [Creates MR with extra aggression]
 > There. MR created despite GitLab's best efforts to make everything harder: [feat: Add new feature](https://gitlab.com/...)
->
-> Want me to fire it up in your browser (assuming it loads)?
-
-If yes: Execute `glab mr view --web`
