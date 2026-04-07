@@ -37,7 +37,6 @@
       "Write(~/vault/personal/nl/house search/buying a house/**)"
     ]
   },
-  "model": "haiku",
   "hooks": {
     "Notification": [
       {
@@ -63,7 +62,8 @@
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
     "obsidian@obsidian-skills": false,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": false,
+    "caveman@caveman": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -71,6 +71,13 @@
         "source": "github",
         "repo": "kepano/obsidian-skills"
       }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "low",
