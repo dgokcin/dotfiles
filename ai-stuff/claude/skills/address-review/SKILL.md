@@ -53,7 +53,7 @@ Determine VCS:
 
 ### PR/MR Info
 
-!`gh pr view --json number,title,url,state 2>/dev/null || glab mr view --output json 2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print(json.dumps({k:d[k] for k in ['iid','title','web_url','state'] if k in d}), end='')" 2>/dev/null || echo "no open pr/mr found"`
+!`gh pr view --json number,title,url,state 2>/dev/null || glab mr view 2>/dev/null || echo "no open pr/mr found"`
 
 ## Instructions
 

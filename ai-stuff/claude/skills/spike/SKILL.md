@@ -2,6 +2,7 @@
 name: spike
 description: Create a structured technical spike/assessment document for research topics. Use when starting technical research, evaluating a technology, or writing an assessment.
 tools: Write, Read, Glob, WebFetch, WebSearch
+disable-model-invocation: true
 argument-hint: <topic name>
 ---
 
@@ -28,10 +29,12 @@ Follow the established pattern from existing spikes (karpenter, crac, argocd):
 ## Problem Statement
 
 **Context:**
+
 - [What problem are we solving]
 - [Current pain points with metrics if available]
 
 **Constraint:**
+
 - [Key constraints or limitations]
 
 ## Proposed Solution
@@ -45,33 +48,38 @@ Follow the established pattern from existing spikes (karpenter, crac, argocd):
 ## Expected Improvements
 
 | Metric | Current | Expected | Improvement |
-|--------|---------|----------|-------------|
+| ------ | ------- | -------- | ----------- |
 | ...    | ...     | ...      | ...         |
 
 ## Technical Feasibility
 
 ### Dependencies
+
 - [List key dependencies]
 
 ### Compatibility
+
 - [Compatibility considerations]
 
 ## Implementation Plan
 
 ### Phase 1: POC
+
 - [POC steps]
 
 ### Phase 2: Integration Testing
+
 - [Testing approach]
 
 ### Phase 3: Production Rollout
+
 - [Rollout strategy]
 
 ## Risk Assessment
 
 | Risk | Probability | Impact | Mitigation |
-|------|------------|--------|------------|
-| ...  | ...        | ...    | ...        |
+| ---- | ----------- | ------ | ---------- |
+| ...  | ...         | ...    | ...        |
 
 ## Cost-Benefit Analysis
 

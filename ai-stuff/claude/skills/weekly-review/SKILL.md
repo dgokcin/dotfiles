@@ -2,6 +2,7 @@
 name: weekly-review
 description: Generate a weekly review by aggregating daily notes, meetings, and completed tasks from the current or specified week.
 tools: Read, Glob, Grep
+disable-model-invocation: true
 argument-hint: [YYYY-Www, e.g. 2026-W11]
 ---
 
@@ -28,15 +29,19 @@ Generate a weekly review summary by reading actual daily notes and meetings from
 ## Week Summary: YYYY-Www (Mon DD - Fri DD Month)
 
 ### Completed Tasks
+
 - [aggregated from daily notes - items marked with [x] or ✅]
 
 ### Key Meetings
+
 - [list of meetings with brief summaries from the meeting notes]
 
 ### Notes & Decisions
+
 - [important notes, decisions, or blockers found in daily notes]
 
 ### Carried Forward
+
 - [uncompleted tasks or "notes for tomorrow" from the last day of the week]
 ```
 

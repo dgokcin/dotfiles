@@ -1,6 +1,7 @@
 ---
 name: daily-recap
-description: Fetch today's activity from Slack, Gmail, and Google Calendar, then update/create your daily note in the vault with a recap and standup draft.
+description: "Fetch today's activity from Slack, Gmail, and Google Calendar, then update/create your daily note in the vault with a recap and standup draft."
+disable-model-invocation: true
 argument-hint: [YYYY-MM-DD] (defaults to today)
 model: sonnet
 allowed-tools:
@@ -65,6 +66,7 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 ### Step 1: Determine date
 
 Parse from `$ARGUMENTS`:
+
 - If a date like `2026-03-23`: use that
 - If empty: use today's date
 
@@ -73,6 +75,7 @@ Parse from `$ARGUMENTS`:
 #### 2a. Today's calendar events
 
 Fetch today's events using `gcal_list_events`:
+
 - Start: `YYYY-MM-DDT00:00:00`
 - End: `YYYY-MM-DDT23:59:59`
 - Note event titles, times, attendees
@@ -146,16 +149,19 @@ slack_read_thread(
 Use `gmail_search_messages` with multiple targeted searches:
 
 **General email search:**
+
 ```
 query: "after:YYYY/MM/DD before:YYYY/MM/DD+1"
 ```
 
 **GitLab-specific search** (MR reviews, pipeline updates, mentions):
+
 ```
 query: "from:gitlab@twtools.io after:YYYY/MM/DD before:YYYY/MM/DD+1"
 ```
 
 Look for:
+
 - **MR review requests** — your MR needs review or someone assigned you a review
 - **MR approvals/changes** — feedback on your MRs
 - **Pipeline notifications** — CI/CD failures or successes on your branch/MR
@@ -163,17 +169,20 @@ Look for:
 - **MR merges** — your MR or related MRs that merged
 
 **Jira-specific search** (ticket assignments, workflow changes):
+
 ```
 query: "from:jira@wahanda.atlassian.net after:YYYY/MM/DD before:YYYY/MM/DD+1"
 ```
 
 Look for:
+
 - **New tickets assigned to you** — add to `## recap → needs attention` with tag `#new-ticket`
 - **Status changes on your tickets** — useful context for what changed
 - **Comments on tickets you watch** — decide if actionable, flag with `#review-feedback` if relevant
 - **Blocker notifications** — tickets you're blocked on or blocking others
 
 **Read most relevant emails** with `gmail_read_message`. Focus on:
+
 - Action items (needs your review, response, or decision)
 - Decisions made (merged MRs, closed tickets)
 - Unresolved items (pending reviews, open feedback)
@@ -188,6 +197,7 @@ Dia is a browser that generates its own daily activity summaries as HTML artifac
 **If no output is returned**, skip this step silently.
 
 **Parse the HTML content** — look for these sections (the structure is consistent):
+
 - `.section` with section-label **"Completed"** → `.item h3` (title) + `.item p` (description) + `.tag` spans
 - `.section` with section-label **"Meetings"** → `.meeting` rows with time + title
 - `.section` with section-label **"Tomorrow"** → `.next-item` rows
@@ -195,6 +205,7 @@ Dia is a browser that generates its own daily activity summaries as HTML artifac
 **If no context was modified today**, skip this step silently (don't fail).
 
 **Merge Dia data into synthesis (Step 4):**
+
 - Dia "Completed" items → merge into Bucket 1 (what you did today). Avoid duplicating items already captured from Slack/Gmail. Dia tends to have richer descriptions of browser-based work (MR reviews, Datadog investigations, etc.)
 - Dia "Tomorrow" items → merge into Bucket 2 (notes for tomorrow)
 - Dia tags (e.g. `DEVX-1111`, `Datadog`) → use as context when writing task descriptions, but don't include them literally as Obsidian tags
@@ -204,6 +215,7 @@ Dia is a browser that generates its own daily activity summaries as HTML artifac
 When synthesizing Slack data, apply these filters:
 
 **Keep** (work signal):
+
 - Thread replies in team channels (#team-devx-public, #team-devx-private, etc.)
 - Code review discussions (MR links, GitLab/GitHub links)
 - Support given (helping others with questions)
@@ -212,6 +224,7 @@ When synthesizing Slack data, apply these filters:
 - PR approval requests
 
 **Skip** (noise):
+
 - Personal DM chatter (physio appointments, office plans, social banter)
 - Short acknowledgments ("hi", "yess", "sure", emoji-only messages)
 - Bot messages that are purely informational (unless they indicate something actionable)
@@ -225,9 +238,11 @@ Check the injected **"Existing daily notes"** list above:
 
 - **If `YYYY-MM-DD.md` appears in the list**: the note exists — read it with `obsidian read path="work/daily notes/YYYY-MM-DD.md"`
 - **If it does NOT appear**: create it from template:
+
   ```bash
   obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent
   ```
+
   Wait (`sleep 3`) for Templater to process, then read it.
 
 ### Step 4: Synthesize and format output
@@ -253,6 +268,7 @@ Read the daily note file directly to find each section, then use `Edit` to inser
 ### Step 6: Summary
 
 After writing, give a brief conversational summary:
+
 - One line on the overall vibe of the day
 - Call out 1-2 things that need attention tomorrow
 - Confirm the file was updated

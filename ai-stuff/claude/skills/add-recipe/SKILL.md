@@ -2,6 +2,7 @@
 name: add-recipe
 description: Add a cooking recipe to the vault with proper frontmatter. Accepts a recipe name, description, or URL to parse.
 tools: Write, Read, Glob, WebFetch
+disable-model-invocation: true
 argument-hint: <recipe name or URL>
 ---
 

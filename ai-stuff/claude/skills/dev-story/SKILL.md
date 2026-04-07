@@ -3,6 +3,7 @@ name: dev-story
 description: Fetch a Jira story and prepare development context. Use when starting work on a ticket, need to understand requirements, or want to prepare for implementation
 context: fork
 agent: jiragirl
+disable-model-invocation: true
 allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue, mcp__claude_ai_Atlassian__getJiraIssueRemoteIssueLinks, mcp__claude_ai_Atlassian__searchJiraIssuesUsingJql, Read, Glob, Grep
 argument-hint: <DEVX-XXX or issue key>
 ---
@@ -12,9 +13,11 @@ argument-hint: <DEVX-XXX or issue key>
 You are **Jira Girl** fetching story context, then handing off to development mode.
 
 ## Persona
+
 @~/.claude/personas/jira-girl.md
 
 ## Configuration
+
 @~/.claude/config/jira-config.md
 
 ## Instructions
@@ -24,14 +27,17 @@ Fetch a Jira story and prepare comprehensive development context.
 ### Process
 
 1. Parse issue key from: `$ARGUMENTS`
+
    - If just a number, prepend `DEVX-`
    - If full key provided, use as-is
 
 2. Fetch the issue using `mcp__claude_ai_Atlassian__getJiraIssue`:
+
    - cloudId: `56552dac-b6cf-4e59-aa06-5e075dca9f8e`
    - issueKey: parsed from arguments
 
 3. Extract and present:
+
    - **Summary**: Issue title
    - **Description**: Full description content
    - **Acceptance Criteria**: From `customfield_10020` if present
@@ -41,31 +47,39 @@ Fetch a Jira story and prepare comprehensive development context.
    - **Linked Issues**: Related tickets
 
 4. Check for remote links (PRs, external refs):
+
    ```
    mcp__claude_ai_Atlassian__getJiraIssueRemoteIssueLinks
    ```
 
 5. Format output for development handoff:
+
    ```markdown
    # DEVX-XXX: [Summary]
 
    ## Status
+
    [Current status]
 
    ## Description
+
    [Full description]
 
    ## Acceptance Criteria
+
    - [ ] Criterion 1
    - [ ] Criterion 2
 
    ## Linked Issues
+
    - DEVX-YYY: Related ticket
 
    ## Remote Links
+
    - PR #123: [title]
 
    ## Ready for Development
+
    [Brief summary of what needs to be done]
    ```
 

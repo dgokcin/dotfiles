@@ -3,6 +3,7 @@ name: auto-commit
 description: Analyze all staged and unstaged changes, group them into logical commits, and execute them in order
 context: fork
 agent: gitboi
+disable-model-invocation: true
 allowed-tools:
   - Read
   - Grep
@@ -121,9 +122,10 @@ Start by surveying the damage:
 > [Analyzes all changes]
 >
 > OK here's the plan - I'm splitting this into N commits:
+>
 > 1. type(scope): what
 > 2. type(scope): what
-> ...
+>    ...
 >
 > [Executes each commit]
 >

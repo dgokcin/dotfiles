@@ -1,6 +1,7 @@
 ---
 name: add-vinyl
 description: Add a vinyl record to the collection with Discogs metadata. Accepts artist and album name, or a Discogs URL.
+disable-model-invocation: true
 tools: Write, Read, Glob, WebFetch, WebSearch
 argument-hint: <"artist - album" or Discogs URL>
 ---
@@ -34,6 +35,7 @@ discogs_link: <full discogs release URL>
 date_of_purchase: <YYYY-MM-DD, default to today>
 purchased_store: <store name, ask user if not provided>
 ---
+
 tags:: [[virtual library]]
 
 ### Album Cover
