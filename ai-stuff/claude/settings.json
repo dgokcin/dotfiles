@@ -21,6 +21,7 @@
       "Read(~/.claude/config/**)",
       "Read(~/vault/personal/nl/house search/buying a house/**)",
       "Bash(git show *)",
+      "Bash(git log *)",
       "Bash(glab mr view *)",
       "Bash(glab mr diff *)",
       "Bash(glab mr list *)",
@@ -33,11 +34,19 @@
       "Bash(ls:*)",
       "Bash(obsidian *)"
     ],
-    "ask": [
-      "Write(~/vault/personal/nl/house search/buying a house/**)"
-    ]
+    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"]
   },
   "hooks": {
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'NAME=$(jq -r .name); DIR=\"$CLAUDE_PROJECT_DIR/.claude/worktrees/$NAME\"; mkdir -p \"$CLAUDE_PROJECT_DIR/.claude/worktrees\" && git worktree add -b \"$NAME\" \"$DIR\" >&2 && git -C \"$DIR\" config \"branch.$NAME.remote\" origin >&2 && git -C \"$DIR\" config \"branch.$NAME.merge\" \"refs/heads/$NAME\" >&2 && echo \"$DIR\"'"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "matcher": "",
@@ -85,5 +94,6 @@
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true,
   "autoMemoryEnabled": true,
-  "autoDreamEnabled": true
+  "autoDreamEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
