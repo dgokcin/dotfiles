@@ -106,115 +106,41 @@ build_bar() {
   printf "%b%s%b%s%b" "$bar_color" "$filled_str" "$C_DIM" "$empty_str" "$C_RESET"
 }
 
-# API usage data (cached)
-CACHE_FILE="/tmp/claude-statusline-usage-cache.json"
-CACHE_MAX_AGE=60
-
-get_oauth_token() {
-  # macOS: credentials stored in Keychain
-  if [ "$(uname)" = "Darwin" ]; then
-    local keychain_data
-    keychain_data=$(security find-generic-password -s "claude-code-credentials" -w 2>/dev/null ||
-      security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null)
-    if [ -n "$keychain_data" ]; then
-      echo "$keychain_data" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null
-      return
-    fi
-  fi
-  # Linux/Windows: credentials in file
-  local creds_path="$HOME/.claude/.credentials.json"
-  if [ -f "$creds_path" ]; then
-    jq -r '.claudeAiOauth.accessToken // empty' "$creds_path" 2>/dev/null
-  fi
-}
-
-fetch_usage_data() {
-  local token
-  token=$(get_oauth_token)
-  if [ -z "$token" ]; then return 1; fi
-  local tmp_file="${CACHE_FILE}.tmp"
-  if curl -s --max-time 5 \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    -H "Authorization: Bearer $token" \
-    -H "anthropic-beta: oauth-2025-04-20" \
-    -H "User-Agent: claude-code/2.1.34" \
-    "https://api.anthropic.com/api/oauth/usage" >"$tmp_file" 2>/dev/null; then
-    # Only update cache if we got valid JSON with utilization data
-    if jq -e '.five_hour.utilization' "$tmp_file" >/dev/null 2>&1; then
-      mv "$tmp_file" "$CACHE_FILE"
-    else
-      rm -f "$tmp_file"
-    fi
-  else
-    rm -f "$tmp_file"
-  fi
-}
-
-needs_refresh=true
-if [ -f "$CACHE_FILE" ]; then
-  if [ "$(uname)" = "Darwin" ]; then
-    cache_mtime=$(stat -f %m "$CACHE_FILE" 2>/dev/null)
-  else
-    cache_mtime=$(stat -c %Y "$CACHE_FILE" 2>/dev/null)
-  fi
-  now=$(date +%s)
-  if [ -n "$cache_mtime" ] && [ $((now - cache_mtime)) -lt $CACHE_MAX_AGE ]; then
-    needs_refresh=false
-  fi
-fi
-
-if $needs_refresh; then
-  fetch_usage_data
-fi
-
-usage_data=""
-if [ -f "$CACHE_FILE" ]; then
-  usage_data=$(cat "$CACHE_FILE" 2>/dev/null)
-fi
-
-# Parse usage data
+# Rate limit data — available from stdin as of Claude Code v2.1.80+
+# resets_at is a Unix timestamp
 five_hour_pct=0
 five_hour_reset=""
 seven_day_pct=0
 seven_day_reset=""
 
-format_reset_time() {
-  local iso=$1 style=$2
-  if [ -z "$iso" ]; then return; fi
-  # Strip fractional seconds and Z suffix to get bare datetime
-  local bare="${iso%%.*}"
-  bare="${bare%%Z}"
+format_reset_time_epoch() {
+  local epoch=$1 style=$2
+  if [ -z "$epoch" ]; then return; fi
   if [ "$(uname)" = "Darwin" ]; then
-    # Parse as UTC to get epoch, then format as local time
-    local epoch
-    epoch=$(TZ=UTC date -jf "%Y-%m-%dT%H:%M:%S" "$bare" "+%s" 2>/dev/null)
-    if [ -z "$epoch" ]; then return; fi
     if [ "$style" = "time" ]; then
       date -r "$epoch" "+%-l:%M%p" 2>/dev/null | tr '[:upper:]' '[:lower:]'
     else
       date -r "$epoch" "+%b %-d, %-l:%M%p" 2>/dev/null | tr '[:upper:]' '[:lower:]'
     fi
   else
-    # Linux: date -d handles ISO with Z natively
     if [ "$style" = "time" ]; then
-      date -d "$iso" "+%-l:%M%p" 2>/dev/null | tr '[:upper:]' '[:lower:]'
+      date -d "@$epoch" "+%-l:%M%p" 2>/dev/null | tr '[:upper:]' '[:lower:]'
     else
-      date -d "$iso" "+%b %-d, %-l:%M%p" 2>/dev/null | tr '[:upper:]' '[:lower:]'
+      date -d "@$epoch" "+%b %-d, %-l:%M%p" 2>/dev/null | tr '[:upper:]' '[:lower:]'
     fi
   fi
 }
 
-if [ -n "$usage_data" ]; then
-  five_hour_pct=$(echo "$usage_data" | jq -r '(.five_hour.utilization // 0) | round' 2>/dev/null)
-  [ -z "$five_hour_pct" ] && five_hour_pct=0
-  five_hour_reset_iso=$(echo "$usage_data" | jq -r '.five_hour.resets_at // empty' 2>/dev/null)
-  five_hour_reset=$(format_reset_time "$five_hour_reset_iso" "time")
+five_hour_pct_raw=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty' 2>/dev/null)
+if [ -n "$five_hour_pct_raw" ]; then
+  five_hour_pct=$(echo "$five_hour_pct_raw" | awk '{printf "%d", int($1 + 0.5)}')
+  five_hour_reset_epoch=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty' 2>/dev/null)
+  five_hour_reset=$(format_reset_time_epoch "$five_hour_reset_epoch" "time")
 
-  seven_day_pct=$(echo "$usage_data" | jq -r '(.seven_day.utilization // 0) | round' 2>/dev/null)
-  [ -z "$seven_day_pct" ] && seven_day_pct=0
-  seven_day_reset_iso=$(echo "$usage_data" | jq -r '.seven_day.resets_at // empty' 2>/dev/null)
-  seven_day_reset=$(format_reset_time "$seven_day_reset_iso" "datetime")
+  seven_day_pct_raw=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty' 2>/dev/null)
+  seven_day_pct=$(echo "$seven_day_pct_raw" | awk '{printf "%d", int($1 + 0.5)}')
+  seven_day_reset_epoch=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty' 2>/dev/null)
+  seven_day_reset=$(format_reset_time_epoch "$seven_day_reset_epoch" "datetime")
 fi
 
 # Format cost as $X.XXXX (4 decimal places), dropping trailing zeros after 2
@@ -293,7 +219,7 @@ printf "%b" "$SEP"
 printf "effort: %b%s%b" "$effort_color" "$effort_level" "$C_RESET"
 
 # Line 2: Current (5h) bar | Weekly (7d) bar
-if [ -n "$usage_data" ]; then
+if [ -n "$five_hour_pct_raw" ]; then
   printf "\n"
   printf "%bcurrent:%b " "$C_WHITE" "$C_RESET"
   build_bar "$five_hour_pct" 10
