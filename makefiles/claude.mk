@@ -96,6 +96,7 @@ claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, file-sug
 	$(call symlink,ai-stuff/claude/scripts/file-suggestion.sh,${CLAUDE_HOME}/scripts/file-suggestion.sh)
 	$(call symlink,ai-stuff/claude/scripts/statusline.sh,${CLAUDE_HOME}/scripts/statusline.sh)
 	$(call symlink,ai-stuff/claude/scripts/worktree-create.sh,${CLAUDE_HOME}/scripts/worktree-create.sh)
+	$(call symlink,ai-stuff/claude/scripts/auto-approve-tools.sh,${CLAUDE_HOME}/scripts/auto-approve-tools.sh)
 	@chmod +x ${CLAUDE_HOME}/scripts/*.sh
 
 claude-settings: claude-dirs ## Symlink Claude Code settings.json

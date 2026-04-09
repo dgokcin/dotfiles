@@ -39,6 +39,28 @@
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/auto-approve-tools.sh pre-tool"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/auto-approve-tools.sh permission"
+          }
+        ]
+      }
+    ],
     "WorktreeCreate": [
       {
         "hooks": [
