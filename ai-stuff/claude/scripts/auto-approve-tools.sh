@@ -10,7 +10,8 @@
 # Called with $1 = "pre-tool" (default) or "permission"
 
 ALLOW=(
-  "Read"
+  "Read(~/codes/**)"
+  "Read(~/.claude/**)"
   "Glob"
   "Grep"
   "Bash(git log *)"
