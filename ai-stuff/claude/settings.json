@@ -44,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'NAME=$(jq -r .name); DIR=\"$CLAUDE_PROJECT_DIR/.claude/worktrees/$NAME\"; mkdir -p \"$CLAUDE_PROJECT_DIR/.claude/worktrees\"; if git worktree list --porcelain | grep -q \"^worktree $DIR$\"; then echo \"$DIR\"; exit 0; fi && (git worktree add -b \"$NAME\" \"$DIR\" 2>/dev/null || git worktree add \"$DIR\" \"$NAME\" 2>/dev/null || (git worktree prune && git worktree add \"$DIR\" \"$NAME\")) >&2 && git -C \"$DIR\" config \"branch.$NAME.remote\" origin >&2 && git -C \"$DIR\" config \"branch.$NAME.merge\" \"refs/heads/$NAME\" >&2 && echo \"$DIR\"'"
+            "command": "~/.claude/scripts/worktree-create.sh"
           }
         ]
       }
