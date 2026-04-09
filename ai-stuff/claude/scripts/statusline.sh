@@ -234,6 +234,9 @@ SEP=" ${C_DIM}|${C_RESET} "
 
 # ===== OUTPUT =====
 
+# Worktree context
+worktree_name=$(echo "$input" | jq -r '.worktree.name // empty')
+
 # Directory: git repo root name, or full path if not a repo
 if [ -n "$git_branch" ]; then
   dir_name=$(basename "$(git -C "$cwd" --no-optional-locks rev-parse --show-toplevel 2>/dev/null)")
@@ -242,7 +245,16 @@ else
 fi
 
 # Line 0: dir on git:branch [time] [vim]
-printf "\033[1;33m%s\033[0m" "$dir_name"
+if [ -n "$worktree_name" ]; then
+  # In a worktree: show "repo / worktree-name on git:branch"
+  repo_name=$(echo "$input" | jq -r '.worktree.original_cwd // empty' | xargs basename 2>/dev/null)
+  [ -z "$repo_name" ] && repo_name="$dir_name"
+  printf "\033[1;33m%s\033[0m" "$repo_name"
+  printf " ${C_DIM}/${C_RESET} "
+  printf "\033[1;33m%s\033[0m" "$worktree_name"
+else
+  printf "\033[1;33m%s\033[0m" "$dir_name"
+fi
 
 if [ -n "$git_branch" ]; then
   printf " on "
