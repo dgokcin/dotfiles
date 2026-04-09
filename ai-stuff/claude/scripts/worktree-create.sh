@@ -4,21 +4,24 @@ set -e
 # Read JSON from stdin
 INPUT=$(cat)
 
-# Parse fields from Claude Code hook input
-BASE_PATH=$(echo "$INPUT" | jq -r '.cwd')
-WORKTREE_NAME=$(echo "$INPUT" | jq -r '.name')
+NAME=$(echo "$INPUT" | jq -r '.name')
+DIR="$CLAUDE_PROJECT_DIR/.claude/worktrees/$NAME"
 
-# Worktree lives under .git/worktrees/<name>
-WORKTREE_PATH="$BASE_PATH/.git/worktrees/$WORKTREE_NAME"
+mkdir -p "$CLAUDE_PROJECT_DIR/.claude/worktrees"
 
-cd "$BASE_PATH"
+# Idempotent: return path if worktree already exists
+if git worktree list --porcelain | grep -q "^worktree $DIR$"; then
+  echo "$DIR"
+  exit 0
+fi
 
-# Create worktree — branch name matches worktree name (no prefix)
-git worktree add "$WORKTREE_PATH" -b "$WORKTREE_NAME" origin/HEAD
+# Try creating with new branch, then existing branch, then after pruning
+(git worktree add -b "$NAME" "$DIR" 2>/dev/null \
+  || git worktree add "$DIR" "$NAME" 2>/dev/null \
+  || (git worktree prune && git worktree add "$DIR" "$NAME")) >&2
 
-# Push branch to remote with tracking
-git -C "$WORKTREE_PATH" push -u origin "$WORKTREE_NAME"
+# Set up remote tracking
+git -C "$DIR" config "branch.$NAME.remote" origin >&2
+git -C "$DIR" config "branch.$NAME.merge" "refs/heads/$NAME" >&2
 
-# Required: print the worktree path to stdout
-echo "$WORKTREE_PATH"
-exit 0
+echo "$DIR"
