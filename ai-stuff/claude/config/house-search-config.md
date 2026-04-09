@@ -41,7 +41,7 @@ Templates for Obsidian notes are in the `templates/` directory:
 - Technical inspection: €500 (skip if new build)
 - Mortgage advice: €3,500
 - Estate agent: €5,000
-- Transfer tax: 2% (waived if under €555k)
+- Transfer tax: 2% on full amount (waived if under €555k) — not a dealbreaker, factor into total cost
 - Total estimated costs: €12,300–€25,000
 
 ## Market Intelligence from Mortgage Advisor & Agent
