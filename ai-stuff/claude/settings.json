@@ -32,11 +32,16 @@
       "Bash(find:*)",
       "Bash(head:*)",
       "Bash(ls:*)",
-      "Bash(obsidian *)"
+      "Bash(obsidian *)",
+      "WebSearch",
+      "WebFetch(domain:docs.datadoghq.com)",
+      "mcp__claude_ai_Google_Calendar__gcal_list_events",
+      "Skill(daily-recap)"
     ],
     "ask": [
       "Write(~/vault/personal/nl/house search/buying a house/**)"
-    ]
+    ],
+    "defaultMode": "default"
   },
   "hooks": {
     "PreToolUse": [
