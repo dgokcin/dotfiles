@@ -58,9 +58,9 @@ Determine VCS (in order of priority):
 - Current branch: !`git branch --show-current 2>/dev/null`
 - Remote HEAD: !`git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null`
 
-### Existing PR (if any)
+### PR/MR Status
 
-!`gh pr view --json number,title,state,url 2>/dev/null || glab mr view --json iid,title,state,web_url 2>/dev/null || echo "no pr exists"`
+!`gh pr view --json number,title,state,url 2>/dev/null && echo "MODE: UPDATE (PR exists)" || glab mr view --json iid,title,state,web_url 2>/dev/null && echo "MODE: UPDATE (MR exists)" || echo "MODE: CREATE (no existing PR/MR)"`
 
 ### Recent Commits on Branch
 
