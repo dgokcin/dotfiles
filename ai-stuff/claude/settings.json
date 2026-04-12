@@ -43,6 +43,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "claude-opus-4-5-20251101",
   "hooks": {
     "PreToolUse": [
       {
@@ -119,6 +120,7 @@
     }
   },
   "effortLevel": "low",
+  "advisorModel": "opus",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "voiceEnabled": true,
