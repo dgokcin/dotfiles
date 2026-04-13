@@ -35,14 +35,14 @@ vim_mode=""
 model_id=$(echo "$input" | jq -r '.model.id // empty')
 effort_level=""
 case "$model_id" in
-  *haiku*) effort_level="n/a" ;;
-  *)
-    settings_path="$HOME/.claude/settings.json"
-    if [ -f "$settings_path" ]; then
-      effort_level=$(jq -r '.effortLevel // empty' "$settings_path" 2>/dev/null)
-    fi
-    [ -z "$effort_level" ] && effort_level="n/a"
-    ;;
+*haiku*) effort_level="n/a" ;;
+*)
+  settings_path="$HOME/.claude/settings.json"
+  if [ -f "$settings_path" ]; then
+    effort_level=$(jq -r '.effortLevel // empty' "$settings_path" 2>/dev/null)
+  fi
+  [ -z "$effort_level" ] && effort_level="n/a"
+  ;;
 esac
 
 # Token calculations
@@ -69,6 +69,30 @@ if [ "$context_size" -gt 0 ]; then
   pct_used=$((current_tokens * 100 / context_size))
 else
   pct_used=0
+fi
+
+# Auto-compact: remaining tokens until trigger
+# Read from settings.json env block (Claude Code doesn't export these to statusline process)
+ac_window="${CLAUDE_CODE_AUTO_COMPACT_WINDOW:-}"
+ac_pct="${CLAUDE_AUTOCOMPACT_PCT_OVERRIDE:-}"
+if [ -z "$ac_window" ] || [ -z "$ac_pct" ]; then
+  if [ -f "$settings_path" ]; then
+    [ -z "$ac_window" ] && ac_window=$(jq -r '.env.CLAUDE_CODE_AUTO_COMPACT_WINDOW // empty' "$settings_path" 2>/dev/null)
+    [ -z "$ac_pct" ] && ac_pct=$(jq -r '.env.CLAUDE_AUTOCOMPACT_PCT_OVERRIDE // empty' "$settings_path" 2>/dev/null)
+  fi
+fi
+# Fallbacks
+[ -z "$ac_window" ] && ac_window="$context_size"
+[ -z "$ac_pct" ] && ac_pct=95
+
+# Cap window to actual context if larger
+[ "$ac_window" -gt "$context_size" ] && ac_window="$context_size"
+
+ac_trigger=$((ac_window * ac_pct / 100))
+ac_remaining=$((ac_trigger - current_tokens))
+ac_remaining_fmt=""
+if [ "$ac_remaining" -gt 0 ]; then
+  ac_remaining_fmt=$(format_tokens "$ac_remaining")
 fi
 
 # Colors
@@ -211,6 +235,9 @@ printf "\n"
 printf "%b%s%b" "$C_BLUE" "$model" "$C_RESET"
 printf "%b" "$SEP"
 printf "ctx: %b%s / %s%b %b(%s%%)%b" "$C_ORANGE" "$used_fmt" "$total_fmt" "$C_RESET" "$C_GREEN" "$pct_used" "$C_RESET"
+if [ -n "$ac_remaining_fmt" ]; then
+  printf " %bacp:%b%s" "$C_DIM" "$C_RESET" "$ac_remaining_fmt"
+fi
 if [ -n "$cost_fmt" ]; then
   printf "%b" "$SEP"
   printf "cost: %b%s%b" "$C_CYAN" "$cost_fmt" "$C_RESET"

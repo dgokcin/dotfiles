@@ -5,7 +5,9 @@
   },
   "env": {
     "ENABLE_TOOL_SEARCH": "true",
-    "ENABLE_LSP_TOOL": "1"
+    "ENABLE_LSP_TOOL": "1",
+    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "400000",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95"
   },
   "attribution": {
     "commit": "",
@@ -101,7 +103,7 @@
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
     "obsidian@obsidian-skills": false,
-    "skill-creator@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": true,
     "caveman@caveman": true
   },
   "extraKnownMarketplaces": {
