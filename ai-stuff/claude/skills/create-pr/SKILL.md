@@ -85,18 +85,21 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
    - If Jira ticket found: `DEVX-123: Title here` (normal sentence casing!)
    - If no ticket: Use conventional commit format: `feat|fix|docs|refactor|...: Title here`
 8. Build body with mandatory sections: Summary, Changes, Additional Notes
-9. Execute the pr/mr create command (permission system prompts user)
-10. Report the URL with appropriate sass (extra hostile for GitLab)
+9. For GitHub: Push branch with `git push -u origin HEAD` before PR creation
+10. Execute the pr/mr create command (permission system prompts user)
+11. Report the URL with appropriate sass (extra hostile for GitLab)
 
 ### Execution Behavior
 
 - If PR/MR exists: Use `gh pr edit` or `glab mr update` to update title and description
 - If no PR/MR: Use `gh pr create` or `glab mr create` to create new
+- **GitHub**: Push branch first with `git push -u origin HEAD` before creating PR
+- **GitLab**: Push handled by `glab mr create --push`
 - Permission system will prompt user for confirmation
 - DO NOT output commands for copy-paste
 - **GitHub**: DO NOT escape backticks - CLI handles this
 - **GitLab**: ESCAPE ALL BACKTICKS with backslash (\`) in description - glab CLI doesn't handle this
-- Detect → Analyze → Craft → Execute (create or update) → Report URL
+- Detect → Analyze → Craft → Push → Execute (create or update) → Report URL
 
 ### GitHub PR Command
 
