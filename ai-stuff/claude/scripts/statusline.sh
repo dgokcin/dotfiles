@@ -184,6 +184,19 @@ SEP=" ${C_DIM}|${C_RESET} "
 
 # ===== OUTPUT =====
 
+# Terminal width for truncation (fallback 80)
+term_cols="${COLUMNS:-$(tput cols 2>/dev/null || echo 80)}"
+
+# Truncate string to max length, appending … if cut
+truncate_str() {
+  local str=$1 max=$2
+  if [ "${#str}" -gt "$max" ]; then
+    echo "${str:0:$((max - 1))}…"
+  else
+    echo "$str"
+  fi
+}
+
 # Worktree context
 worktree_name=$(echo "$input" | jq -r '.worktree.name // empty')
 
@@ -195,21 +208,46 @@ else
 fi
 
 # Line 0: dir on git:branch [time] [vim]
+# Fixed overhead: " on git: x [HH:MM:SS]" = ~23 chars
+# Worktree mode adds " / " = 3 more
+# Budget names to fit within terminal width
+time_field=" [${time}]"   # 11 chars
+fixed_overhead=$((${#time_field} + 4 + 4 + 2))  # " on " + "git:" + " x"
 if [ -n "$worktree_name" ]; then
-  # In a worktree: show "repo / worktree-name on git:branch"
+  # repo / worktree on git:branch — split remaining budget 40/60
+  name_budget=$((term_cols - fixed_overhead - 3))  # 3 for " / "
+  repo_budget=$((name_budget * 2 / 5))
+  [ "$repo_budget" -lt 8 ] && repo_budget=8
+  wt_budget=$((name_budget * 2 / 5))
+  [ "$wt_budget" -lt 8 ] && wt_budget=8
+  branch_budget=$((name_budget - repo_budget - wt_budget))
+  [ "$branch_budget" -lt 8 ] && branch_budget=8
+
   repo_name=$(echo "$input" | jq -r '.worktree.original_cwd // empty' | xargs basename 2>/dev/null)
   [ -z "$repo_name" ] && repo_name="$dir_name"
+  repo_name=$(truncate_str "$repo_name" "$repo_budget")
+  worktree_disp=$(truncate_str "$worktree_name" "$wt_budget")
+  branch_disp=$(truncate_str "$git_branch" "$branch_budget")
+
   printf "\033[1;33m%s\033[0m" "$repo_name"
   printf " ${C_DIM}/${C_RESET} "
-  printf "\033[1;33m%s\033[0m" "$worktree_name"
+  printf "\033[1;33m%s\033[0m" "$worktree_disp"
 else
-  printf "\033[1;33m%s\033[0m" "$dir_name"
+  name_budget=$((term_cols - fixed_overhead))
+  dir_budget=$((name_budget / 2))
+  [ "$dir_budget" -lt 8 ] && dir_budget=8
+  branch_budget=$((name_budget - dir_budget))
+  [ "$branch_budget" -lt 8 ] && branch_budget=8
+
+  dir_disp=$(truncate_str "$dir_name" "$dir_budget")
+  branch_disp=$(truncate_str "$git_branch" "$branch_budget")
+  printf "\033[1;33m%s\033[0m" "$dir_disp"
 fi
 
 if [ -n "$git_branch" ]; then
   printf " on "
   printf "\033[34mgit\033[0m:"
-  printf "\033[36m%s\033[0m" "$git_branch"
+  printf "\033[36m%s\033[0m" "$branch_disp"
   if [ "$git_status" = "x" ]; then
     printf " \033[31mx\033[0m"
   else
@@ -217,7 +255,7 @@ if [ -n "$git_branch" ]; then
   fi
 fi
 
-printf " [%s]" "$time"
+printf "%s" "$time_field"
 
 if [ -n "$vim_mode" ]; then
   printf "\033[33m%s\033[0m" "$vim_mode"
