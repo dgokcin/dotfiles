@@ -2,8 +2,7 @@
 name: daily-recap
 description: "Fetch today's activity from Slack, Gmail, and Google Calendar, then update/create your daily note in the vault with a recap and standup draft."
 disable-model-invocation: true
-argument-hint: [YYYY-MM-DD] (defaults to today)
-model: sonnet
+argument-hint: "[YYYY-MM-DD] (defaults to today)"
 allowed-tools:
   - Read
   - Glob
@@ -38,10 +37,10 @@ allowed-tools:
   - mcp__claude_ai_Gmail__gmail_get_profile
   - mcp__claude_ai_Gmail__gmail_list_labels
   # Google Calendar (read-only)
-  - mcp__claude_ai_Google_Calendar__gcal_list_events
-  - mcp__claude_ai_Google_Calendar__gcal_get_event
-  - mcp__claude_ai_Google_Calendar__gcal_list_calendars
-  - mcp__claude_ai_Google_Calendar__gcal_find_my_free_time
+  - mcp__claude_ai_Google_Calendar__list_events
+  - mcp__claude_ai_Google_Calendar__get_event
+  - mcp__claude_ai_Google_Calendar__list_calendars
+  - mcp__claude_ai_Google_Calendar__find_my_free_time
 ---
 
 # Daily Recap

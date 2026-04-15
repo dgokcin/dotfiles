@@ -17,6 +17,7 @@ allowed-tools:
   - Bash(git show:*)
   - Bash(git symbolic-ref:*)
   - Bash(git config --get remote.origin.url)
+  - Bash(git remote -v:*)
   - Bash(gh pr view:*)
 
   - Bash(gh pr diff:*)
@@ -26,6 +27,7 @@ allowed-tools:
   - Bash(glab mr diff:*)
   - Bash(glab mr update:*)
   - Bash(echo:*)
+  - Bash(~/.claude/scripts/pr-status.sh)
 ---
 
 # Create Pull Request / Merge Request
@@ -60,7 +62,7 @@ Determine VCS (in order of priority):
 
 ### PR/MR Status
 
-!`gh pr view --json number,title,state,url 2>/dev/null && echo "MODE: UPDATE (PR exists)" || glab mr view --json iid,title,state,web_url 2>/dev/null && echo "MODE: UPDATE (MR exists)" || echo "MODE: CREATE (no existing PR/MR)"`
+!`~/.claude/scripts/pr-status.sh`
 
 ### Recent Commits on Branch
 
