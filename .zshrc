@@ -163,8 +163,6 @@ if [ -f ~/.bash_profile ]; then
 fi
 
 # eval "$(gh copilot alias -- zsh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval $(thefuck --alias)
 
 # Created by `pipx` on 2024-06-14 23:26:07
 export PATH="$PATH:/Users/denizgokcin/.local/bin"
@@ -193,6 +191,10 @@ export PATH="/Users/denizgokcin/.antigravity/antigravity/bin:$PATH"
 
 # bun completions
 [ -s "/Users/denizgokcin/.bun/_bun" ] && source "/Users/denizgokcin/.bun/_bun"
+
+# thefuck
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval $(thefuck --alias)
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
