@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__datadog-mcp__search_datadog_spans",
+      "mcp__datadog-mcp__analyze_datadog_logs",
+      "mcp__datadog-mcp__search_datadog_logs",
+      "mcp__datadog-mcp__get_datadog_metric",
+      "mcp__datadog-mcp__search_datadog_metrics",
+      "mcp__datadog-mcp__search_datadog_hosts",
+      "mcp__datadog-mcp__search_datadog_monitors",
+      "mcp__datadog-mcp__get_datadog_metric_context",
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "mcp__claude_ai_Slack__slack_read_channel",
+      "mcp__claude_ai_Atlassian__getJiraIssue",
+      "mcp__context7__query-docs",
+      "mcp__context7__resolve-library-id",
+      "Bash(kubectl get *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl describe *)",
+      "Bash(kustomize build *)",
+      "Bash(helm show *)",
+      "Bash(glab mr view *)",
+      "Bash(glab mr list *)",
+      "Bash(glab ci view *)"
+    ]
+  }
+}

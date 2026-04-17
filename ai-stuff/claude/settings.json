@@ -45,6 +45,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "claude-opus-4-5-20251101",
   "hooks": {
     "SessionStart": [
       {
@@ -160,6 +161,5 @@
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "model": "claude-opus-4-5-20251101"
+  "voiceEnabled": true
 }
