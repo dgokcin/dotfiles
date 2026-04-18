@@ -45,6 +45,7 @@ case "$model_id" in
   ;;
 esac
 
+
 # Token calculations
 context_size=$(echo "$input" | jq -r ".context_window.context_window_size // 200000")
 input_tokens=$(echo "$input" | jq -r ".context_window.current_usage.input_tokens // 0")
@@ -299,4 +300,16 @@ if [ -n "$five_hour_pct_raw" ]; then
   printf "%bresets:%b 5h @ %s" "$C_WHITE" "$C_RESET" "$five_hour_reset"
   printf "%b" "$SEP"
   printf "7d @ %s" "$seven_day_reset"
+fi
+
+# Caveman mode display
+caveman_flag="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.caveman-active"
+if [ ! -L "$caveman_flag" ] && [ -f "$caveman_flag" ]; then
+  caveman_mode=$(head -c 64 "$caveman_flag" 2>/dev/null | tr -d '\n\r' | tr '[:upper:]' '[:lower:]')
+  caveman_mode=$(printf '%s' "$caveman_mode" | tr -cd 'a-z0-9-')
+
+  if [ -n "$caveman_mode" ] && [ "$caveman_mode" != "off" ]; then
+    printf "\n"
+    printf "%bkevin-mode%b: %b%s%b" "$C_WHITE" "$C_RESET" "$C_ORANGE" "$caveman_mode" "$C_RESET"
+  fi
 fi

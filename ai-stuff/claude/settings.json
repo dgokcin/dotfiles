@@ -6,6 +6,7 @@
   "env": {
     "ENABLE_TOOL_SEARCH": "true",
     "ENABLE_LSP_TOOL": "1",
+    "CAVEMAN_DEFAULT_MODE": "ultra",
     "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "400000",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95"
   },
