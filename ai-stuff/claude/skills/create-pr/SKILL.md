@@ -18,15 +18,32 @@ allowed-tools:
   - Bash(git symbolic-ref:*)
   - Bash(git config --get remote.origin.url)
   - Bash(git remote -v:*)
+  - Bash(rtk git status:*)
+  - Bash(rtk git diff:*)
+  - Bash(rtk git log:*)
+  - Bash(rtk git branch:*)
+  - Bash(rtk git rev-parse:*)
+  - Bash(rtk git show:*)
+  - Bash(rtk git symbolic-ref:*)
+  - Bash(rtk git config --get remote.origin.url)
+  - Bash(rtk git remote -v:*)
+
   - Bash(gh pr view:*)
-
+  - Bash(gh pr view:*)
   - Bash(gh pr diff:*)
-  - Bash(gh pr edit:*)
-  - Bash(glab mr view:*)
+  - Bash(rtk gh pr edit:*)
+  - Bash(rtk gh pr diff:*)
+  - Bash(rtk gh pr edit:*)
 
+  - Bash(glab mr view:*)
   - Bash(glab mr diff:*)
   - Bash(glab mr update:*)
   - Bash(echo:*)
+  - Bash(rtk glab mr view:*)
+  - Bash(rtk glab mr diff:*)
+  - Bash(rtk glab mr update:*)
+  - Bash(echo:*)
+
   - Bash(~/.claude/scripts/pr-status.sh)
 ---
 
@@ -49,6 +66,7 @@ User provided VCS hint: $0
 - Git remote URL: !`git remote -v 2>/dev/null | head -1`
 
 Determine VCS (in order of priority):
+
 - If hint is "gh": Use GitHub
 - If hint is "gl": Use GitLab
 - If hint is empty: check the injected remote URL above — if it contains `git.treatwell.net` → GitLab, otherwise → GitHub
