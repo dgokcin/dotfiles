@@ -21,7 +21,27 @@
       "Bash(helm show *)",
       "Bash(glab mr view *)",
       "Bash(glab mr list *)",
-      "Bash(glab ci view *)"
+      "Bash(glab ci view *)",
+      "Bash(rtk git status *)",
+      "Bash(rtk git log *)",
+      "Bash(rtk git diff *)",
+      "Bash(rtk git show *)",
+      "Bash(rtk git add *)",
+      "Bash(rtk git commit *)",
+      "Bash(rtk git push *)",
+      "Bash(rtk git pull *)",
+      "Bash(rtk git branch *)",
+      "Bash(rtk git fetch *)",
+      "Bash(rtk git stash *)",
+      "Bash(rtk git worktree *)",
+      "Bash(rtk gh pr *)",
+      "Bash(rtk gh issue *)",
+      "Bash(rtk gh run *)",
+      "Bash(rtk gh repo *)",
+      "Bash(rtk gh api *)",
+      "Bash(rtk gh release *)",
+      "Bash(rtk yadm *)",
+      "Bash(rtk gt *)"
     ]
   }
 }
