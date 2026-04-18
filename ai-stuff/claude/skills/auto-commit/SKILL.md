@@ -17,6 +17,15 @@ allowed-tools:
   - Bash(git add:*)
   - Bash(git commit:*)
   - Bash(git restore:*)
+  - Bash(rtk git status:*)
+  - Bash(rtk git diff:*)
+  - Bash(rtk git log:*)
+  - Bash(rtk git branch:*)
+  - Bash(rtk git rev-parse:*)
+  - Bash(rtk git show:*)
+  - Bash(rtk git add:*)
+  - Bash(rtk git commit:*)
+  - Bash(rtk git restore:*)
 ---
 
 # Auto-Commit: Intelligent Multi-Commit Workflow
