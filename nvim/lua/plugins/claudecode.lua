@@ -23,12 +23,48 @@
 --   },
 -- }
 
+-- return {
+--   "greggh/claude-code.nvim",
+--   dependencies = {
+--     "nvim-lua/plenary.nvim", -- Required for git operations
+--   },
+--   config = function()
+--     require("claude-code").setup()
+--   end,
+-- }
+
 return {
-  "greggh/claude-code.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim", -- Required for git operations
-  },
+  "Cannon07/code-preview.nvim",
   config = function()
-    require("claude-code").setup()
+    require("code-preview").setup({
+      diff = {
+        layout = "vsplit", -- "tab" (new tab) | "vsplit" (current tab) | "inline" (GitHub-style)
+        labels = { current = "CURRENT", proposed = "PROPOSED" },
+        equalize = true, -- 50/50 split widths (tab/vsplit only)
+        full_file = true, -- show full file, not just diff hunks (tab/vsplit only)
+        visible_only = false, -- skip diffs for files not open in any Neovim buffer
+        defer_claude_permissions = false, -- for Claude Code: let its own settings decide, don't prompt
+      },
+      highlights = {
+        current = { -- CURRENT (original) side — tab/vsplit layouts
+          DiffAdd = { bg = "#4c2e2e" },
+          DiffDelete = { bg = "#4c2e2e" },
+          DiffChange = { bg = "#4c3a2e" },
+          DiffText = { bg = "#5c3030" },
+        },
+        proposed = { -- PROPOSED side — tab/vsplit layouts
+          DiffAdd = { bg = "#2e4c2e" },
+          DiffDelete = { bg = "#4c2e2e" },
+          DiffChange = { bg = "#2e3c4c" },
+          DiffText = { bg = "#3e5c3e" },
+        },
+        inline = { -- inline layout
+          added = { bg = "#2e4c2e" }, -- added line background
+          removed = { bg = "#4c2e2e" }, -- removed line background
+          added_text = { bg = "#3a6e3a" }, -- changed characters (added)
+          removed_text = { bg = "#6e3a3a" }, -- changed characters (removed)
+        },
+      },
+    })
   end,
 }
