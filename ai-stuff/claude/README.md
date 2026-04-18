@@ -307,6 +307,89 @@ Starts a Mega-Dev session where you can use all skills and implement full featur
 
 6. **Format Enforcement**: Strict rules for commits (lowercase) vs PRs (sentence case) vs Jira (ADF)
 
+## External Dependencies
+
+This framework integrates with external tools via the hooks system in `settings.json`:
+
+### cc-notifier
+
+**Purpose**: Notification bridge for Claude Code session lifecycle events
+
+**Repository**: [trentmcnitt/cc-notifier](https://github.com/trentmcnitt/cc-notifier)
+
+**Integration**: Configured in `settings.json` hooks for:
+- `SessionStart`: Initialize notification context
+- `Stop`: Notify on session end (e.g., to Slack/Discord/desktop)
+- `Notification`: Alert on permission prompts
+- `SessionEnd`: Cleanup notification state
+
+**Example Configuration**:
+```json
+"SessionStart": [
+  {
+    "matcher": "*",
+    "hooks": [
+      {
+        "type": "command",
+        "command": "$HOME/.cc-notifier/cc-notifier init"
+      }
+    ]
+  }
+]
+```
+
+### rtk (Rust Token Killer)
+
+**Purpose**: Token optimization CLI proxy (60-90% savings on dev operations)
+
+**Repository**: [rtk-ai/rtk](https://github.com/rtk-ai/rtk)
+
+**Integration**: Injected into `PreToolUse` hook to transparently rewrite commands
+
+**How It Works**:
+- `git status` → `rtk git status` (automatic via hook)
+- Filters redundant output, caches results, batches operations
+- Zero token overhead — hook rewriting is transparent to user
+
+**Example Configuration**:
+```json
+"PreToolUse": [
+  {
+    "matcher": "",
+    "hooks": [
+      {
+        "type": "command",
+        "command": "rtk hook claude"
+      }
+    ]
+  }
+]
+```
+
+**Meta Commands** (always use rtk directly):
+- `rtk gain` — Show token savings analytics
+- `rtk gain --history` — Show usage history with savings
+- `rtk discover` — Analyze Claude Code history for missed opportunities
+- `rtk --version` — Verify installation
+
+### Hook Execution Flow
+
+```
+User Input
+    ↓
+SessionStart Hook (cc-notifier init)
+    ↓
+PreToolUse Hook (rtk rewrite + auto-approve)
+    ↓
+Tool Execution
+    ↓
+Permission/Notification Hooks (cc-notifier)
+    ↓
+Stop/SessionEnd Hooks (cc-notifier cleanup)
+```
+
+Dependencies are loaded transparently — no configuration changes needed once installed.
+
 ## Related Documentation
 
 - [Claude Code Skills Documentation](https://code.claude.com/docs/en/skills)
