@@ -45,7 +45,6 @@ case "$model_id" in
   ;;
 esac
 
-
 # Token calculations
 context_size=$(echo "$input" | jq -r ".context_window.context_window_size // 200000")
 input_tokens=$(echo "$input" | jq -r ".context_window.current_usage.input_tokens // 0")
@@ -212,11 +211,11 @@ fi
 # Fixed overhead: " on git: x [HH:MM:SS]" = ~23 chars
 # Worktree mode adds " / " = 3 more
 # Budget names to fit within terminal width
-time_field=" [${time}]"   # 11 chars
-fixed_overhead=$((${#time_field} + 4 + 4 + 2))  # " on " + "git:" + " x"
+time_field=" [${time}]"                        # 11 chars
+fixed_overhead=$((${#time_field} + 4 + 4 + 2)) # " on " + "git:" + " x"
 if [ -n "$worktree_name" ]; then
   # repo / worktree on git:branch — split remaining budget 40/60
-  name_budget=$((term_cols - fixed_overhead - 3))  # 3 for " / "
+  name_budget=$((term_cols - fixed_overhead - 3)) # 3 for " / "
   repo_budget=$((name_budget * 2 / 5))
   [ "$repo_budget" -lt 8 ] && repo_budget=8
   wt_budget=$((name_budget * 2 / 5))
@@ -310,6 +309,6 @@ if [ ! -L "$caveman_flag" ] && [ -f "$caveman_flag" ]; then
 
   if [ -n "$caveman_mode" ] && [ "$caveman_mode" != "off" ]; then
     printf "\n"
-    printf "%bkevin-mode%b: %b%s%b" "$C_WHITE" "$C_RESET" "$C_ORANGE" "$caveman_mode" "$C_RESET"
+    printf "%bcaveman%b: %b%s%b" "$C_WHITE" "$C_RESET" "$C_ORANGE" "$caveman_mode" "$C_RESET"
   fi
 fi
