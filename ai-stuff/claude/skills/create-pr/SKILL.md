@@ -75,6 +75,7 @@ Determine VCS (in order of priority):
 
 ### Branch Info
 
+- Are we in a git worktree: !`git rev-parse --is-inside-work-tree`
 - Current branch: !`git branch --show-current 2>/dev/null`
 - Remote HEAD: !`git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null`
 

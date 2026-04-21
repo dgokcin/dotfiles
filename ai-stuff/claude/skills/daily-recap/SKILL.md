@@ -50,7 +50,7 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 ## Injected context
 
 - Existing daily notes: !`ls "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes/" 2>/dev/null`
-- Dia context files: !`find "$HOME/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -exec ls -la {} \; 2>/dev/null`
+- Dia context files: !`find "$HOME/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -ls 2>/dev/null`
 
 ## Constants
 
