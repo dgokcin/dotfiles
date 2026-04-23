@@ -22,6 +22,9 @@ allowed-tools:
   - Bash(obsidian help:*)
   - Bash(sleep:*)
   - Bash(ls:*)
+  - Bash(cat:*)
+  - Bash(date:*)
+  - Bash(find:*)
   # Slack (read-only)
   - mcp__claude_ai_Slack__slack_search_public_and_private
   - mcp__claude_ai_Slack__slack_search_public
@@ -49,8 +52,11 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 
 ## Injected context
 
+- Today's date: !`date +%Y-%m-%d`
+- Tomorrow's date: !`date -v+1d +%Y-%m-%d`
 - Existing daily notes: !`ls "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes/" 2>/dev/null`
 - Dia context files: !`find "$HOME/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -ls 2>/dev/null`
+- Output template: @~/.claude/templates/daily-recap-output.md
 
 ## Constants
 
@@ -60,6 +66,12 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 - **Timezone**: `Europe/Amsterdam`
 - **Slack user ID**: `U07QR93GVRU`
 
+## Rules for tool usage
+
+- **NEVER use `cd`** — obsidian CLI works from any cwd. Call `obsidian ...` directly with absolute paths in args. Prepending `cd` triggers permission prompts and wastes tokens.
+- **NEVER escape spaces in obsidian args** — the CLI handles the vault path internally; just pass `path="work/daily notes"` as-is.
+- Use the injected context above instead of re-running `ls`, `date`, or `cat` on the template.
+
 ## Instructions
 
 ### Step 1: Determine date
@@ -67,7 +79,7 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 Parse from `$ARGUMENTS`:
 
 - If a date like `2026-03-23`: use that
-- If empty: use today's date
+- If empty: use today's date from injected context above
 
 ### Step 2: Gather data (do ALL of these in parallel, including 2h)
 
@@ -246,11 +258,7 @@ Check the injected **"Existing daily notes"** list above:
 
 ### Step 4: Synthesize and format output
 
-Read the output template for the exact structure, formatting, examples, and rules:
-
-```
-Read file: ~/.claude/templates/daily-recap-output.md
-```
+The output template is injected above under "Output template". Use it for exact structure, formatting, examples, and rules. Do NOT re-read it.
 
 The template defines three sections to write. Analyze all gathered data and populate each one following the template exactly.
 
