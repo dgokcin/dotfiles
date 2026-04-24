@@ -21,6 +21,7 @@ allowed-tools:
   - Bash(gh pr diff:*)
   - Bash(glab mr view:*)
   - Bash(glab mr diff:*)
+  - Bash(gh api:*)
 ---
 
 # Address Review Comments
