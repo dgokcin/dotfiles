@@ -16,6 +16,7 @@ include makefiles/tools.mk
 include makefiles/utils.mk
 include makefiles/claude.mk
 include makefiles/cursor.mk
+include makefiles/codex.mk
 include makefiles/targets.mk
 
 # Define reusable macros for common operations
