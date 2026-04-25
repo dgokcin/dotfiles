@@ -75,7 +75,6 @@ if [[ -z "$NVIM_LISTEN_ADDRESS" ]]; then
     web-search
     docker
     kubectl
-    nvm
     aws
     z
   )
@@ -87,15 +86,29 @@ else
     web-search
     docker
     kubectl
-    nvm
     aws
     z
   )
 fi
 
+# Lazy-load nvm — only init when nvm/node/npm first called
+export NVM_DIR="$HOME/.nvm"
+nvm() {
+  unfunction nvm node npm npx 2>/dev/null
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+node() { nvm; node "$@" }
+npm()  { nvm; npm  "$@" }
+npx()  { nvm; npx  "$@" }
+
 source $ZSH/oh-my-zsh.sh
-autoload -U +X compinit && compinit
-source <(kubectl completion zsh)
+
+# Cache kubectl completions — rebuild only when binary changes
+if [[ ! -f ~/.zsh_kubectl_completion ]] || [[ /usr/local/bin/kubectl -nt ~/.zsh_kubectl_completion ]] || [[ /opt/homebrew/bin/kubectl -nt ~/.zsh_kubectl_completion ]]; then
+  kubectl completion zsh > ~/.zsh_kubectl_completion 2>/dev/null
+fi
+[[ -f ~/.zsh_kubectl_completion ]] && source ~/.zsh_kubectl_completion
 
 # History in cache directory:
 HISTSIZE=10000
@@ -194,9 +207,14 @@ export PATH="/Users/denizgokcin/.antigravity/antigravity/bin:$PATH"
 # bun completions
 [ -s "/Users/denizgokcin/.bun/_bun" ] && source "/Users/denizgokcin/.bun/_bun"
 
-# thefuck
 eval "$(/opt/homebrew/bin/brew shellenv)"
-eval $(thefuck --alias)
+
+# Lazy-load thefuck — skip Python startup cost on every shell
+fuck() {
+  unfunction fuck 2>/dev/null
+  eval $(thefuck --alias)
+  fuck "$@"
+}
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
