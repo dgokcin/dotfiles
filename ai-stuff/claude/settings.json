@@ -40,6 +40,7 @@
       "Bash(find:*)",
       "Bash(head:*)",
       "Bash(ls:*)",
+      "Bash(grep:*)",
       "Bash(rtk npm run lint)",
       "Bash(rtk npm run test *)",
       "Bash(rtk git show *)",
@@ -52,7 +53,9 @@
       "Bash(rtk gh pr list *)",
       "Bash(rtk find:*)",
       "Bash(rtk head:*)",
-      "Bash(rtk ls:*)"
+      "Bash(rtk ls:*)",
+      "Bash(rtk grep:*)",
+      "Bash(rtk read:*)"
     ],
     "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"],
     "defaultMode": "default"
