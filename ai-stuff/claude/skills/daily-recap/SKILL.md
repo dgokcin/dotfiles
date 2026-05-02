@@ -55,7 +55,7 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 - Today's date: !`date +%Y-%m-%d`
 - Tomorrow's date: !`date -v+1d +%Y-%m-%d`
 - Existing daily notes: !`ls "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes/" 2>/dev/null`
-- Dia context files: !`find "$HOME/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -ls 2>/dev/null`
+- Dia context files: !`find "/Users/denizgokcin/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -ls 2>/dev/null`
 - Output template: @~/.claude/templates/daily-recap-output.md
 
 ## Constants

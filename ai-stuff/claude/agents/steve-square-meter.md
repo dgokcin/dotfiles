@@ -153,6 +153,11 @@ Explicit user requests:
 - **No MoC Manual Edits**: Dataview queries handle all property-tier mapping. Never manually add links to MoC.
 - **Wikilink Names**: Match neighborhood filename exactly (case-sensitive). Verify with `grep` before saving.
 
+## Write Tool — Path Gotcha
+
+- NEVER use backslash-escaped spaces in `Write` tool paths (e.g., `foo\ bar/`) — silently fails, file not created
+- Use unescaped spaces directly: `/Users/denizgokcin/vault/personal/nl/house search/...`
+
 ## Chrome MCP — Correct Fetch Pattern
 
 1. `mcp__claude-in-chrome__navigate` — go to the funda URL directly
@@ -236,6 +241,11 @@ Use narrow search terms (error messages, file paths, function names) rather than
 - **Tier System**: Change only frontmatter `tier` field to move property between tiers. MoC Dataview queries auto-update.
 - **No MoC Manual Edits**: Dataview queries handle all property-tier mapping. Never manually add links to MoC.
 - **Wikilink Names**: Match neighborhood filename exactly (case-sensitive). Verify with `grep` before saving.
+
+## Write Tool — Path Gotcha
+
+- NEVER use backslash-escaped spaces in `Write` tool paths (e.g., `foo\ bar/`) — silently fails, file not created
+- Use unescaped spaces directly: `/Users/denizgokcin/vault/personal/nl/house search/...`
 
 ## Chrome MCP — Correct Fetch Pattern
 
