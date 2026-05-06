@@ -88,6 +88,7 @@ claude-configs: claude-dirs ## Symlink Claude Code configs (referenced by agents
 	$(call symlink,ai-stuff/claude/config/house-search-config.md,${CLAUDE_HOME}/config/house-search-config.md)
 	$(call symlink,ai-stuff/claude/config/_house-search-private.md,${CLAUDE_HOME}/config/_house-search-private.md)
 	$(call symlink,ai-stuff/claude/config/gitops-config.md,${CLAUDE_HOME}/config/gitops-config.md)
+	$(call symlink,ai-stuff/claude/config/.clusters.json,${CLAUDE_HOME}/config/.clusters.json)
 
 claude-templates: claude-dirs ## Symlink Claude Code templates (referenced by skills)
 	$(call pretty_print, "Installing Claude Code templates...")
@@ -141,7 +142,7 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/skills/daily-recap)
 	$(call remove_file,${CLAUDE_HOME}/skills/k8s-debug)
 	$(call remove_file,${CLAUDE_HOME}/skills/gitops-geezer)
-	@# Personas, configs, and templates
+	@# Personas, configs, and templates (note: .clusters.json removed as part of config dir)
 	$(call remove_file,${CLAUDE_HOME}/personas)
 	$(call remove_file,${CLAUDE_HOME}/config)
 	$(call remove_file,${CLAUDE_HOME}/templates)
