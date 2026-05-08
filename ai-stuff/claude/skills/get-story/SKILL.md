@@ -26,7 +26,7 @@ Fetch a Jira issue and display only the body content and comments.
 
 ### Process
 
-1. Parse issue key from: `$ARGUMENTS`
+1. Parse issue key from the argument-hint
 
    - If just a number (e.g., `123`), prepend `DEVX-`
    - If full key (e.g., `DEVX-123`), use as-is
