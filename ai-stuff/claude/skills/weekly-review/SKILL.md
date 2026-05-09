@@ -8,19 +8,19 @@ argument-hint: [YYYY-Www, e.g. 2026-W11]
 
 # Weekly Review
 
-Generate a weekly review summary by reading actual daily notes and meetings from the vault.
+Generate weekly review summary by reading actual daily notes and meetings from vault.
 
 ## Instructions
 
-1. Parse the week from: `$ARGUMENTS`
-   - If a week string like `2026-W11`: use that week
-   - If empty: use the current week
-2. Calculate the Monday-Friday date range for the target week
-3. Read all daily notes in that range from: `~/vault/work/daily notes/`
-   - Use the vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
-   - Files are named `YYYY-MM-DD.md`
-4. Read all meeting notes from that date range in: `~/vault/work/meetings/`
-   - Files are prefixed with `YYYY-MM-DD`
+1. Parse week from: `$ARGUMENTS`
+   - Week string like `2026-W11`: use that week
+   - Empty: use current week
+2. Calculate Mon-Fri date range for target week
+3. Read all daily notes in range from: `~/vault/work/daily notes/`
+   - Vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
+   - Files named `YYYY-MM-DD.md`
+4. Read all meeting notes in that date range from: `~/vault/work/meetings/`
+   - Files prefixed with `YYYY-MM-DD`
 5. Aggregate and present:
 
 ### Output Format
@@ -47,10 +47,10 @@ Generate a weekly review summary by reading actual daily notes and meetings from
 
 ### Rules
 
-- Read the actual file contents - don't guess or invent
-- Extract tasks from the `## today` section of daily notes (lines starting with `- [x]` or `- [ ]`)
+- Read actual file contents — no guessing/inventing
+- Extract tasks from `## today` section of daily notes (lines starting with `- [x]` or `- [ ]`)
 - Extract "notes for tomorrow" sections from each day
-- For meetings, read the `## Notes` and `## Action Items` sections
-- Keep the summary concise but complete
-- If a daily note doesn't exist for a weekday, note it (likely PTO/holiday)
-- Output directly to the conversation - do NOT create a file unless asked
+- For meetings, read `## Notes` and `## Action Items` sections
+- Summary: concise but complete
+- Missing daily note for weekday → note it (likely PTO/holiday)
+- Output to conversation — do NOT create file unless asked

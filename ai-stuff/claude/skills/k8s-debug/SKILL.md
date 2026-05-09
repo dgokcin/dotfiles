@@ -68,7 +68,7 @@ allowed-tools:
 
 # Kubernetes Debugging
 
-Debug Kubernetes cluster issues by combining kubectl introspection with Datadog metrics and logs.
+Debug k8s cluster issues — combine kubectl introspection with Datadog metrics/logs.
 
 ## Cluster Context
 
@@ -79,29 +79,29 @@ Current context: `!kubectl config current-context 2>/dev/null || echo "(none)"`
 !rtk cat ~/.claude/config/.clusters.json | jq '.[] | select(.cluster | contains("CLUSTER_NAME")) | .context'
 ```
 
-If user mentions a cluster name:
-1. Extract cluster name from their request (e.g., "prod-tangela", "dev-verdigris")
-2. Query clusters.json to find the full context (e.g., "argocd-prod/prod-tangela")
+If user mentions cluster name:
+1. Extract cluster name (e.g., "prod-tangela", "dev-verdigris")
+2. Query clusters.json → find full context (e.g., "argocd-prod/prod-tangela")
 3. Use `kubectl --context=<full-context>` in all kubectl commands
-4. If cluster not found in map or already current context, proceed with default or user-specified context
+4. If cluster not found or already current context → proceed with default or user-specified context
 
 ## Instructions
 
-When debugging, follow this systematic approach:
+Systematic debug approach:
 
 ### 1. Understand the Problem
 
-Ask the user what they're investigating:
+Ask user what they're investigating:
 
-- **Pod issues**: Pod stuck in pending/crash/error state?
-- **Performance**: Latency, slow response times, resource constraints?
+- **Pod issues**: Pod stuck in pending/crash/error?
+- **Performance**: Latency, slow response, resource constraints?
 - **Service connectivity**: Can't reach service, DNS issues?
 - **Resource exhaustion**: CPU/memory pressure, disk space?
-- **Error spikes**: Errors appearing in logs/metrics?
+- **Error spikes**: Errors in logs/metrics?
 
 ### 2. kubectl Introspection
 
-Start with kubectl to understand cluster state:
+Start with kubectl — get cluster state:
 
 **For pod issues:**
 
@@ -135,47 +135,47 @@ kubectl get resourcequota -A
 
 ### 3. Correlate with Datadog
 
-Once you have a lead from kubectl, cross-reference with Datadog:
+Got lead from kubectl → cross-reference Datadog:
 
-**Search logs** for the service/pod:
+**Search logs** for service/pod:
 
 - Query: `service:SERVICE_NAME env:prod` (or appropriate env)
-- Look for error messages, exceptions, warnings
-- Focus on the time window when the issue occurred
+- Look for errors, exceptions, warnings
+- Focus on time window when issue occurred
 
 **Check metrics** for anomalies:
 
 - Resource usage: `system.cpu.user{service:...}`, `system.memory.rss{service:...}`
 - Request latency: `trace.web.request.duration{service:...}`
-- Error rates: Look for spikes in status codes or exception rates
+- Error rates: spikes in status codes or exception rates
 
 **Search traces** (APM) if available:
 
-- Query: `service:SERVICE_NAME status:error` (for error traces)
-- Look for slow spans, service dependencies, bottlenecks
-- Identify which upstream service is slow (if applicable)
+- Query: `service:SERVICE_NAME status:error`
+- Look for slow spans, service deps, bottlenecks
+- Identify slow upstream services
 
 **Aggregate for patterns:**
 
-- Group errors by source, service, or tag
-- Check if issue is widespread or isolated to specific pods/nodes
-- Look at P99 latencies, not just averages
+- Group errors by source, service, tag
+- Issue widespread or isolated to specific pods/nodes?
+- Check P99 latencies, not averages
 
 ### 4. Synthesize Findings
 
-Combine kubectl and Datadog findings:
+Combine kubectl + Datadog:
 
-- **What**: What is the problem (pod crashed, service slow, resource exhausted, etc.)
-- **Where**: Which pod/node/service is affected
-- **When**: Time window of the issue
-- **Why**: Root cause (pending due to node resource limits, crashed due to OOM, slow due to external service latency, etc.)
-- **Next steps**: What to investigate further or what to fix
+- **What**: Problem (pod crashed, service slow, resource exhausted, etc.)
+- **Where**: Affected pod/node/service
+- **When**: Issue time window
+- **Why**: Root cause (pending → node resource limits, crashed → OOM, slow → external service latency, etc.)
+- **Next steps**: What to investigate or fix
 
 ### 5. Deep Dives (as needed)
 
-**If investigating logs:** Use `analyze_datadog_logs` with SQL to aggregate error counts, parse stack traces, group by service
-**If investigating spans:** Use `aggregate_spans` to find p95/p99 duration, group by resource or service
-**If investigating events:** Use `aggregate_events` to find patterns (e.g., which nodes had issues, when)
+**Logs:** `analyze_datadog_logs` with SQL → aggregate error counts, parse stack traces, group by service
+**Spans:** `aggregate_spans` → p95/p99 duration, group by resource/service
+**Events:** `aggregate_events` → patterns (which nodes had issues, when)
 
 ## Common Debugging Patterns
 
@@ -189,9 +189,9 @@ Combine kubectl and Datadog findings:
 
 ## Rules
 
-- **Always start with kubectl** — it's fast and gives you cluster state
-- **Then cross-reference with Datadog** — metrics/logs confirm and provide context
-- **Be specific with queries** — narrow down by service, namespace, time window
-- **Ask clarifying questions** if the issue description is vague
-- **Show your findings** — tell the user what you found and what it means
-- **Don't guess** — if data is missing or inconclusive, say so
+- **Always start with kubectl** — fast, gives cluster state
+- **Cross-reference Datadog** — metrics/logs confirm + add context
+- **Narrow queries** — by service, namespace, time window
+- **Ask clarifying questions** if issue description vague
+- **Show findings** — tell user what you found + what it means
+- **No guessing** — data missing or inconclusive → say so

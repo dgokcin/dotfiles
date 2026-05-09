@@ -8,16 +8,16 @@ argument-hint: <recipe name or URL>
 
 # Add Recipe
 
-Add a cooking recipe to the Obsidian vault following the established format.
+Add cooking recipe to Obsidian vault in established format.
 
 ## Instructions
 
 1. Parse input from: `$ARGUMENTS`
-   - If a URL: fetch the page and extract the recipe
-   - If a recipe name/description: use it to create the note
-   - If no arguments: ask what recipe to add
-2. Create the file at: `~/vault/personal/cooking/<recipe-name-slug>.md`
-   - Use the vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
+   - URL → fetch page, extract recipe
+   - Name/description → create note
+   - No args → ask what recipe to add
+2. Create file at: `~/vault/personal/cooking/<recipe-name-slug>.md`
+   - Vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
    - slug: lowercase with spaces (e.g., "citir tavuk.md", "boyoz.md")
 
 ### File Format
@@ -50,9 +50,9 @@ notes: <brief personal note about the recipe>
 
 ### Rules
 
-- Keep steps concise and practical (not essay-style)
-- The body text below frontmatter is for casual personal notes (can be in Turkish)
-- If the user provides info in Turkish, keep it in Turkish in the body
-- Frontmatter fields (title, steps, ingredients) should be in English
-- Tags should include `cooking` plus relevant category/cuisine/type tags
-- Report the created file path when done
+- Steps: concise, practical (not essay-style)
+- Body below frontmatter: casual personal notes (Turkish ok)
+- User input in Turkish → keep Turkish in body
+- Frontmatter fields (title, steps, ingredients): English
+- Tags: `cooking` + relevant category/cuisine/type
+- Report created file path when done

@@ -8,17 +8,17 @@ argument-hint: <"artist - album" or Discogs URL>
 
 # Add Vinyl Record
 
-Add a vinyl record to the Obsidian vault collection.
+Add vinyl record to Obsidian vault collection.
 
 ## Instructions
 
 1. Parse input from: `$ARGUMENTS`
-   - If a Discogs URL: fetch and extract metadata
-   - If "artist - album" format: use web search to find the Discogs release page and extract metadata
-   - If no arguments: ask for artist and album name
-2. Create the file at: `~/vault/personal/vinyl/records/collection/<artist> - <album>.md`
-   - Use the vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
-   - filename: all lowercase (e.g., "daft punk - random access memories.md")
+   - Discogs URL → fetch + extract metadata
+   - "artist - album" format → web search for Discogs release page, extract metadata
+   - No args → ask for artist + album
+2. Create file at: `~/vault/personal/vinyl/records/collection/<artist> - <album>.md`
+   - Vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
+   - Filename: all lowercase (e.g., "daft punk - random access memories.md")
 
 ### File Format
 
@@ -49,10 +49,10 @@ N/A
 
 ### Rules
 
-- All text values in frontmatter are lowercase
-- Genre and style are comma-separated strings (not arrays)
-- `date_of_purchase` defaults to today if not specified
-- Ask the user for `purchased_store` if not provided
-- The cover image URL should be from Discogs
-- `tags::` (with double colon) is inline Dataview syntax, not frontmatter
-- Report the created file path when done
+- Frontmatter values: all lowercase
+- Genre + style: comma-separated strings (not arrays)
+- `date_of_purchase` defaults to today
+- Ask user for `purchased_store` if missing
+- Cover image URL from Discogs
+- `tags::` (double colon) = inline Dataview syntax, not frontmatter
+- Report created file path when done

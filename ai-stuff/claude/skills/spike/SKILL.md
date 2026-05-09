@@ -8,20 +8,20 @@ argument-hint: <topic name>
 
 # Create Technical Spike
 
-Create a structured technical spike assessment in the Obsidian vault.
+Create structured spike assessment in Obsidian vault.
 
 ## Instructions
 
-1. Parse the topic from: `$ARGUMENTS`
-   - If no arguments, ask for the spike topic
-2. Create the spike directory and assessment file at:
+1. Parse topic from: `$ARGUMENTS`
+   - No args → ask for topic
+2. Create spike dir + assessment at:
    `~/vault/work/spikes/<topic-slug>/assessment.md`
-   - Use the vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
-   - topic-slug: lowercase, spaces replaced with hyphens
+   - Vault path: `/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault`
+   - topic-slug: lowercase, spaces → hyphens
 
 ### Assessment Structure
 
-Follow the established pattern from existing spikes (karpenter, crac, argocd):
+Follow pattern from existing spikes (karpenter, crac, argocd):
 
 ```markdown
 # <Topic> Assessment - Executive Summary
@@ -90,6 +90,6 @@ Follow the established pattern from existing spikes (karpenter, crac, argocd):
 - [Relevant documentation links]
 ```
 
-3. If the user provides context about the problem, use it to pre-fill sections
-4. Use web search/fetch to gather current documentation if the user asks
-5. Report the created file path when done
+3. User provides context → pre-fill sections
+4. User asks → web search/fetch for current docs
+5. Report created file path when done

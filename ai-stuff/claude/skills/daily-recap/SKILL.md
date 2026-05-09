@@ -48,7 +48,7 @@ allowed-tools:
 
 # Daily Recap
 
-Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a daily recap and update the vault's daily note.
+Fetch today's Slack/Gmail/Calendar activity. Synthesize → daily recap → update vault.
 
 ## Injected context
 
@@ -68,9 +68,9 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 
 ## Rules for tool usage
 
-- **NEVER use `cd`** — obsidian CLI works from any cwd. Call `obsidian ...` directly with absolute paths in args. Prepending `cd` triggers permission prompts and wastes tokens.
-- **NEVER escape spaces in obsidian args** — the CLI handles the vault path internally; just pass `path="work/daily notes"` as-is.
-- Use the injected context above instead of re-running `ls`, `date`, or `cat` on the template.
+- **NEVER use `cd`** — obsidian CLI works from any cwd. Call `obsidian ...` directly. `cd` → permission prompts + wasted tokens.
+- **NEVER escape spaces in obsidian args** — CLI handles vault path internally; pass `path="work/daily notes"` as-is.
+- Use injected context above instead of re-running `ls`, `date`, or `cat` on template.
 
 ## Instructions
 
@@ -78,26 +78,26 @@ Fetch today's activity from Slack, Gmail, and Google Calendar. Synthesize into a
 
 Parse from `$ARGUMENTS`:
 
-- If a date like `2026-03-23`: use that
-- If empty: use today's date from injected context above
+- Date like `2026-03-23`: use that
+- Empty: use today from injected context
 
-### Step 2: Gather data (do ALL of these in parallel, including 2h)
+### Step 2: Gather data (all in parallel, including 2h)
 
 #### 2a. Today's calendar events
 
-Fetch today's events using `gcal_list_events`:
+Fetch today's events via `gcal_list_events`:
 
 - Start: `YYYY-MM-DDT00:00:00`
 - End: `YYYY-MM-DDT23:59:59`
-- Note event titles, times, attendees
+- Note titles, times, attendees
 
 #### 2b. Tomorrow's calendar events
 
-Fetch tomorrow's events (next day's date range) for the standup prep section.
+Fetch tomorrow's events for standup prep.
 
 #### 2c. Slack — your thread activity (PRIMARY source)
 
-This is the highest-signal query. It shows your thread replies grouped by conversation topic.
+Highest-signal query. Shows thread replies grouped by topic.
 
 ```
 slack_search_public_and_private(
@@ -109,9 +109,9 @@ slack_search_public_and_private(
 )
 ```
 
-This captures: support threads you participated in, code review discussions, technical questions you answered, decisions made in threads. The context messages show what was asked and what you replied — this is the best signal for "what you did".
+Captures: support threads, code review discussions, technical questions answered, decisions. Context messages show what was asked + what you replied — best signal for "what you did".
 
-If there are more than 20 results, paginate using the `cursor` from `pagination_info`.
+>20 results → paginate via `cursor` from `pagination_info`.
 
 #### 2d. Slack — messages sent to you (incoming work)
 
@@ -125,11 +125,11 @@ slack_search_public_and_private(
 )
 ```
 
-This captures: Jira bot notifications (ticket assignments), PR approval requests, direct questions, alerts. Good for the "needs attention" bucket.
+Captures: Jira bot notifications, PR approval requests, direct questions, alerts. → "needs attention" bucket.
 
 #### 2e. Slack — all messages you sent (SUPPLEMENTARY)
 
-Only use this if the thread query (2c) returned fewer than 5 results — otherwise it's redundant.
+Only use if 2c returned <5 results — otherwise redundant.
 
 ```
 slack_search_public_and_private(
@@ -141,11 +141,11 @@ slack_search_public_and_private(
 )
 ```
 
-This is a broader sweep. It catches non-threaded channel messages and DMs. Useful for finding work activity that wasn't in a thread. However it's noisy — includes casual DM chat ("hi", "yess", emoji reactions). Apply heavy filtering.
+Broader sweep. Catches non-threaded channel msgs + DMs. Noisy — includes casual chat. Apply heavy filtering.
 
 #### 2f. Slack — read specific threads for deeper context
 
-If any search result looks like a meaty work discussion but the context is truncated, use `slack_read_thread` to get the full thread:
+If search result looks like meaty work discussion but context truncated, use `slack_read_thread`:
 
 ```
 slack_read_thread(
@@ -159,13 +159,13 @@ slack_read_thread(
 
 Use `gmail_search_messages` with multiple targeted searches:
 
-**General email search:**
+**General:**
 
 ```
 query: "after:YYYY/MM/DD before:YYYY/MM/DD+1"
 ```
 
-**GitLab-specific search** (MR reviews, pipeline updates, mentions):
+**GitLab-specific** (MR reviews, pipeline updates, mentions):
 
 ```
 query: "from:gitlab@twtools.io after:YYYY/MM/DD before:YYYY/MM/DD+1"
@@ -173,13 +173,13 @@ query: "from:gitlab@twtools.io after:YYYY/MM/DD before:YYYY/MM/DD+1"
 
 Look for:
 
-- **MR review requests** — your MR needs review or someone assigned you a review
+- **MR review requests** — your MR needs review or you're assigned reviewer
 - **MR approvals/changes** — feedback on your MRs
 - **Pipeline notifications** — CI/CD failures or successes on your branch/MR
-- **Mentions in discussions** — someone @mentioned you in an MR comment or issue
-- **MR merges** — your MR or related MRs that merged
+- **Mentions** — @mentioned in MR comment or issue
+- **MR merges** — your MR or related MRs merged
 
-**Jira-specific search** (ticket assignments, workflow changes):
+**Jira-specific:**
 
 ```
 query: "from:jira@wahanda.atlassian.net after:YYYY/MM/DD before:YYYY/MM/DD+1"
@@ -187,104 +187,97 @@ query: "from:jira@wahanda.atlassian.net after:YYYY/MM/DD before:YYYY/MM/DD+1"
 
 Look for:
 
-- **New tickets assigned to you** — add to `## recap → needs attention` with tag `#new-ticket`
-- **Status changes on your tickets** — useful context for what changed
-- **Comments on tickets you watch** — decide if actionable, flag with `#review-feedback` if relevant
-- **Blocker notifications** — tickets you're blocked on or blocking others
+- **New tickets assigned** → `## recap → needs attention` tag `#new-ticket`
+- **Status changes on your tickets** — context for what changed
+- **Comments on watched tickets** — flag `#review-feedback` if actionable
+- **Blocker notifications** — tickets blocking you or blocked by you
 
-**Read most relevant emails** with `gmail_read_message`. Focus on:
-
-- Action items (needs your review, response, or decision)
-- Decisions made (merged MRs, closed tickets)
-- Unresolved items (pending reviews, open feedback)
-- Skip pure automation spam or FYI-only notifications
+Read most relevant emails via `gmail_read_message`. Focus on: action items, decisions made, unresolved items. Skip automation spam + FYI-only.
 
 #### 2h. Dia browser — daily activity summary
 
-Dia is a browser that generates its own daily activity summaries as HTML artifacts. These often capture work context that Slack/Gmail misses (browsing activity, GitLab MR reviews done in the browser, etc.).
+Dia generates daily activity summaries as HTML. Captures work context Slack/Gmail misses (browsing, GitLab MR reviews in browser, etc.).
 
-**The Dia context files are injected in the "Injected context" section above.** Pick the one with the most recent date and read it using the Read tool.
+**Dia context files injected above.** Pick most recent date → read via Read tool.
 
-**If no output is returned**, skip this step silently.
+**No output** → skip silently.
 
-**Parse the HTML content** — look for these sections (the structure is consistent):
+**Parse HTML** — look for:
 
-- `.section` with section-label **"Completed"** → `.item h3` (title) + `.item p` (description) + `.tag` spans
-- `.section` with section-label **"Meetings"** → `.meeting` rows with time + title
-- `.section` with section-label **"Tomorrow"** → `.next-item` rows
+- `.section` with label **"Completed"** → `.item h3` + `.item p` + `.tag` spans
+- `.section` with label **"Meetings"** → `.meeting` rows (time + title)
+- `.section` with label **"Tomorrow"** → `.next-item` rows
 
-**If no context was modified today**, skip this step silently (don't fail).
+**No context modified today** → skip silently.
 
-**Merge Dia data into synthesis (Step 4):**
+**Merge into Step 4:**
 
-- Dia "Completed" items → merge into Bucket 1 (what you did today). Avoid duplicating items already captured from Slack/Gmail. Dia tends to have richer descriptions of browser-based work (MR reviews, Datadog investigations, etc.)
-- Dia "Tomorrow" items → merge into Bucket 2 (notes for tomorrow)
-- Dia tags (e.g. `DEVX-1111`, `Datadog`) → use as context when writing task descriptions, but don't include them literally as Obsidian tags
+- Dia "Completed" → Bucket 1 (today). No dups from Slack/Gmail. Dia has richer descriptions of browser work.
+- Dia "Tomorrow" → Bucket 2 (notes for tomorrow)
+- Dia tags (e.g. `DEVX-1111`, `Datadog`) → context only, not literal Obsidian tags
 
 ### Slack filtering guidance
-
-When synthesizing Slack data, apply these filters:
 
 **Keep** (work signal):
 
 - Thread replies in team channels (#team-devx-public, #team-devx-private, etc.)
 - Code review discussions (MR links, GitLab/GitHub links)
-- Support given (helping others with questions)
-- Technical decisions and discussions
-- Jira ticket assignments and updates
+- Support given
+- Technical decisions
+- Jira ticket assignments/updates
 - PR approval requests
 
 **Skip** (noise):
 
-- Personal DM chatter (physio appointments, office plans, social banter)
-- Short acknowledgments ("hi", "yess", "sure", emoji-only messages)
-- Bot messages that are purely informational (unless they indicate something actionable)
-- Messages in non-work channels unless they contain work discussion
+- Personal DM chatter (physio, office plans, social)
+- Short acks ("hi", "yess", "sure", emoji-only)
+- Pure-info bot messages (unless actionable)
+- Non-work channels unless work discussion inside
 
 ### Step 3: Ensure daily note exists
 
-**Note**: This vault uses the Periodic Notes community plugin, NOT the core Daily Notes plugin. The `obsidian daily:*` commands will NOT work.
+**Note**: Vault uses Periodic Notes community plugin, NOT core Daily Notes. `obsidian daily:*` commands will NOT work.
 
-Check the injected **"Existing daily notes"** list above:
+Check injected **"Existing daily notes"** list:
 
-- **If `YYYY-MM-DD.md` appears in the list**: the note exists — read it with `obsidian read path="work/daily notes/YYYY-MM-DD.md"`
-- **If it does NOT appear**: create it from template:
+- **`YYYY-MM-DD.md` in list**: note exists → read with `obsidian read path="work/daily notes/YYYY-MM-DD.md"`
+- **Not in list**: create from template:
 
   ```bash
   obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent
   ```
 
-  Wait (`sleep 3`) for Templater to process, then read it.
+  Wait (`sleep 3`) for Templater to process, then read.
 
 ### Step 4: Synthesize and format output
 
-The output template is injected above under "Output template". Use it for exact structure, formatting, examples, and rules. Do NOT re-read it.
+Output template injected above under "Output template". Use for exact structure, formatting, examples, rules. Do NOT re-read it.
 
-The template defines three sections to write. Analyze all gathered data and populate each one following the template exactly.
+Template defines three sections. Analyze all data → populate each following template exactly.
 
 ### Step 5: Write to vault
 
-Use the Obsidian CLI to write to the daily note. Three separate edits (see template for exact content format):
+Three separate edits (see template for exact content format):
 
-1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, otherwise append after existing tasks)
+1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, else append after existing tasks)
 2. **`## notes for tomorrow`** — insert calendar + standup draft
-3. **`## recap`** — append as new section at the very bottom of the file
+3. **`## recap`** — append as new section at very bottom
 
-Read the daily note file directly to find each section, then use `Edit` to insert.
+Read daily note to find each section, then use `Edit` to insert.
 
 ### Step 6: Summary
 
-After writing, give a brief conversational summary:
+Brief conversational summary after writing:
 
-- One line on the overall vibe of the day
-- Call out 1-2 things that need attention tomorrow
-- Confirm the file was updated
+- One line on overall day vibe
+- 1-2 things needing attention tomorrow
+- Confirm file updated
 
 ## Rules
 
-- **Follow the output template** — read `~/.claude/templates/daily-recap-output.md` for all formatting, voice, and structure rules
-- **Don't invent data** — only include what you found in Slack/Gmail/Calendar/Dia
-- **Skip noise** — ignore bot spam, automated notifications that aren't actionable
-- **Group intelligently** — multiple Slack messages on the same topic become one task line
+- **Follow output template** — `~/.claude/templates/daily-recap-output.md` has all formatting/voice/structure rules
+- **Don't invent data** — only include what found in Slack/Gmail/Calendar/Dia
+- **Skip noise** — ignore bot spam, non-actionable automated notifications
+- **Group intelligently** — multiple Slack msgs on same topic → one task line
 - **Respect existing content** — never overwrite existing tasks or notes, only append/insert
-- **NEVER create a daily note with Write tool** — always use `obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent` via Bash. The template has Templater logic that Obsidian must process. Writing the file manually will produce a broken note.
+- **NEVER create daily note with Write tool** — always use `obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent` via Bash. Template has Templater logic Obsidian must process. Manual write → broken note.

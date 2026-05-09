@@ -9,7 +9,7 @@ mcpServers:
   - claude-in-chrome
 ---
 
-Fill the funda viewing request form for the property at: $ARGUMENTS
+Fill funda viewing request form for property at: $ARGUMENTS
 
 ## My Details
 
@@ -38,12 +38,12 @@ Fill the funda viewing request form for the property at: $ARGUMENTS
 
 ## Steps
 
-1. Navigate directly to the viewing request URL (form is pre-loaded)
-2. Fill all textbox fields using CSS selectors as specified
+1. Navigate directly to viewing request URL (form pre-loaded)
+2. Fill all textbox fields via CSS selectors as specified
 3. Check all checkbox IDs listed (use `document.getElementById(id).checked = true`)
 4. Select radio options by label text or data attribute
 5. Submit form with button containing "Send message" text
-6. After successful submission, update the property note in Obsidian:
+6. After successful submission, update property note in Obsidian:
    - Set `viewing_requested: true`
    - Set `viewing_requested_date: <today's date in YYYY-MM-DD format>`
 7. Report success
