@@ -219,3 +219,4 @@ fuck() {
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export BASH_MAX_OUTPUT_LENGTH=15000

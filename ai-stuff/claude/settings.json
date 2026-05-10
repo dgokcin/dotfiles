@@ -175,8 +175,7 @@
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
-      },
-      "autoUpdate": true
+      }
     }
   },
   "effortLevel": "low",

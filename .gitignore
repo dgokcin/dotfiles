@@ -10,8 +10,13 @@ vscode-settings.json
 .cursor/rules/_*.mdc
 .cursor/mcp.json
 
+.claude/worktrees/**
+
 # Private claude personas (sweary/personal personality configs)
 ai-stuff/claude/personas/_*.md
 
 # Private cluster context map (contains sensitive account/cluster names)
 ai-stuff/claude/config/.clusters.json
+
+ai-stuff/claude/skills/add-recipe/*.original*
+ai-stuff/claude/skills/**/SKILL.original.md
