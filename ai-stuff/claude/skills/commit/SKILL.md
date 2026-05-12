@@ -2,7 +2,7 @@
 name: commit
 description: Create conventional commits with GitBoi's sass and strict lowercase enforcement. Use whenever you need to commit something.
 disable-model-invocation: false
-context: fork
+context: inline
 agent: gitboi
 allowed-tools:
   - Read
@@ -14,6 +14,8 @@ allowed-tools:
   - Bash(git branch:*)
   - Bash(git rev-parse:*)
   - Bash(git show:*)
+  - Bash(git commit:*)
+  - AskUserQuestion
 ---
 
 # Create Conventional Commit
