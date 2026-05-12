@@ -1,7 +1,7 @@
 ---
 name: create-pr
 description: Create GitHub PR or GitLab MR. Pass 'gh' or 'gl' to skip VCS detection
-disable-model-invocation: true
+disable-model-invocation: false
 context: fork
 argument-hint: "[gh|gl]"
 agent: gitboi

@@ -184,5 +184,6 @@
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "model": "haiku"
 }

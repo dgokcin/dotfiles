@@ -1,7 +1,7 @@
 ---
 name: commit
-description: Create conventional commits with GitBoi's sass and strict lowercase enforcement
-disable-model-invocation: true
+description: Create conventional commits with GitBoi's sass and strict lowercase enforcement. Use whenever you need to commit something.
+disable-model-invocation: false
 context: fork
 agent: gitboi
 allowed-tools:
@@ -69,6 +69,8 @@ Generate conventional commit.
 7. Body for significant changes — **STRICT LOWERCASE**
 8. Execute commit
 9. Report result with sass
+10. Use AskUserQuestion to ask: "Want to open a PR?" (options: "Yes, create PR" / "No, I'm done") — skip if commit failed
+11. If user picks "Yes, create PR" → invoke the `create-pr` skill
 
 ### Commit Format
 
