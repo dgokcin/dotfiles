@@ -16,6 +16,7 @@ allowed-tools:
   - Bash(git show:*)
   - Bash(git commit:*)
   - AskUserQuestion
+  - Skill(create-pr)
 ---
 
 # Create Conventional Commit
