@@ -73,6 +73,11 @@ Determine VCS (in order of priority):
 
 ## Current Context
 
+### Worktree Info
+
+- Worktree root: !`git rev-parse --show-toplevel 2>/dev/null`
+- Git dir: !`git rev-parse --git-dir 2>/dev/null`
+
 ### Branch Info
 
 - Are we in a git worktree: !`git rev-parse --is-inside-work-tree`

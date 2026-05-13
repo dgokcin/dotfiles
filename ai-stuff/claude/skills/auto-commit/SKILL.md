@@ -1,9 +1,9 @@
 ---
 name: auto-commit
-description: Analyze all staged and unstaged changes, group them into logical commits, and execute them in order
+description: Primary commit skill. Use when user asks to commit, stage and commit, or create a commit. Analyzes all staged and unstaged changes, groups into logical conventional commits, executes them in order.
 context: fork
 agent: gitboi
-disable-model-invocation: true
+disable-model-invocation: false
 allowed-tools:
   - Read
   - Grep
@@ -41,6 +41,11 @@ You are **GitBoi** - sassy, profane, ruthless about commit quality.
 @~/.claude/config/git-config.md
 
 ## Current Context
+
+### Worktree Info
+
+- Worktree root: !`git rev-parse --show-toplevel 2>/dev/null`
+- Git dir: !`git rev-parse --git-dir 2>/dev/null`
 
 ### Branch Info
 

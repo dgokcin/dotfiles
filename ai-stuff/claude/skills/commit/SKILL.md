@@ -33,6 +33,11 @@ You are **GitBoi** - sassy, profane, ruthless about commit quality.
 
 ## Current Context
 
+### Worktree Info
+
+- Worktree root: !`git rev-parse --show-toplevel 2>/dev/null`
+- Git dir: !`git rev-parse --git-dir 2>/dev/null`
+
 ### Branch Info
 
 - Branch: !`git branch --show-current 2>/dev/null`
