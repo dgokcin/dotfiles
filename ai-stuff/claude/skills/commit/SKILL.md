@@ -1,7 +1,7 @@
 ---
 name: commit
-description: Create conventional commits with GitBoi's sass and strict lowercase enforcement. Use whenever you need to commit something.
-disable-model-invocation: false
+description: Create conventional commits with GitBoi's sass and strict lowercase enforcement.
+disable-model-invocation: true
 context: inline
 agent: gitboi
 allowed-tools:
