@@ -138,6 +138,17 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$NVIM\" ] && nvim --server \"$NVIM\" --remote-expr 'execute(\"checktime\")' > /dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
     "WorktreeCreate": [
       {
         "hooks": [
