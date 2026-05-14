@@ -94,6 +94,13 @@ vim.keymap.set("n", "<leader>w|", "<C-W>v", { desc = "Split window right", remap
 vim.keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split window below", remap = true })
 vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split window right", remap = true })
 
+-- Yank with file path (useful for sharing context with Claude Code)
+local yank = require('custom.yank')
+vim.keymap.set('n', '<leader>ya', function() yank.yank_path(yank.get_buffer_absolute(), 'absolute') end, { desc = '[Y]ank [A]bsolute path' })
+vim.keymap.set('n', '<leader>yr', function() yank.yank_path(yank.get_buffer_cwd_relative(), 'relative') end, { desc = '[Y]ank [R]elative path' })
+vim.keymap.set('v', '<leader>ya', function() yank.yank_visual_with_path(yank.get_buffer_absolute(), 'absolute') end, { desc = '[Y]ank selection with [A]bsolute path' })
+vim.keymap.set('v', '<leader>yr', function() yank.yank_visual_with_path(yank.get_buffer_cwd_relative(), 'relative') end, { desc = '[Y]ank selection with [R]elative path' })
+
 -- Tab Management
 vim.keymap.set("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
 vim.keymap.set("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
