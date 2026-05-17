@@ -8,6 +8,7 @@
     "ENABLE_LSP_TOOL": "1",
     "CAVEMAN_DEFAULT_MODE": "ultra",
     "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "400000",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95"
   },
@@ -57,9 +58,7 @@
       "Bash(rtk grep:*)",
       "Bash(rtk read:*)"
     ],
-    "ask": [
-      "Write(~/vault/personal/nl/house search/buying a house/**)"
-    ],
+    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"],
     "defaultMode": "default"
   },
   "hooks": {

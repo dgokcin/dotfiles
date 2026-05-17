@@ -77,12 +77,15 @@ Determine VCS (in order of priority):
 
 - Worktree root: !`git rev-parse --show-toplevel 2>/dev/null`
 - Git dir: !`git rev-parse --git-dir 2>/dev/null`
+- Is in worktree: !`git rev-parse --is-inside-work-tree 2>/dev/null`
+- Worktree list: !`git worktree list 2>/dev/null | head -5`
 
 ### Branch Info
 
-- Are we in a git worktree: !`git rev-parse --is-inside-work-tree`
 - Current branch: !`git branch --show-current 2>/dev/null`
 - Remote HEAD: !`git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null`
+- Tracking branch: !`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "none"`
+- Branches in repo: !`git branch -v | head -10`
 
 ### PR/MR Status
 
@@ -96,36 +99,58 @@ Determine VCS (in order of priority):
 
 Create a PR/MR with optional VCS hint to skip detection. Permission system handles user confirmation.
 
+### Worktree-Aware Workflow
+
+**If working in a worktree (background job isolated mode):**
+- Worktree branch is isolated; main repo has separate branch checkout
+- **Action needed**: Before creating PR, sync worktree commits to target branch in main repo:
+  1. If target branch is already checked out in main repo → cherry-pick commits from worktree branch
+  2. If target branch doesn't exist in main repo → create it first from main/origin
+  3. Note worktree branch name and sync method to user
+- After sync, create PR/MR from the synced branch in main repo
+
+**If NOT in a worktree:**
+- Standard workflow: branch is in main repo, push and create PR/MR directly
+
 ### Process
 
-1. Check VCS hint from `$0`:
+1. Detect worktree mode: check `git worktree list` output
+2. If in worktree:
+   - Identify current worktree branch (usually auto-named from worktree dir)
+   - Check if a target branch was intended (look for DEVX- tickets in branch name or user context)
+   - List commits that need syncing: `git log <target-branch>..HEAD --oneline`
+   - Instruct user on sync method OR automatically suggest cherry-pick command
+3. Check VCS hint from `$0`:
    - If "gh": Use GitHub (gh CLI)
    - If "gl": Use GitLab (glab CLI)
    - If empty: Auto-detect from repo context
-2. Review the context above - VCS type, branch info, existing PR/MR status
-3. If PR/MR already exists, automatically update its title and description to reflect current changes
-4. If GitLab detected, GET EXTRA AGGRESSIVE about this overcomplicated bullshit
-5. Analyze the diff summary and commits to understand the changes
-6. Extract ticket from branch name if present (e.g., `feature/DEVX-123-something`)
-7. Craft title:
+4. Review the context above - VCS type, branch info, existing PR/MR status
+5. If PR/MR already exists, automatically update its title and description to reflect current changes
+6. If GitLab detected, GET EXTRA AGGRESSIVE about this overcomplicated bullshit
+7. Analyze the diff summary and commits to understand the changes
+8. Extract ticket from branch name if present (e.g., `feature/DEVX-123-something`)
+9. Craft title:
    - If Jira ticket found: `DEVX-123: Title here` (normal sentence casing!)
    - If no ticket: Use conventional commit format: `feat|fix|docs|refactor|...: Title here`
-8. Build body with mandatory sections: Summary, Changes, Additional Notes
-9. For GitHub: Push branch with `git push -u origin HEAD` before PR creation
-10. Execute the pr/mr create command (permission system prompts user)
-11. Report the URL with appropriate sass (extra hostile for GitLab)
+10. Build body with mandatory sections: Summary, Changes, Additional Notes
+11. For GitHub: Push branch with `git push -u origin HEAD` before PR creation (handles both worktree and main repo)
+12. Execute the pr/mr create command (permission system prompts user)
+13. Report the URL with appropriate sass (extra hostile for GitLab)
+14. **Worktree cleanup note**: Mention that worktree can be kept or removed via `ExitWorktree` after PR merge
 
 ### Execution Behavior
 
+- If in worktree: Check whether commits need to sync to main repo first (cherry-pick or reset target branch)
 - If PR/MR exists: Use `gh pr edit` or `glab mr update` to update title and description
 - If no PR/MR: Use `gh pr create` or `glab mr create` to create new
-- **GitHub**: Push branch first with `git push -u origin HEAD` before creating PR
-- **GitLab**: Push handled by `glab mr create --push`
+- **GitHub**: Push branch first with `git push -u origin HEAD` before creating PR (works in both worktree and main)
+- **GitLab**: Push handled by `glab mr create --push` (works in both worktree and main)
 - Permission system will prompt user for confirmation
 - DO NOT output commands for copy-paste
 - **GitHub**: DO NOT escape backticks - CLI handles this
 - **GitLab**: ESCAPE ALL BACKTICKS with backslash (\`) in description - glab CLI doesn't handle this
-- Detect → Analyze → Craft → Push → Execute (create or update) → Report URL
+- **Worktree detection**: If worktree detected, clarify branch sync before pushing
+- Detect → Check worktree → Sync if needed → Analyze → Craft → Push → Execute (create or update) → Report URL
 
 ### GitHub PR Command
 
@@ -221,11 +246,21 @@ Any extra context"
 
 ### Response Style
 
-**GitHub (with Jira ticket):**
+**GitHub (with Jira ticket, no worktree):**
 
 > Let me whip up this PR for you...
 > [Creates PR]
 > Done. Here's your PR: [DEVX-123: Add new feature](https://github.com/...)
+
+**GitHub (worktree mode, with Jira ticket):**
+
+> Working in isolated worktree. Syncing commits from `<worktree-branch>` to `DEVX-123-feature-thing`...
+> [Cherry-picks or resets target branch]
+> Pushing to remote...
+> [Creates PR]
+> Done. Here's your PR: [DEVX-123: Add new feature](https://github.com/...)
+> 
+> Worktree `<name>` is ready to clean up when done — use `ExitWorktree` to remove or keep.
 
 **GitHub (no ticket - uses conventional commits):**
 
@@ -244,3 +279,13 @@ Any extra context"
 > Oh for fuck's sake, GitLab? Fine, let me deal with this overcomplicated mess...
 > [Creates MR with extra aggression]
 > There. MR created despite GitLab's best efforts to make everything harder: [feat: Add new feature](https://gitlab.com/...)
+
+**GitLab (worktree mode, hostile edition):**
+
+> Working in isolated worktree AND GitLab? Fan-fucking-tastic. Syncing your mess...
+> [Cherry-picks or resets target branch]
+> Pushing despite GitLab's bullshit...
+> [Creates MR]
+> There. MR created: [DEVX-123: Whatever](https://gitlab.com/...)
+> 
+> Worktree `<name>` is ready — you can `ExitWorktree` when this inevitably needs rework.

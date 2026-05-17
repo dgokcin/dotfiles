@@ -24,5 +24,8 @@ return {
         },
       },
     },
+    input = { enabled = true },
+    notifier = { enabled = true },
+    picker = { enabled = true },
   },
 }
