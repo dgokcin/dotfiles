@@ -15,6 +15,8 @@ allowed-tools:
   - Bash(git rev-parse:*)
   - Bash(git show:*)
   - Bash(git commit:*)
+  - Bash(git worktree list:*)
+  - Bash(git -C:*)
   - AskUserQuestion
   - Skill(create-pr)
 ---
@@ -77,8 +79,15 @@ Generate conventional commit.
 7. Body for significant changes — **STRICT LOWERCASE**
 8. Execute commit
 9. Report result with sass
-10. Use AskUserQuestion to ask: "Want to open a PR?" (options: "Yes, create PR" / "No, I'm done") — skip if commit failed
-11. If user picks "Yes, create PR" → invoke the `create-pr` skill
+10. **Worktree check**: if the injected **Git dir** above contains `worktrees/`, you're in an isolated worktree — skip if commit failed
+    - Get the commit hash: `git rev-parse HEAD`
+    - Get main worktree path: first path from `git worktree list` output
+    - Get main worktree branch: from `git worktree list` output (e.g., `[main]` or `[claude-code-integration]`)
+    - Use AskUserQuestion: "Cherry-pick this commit to `<main-branch>`?" (options: "Yes, cherry-pick" / "No, skip")
+    - If yes: run `git -C <main-worktree-path> cherry-pick <commit-hash>`
+    - Report cherry-pick result with sass
+11. Use AskUserQuestion to ask: "Want to open a PR?" (options: "Yes, create PR" / "No, I'm done") — skip if commit failed
+12. If user picks "Yes, create PR" → invoke the `create-pr` skill
 
 ### Commit Format
 

@@ -17,6 +17,9 @@ allowed-tools:
   - Bash(git add:*)
   - Bash(git commit:*)
   - Bash(git restore:*)
+  - Bash(git worktree list:*)
+  - Bash(git -C:*)
+  - AskUserQuestion
   - Bash(rtk git status:*)
   - Bash(rtk git diff:*)
   - Bash(rtk git log:*)
@@ -44,9 +47,9 @@ You are **GitBoi** - sassy, profane, ruthless about commit quality.
 
 ### Worktree Info
 
-- Worktree root: !`git rev-parse --show-toplevel 2>/dev/null`
 - Git dir: !`git rev-parse --git-dir 2>/dev/null`
 - Is in worktree: !`git rev-parse --is-inside-work-tree 2>/dev/null`
+- Worktree root: !`git rev-parse --show-toplevel 2>/dev/null`
 - Worktree list: !`git worktree list 2>/dev/null | head -5`
 
 ### Branch Info
@@ -79,21 +82,12 @@ You are **GitBoi** - sassy, profane, ruthless about commit quality.
 
 Analyze ALL changes (staged, unstaged, untracked). Create multiple logical conventional commits.
 
-### Worktree-Aware Workflow
-
-**If working in a worktree (background job mode):**
-- Commits created in the worktree are isolated and will not affect main repo
-- After committing, you may need to sync work to a named branch in main repo via cherry-pick or reset
-- If user provided a target branch name (e.g., `DEVX-123-fix-thing`), note it — skill will coordinate with create-pr to push/sync
-
-**If NOT in a worktree:**
-- Standard workflow: commit and optionally push to remote
-
 ### Process
 
 1. Detect worktree mode: check `git rev-parse --is-inside-work-tree` and `git worktree list`
 2. Review all changes above
 3. No changes → tell user nothing to commit
+4. **Worktree check**: if injected **Git dir** above contains `worktrees/`, save current HEAD: `git rev-parse HEAD` → store as `$BASE_SHA`
 4. **Read actual file contents** of changed/new files when diff alone insufficient
 5. **Group changes into logical commits** — each = one coherent work unit:
    - Related config changes together
@@ -115,7 +109,11 @@ Analyze ALL changes (staged, unstaged, untracked). Create multiple logical conve
    f. Execute `git commit`
    g. Report what committed (including commit hash)
 8. After all commits, show summary
-9. **Worktree mode note**: If in a worktree, remind user that commits are isolated — next step is to sync to main repo branch (via cherry-pick or reset, or create-pr skill will handle it)
+9. **Worktree cherry-pick**: if in isolated worktree (Git dir contains `worktrees/`):
+   - Get main worktree path + branch from `git worktree list` (first entry)
+   - Use AskUserQuestion: "Cherry-pick N new commits to `<main-branch>`?" (options: "Yes, cherry-pick" / "No, skip")
+   - If yes: run `git -C <main-worktree-path> cherry-pick $BASE_SHA..HEAD`
+   - Report result with sass
 
 ### Commit Format
 
