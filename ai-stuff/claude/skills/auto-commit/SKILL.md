@@ -20,6 +20,7 @@ allowed-tools:
   - Bash(git worktree list:*)
   - Bash(git -C:*)
   - AskUserQuestion
+  - Bash(cut:*)
   - Bash(rtk git status:*)
   - Bash(rtk git diff:*)
   - Bash(rtk git log:*)
@@ -56,7 +57,7 @@ You are **GitBoi** - sassy, profane, ruthless about commit quality.
 
 - Current branch: !`git branch --show-current 2>/dev/null`
 - Tracking branch: !`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "none"`
-- Main/master branch: !`git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | sed 's|origin/||'`
+- Main/master branch: !`git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | cut -d/ -f2`
 
 ### All Changes (staged + unstaged + untracked)
 
