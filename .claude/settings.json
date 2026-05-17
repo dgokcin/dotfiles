@@ -43,5 +43,8 @@
       "Bash(rtk yadm *)",
       "Bash(rtk gt *)"
     ]
+  },
+  "worktree": {
+    "bgIsolation": "none"
   }
 }
