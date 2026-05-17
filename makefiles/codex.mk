@@ -2,8 +2,6 @@
 
 CODEX_HOME := ${HOME}/.codex
 CODEX_SKILLS := \
-	add-recipe \
-	add-vinyl \
 	address-review \
 	auto-commit \
 	commit \
@@ -12,17 +10,11 @@ CODEX_SKILLS := \
 	daily-recap \
 	dev-story \
 	get-story \
-	gitboi \
-	gitops-geezer \
 	jiragirl \
 	k8s-debug \
-	meeting-note \
 	mega-dev \
-	quick-note \
-	request-viewing \
 	save-property-to-vault \
-	spike \
-	weekly-review
+	spike
 
 codex: codex-dirs codex-skills ## Install Codex skills from repo
 
@@ -31,7 +23,7 @@ codex-dirs: ## Create Codex directory structure
 
 codex-skills: codex-dirs ## Symlink Codex skills and shared references
 	$(call pretty_print, "Installing Codex skills...")
-	$(call symlink,ai-stuff/codex/skills/_shared,${CODEX_HOME}/skills/_shared)
+	$(call symlink,ai-stuff/_shared,${CODEX_HOME}/skills/_shared)
 	@for skill in ${CODEX_SKILLS}; do \
 		$(call pretty_print, "Creating symlink\: $(DOTFILES)/ai-stuff/codex/skills/$$skill \~\> ${CODEX_HOME}/skills/$$skill"); \
 		ln -fs $(DOTFILES)/ai-stuff/codex/skills/$$skill ${CODEX_HOME}/skills/$$skill || echo "Failed to create symlink for ai-stuff/codex/skills/$$skill"; \
