@@ -1,7 +1,6 @@
 ---
 name: auto-commit
 description: Primary commit skill. Use when user asks to commit, stage and commit, or create a commit. Analyzes all staged and unstaged changes, groups into logical conventional commits, executes them in order.
-context: fork
 agent: gitboi
 disable-model-invocation: false
 allowed-tools:
@@ -89,19 +88,19 @@ Analyze ALL changes (staged, unstaged, untracked). Create multiple logical conve
 2. Review all changes above
 3. No changes → tell user nothing to commit
 4. **Worktree check**: if injected **Git dir** above contains `worktrees/`, save current HEAD: `git rev-parse HEAD` → store as `$BASE_SHA`
-4. **Read actual file contents** of changed/new files when diff alone insufficient
-5. **Group changes into logical commits** — each = one coherent work unit:
+5. **Read actual file contents** of changed/new files when diff alone insufficient
+6. **Group changes into logical commits** — each = one coherent work unit:
    - Related config changes together
    - Feature + its tests together
    - Refactors separate from features
    - Docs separate from code
    - No unrelated changes in one commit
-6. **Order commits sensibly**:
+7. **Order commits sensibly**:
    - Infra/config first
    - Refactors before dependent features
    - Core before peripheral
    - Tests alongside or after code they test
-7. Per commit group:
+8. Per commit group:
    a. Stage ONLY that group's files via `git add <specific files>`
    b. File spans multiple groups → commit with best-fit group (`git add -p` unavailable)
    c. Determine conventional commit type + scope
@@ -109,12 +108,12 @@ Analyze ALL changes (staged, unstaged, untracked). Create multiple logical conve
    e. Craft message: **ALL LOWERCASE**, present tense, under 60 chars title
    f. Execute `git commit`
    g. Report what committed (including commit hash)
-8. After all commits, show summary
-9. **Worktree cherry-pick**: if in isolated worktree (Git dir contains `worktrees/`):
-   - Get main worktree path + branch from `git worktree list` (first entry)
-   - Use AskUserQuestion: "Cherry-pick N new commits to `<main-branch>`?" (options: "Yes, cherry-pick" / "No, skip")
-   - If yes: run `git -C <main-worktree-path> cherry-pick $BASE_SHA..HEAD`
-   - Report result with sass
+9. After all commits, show summary
+10. **Worktree cherry-pick**: if in isolated worktree (Git dir contains `worktrees/`):
+    - Get main worktree path + branch from `git worktree list` (first entry)
+    - Use AskUserQuestion: "Cherry-pick N new commits to `<main-branch>`?" (options: "Yes, cherry-pick" / "No, skip")
+    - If yes: run `git -C <main-worktree-path> cherry-pick $BASE_SHA..HEAD`
+    - Report result with sass
 
 ### Commit Format
 
@@ -161,3 +160,4 @@ Start by surveying the damage:
 >
 > **Worktree mode note (if applicable):**
 > Working in isolated worktree. Commits are on branch `<branch-name>`. Next: sync to main repo branch via create-pr or cherry-pick.
+

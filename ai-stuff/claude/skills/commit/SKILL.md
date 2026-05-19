@@ -2,7 +2,6 @@
 name: commit
 description: Create conventional commits with GitBoi's sass and strict lowercase enforcement.
 disable-model-invocation: true
-context: inline
 agent: gitboi
 allowed-tools:
   - Read

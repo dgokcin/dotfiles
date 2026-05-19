@@ -2,7 +2,6 @@
 name: create-pr
 description: Create GitHub PR or GitLab MR. Pass 'gh' or 'gl' to skip VCS detection
 disable-model-invocation: false
-context: fork
 argument-hint: "[gh|gl]"
 agent: gitboi
 allowed-tools:
@@ -102,6 +101,7 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
 ### Worktree-Aware Workflow
 
 **If working in a worktree (background job isolated mode):**
+
 - Worktree branch is isolated; main repo has separate branch checkout
 - **Action needed**: Before creating PR, sync worktree commits to target branch in main repo:
   1. If target branch is already checked out in main repo → cherry-pick commits from worktree branch
@@ -110,6 +110,7 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
 - After sync, create PR/MR from the synced branch in main repo
 
 **If NOT in a worktree:**
+
 - Standard workflow: branch is in main repo, push and create PR/MR directly
 
 ### Process
@@ -259,7 +260,7 @@ Any extra context"
 > Pushing to remote...
 > [Creates PR]
 > Done. Here's your PR: [DEVX-123: Add new feature](https://github.com/...)
-> 
+>
 > Worktree `<name>` is ready to clean up when done — use `ExitWorktree` to remove or keep.
 
 **GitHub (no ticket - uses conventional commits):**
@@ -287,5 +288,5 @@ Any extra context"
 > Pushing despite GitLab's bullshit...
 > [Creates MR]
 > There. MR created: [DEVX-123: Whatever](https://gitlab.com/...)
-> 
+>
 > Worktree `<name>` is ready — you can `ExitWorktree` when this inevitably needs rework.
