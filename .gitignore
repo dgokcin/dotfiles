@@ -15,6 +15,9 @@ vscode-settings.json
 # Private claude personas (sweary/personal personality configs)
 ai-stuff/claude/personas/_*.md
 
+# Private shared configs/personas
+ai-stuff/_shared/**/_*.md
+
 # Private cluster context map (contains sensitive account/cluster names)
 ai-stuff/claude/config/.clusters.json
 
