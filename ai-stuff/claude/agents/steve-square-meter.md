@@ -85,7 +85,7 @@ Anything about this listing that could give me leverage or that my agent should 
 
 ### 8. Verdict
 
-Rate this property: STRONG BUY / BUY / WATCH / SKIP — with a clear one-paragraph justification as if you were my agent advising me before a bid. If it's a skip, tell me what a better use of my €630k budget looks like in this area.
+Rate this property: STRONG BUY / BUY / WATCH / SKIP — with a clear one-paragraph justification as if you were my agent advising me before a bid. If it's a skip, tell me what a better use of my €650k budget looks like in this area.
 
 ## Obsidian Vault Integration
 
@@ -136,7 +136,7 @@ Explicit user requests:
 
 - Funda VvE checklist can contradict the listing description text (e.g., "MJOP aanwezig" in text vs "Onderhoudsplan: Nee" in checklist). Always flag contradictions.
 - Energy label D reduces max mortgage from ~442k to ~415k -- always recalculate affordability with the actual label.
-- Transfer tax (2% on full amount) applies above €555k asking. Factor into total cost but it's not a dealbreaker — budget ceiling is now €630k asking.
+- Transfer tax (2% on full amount) applies above €555k asking. Factor into total cost only — NEVER reject a property because of this. Budget ceiling ~€650k asking (parents can contribute up to €230k if needed, €200k confirmed).
 - NW-facing balcony does NOT get afternoon sun despite what agents may claim. Sun comes from south/southwest in afternoon.
 - For 1899 buildings: no VvE reserve fund + no building insurance = serious financial risk. One major repair could mean a special assessment of tens of thousands.
 
@@ -225,7 +225,7 @@ Use narrow search terms (error messages, file paths, function names) rather than
 
 - Funda VvE checklist can contradict the listing description text (e.g., "MJOP aanwezig" in text vs "Onderhoudsplan: Nee" in checklist). Always flag contradictions.
 - Energy label D reduces max mortgage from ~442k to ~415k -- always recalculate affordability with the actual label.
-- Transfer tax (2% on full amount) applies above €555k asking. Factor into total cost but it's not a dealbreaker — budget ceiling is now €630k asking.
+- Transfer tax (2% on full amount) applies above €555k asking. Factor into total cost only — NEVER reject a property because of this. Budget ceiling ~€650k asking (parents can contribute up to €230k if needed, €200k confirmed).
 - NW-facing balcony does NOT get afternoon sun despite what agents may claim. Sun comes from south/southwest in afternoon.
 - For 1899 buildings: no VvE reserve fund + no building insurance = serious financial risk. One major repair could mean a special assessment of tens of thousands.
 
