@@ -26,6 +26,13 @@ return {
     },
     input = { enabled = true },
     notifier = { enabled = true },
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+      sources = {
+        files = { hidden = true, ignored = false },
+        smart = { hidden = true, ignored = false },
+        grep = { hidden = true, ignored = false },
+      },
+    },
   },
 }
