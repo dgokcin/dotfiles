@@ -191,7 +191,7 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "low",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "autoMemoryEnabled": true,
