@@ -9,7 +9,7 @@ input=$(cat)
 cwd=$(echo "$input" | jq -r ".workspace.current_dir")
 model=$(echo "$input" | jq -r ".model.display_name")
 time=$(date +%H:%M:%S)
-cost_usd=$(echo "$input" | jq -r ".cost_usd // empty")
+cost_usd=$(echo "$input" | jq -r ".cost.total_cost_usd // empty")
 
 # Git info
 git_branch=""
@@ -29,21 +29,13 @@ fi
 # Vim mode (bracket indicator removed; Claude Code renders -- INSERT --/-- NORMAL -- natively)
 vim_mode=""
 
-# Reasoning effort: Claude Code does not pass effort_level in the statusline JSON.
-# Read effortLevel from settings.json, but only show it for models that support
-# extended thinking (Sonnet/Opus). Haiku and other non-thinking models → "n/a".
-model_id=$(echo "$input" | jq -r '.model.id // empty')
-effort_level=""
-case "$model_id" in
-*haiku*) effort_level="n/a" ;;
-*)
-  settings_path="$HOME/.claude/settings.json"
-  if [ -f "$settings_path" ]; then
-    effort_level=$(jq -r '.effortLevel // empty' "$settings_path" 2>/dev/null)
-  fi
-  [ -z "$effort_level" ] && effort_level="n/a"
-  ;;
-esac
+# Reasoning effort: Claude Code passes the live session value as effort.level on
+# stdin (reflects mid-session /effort changes). Values: low|medium|high|xhigh|max|
+# ultra. Absent when the model lacks the reasoning effort parameter (e.g. Haiku)
+# → "n/a". (settings_path also reused by the auto-compact block below.)
+settings_path="$HOME/.claude/settings.json"
+effort_level=$(echo "$input" | jq -r '.effort.level // empty')
+[ -z "$effort_level" ] && effort_level="n/a"
 
 # Token calculations
 context_size=$(echo "$input" | jq -r ".context_window.context_window_size // 200000")
@@ -262,11 +254,17 @@ if [ -n "$vim_mode" ]; then
 fi
 
 # Line 1: Model | tokens used/total (%) | effort
+# Display label differs from stored value: /effort ultracode is stored as
+# "ultra" on stdin; show the friendlier "ultracode" label.
+effort_disp="$effort_level"
+[ "$effort_level" = "ultra" ] && effort_disp="ultracode"
+
 effort_color="$C_DIM"
 case "$effort_level" in
-high | max) effort_color="$C_RED" ;;
+high | xhigh | max | ultra) effort_color="$C_RED" ;;
 medium) effort_color="$C_ORANGE" ;;
 low) effort_color="$C_GREEN" ;;
+auto) effort_color="$C_CYAN" ;;
 esac
 
 printf "\n"
@@ -281,7 +279,7 @@ if [ -n "$cost_fmt" ]; then
   printf "cost: %b%s%b" "$C_CYAN" "$cost_fmt" "$C_RESET"
 fi
 printf "%b" "$SEP"
-printf "effort: %b%s%b" "$effort_color" "$effort_level" "$C_RESET"
+printf "effort: %b%s%b" "$effort_color" "$effort_disp" "$C_RESET"
 
 # Line 2: Current (5h) bar | Weekly (7d) bar
 if [ -n "$five_hour_pct_raw" ]; then
