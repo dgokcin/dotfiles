@@ -63,7 +63,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -175,7 +174,8 @@
     "feature-dev@claude-plugins-official": false,
     "obsidian@obsidian-skills": false,
     "skill-creator@claude-plugins-official": false,
-    "caveman@caveman": true
+    "caveman@caveman": true,
+    "jira-tools@treatwell": false
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -188,6 +188,12 @@
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "treatwell": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/denizgokcin/codes/work/tw-plugins"
       }
     }
   },
