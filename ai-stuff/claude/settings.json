@@ -63,6 +63,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "z-ai/glm-4.5-air:free",
   "hooks": {
     "SessionStart": [
       {
@@ -172,10 +173,8 @@
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
-    "obsidian@obsidian-skills": false,
     "skill-creator@claude-plugins-official": false,
-    "caveman@caveman": true,
-    "jira-tools@treatwell": false
+    "caveman@caveman": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -189,15 +188,9 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
-    },
-    "treatwell": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/denizgokcin/codes/work/tw-plugins"
-      }
     }
   },
-  "effortLevel": "low",
+  "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "autoMemoryEnabled": true,
