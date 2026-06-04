@@ -63,7 +63,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "z-ai/glm-4.5-air:free",
   "hooks": {
     "SessionStart": [
       {
@@ -174,7 +173,10 @@
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": false,
-    "caveman@caveman": true
+    "caveman@caveman": true,
+    "atlassian@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "datadog-debug@treatwell": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -187,6 +189,12 @@
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "treatwell": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/denizgokcin/codes/work/claude-skills"
       }
     }
   },
