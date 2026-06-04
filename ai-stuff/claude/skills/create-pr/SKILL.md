@@ -115,6 +115,7 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
 
 ### Process
 
+0. **Set working directory**: Run `cd <worktree-root>` using the injected "Worktree root" value above — ensures all subsequent git commands run in the correct worktree, not the main repo root
 1. Detect worktree mode: check `git worktree list` output
 2. If in worktree:
    - Identify current worktree branch (usually auto-named from worktree dir)
@@ -151,7 +152,8 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
 - **GitHub**: DO NOT escape backticks - CLI handles this
 - **GitLab**: ESCAPE ALL BACKTICKS with backslash (\`) in description - glab CLI doesn't handle this
 - **Worktree detection**: If worktree detected, clarify branch sync before pushing
-- Detect → Check worktree → Sync if needed → Analyze → Craft → Push → Execute (create or update) → Report URL
+- **CWD**: Always `cd` to injected Worktree root first — CWD may be main repo root when skill loads
+- cd → Detect → Check worktree → Sync if needed → Analyze → Craft → Push → Execute (create or update) → Report URL
 
 ### GitHub PR Command
 
