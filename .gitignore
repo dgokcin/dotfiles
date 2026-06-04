@@ -20,6 +20,7 @@ ai-stuff/_shared/**/_*.md
 
 # Private cluster context map (contains sensitive account/cluster names)
 ai-stuff/claude/config/.clusters.json
+ai-stuff/_shared/config/.clusters.json
 
 ai-stuff/claude/skills/add-recipe/*.original*
 ai-stuff/claude/skills/**/SKILL.original.md
