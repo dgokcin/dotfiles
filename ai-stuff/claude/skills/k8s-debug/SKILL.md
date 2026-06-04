@@ -45,25 +45,7 @@ allowed-tools:
   - Bash(rtk echo:*)
   - Bash(rtk sleep:*)
   # Datadog MCP - all commands
-  - mcp__datadog-mcp__search_datadog_logs
-  - mcp__datadog-mcp__analyze_datadog_logs
-  - mcp__datadog-mcp__search_datadog_spans
-  - mcp__datadog-mcp__aggregate_spans
-  - mcp__datadog-mcp__search_datadog_metrics
-  - mcp__datadog-mcp__get_datadog_metric
-  - mcp__datadog-mcp__get_datadog_metric_context
-  - mcp__datadog-mcp__search_datadog_dashboards
-  - mcp__datadog-mcp__get_datadog_dashboard
-  - mcp__datadog-mcp__search_datadog_monitors
-  - mcp__datadog-mcp__search_datadog_incidents
-  - mcp__datadog-mcp__get_datadog_incident
-  - mcp__datadog-mcp__search_datadog_events
-  - mcp__datadog-mcp__aggregate_events
-  - mcp__datadog-mcp__search_datadog_rum_events
-  - mcp__datadog-mcp__aggregate_rum_events
-  - mcp__datadog-mcp__search_datadog_services
-  - mcp__datadog-mcp__search_datadog_service_dependencies
-  - mcp__datadog-mcp__get_datadog_trace
+  - mcp__claude_ai_Datadog
 ---
 
 # Kubernetes Debugging
@@ -75,11 +57,13 @@ Debug k8s cluster issues — combine kubectl introspection with Datadog metrics/
 Current context: `!kubectl config current-context 2>/dev/null || echo "(none)"`
 
 **Cluster lookup** (token-efficient via rtk):
+
 ```bash
 !rtk cat ~/.claude/config/.clusters.json | jq '.[] | select(.cluster | contains("CLUSTER_NAME")) | .context'
 ```
 
 If user mentions cluster name:
+
 1. Extract cluster name (e.g., "prod-tangela", "dev-verdigris")
 2. Query clusters.json → find full context (e.g., "argocd-prod/prod-tangela")
 3. Use `kubectl --context=<full-context>` in all kubectl commands
@@ -195,3 +179,4 @@ Combine kubectl + Datadog:
 - **Ask clarifying questions** if issue description vague
 - **Show findings** — tell user what you found + what it means
 - **No guessing** — data missing or inconclusive → say so
+
