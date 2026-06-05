@@ -44,6 +44,9 @@ allowed-tools:
   - mcp__claude_ai_Google_Calendar__get_event
   - mcp__claude_ai_Google_Calendar__list_calendars
   - mcp__claude_ai_Google_Calendar__find_my_free_time
+  # Google Drive (read-only — meeting notes)
+  - mcp__claude_ai_Google_Drive__read_file_content
+  - mcp__claude_ai_Google_Drive__search_files
 ---
 
 # Daily Recap
@@ -216,6 +219,21 @@ Dia generates daily activity summaries as HTML. Captures work context Slack/Gmai
 - Dia "Tomorrow" → Bucket 2 (notes for tomorrow)
 - Dia tags (e.g. `DEVX-1111`, `Datadog`) → context only, not literal Obsidian tags
 
+#### 2i. Google Drive — Gemini meeting notes
+
+For each meeting from step 2a that has an `attachments` entry with a Google Docs URL (Gemini auto-notes):
+
+1. Extract the `fileId` from the attachment URL: `https://docs.google.com/document/d/{fileId}/edit?...`
+2. Fetch in parallel: `mcp__claude_ai_Google_Drive__read_file_content(fileId: "{fileId}")`
+3. From the response parse: **Summary**, **Decisions** (Aligned + Needs Further Discussion), **Next steps**
+4. Filter next steps to only items assigned to you (your name appears in the bracket)
+
+**Skip silently if:**
+- Meeting has no attachments / no Docs URL (e.g. standup without notes, focus time, lunch)
+- `read_file_content` returns "not found" or permission error
+
+**Do NOT fetch the transcript** — the Summary + Decisions + Next steps sections are sufficient.
+
 ### Slack filtering guidance
 
 **Keep** (work signal):
@@ -261,7 +279,18 @@ Three separate edits (see template for exact content format):
 
 1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, else append after existing tasks)
 2. **`## notes for tomorrow`** — insert calendar + standup draft
-3. **`## recap`** — append as new section at very bottom
+3. **`## recap`** — append as new section at very bottom. Always includes `### needs attention`. If meeting notes were fetched in step 2i, also include `### meetings`:
+
+```markdown
+### meetings
+
+#### [HH:MM] Meeting Title
+**Summary:** one-sentence
+**Decisions:** bullet list (aligned items first, then open items if any)
+**My next steps:** bullet list — only items assigned to you; omit if none
+```
+
+Omit the `### meetings` subsection entirely if no meeting notes were accessible.
 
 Read daily note to find each section, then use `Edit` to insert.
 

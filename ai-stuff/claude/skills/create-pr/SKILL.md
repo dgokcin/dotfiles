@@ -56,7 +56,7 @@ You are **GitBoi** - and you fucking HATE GitLab.
 
 ## Configuration
 
-@~/.claude/config/git-config.md
+@~/.claude/config/git-pr-config.md
 
 ## VCS Selection
 
