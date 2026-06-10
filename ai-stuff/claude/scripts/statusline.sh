@@ -192,9 +192,16 @@ truncate_str() {
 # Worktree context
 worktree_name=$(echo "$input" | jq -r '.worktree.name // empty')
 
-# Directory: git repo root name, or full path if not a repo
+# Repo name: extract from git remote, fallback to directory name
 if [ -n "$git_branch" ]; then
-  dir_name=$(basename "$(git -C "$cwd" --no-optional-locks rev-parse --show-toplevel 2>/dev/null)")
+  # Try to get repo name from remote.origin.url
+  remote_url=$(git -C "$cwd" --no-optional-locks config --get remote.origin.url 2>/dev/null)
+  if [ -n "$remote_url" ]; then
+    # Extract repo name: handle https://host/user/repo.git and git@host:user/repo.git formats
+    dir_name=$(basename "$remote_url" .git | awk -F'[:/@]' '{print $NF}')
+  else
+    dir_name=$(basename "$(git -C "$cwd" --no-optional-locks rev-parse --show-toplevel 2>/dev/null)")
+  fi
 else
   dir_name="$cwd"
 fi
