@@ -63,6 +63,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "haiku",
   "hooks": {
     "SessionStart": [
       {
@@ -195,7 +196,8 @@
       "source": {
         "source": "directory",
         "path": "/Users/denizgokcin/codes/work/claude-skills"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "medium",
