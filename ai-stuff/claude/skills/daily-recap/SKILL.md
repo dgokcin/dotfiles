@@ -58,7 +58,6 @@ Fetch today's Slack/Gmail/Calendar activity. Synthesize → daily recap → upda
 - Today's date: !`date +%Y-%m-%d`
 - Tomorrow's date: !`date -v+1d +%Y-%m-%d`
 - Existing daily notes: !`ls "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes/" 2>/dev/null`
-- Dia context files: !`find "/Users/denizgokcin/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts" -name "index.html" -ls 2>/dev/null`
 - Output template: @~/.claude/templates/daily-recap-output.md
 
 ## Constants
@@ -229,6 +228,7 @@ For each meeting from step 2a that has an `attachments` entry with a Google Docs
 4. Filter next steps to only items assigned to you (your name appears in the bracket)
 
 **Skip silently if:**
+
 - Meeting has no attachments / no Docs URL (e.g. standup without notes, focus time, lunch)
 - `read_file_content` returns "not found" or permission error
 
@@ -310,3 +310,4 @@ Brief conversational summary after writing:
 - **Group intelligently** — multiple Slack msgs on same topic → one task line
 - **Respect existing content** — never overwrite existing tasks or notes, only append/insert
 - **NEVER create daily note with Write tool** — always use `obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent` via Bash. Template has Templater logic Obsidian must process. Manual write → broken note.
+
