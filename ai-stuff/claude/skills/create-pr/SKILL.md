@@ -3,6 +3,8 @@ name: create-pr
 description: Create GitHub PR or GitLab MR. Pass 'gh' or 'gl' to skip VCS detection
 disable-model-invocation: false
 argument-hint: "[gh|gl]"
+context: fork
+model: haiku
 agent: gitboi
 allowed-tools:
   - Read
