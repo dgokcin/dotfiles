@@ -87,6 +87,17 @@ function nmc() {
     fi
 }
 
+function tfclear() {
+    echo "Are you sure you want to delete .terraform directories recursively? (y/n)"
+    read answer
+    if [ "$answer" != "${answer#[Yy]}" ] ;then
+        find . -iname ".terraform" -type d -exec rm -rf {} +;
+    else
+        echo "Exiting..."
+        exit 1
+    fi
+}
+
 function move_env_file() {
     if [ -f .env.local ]; then
         echo "A .env.local file already exists. Do you want to overwrite it? (y/n)"
