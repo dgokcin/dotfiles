@@ -63,7 +63,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "haiku",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -176,8 +176,7 @@
     "skill-creator@claude-plugins-official": false,
     "caveman@caveman": true,
     "atlassian@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "datadog-debug@treatwell": true
+    "plugin-dev@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -191,20 +190,14 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
-    },
-    "treatwell": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/denizgokcin/codes/work/claude-skills"
-      },
-      "autoUpdate": true
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "low",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "skipWorkflowUsageWarning": true
 }
