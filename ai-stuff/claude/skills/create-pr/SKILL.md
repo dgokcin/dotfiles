@@ -4,7 +4,7 @@ description: Create GitHub PR or GitLab MR. Pass 'gh' or 'gl' to skip VCS detect
 disable-model-invocation: false
 argument-hint: "[gh|gl]"
 context: fork
-model: haiku
+model: sonnet
 agent: gitboi
 allowed-tools:
   - Read

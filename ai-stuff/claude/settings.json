@@ -77,6 +77,11 @@
             "type": "command",
             "command": "echo \"Working directory: $(git rev-parse --show-toplevel 2>/dev/null || pwd)\nMain git dir: $(git rev-parse --git-common-dir 2>/dev/null)\nIs worktree: $(git rev-parse --is-inside-work-tree 2>/dev/null)\nMain worktree: $(git worktree list --porcelain 2>/dev/null | head -1 | sed 's/worktree //')\"",
             "statusMessage": "Checking git worktree context"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/session-start.sh",
+            "statusMessage": "Auto-naming worktree session"
           }
         ]
       }
