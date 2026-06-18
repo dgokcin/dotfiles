@@ -68,9 +68,17 @@ claude-skills: claude-dirs ## Symlink Claude Code skills
 	$(call symlink,ai-stuff/claude/skills/weekly-review/SKILL.md,${CLAUDE_HOME}/skills/weekly-review/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/quick-note/SKILL.md,${CLAUDE_HOME}/skills/quick-note/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/daily-recap/SKILL.md,${CLAUDE_HOME}/skills/daily-recap/SKILL.md)
+	@# Obsidian vault capture (tasks/notes/workstreams → ~/vault)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/vault-capture)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/vault-capture/references)
+	$(call symlink,ai-stuff/claude/skills/vault-capture/SKILL.md,${CLAUDE_HOME}/skills/vault-capture/SKILL.md)
+	$(call symlink,ai-stuff/claude/skills/vault-capture/references/vault-conventions.md,${CLAUDE_HOME}/skills/vault-capture/references/vault-conventions.md)
 	@# Kubernetes debugging operations
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/k8s-debug)
 	$(call symlink,ai-stuff/claude/skills/k8s-debug/SKILL.md,${CLAUDE_HOME}/skills/k8s-debug/SKILL.md)
+	@# AWS debugging operations
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/aws-debug)
+	$(call symlink,ai-stuff/claude/skills/aws-debug/SKILL.md,${CLAUDE_HOME}/skills/aws-debug/SKILL.md)
 
 claude-personas: claude-dirs ## Symlink Claude Code personas (referenced by agents)
 	$(call pretty_print, "Installing Claude Code personas...")
@@ -138,7 +146,9 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/skills/weekly-review)
 	$(call remove_file,${CLAUDE_HOME}/skills/quick-note)
 	$(call remove_file,${CLAUDE_HOME}/skills/daily-recap)
+	$(call remove_file,${CLAUDE_HOME}/skills/vault-capture)
 	$(call remove_file,${CLAUDE_HOME}/skills/k8s-debug)
+	$(call remove_file,${CLAUDE_HOME}/skills/aws-debug)
 	$(call remove_file,${CLAUDE_HOME}/skills/gitops-geezer)
 	@# Personas, configs, and templates (note: .clusters.json removed as part of config dir)
 	$(call remove_file,${CLAUDE_HOME}/personas)
