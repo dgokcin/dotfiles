@@ -61,7 +61,7 @@
     "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"],
     "defaultMode": "default"
   },
-  "model": "opus[1m]",
+  "model": "haiku",
   "hooks": {
     "SessionStart": [
       {
@@ -169,7 +169,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'p=$(jq -r .worktree_path); git worktree remove --force \"$p\" 2>/dev/null; rm -rf \"$p\"'"
+            "command": "~/.claude/scripts/worktree-remove.sh"
           }
         ]
       }
@@ -210,7 +210,7 @@
   "autoUpdatesChannel": "latest",
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
+  "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "voiceEnabled": true
 }
