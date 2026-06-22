@@ -79,6 +79,9 @@ claude-skills: claude-dirs ## Symlink Claude Code skills
 	@# AWS debugging operations
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/aws-debug)
 	$(call symlink,ai-stuff/claude/skills/aws-debug/SKILL.md,${CLAUDE_HOME}/skills/aws-debug/SKILL.md)
+	@# Git worktree cleanup (detect merged PRs/MRs, prune stale worktrees)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/worktree-cleanup)
+	$(call symlink,ai-stuff/claude/skills/worktree-cleanup/SKILL.md,${CLAUDE_HOME}/skills/worktree-cleanup/SKILL.md)
 
 claude-personas: claude-dirs ## Symlink Claude Code personas (referenced by agents)
 	$(call pretty_print, "Installing Claude Code personas...")
@@ -114,6 +117,8 @@ claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, file-sug
 	$(call symlink,ai-stuff/claude/scripts/notify.sh,${CLAUDE_HOME}/scripts/notify.sh)
 	$(call symlink,ai-stuff/claude/scripts/focus-iterm.applescript,${CLAUDE_HOME}/scripts/focus-iterm.applescript)
 	$(call symlink,ai-stuff/claude/scripts/pr-status.sh,${CLAUDE_HOME}/scripts/pr-status.sh)
+	$(call symlink,ai-stuff/claude/scripts/worktree-cleanup-scan.sh,${CLAUDE_HOME}/scripts/worktree-cleanup-scan.sh)
+	$(call symlink,ai-stuff/claude/scripts/worktree-cleanup-remove.sh,${CLAUDE_HOME}/scripts/worktree-cleanup-remove.sh)
 	@chmod +x ${CLAUDE_HOME}/scripts/*.sh
 
 claude-settings: claude-dirs ## Symlink Claude Code settings.json
@@ -151,6 +156,7 @@ claude-clean: ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/skills/vault-capture)
 	$(call remove_file,${CLAUDE_HOME}/skills/k8s-debug)
 	$(call remove_file,${CLAUDE_HOME}/skills/aws-debug)
+	$(call remove_file,${CLAUDE_HOME}/skills/worktree-cleanup)
 	$(call remove_file,${CLAUDE_HOME}/skills/gitops-geezer)
 	@# Personas, configs, and templates (note: .clusters.json removed as part of config dir)
 	$(call remove_file,${CLAUDE_HOME}/personas)
