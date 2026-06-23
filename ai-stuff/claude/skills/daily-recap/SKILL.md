@@ -25,6 +25,8 @@ allowed-tools:
   - Bash(cat:*)
   - Bash(date:*)
   - Bash(find:*)
+- Bash(python3 ~/.claude/skills/daily-recap/scripts/summarize-claude-sessions.py:*)
+- Bash(claude -p:*)
   # Slack (read-only)
   - mcp__claude_ai_Slack__slack_search_public_and_private
   - mcp__claude_ai_Slack__slack_search_public
@@ -56,7 +58,7 @@ Fetch today's Slack/Gmail/Calendar activity. Synthesize → daily recap → upda
 ## Injected context
 
 - Today's date: !`date +%Y-%m-%d`
-- Tomorrow's date: !`date -v+1d +%Y-%m-%d`
+- Tomorrow's date: (today + 1 day — derive from the today date above)
 - Existing daily notes: !`ls "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes/" 2>/dev/null`
 - Output template: @~/.claude/templates/daily-recap-output.md
 
@@ -234,6 +236,22 @@ For each meeting from step 2a that has an `attachments` entry with a Google Docs
 
 **Do NOT fetch the transcript** — the Summary + Decisions + Next steps sections are sufficient.
 
+#### 2j. Claude Code sessions (Haiku subagent)
+
+Run the companion script to extract session data, then pipe to a Haiku subagent for summarization. This captures engineering work that never surfaces in Slack or Gmail (local coding, debugging, config changes, dotfiles work).
+
+```bash
+python3 ~/.claude/skills/daily-recap/scripts/summarize-claude-sessions.py YYYY-MM-DD | \
+  claude -p --model claude-haiku-4-5-20251001 \
+  "Summarize these Claude Code sessions into 2-5 bullet points of what engineering work was done. Focus on: features built, tickets worked, bugs debugged, code changed. Skip meta/tooling sessions (e.g. only ran 'exit', only did shell commands with no edits). Max one line per bullet. Output plain bullets only."
+```
+
+**No sessions found** → skip silently (script exits 0 with a note).
+
+**Merge into step 4:**
+- Session bullets → `## today` (engineering work items, mark as `- [x]`)
+- Dedup against Slack/GitLab items already found (same ticket or task → merge, don't repeat)
+
 ### Slack filtering guidance
 
 **Keep** (work signal):
@@ -277,7 +295,7 @@ Template defines three sections. Analyze all data → populate each following te
 
 Three separate edits (see template for exact content format):
 
-1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, else append after existing tasks)
+1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, else append after existing tasks). Include session bullets from step 2j as engineering work items; dedup against Slack/GitLab items already found.
 2. **`## notes for tomorrow`** — insert calendar + standup draft
 3. **`## recap`** — append as new section at very bottom. Always includes `### needs attention`. If meeting notes were fetched in step 2i, also include `### meetings`:
 

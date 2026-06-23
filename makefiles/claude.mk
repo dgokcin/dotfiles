@@ -68,6 +68,8 @@ claude-skills: claude-dirs ## Symlink Claude Code skills
 	$(call symlink,ai-stuff/claude/skills/weekly-review/SKILL.md,${CLAUDE_HOME}/skills/weekly-review/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/quick-note/SKILL.md,${CLAUDE_HOME}/skills/quick-note/SKILL.md)
 	$(call symlink,ai-stuff/claude/skills/daily-recap/SKILL.md,${CLAUDE_HOME}/skills/daily-recap/SKILL.md)
+	$(call mkdir_safe,${CLAUDE_HOME}/skills/daily-recap/scripts)
+	$(call symlink,ai-stuff/claude/skills/daily-recap/scripts/summarize-claude-sessions.py,${CLAUDE_HOME}/skills/daily-recap/scripts/summarize-claude-sessions.py)
 	@# Obsidian vault capture (tasks/notes/workstreams → ~/vault)
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/vault-capture)
 	$(call mkdir_safe,${CLAUDE_HOME}/skills/vault-capture/references)

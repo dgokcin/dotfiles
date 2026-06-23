@@ -63,7 +63,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -207,7 +206,7 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "autoMemoryEnabled": true,
