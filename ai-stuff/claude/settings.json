@@ -209,10 +209,10 @@
   "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
+  "tui": "fullscreen",
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
   "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "tui": "fullscreen"
+  "voiceEnabled": true
 }
