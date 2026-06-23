@@ -15,3 +15,4 @@ export LANG=en_US.UTF-8
 export PATH="$HOME/codes/work/dev-tools/bin:$PATH"
 export PATH="$HOME/codes/work/docker-build-tools/bin:$PATH"
 export PATH="$HOME/.volta/bin:$PATH"
+export HEADROOM_MEMORY_DB_PATH="$HOME/.headroom/memory.db"
