@@ -252,7 +252,13 @@ For each meeting where Gemini data was successfully fetched (step 2i above):
 
 3. **Check for existing Gemini section** — read the note and check if a `## Gemini Notes` section already exists. If yes → skip (don't overwrite).
 
-4. **Append Gemini data** — build the section and append:
+4. **Set frontmatter summary** — set the `summary` property to the one-sentence Gemini summary:
+
+   ```bash
+   obsidian property:set name="summary" value="<one-sentence summary>" file="YYYY-MM-DD title"
+   ```
+
+5. **Append Gemini data** — build the section and append:
 
    ```bash
    obsidian append path="work/meetings/YYYY-MM-DD title.md" content="\n## Gemini Notes\n\n**Summary:** <one-sentence summary>\n\n**Decisions:**\n- <aligned decisions>\n\n**Open items:**\n- <items needing further discussion — omit section if none>\n\n**My next steps:**\n- <items assigned to you — omit section if none>"
@@ -319,7 +325,7 @@ Template defines three sections. Analyze all data → populate each following te
 
 Three separate edits (see template for exact content format):
 
-1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, else append after existing tasks). Include session bullets from step 2j as engineering work items; dedup against Slack/GitLab items already found.
+1. **`## today`** — append `- [x]` task lines (replace placeholder `- [ ]` if present, else append after existing tasks). Include session bullets from step 2j as engineering work items; dedup against Slack/GitLab items already found. **Meetings with a vault note** (found in step 2i-vault): use a wikilink `[[YYYY-MM-DD meeting title]]` (note filename without `.md`) as the task text instead of plain text — e.g. `[[2026-06-24 roadmap discussion]]`.
 2. **`## notes for tomorrow`** — insert calendar + standup draft
 3. **`## recap`** — append as new section at very bottom. Always includes `### needs attention`. If meeting notes were fetched in step 2i, also include `### meetings`:
 
