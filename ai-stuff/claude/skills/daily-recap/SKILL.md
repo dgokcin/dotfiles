@@ -332,11 +332,13 @@ Three separate edits (see template for exact content format):
 ```markdown
 ### meetings
 
-#### [HH:MM] Meeting Title
+#### [[YYYY-MM-DD meeting title]]
 **Summary:** one-sentence
 **Decisions:** bullet list (aligned items first, then open items if any)
 **My next steps:** bullet list — only items assigned to you; omit if none
 ```
+
+Use `[[YYYY-MM-DD meeting title]]` (matching the vault note filename without `.md`) as the heading — this creates a backlink. Only meetings where a vault note was found and enriched (step 2i-vault) should appear here.
 
 Omit the `### meetings` subsection entirely if no meeting notes were accessible.
 
