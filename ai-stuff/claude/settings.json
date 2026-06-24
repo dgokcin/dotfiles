@@ -63,6 +63,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "haiku",
   "hooks": {
     "SessionStart": [
       {
