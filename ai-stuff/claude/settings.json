@@ -63,7 +63,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "haiku",
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -207,7 +207,7 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "latest",
   "tui": "fullscreen",
