@@ -236,6 +236,30 @@ For each meeting from step 2a that has an `attachments` entry with a Google Docs
 
 **Do NOT fetch the transcript** — the Summary + Decisions + Next steps sections are sufficient.
 
+#### 2i-vault. Enrich vault meeting notes with Gemini data
+
+For each meeting where Gemini data was successfully fetched (step 2i above):
+
+1. **Find vault note** — search for notes in `work/meetings` on the target date:
+
+   ```bash
+   obsidian search query="YYYY-MM-DD" path="work/meetings" format=json
+   ```
+
+   Returns a JSON array of paths like `["work/meetings/YYYY-MM-DD title.md", ...]`.
+
+2. **Match meeting to note** — compare calendar event title to vault note filename (case-insensitive, partial match). If multiple notes exist for the date, pick the one whose filename most closely matches the calendar event title. If no match → skip silently.
+
+3. **Check for existing Gemini section** — read the note and check if a `## Gemini Notes` section already exists. If yes → skip (don't overwrite).
+
+4. **Append Gemini data** — build the section and append:
+
+   ```bash
+   obsidian append path="work/meetings/YYYY-MM-DD title.md" content="\n## Gemini Notes\n\n**Summary:** <one-sentence summary>\n\n**Decisions:**\n- <aligned decisions>\n\n**Open items:**\n- <items needing further discussion — omit section if none>\n\n**My next steps:**\n- <items assigned to you — omit section if none>"
+   ```
+
+   Use `\n` for newlines. Omit empty sections entirely.
+
 #### 2j. Claude Code sessions (Haiku subagent)
 
 Run the companion script to extract session data, then pipe to a Haiku subagent for summarization. This captures engineering work that never surfaces in Slack or Gmail (local coding, debugging, config changes, dotfiles work).
