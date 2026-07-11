@@ -27,13 +27,18 @@ AI_SKILLS := $(notdir $(wildcard $(DOTFILES)/ai-stuff/skills/*))
 # every install so stale symlinks don't linger (BMAD's removals.txt pattern).
 AI_LEGACY_SKILLS := add-recipe add-vinyl gitboi gitops-geezer meeting-note quick-note request-viewing weekly-review
 
-ai: $(addprefix ai-,$(AI_TOOLS)) ## Install universal skills into every registered AI tool
+ai: ai-shared $(addprefix ai-,$(AI_TOOLS)) ## Install universal skills into every registered AI tool
+
+ai-shared: ## Symlink shared personas/configs/templates to the tool-agnostic ~/.config/ai-shared
+	$(call pretty_print, "Linking $(XDG_CONFIG_HOME)/ai-shared to ai-stuff/_shared")
+	@mkdir -p $(XDG_CONFIG_HOME)
+	@ln -sfn "$(DOTFILES)/ai-stuff/_shared" "$(XDG_CONFIG_HOME)/ai-shared"
 
 $(addprefix ai-,$(AI_TOOLS)): ai-%:
-	$(call pretty_print, "Installing $(words $(AI_SKILLS)) skills -> $(ai_skills_dir_$*)")
+	$(call pretty_print, "Installing $(words $(AI_SKILLS)) skills into $(ai_skills_dir_$*)")
 	@mkdir -p $(ai_skills_dir_$*)
 	@for s in $(AI_SKILLS) $(AI_LEGACY_SKILLS); do rm -rf "$(ai_skills_dir_$*)/$$s"; done
-	@for s in $(AI_SKILLS); do ln -s "$(DOTFILES)/ai-stuff/skills/$$s" "$(ai_skills_dir_$*)/$$s"; done
+	@for s in $(AI_SKILLS); do ln -sfn "$(DOTFILES)/ai-stuff/skills/$$s" "$(ai_skills_dir_$*)/$$s"; done
 
 ai-list: ## List universal skills and registered AI tools
 	@echo "Skills ($(words $(AI_SKILLS))): $(AI_SKILLS)"
@@ -46,4 +51,4 @@ $(addprefix ai-clean-,$(AI_TOOLS)): ai-clean-%:
 	$(call pretty_print, "Removing skills from $(ai_skills_dir_$*)")
 	@for s in $(AI_SKILLS) $(AI_LEGACY_SKILLS); do rm -rf "$(ai_skills_dir_$*)/$$s"; done
 
-.PHONY: ai ai-list ai-clean $(addprefix ai-,$(AI_TOOLS)) $(addprefix ai-clean-,$(AI_TOOLS))
+.PHONY: ai ai-shared ai-list ai-clean $(addprefix ai-,$(AI_TOOLS)) $(addprefix ai-clean-,$(AI_TOOLS))
