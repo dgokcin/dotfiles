@@ -104,10 +104,17 @@ Anything that is *not* a skill stays out of `skills/`:
 
 - **`agents/`** — subagent definitions with `tools:`/`model:` frontmatter.
   Installed to `~/.claude/agents` and `~/.cursor/agents`. They reference
-  personas/configs via `@~/.claude/...` includes, which is fine: the claude
-  layer owns those paths on this machine.
+  personas/configs via the tool-agnostic `~/.config/ai-shared/...` path
+  (`make ai-shared` symlinks it to `ai-stuff/_shared`), so the same agent
+  file works in every tool that can read files.
 - **`claude/`** — `settings.json` (hooks, permissions, statusline, plugins)
-  and hook scripts. See [claude/README.md](claude/README.md).
-- Hooks, statuslines, permission systems have no cross-tool standard — they
-  stay per-tool by design. A skill must never depend on them to function,
-  only get better when they exist.
+  and Claude-only hook scripts. See [claude/README.md](claude/README.md).
+- **`codex/`** — `hooks.json` + Codex-only hook scripts. See
+  [codex/README.md](codex/README.md).
+- **`_shared/scripts/`** — hook scripts shared across tools
+  (`auto-approve-tools.sh`, `focus-iterm.applescript`): Codex adopted Claude
+  Code's hook protocol, so the same scripts serve both — symlinked into each
+  tool's own scripts dir, never referenced across tool homes.
+- Hooks have no cross-tool *standard* (event names/config differ per tool),
+  so hook configs stay per-tool by design. A skill must never depend on
+  hooks to function, only get better when they exist.

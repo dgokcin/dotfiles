@@ -10,27 +10,26 @@ cross-tool architecture.
 
 ```
 ai-stuff/claude/
-├── scripts/               # Hook + integration scripts (→ ~/.claude/scripts)
+├── scripts/               # Claude-only hook + integration scripts (→ ~/.claude/scripts)
 │   ├── file-suggestion.sh # Custom file suggestion using rg + fzf
 │   ├── statusline.sh      # Statusline with git, context, vim mode
 │   ├── session-start.sh   # Auto-name worktree sessions
-│   ├── auto-approve-tools.sh
-│   ├── notify.sh / focus-iterm.applescript
+│   ├── notify.sh          # Notification-event alert (claude-only event)
 │   ├── pr-status.sh       # Used by the create-pr skill
 │   └── worktree-*.sh      # Worktree hooks + worktree-cleanup skill helpers
+│   (auto-approve-tools.sh + focus-iterm.applescript moved to
+│    ai-stuff/_shared/scripts/ — shared with Codex hooks)
 ├── settings.json          # Hooks, permissions, statusline, plugins (→ ~/.claude/settings.json)
 └── README.md
 ```
 
 `make claude` also installs (sources live elsewhere):
 
-| Target             | Source                     | Destination           | Consumed by                          |
-| ------------------ | -------------------------- | --------------------- | ------------------------------------ |
-| `claude-agents`    | `ai-stuff/agents/*.md`     | `~/.claude/agents`    | Claude Code subagents                |
-| `claude-personas`  | `ai-stuff/_shared/personas`| `~/.claude/personas`  | agents' `@~/.claude/...` includes    |
-| `claude-configs`   | `ai-stuff/_shared/config`  | `~/.claude/config`    | agents' `@~/.claude/...` includes    |
-| `claude-templates` | `ai-stuff/_shared/templates`| `~/.claude/templates` | settings permissions, legacy refs    |
-| `ai-claude`        | `ai-stuff/skills/*`        | `~/.claude/skills`    | skills (universal, see ai.mk)        |
+| Target          | Source                 | Destination           | Consumed by                            |
+| --------------- | ---------------------- | --------------------- | -------------------------------------- |
+| `claude-agents` | `ai-stuff/agents/*.md` | `~/.claude/agents`    | Claude Code subagents                  |
+| `ai-shared`     | `ai-stuff/_shared`     | `~/.config/ai-shared` | agents' `@~/.config/ai-shared/...` includes (tool-agnostic) |
+| `ai-claude`     | `ai-stuff/skills/*`    | `~/.claude/skills`    | skills (universal, see ai.mk)          |
 
 ## Architecture
 
@@ -39,7 +38,7 @@ Skills (universal, ai-stuff/skills/)     ← same files for every AI tool
     │ uses (agent: frontmatter, Claude only)
     ▼
 Agents (ai-stuff/agents/)                ← execution env: model + tools + persona
-    │ loads via @~/.claude/... includes
+    │ loads via @~/.config/ai-shared/... includes (tool-agnostic path)
     ▼
 Personas + Config (ai-stuff/_shared/)    ← identity, rules, shared constants
 ```
@@ -74,9 +73,11 @@ line as an instruction to run the command):
 | `gitops-geezer`     | ArgoCD / GitOps                            |
 | `steve-square-meter`| Funda house-search analysis                |
 
-Agent bodies reference personas/configs with `@~/.claude/...` eager includes —
-that path is owned by this layer, always installed, so Cursor (which gets the
-same agent files at `~/.cursor/agents`) resolves them too.
+Agent bodies reference personas/configs with `@~/.config/ai-shared/...` eager
+includes — a tool-agnostic path (`make ai-shared`), so Cursor (which gets the
+same agent files at `~/.cursor/agents`) resolves them identically. The only
+`.claude` paths left in an agent file are Claude's own runtime features
+(e.g. steve-square-meter's Persistent Agent Memory directory).
 
 ## External Dependencies (hooks in settings.json)
 
