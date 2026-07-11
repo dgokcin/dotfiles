@@ -1,98 +1,35 @@
-# Claude Code configuration setup
+# Claude Code configuration setup (tool-specific layer)
+#
+# Universal skills are installed by makefiles/ai.mk (make ai-claude).
+# This file only handles what is Claude Code-specific: agents, personas,
+# configs, templates (referenced by agents via @~/.claude/... includes),
+# hook scripts, and settings.json.
 
 CLAUDE_HOME := ${HOME}/.claude
 
-claude: claude-dirs claude-agents claude-skills claude-personas claude-configs claude-templates claude-scripts claude-settings ## Install Claude Code agents, skills, personas, and configs
+CLAUDE_AGENTS := $(notdir $(wildcard $(DOTFILES)/ai-stuff/agents/*.md))
+
+claude: claude-dirs claude-agents claude-personas claude-configs claude-templates claude-scripts claude-settings ai-claude ## Install Claude Code agents, personas, configs, scripts, settings, and skills
 
 claude-dirs: ## Create Claude Code directory structure
 	$(call mkdir_safe,${CLAUDE_HOME}/agents)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills)
 	$(call mkdir_safe,${CLAUDE_HOME}/personas)
 	$(call mkdir_safe,${CLAUDE_HOME}/config)
 	$(call mkdir_safe,${CLAUDE_HOME}/scripts)
 	$(call mkdir_safe,${CLAUDE_HOME}/templates)
 
-claude-agents: claude-dirs ## Symlink Claude Code agents (subagent definitions for context: fork)
+claude-agents: claude-dirs ## Symlink Claude Code agents (subagent definitions)
 	$(call pretty_print, "Installing Claude Code agents...")
-	$(call symlink,ai-stuff/claude/agents/gitboi.md,${CLAUDE_HOME}/agents/gitboi.md)
-	$(call symlink,ai-stuff/claude/agents/jiragirl.md,${CLAUDE_HOME}/agents/jiragirl.md)
-	$(call symlink,ai-stuff/claude/agents/mega-dev.md,${CLAUDE_HOME}/agents/mega-dev.md)
-	$(call symlink,ai-stuff/claude/agents/steve-square-meter.md,${CLAUDE_HOME}/agents/steve-square-meter.md)
-	$(call symlink,ai-stuff/claude/agents/gitops-geezer.md,${CLAUDE_HOME}/agents/gitops-geezer.md)
+	@for a in $(CLAUDE_AGENTS); do ln -sfn "$(DOTFILES)/ai-stuff/agents/$$a" "${CLAUDE_HOME}/agents/$$a"; done
 
-claude-skills: claude-dirs ## Symlink Claude Code skills
-	$(call pretty_print, "Installing Claude Code skills...")
-	@# Agent sessions (invoke with /gitboi, /jiragirl, /mega-dev)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/gitboi)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/jiragirl)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/mega-dev)
-	$(call symlink,ai-stuff/claude/skills/gitboi/SKILL.md,${CLAUDE_HOME}/skills/gitboi/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/jiragirl/SKILL.md,${CLAUDE_HOME}/skills/jiragirl/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/mega-dev/SKILL.md,${CLAUDE_HOME}/skills/mega-dev/SKILL.md)
-	@# GitOps operations (use agent: gitops-geezer)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/gitops-geezer)
-	$(call symlink,ai-stuff/claude/skills/gitops-geezer/SKILL.md,${CLAUDE_HOME}/skills/gitops-geezer/SKILL.md)
-	@# Git operations (use agent: gitboi)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/commit)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/auto-commit)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/create-pr)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/address-review)
-	$(call symlink,ai-stuff/claude/skills/commit/SKILL.md,${CLAUDE_HOME}/skills/commit/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/auto-commit/SKILL.md,${CLAUDE_HOME}/skills/auto-commit/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/create-pr/SKILL.md,${CLAUDE_HOME}/skills/create-pr/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/address-review/SKILL.md,${CLAUDE_HOME}/skills/address-review/SKILL.md)
-	@# Jira operations (use agent: jiragirl)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/create-story)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/dev-story)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/get-story)
-	$(call symlink,ai-stuff/claude/skills/create-story/SKILL.md,${CLAUDE_HOME}/skills/create-story/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/dev-story/SKILL.md,${CLAUDE_HOME}/skills/dev-story/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/get-story/SKILL.md,${CLAUDE_HOME}/skills/get-story/SKILL.md)
-	@# House search operations (use agent: steve-square-meter)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/save-property-to-vault)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/request-viewing)
-	$(call symlink,ai-stuff/claude/skills/save-property-to-vault/SKILL.md,${CLAUDE_HOME}/skills/save-property-to-vault/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/request-viewing/SKILL.md,${CLAUDE_HOME}/skills/request-viewing/SKILL.md)
-	@# Obsidian vault operations
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/meeting-note)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/spike)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/add-recipe)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/add-vinyl)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/weekly-review)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/quick-note)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/daily-recap)
-	$(call symlink,ai-stuff/claude/skills/meeting-note/SKILL.md,${CLAUDE_HOME}/skills/meeting-note/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/spike/SKILL.md,${CLAUDE_HOME}/skills/spike/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/add-recipe/SKILL.md,${CLAUDE_HOME}/skills/add-recipe/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/add-vinyl/SKILL.md,${CLAUDE_HOME}/skills/add-vinyl/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/weekly-review/SKILL.md,${CLAUDE_HOME}/skills/weekly-review/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/quick-note/SKILL.md,${CLAUDE_HOME}/skills/quick-note/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/daily-recap/SKILL.md,${CLAUDE_HOME}/skills/daily-recap/SKILL.md)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/daily-recap/scripts)
-	$(call symlink,ai-stuff/claude/skills/daily-recap/scripts/summarize-claude-sessions.py,${CLAUDE_HOME}/skills/daily-recap/scripts/summarize-claude-sessions.py)
-	@# Obsidian vault capture (tasks/notes/workstreams → ~/vault)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/vault-capture)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/vault-capture/references)
-	$(call symlink,ai-stuff/claude/skills/vault-capture/SKILL.md,${CLAUDE_HOME}/skills/vault-capture/SKILL.md)
-	$(call symlink,ai-stuff/claude/skills/vault-capture/references/vault-conventions.md,${CLAUDE_HOME}/skills/vault-capture/references/vault-conventions.md)
-	@# Kubernetes debugging operations
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/k8s-debug)
-	$(call symlink,ai-stuff/claude/skills/k8s-debug/SKILL.md,${CLAUDE_HOME}/skills/k8s-debug/SKILL.md)
-	@# AWS debugging operations
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/aws-debug)
-	$(call symlink,ai-stuff/claude/skills/aws-debug/SKILL.md,${CLAUDE_HOME}/skills/aws-debug/SKILL.md)
-	@# Git worktree cleanup (detect merged PRs/MRs, prune stale worktrees)
-	$(call mkdir_safe,${CLAUDE_HOME}/skills/worktree-cleanup)
-	$(call symlink,ai-stuff/claude/skills/worktree-cleanup/SKILL.md,${CLAUDE_HOME}/skills/worktree-cleanup/SKILL.md)
-
-claude-personas: claude-dirs ## Symlink Claude Code personas (referenced by agents)
+claude-personas: claude-dirs ## Symlink personas (referenced by agents)
 	$(call pretty_print, "Installing Claude Code personas...")
 	$(call symlink,ai-stuff/_shared/personas/gitboi.md,${CLAUDE_HOME}/personas/gitboi.md)
 	$(call symlink,ai-stuff/_shared/personas/jira-girl.md,${CLAUDE_HOME}/personas/jira-girl.md)
 	$(call symlink,ai-stuff/_shared/personas/mega-dev.md,${CLAUDE_HOME}/personas/mega-dev.md)
 	$(call symlink,ai-stuff/_shared/personas/_gitops-geezer.md,${CLAUDE_HOME}/personas/_gitops-geezer.md)
 
-claude-configs: claude-dirs ## Symlink Claude Code configs (referenced by agents)
+claude-configs: claude-dirs ## Symlink configs (referenced by agents)
 	$(call pretty_print, "Installing Claude Code configs...")
 	$(call symlink,ai-stuff/_shared/config/jira-config.md,${CLAUDE_HOME}/config/jira-config.md)
 	$(call symlink,ai-stuff/_shared/config/git-config.md,${CLAUDE_HOME}/config/git-config.md)
@@ -101,14 +38,14 @@ claude-configs: claude-dirs ## Symlink Claude Code configs (referenced by agents
 	$(call symlink,ai-stuff/_shared/config/gitops-config.md,${CLAUDE_HOME}/config/gitops-config.md)
 	$(call symlink,ai-stuff/_shared/config/.clusters.json,${CLAUDE_HOME}/config/.clusters.json)
 
-claude-templates: claude-dirs ## Symlink Claude Code templates (referenced by skills)
+claude-templates: claude-dirs ## Symlink templates (referenced by agents and settings)
 	$(call pretty_print, "Installing Claude Code templates...")
 	$(call symlink,ai-stuff/_shared/templates/property-frontmatter.yaml,${CLAUDE_HOME}/templates/property-frontmatter.yaml)
 	$(call symlink,ai-stuff/_shared/templates/property-template.md,${CLAUDE_HOME}/templates/property-template.md)
 	$(call symlink,ai-stuff/_shared/templates/neighborhood-template.md,${CLAUDE_HOME}/templates/neighborhood-template.md)
 	$(call symlink,ai-stuff/_shared/templates/daily-recap-output.md,${CLAUDE_HOME}/templates/daily-recap-output.md)
 
-claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, file-suggestion, etc.)
+claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, hooks, etc.)
 	$(call pretty_print, "Installing Claude Code scripts...")
 	$(call symlink,ai-stuff/claude/scripts/file-suggestion.sh,${CLAUDE_HOME}/scripts/file-suggestion.sh)
 	$(call symlink,ai-stuff/claude/scripts/statusline.sh,${CLAUDE_HOME}/scripts/statusline.sh)
@@ -127,46 +64,13 @@ claude-settings: claude-dirs ## Symlink Claude Code settings.json
 	$(call pretty_print, "Installing Claude Code settings...")
 	$(call symlink,ai-stuff/claude/settings.json,${CLAUDE_HOME}/settings.json)
 
-claude-clean: ## Remove Claude Code symlinks
+claude-clean: ai-clean-claude ## Remove Claude Code symlinks
 	$(call pretty_print, "Removing Claude Code symlinks...")
-	@# Agents
-	$(call remove_file,${CLAUDE_HOME}/agents/gitboi.md)
-	$(call remove_file,${CLAUDE_HOME}/agents/jiragirl.md)
-	$(call remove_file,${CLAUDE_HOME}/agents/mega-dev.md)
-	$(call remove_file,${CLAUDE_HOME}/agents/steve-square-meter.md)
-	$(call remove_file,${CLAUDE_HOME}/agents/gitops-geezer.md)
-	@# Skills
-	$(call remove_file,${CLAUDE_HOME}/skills/gitboi)
-	$(call remove_file,${CLAUDE_HOME}/skills/jiragirl)
-	$(call remove_file,${CLAUDE_HOME}/skills/mega-dev)
-	$(call remove_file,${CLAUDE_HOME}/skills/commit)
-	$(call remove_file,${CLAUDE_HOME}/skills/auto-commit)
-	$(call remove_file,${CLAUDE_HOME}/skills/create-pr)
-	$(call remove_file,${CLAUDE_HOME}/skills/address-review)
-	$(call remove_file,${CLAUDE_HOME}/skills/create-story)
-	$(call remove_file,${CLAUDE_HOME}/skills/dev-story)
-	$(call remove_file,${CLAUDE_HOME}/skills/get-story)
-	$(call remove_file,${CLAUDE_HOME}/skills/save-property-to-vault)
-	$(call remove_file,${CLAUDE_HOME}/skills/request-viewing)
-	$(call remove_file,${CLAUDE_HOME}/skills/meeting-note)
-	$(call remove_file,${CLAUDE_HOME}/skills/spike)
-	$(call remove_file,${CLAUDE_HOME}/skills/add-recipe)
-	$(call remove_file,${CLAUDE_HOME}/skills/add-vinyl)
-	$(call remove_file,${CLAUDE_HOME}/skills/weekly-review)
-	$(call remove_file,${CLAUDE_HOME}/skills/quick-note)
-	$(call remove_file,${CLAUDE_HOME}/skills/daily-recap)
-	$(call remove_file,${CLAUDE_HOME}/skills/vault-capture)
-	$(call remove_file,${CLAUDE_HOME}/skills/k8s-debug)
-	$(call remove_file,${CLAUDE_HOME}/skills/aws-debug)
-	$(call remove_file,${CLAUDE_HOME}/skills/worktree-cleanup)
-	$(call remove_file,${CLAUDE_HOME}/skills/gitops-geezer)
-	@# Personas, configs, and templates (note: .clusters.json removed as part of config dir)
+	@for a in $(CLAUDE_AGENTS); do rm -f "${CLAUDE_HOME}/agents/$$a"; done
 	$(call remove_file,${CLAUDE_HOME}/personas)
 	$(call remove_file,${CLAUDE_HOME}/config)
 	$(call remove_file,${CLAUDE_HOME}/templates)
-	@# Scripts
 	$(call remove_file,${CLAUDE_HOME}/scripts)
-	@# Settings
 	$(call remove_file,${CLAUDE_HOME}/settings.json)
 
-.PHONY: claude claude-dirs claude-agents claude-skills claude-personas claude-configs claude-templates claude-scripts claude-settings claude-clean
+.PHONY: claude claude-dirs claude-agents claude-personas claude-configs claude-templates claude-scripts claude-settings claude-clean
