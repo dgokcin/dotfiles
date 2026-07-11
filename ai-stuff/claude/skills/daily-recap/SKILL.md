@@ -1,5 +1,7 @@
 ---
 name: daily-recap
+model: sonnet
+effort: high
 description: "Fetch today's activity from Slack, Gmail, and Google Calendar, then update/create your daily note in the vault with a recap and standup draft."
 disable-model-invocation: true
 argument-hint: "[YYYY-MM-DD] (defaults to today)"
@@ -25,8 +27,8 @@ allowed-tools:
   - Bash(cat:*)
   - Bash(date:*)
   - Bash(find:*)
-- Bash(python3 ~/.claude/skills/daily-recap/scripts/summarize-claude-sessions.py:*)
-- Bash(claude -p:*)
+  - Bash(python3 ~/.claude/skills/daily-recap/scripts/summarize-claude-sessions.py:*)
+  - Bash(claude -p:*)
   # Slack (read-only)
   - mcp__claude_ai_Slack__slack_search_public_and_private
   - mcp__claude_ai_Slack__slack_search_public
@@ -49,6 +51,8 @@ allowed-tools:
   # Google Drive (read-only — meeting notes)
   - mcp__claude_ai_Google_Drive__read_file_content
   - mcp__claude_ai_Google_Drive__search_files
+  # Headroom — decompress truncated tool results
+  - mcp__headroom__headroom_retrieve
 ---
 
 # Daily Recap
@@ -95,6 +99,8 @@ Fetch today's events via `gcal_list_events`:
 - End: `YYYY-MM-DDT23:59:59`
 - Note titles, times, attendees
 
+**If response contains `[N items compressed... hash=XXX]`:** immediately call `mcp__headroom__headroom_retrieve(hash: "XXX", query: "meeting attachments Gemini summary")` to get the full event list with attachment URLs. This is critical for step 2i — compressed calendar responses drop attachment fileUrls needed for Gemini notes.
+
 #### 2b. Tomorrow's calendar events
 
 Fetch tomorrow's events for standup prep.
@@ -115,7 +121,7 @@ slack_search_public_and_private(
 
 Captures: support threads, code review discussions, technical questions answered, decisions. Context messages show what was asked + what you replied — best signal for "what you did".
 
->20 results → paginate via `cursor` from `pagination_info`.
+> 20 results → paginate via `cursor` from `pagination_info`.
 
 #### 2d. Slack — messages sent to you (incoming work)
 
@@ -229,9 +235,19 @@ For each meeting from step 2a that has an `attachments` entry with a Google Docs
 3. From the response parse: **Summary**, **Decisions** (Aligned + Needs Further Discussion), **Next steps**
 4. Filter next steps to only items assigned to you (your name appears in the bracket)
 
+**Fallback — attachment missing but meeting already ended:** Gemini attaches the notes doc to the calendar event asynchronously; if the meeting's `end` time is in the past relative to the run and the event has no `attachments` field, the doc may exist even though the calendar API hasn't linked it yet. For every ended meeting with ≥2 attendees and no `attachments` field, search Drive as a fallback before giving up:
+
+```
+mcp__claude_ai_Google_Drive__search_files(
+  query: "title contains '<event summary>' and mimeType contains 'application/vnd.google-apps.document' and modifiedTime > 'YYYY-MM-DDT00:00:00Z'"
+)
+```
+
+Match the returned file's title/date against the event. If found, treat it exactly like an attachment-sourced doc (proceed to steps 2–4 above). If Drive search returns nothing either, skip silently — the doc genuinely doesn't exist yet or was never generated (standup, focus time, 1:1 without notes enabled, etc.).
+
 **Skip silently if:**
 
-- Meeting has no attachments / no Docs URL (e.g. standup without notes, focus time, lunch)
+- Meeting has no attachments / no Docs URL AND the Drive fallback search above also finds nothing (e.g. standup without notes, focus time, lunch)
 - `read_file_content` returns "not found" or permission error
 
 **Do NOT fetch the transcript** — the Summary + Decisions + Next steps sections are sufficient.
@@ -279,8 +295,27 @@ python3 ~/.claude/skills/daily-recap/scripts/summarize-claude-sessions.py YYYY-M
 **No sessions found** → skip silently (script exits 0 with a note).
 
 **Merge into step 4:**
+
 - Session bullets → `## today` (engineering work items, mark as `- [x]`)
 - Dedup against Slack/GitLab items already found (same ticket or task → merge, don't repeat)
+
+#### 2k. Resolve person names to vault wikilinks
+
+After all data is gathered, collect every person name that appears in the recap data (Slack messages, meeting attendees, email senders/recipients, Gemini next steps, etc.). For each unique name:
+
+1. Search the vault people directory:
+
+   ```bash
+   obsidian search query="<first> <last>" path="work/people" format=json
+   ```
+
+2. If a match is returned → record the mapping: `"First Last" → [[First Last]]` (use the filename without `.md` as the link target).
+
+3. If no match → leave as plain text (never invent a wikilink).
+
+**Apply the map in steps 4 and 5:** whenever a person name appears in output (task lines, recap bullets, meeting next steps, needs-attention items), substitute the plain name with its resolved `[[wikilink]]`. Do this consistently — same person always gets the same wikilink throughout the note.
+
+**Efficiency:** batch all name lookups in parallel. Skip clearly non-person tokens (team names, Jira bots, GitLab automation).
 
 ### Slack filtering guidance
 
@@ -333,6 +368,7 @@ Three separate edits (see template for exact content format):
 ### meetings
 
 #### [[YYYY-MM-DD meeting title]]
+
 **Summary:** one-sentence
 **Decisions:** bullet list (aligned items first, then open items if any)
 **My next steps:** bullet list — only items assigned to you; omit if none
@@ -360,4 +396,3 @@ Brief conversational summary after writing:
 - **Group intelligently** — multiple Slack msgs on same topic → one task line
 - **Respect existing content** — never overwrite existing tasks or notes, only append/insert
 - **NEVER create daily note with Write tool** — always use `obsidian create name="YYYY-MM-DD" path="work/daily notes" template="daily-template" silent` via Bash. Template has Templater logic Obsidian must process. Manual write → broken note.
-

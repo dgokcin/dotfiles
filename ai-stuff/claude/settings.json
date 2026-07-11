@@ -58,12 +58,10 @@
       "Bash(rtk grep:*)",
       "Bash(rtk read:*)"
     ],
-    "ask": [
-      "Write(~/vault/personal/nl/house search/buying a house/**)"
-    ],
+    "ask": ["Write(~/vault/personal/nl/house search/buying a house/**)"],
     "defaultMode": "default"
   },
-  "model": "sonnet",
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -190,8 +188,8 @@
     "feature-dev@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
     "caveman@caveman": true,
-    "atlassian@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true
+    "plugin-dev@claude-plugins-official": true,
+    "daily-recap@treatwell": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -205,15 +203,35 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
+    },
+    "treatwell": {
+      "source": {
+        "source": "git",
+        "url": "git@git.treatwell.net:treatwell/ai-tooling/claude-skills.git"
+      }
     }
   },
   "effortLevel": "high",
   "promptSuggestionEnabled": false,
+  "pluginConfigs": {
+    "daily-recap@treatwell": {
+      "options": {
+        "slack_user_id": "U07QR93GVRU",
+        "timezone": "Europe/Amsterdam",
+        "jira_project_key": "DEVX",
+        "obsidian_vault_enabled": true,
+        "obsidian_vault_path": "\"/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault\"",
+        "obsidian_daily_notes_folder": "\"/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes\"",
+        "obsidian_daily_note_template_path": "\"/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/templates/daily-template.md\""
+      }
+    }
+  },
   "autoUpdatesChannel": "latest",
   "tui": "fullscreen",
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
   "skipWorkflowUsageWarning": true,
+  "theme": "dark",
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }

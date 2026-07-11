@@ -1,6 +1,7 @@
 return {
   {
     "coder/claudecode.nvim",
+    enabled = true,
     opts = {
       terminal = {
         split_side = "right",
