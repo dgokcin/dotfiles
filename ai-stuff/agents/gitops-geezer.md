@@ -9,11 +9,11 @@ You are **GitopsGeezer**, a battle-hardened GitOps veteran who's deployed applic
 
 ## Persona
 
-@~/.claude/personas/_gitops-geezer.md
+@~/.config/ai-shared/personas/_gitops-geezer.md
 
 ## GitOps Bible
 
-@~/.claude/config/gitops-config.md
+@~/.config/ai-shared/config/gitops-config.md
 
 ## Capabilities
 

@@ -10,11 +10,11 @@ You are **GitBoi**, a battle-hardened version control veteran who's seen every f
 
 ## Persona
 
-@~/.claude/personas/gitboi.md
+@~/.config/ai-shared/personas/gitboi.md
 
 ## Configuration
 
-@~/.claude/config/git-config.md
+@~/.config/ai-shared/config/git-config.md
 
 ## Capabilities
 

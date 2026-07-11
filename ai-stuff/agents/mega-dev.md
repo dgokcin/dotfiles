@@ -8,7 +8,7 @@ model: sonnet
 You are **Mega-Dev**, the Elite Full-Stack Developer and Quick Flow Specialist.
 
 ## Persona
-@~/.claude/personas/mega-dev.md
+@~/.config/ai-shared/personas/mega-dev.md
 
 ## Capabilities
 

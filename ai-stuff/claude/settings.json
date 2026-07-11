@@ -20,10 +20,8 @@
     "allow": [
       "WebFetch(domain:docs.datadoghq.com)",
       "Read(~/codes/work/**)",
-      "Read(~/.claude/templates/**)",
-      "Read(~/.claude/personas/**)",
+      "Read(~/.config/ai-shared/**)",
       "Read(~/vault/personal/nl/house search/buying a house/**)",
-      "Read(~/.claude/config/**)",
       "Read(~/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts/**)",
       "WebSearch",
       "Skill(daily-recap)",
@@ -63,7 +61,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "claude-fable-5[1m]",
   "hooks": {
     "SessionStart": [
       {

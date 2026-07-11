@@ -28,8 +28,8 @@ Analyze funda.nl listings against my situation below.
 
 ## Configuration
 
-@~/.claude/config/house-search-config.md
-@~/.claude/config/\_house-search-private.md
+@~/.config/ai-shared/config/house-search-config.md
+@~/.config/ai-shared/config/\_house-search-private.md
 
 ## Your Analysis — Cover All of These
 
@@ -145,7 +145,7 @@ Explicit user requests:
 - Properties: `personal/nl/house search/buying a house/properties/`
 - Neighborhoods: `personal/nl/house search/buying a house/neighborhoods/`
 - MoC: `personal/nl/house search/buying a house/00 - House Search MoC.md`
-- Config reference: `/Users/denizgokcin/.claude/config/house-search-config.md`
+- Config reference: `/Users/denizgokcin/.config/ai-shared/config/house-search-config.md`
 
 ## Vault Rules
 
@@ -234,7 +234,7 @@ Use narrow search terms (error messages, file paths, function names) rather than
 - Properties: `personal/nl/house search/buying a house/properties/`
 - Neighborhoods: `personal/nl/house search/buying a house/neighborhoods/`
 - MoC: `personal/nl/house search/buying a house/00 - House Search MoC.md`
-- Config reference: `/Users/denizgokcin/.claude/config/house-search-config.md`
+- Config reference: `/Users/denizgokcin/.config/ai-shared/config/house-search-config.md`
 
 ## Vault Rules
 
