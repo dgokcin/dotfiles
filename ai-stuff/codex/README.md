@@ -1,26 +1,9 @@
-# Codex Skills
+# Codex Layer
 
-This directory contains Codex-native equivalents of the custom setup under `ai-stuff/claude`.
+Codex consumes the universal skills from [`ai-stuff/skills/`](../skills/) —
+see [ai-stuff/README.md](../README.md). `make codex` (alias for `make
+ai-codex`) symlinks every skill directory plus `_shared` into
+`~/.codex/skills`.
 
-## What maps directly
-
-- `skills/`: repo-local Codex skills with simplified frontmatter
-- `skills/_shared/`: shared personas, configs, templates, and helper scripts referenced by the skills
-- `makefiles/codex.mk`: installer target that symlinks full skill directories into `~/.codex/skills`
-
-## What does not map 1:1
-
-- Claude agents/personas/settings hooks do not have a direct Codex manifest equivalent here
-- Claude `@file` includes and command injection were converted into plain references and run-time instructions inside each skill
-- Claude `settings.json` hooks, permissions, status line, and plugins were not mirrored because Codex uses a different runtime model
-
-## Install
-
-```bash
-make codex
-```
-
-That creates:
-
-- `~/.codex/skills/_shared`
-- `~/.codex/skills/<skill-name>` for each migrated skill
+No Codex-specific artifacts exist yet; this directory is a placeholder for
+future Codex-only config (e.g. `config.toml`).
