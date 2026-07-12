@@ -7,6 +7,8 @@ additionally installs:
 
 - **Agents** — Cursor agents symlinked into `~/.cursor/agents` (same
   definitions as Claude Code)
+- **CLI config** — [`cli-config.json`](cli-config.json) →
+  `~/.cursor/cli-config.json`
 - **Hooks** — [`hooks.json`](hooks.json) → `~/.cursor/hooks.json`
 - **Hook scripts** — into `~/.cursor/scripts/`
 
