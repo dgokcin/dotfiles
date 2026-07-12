@@ -37,9 +37,10 @@ codex-hooks: ## Symlink Codex hooks.json (backs up an unmanaged existing file)
 		echo "removed dead ~/.codex/settings.json symlink"; \
 	fi
 
-codex-agents-md: ## Symlink global AGENTS.md
-	$(call pretty_print, "Installing Codex AGENTS.md...")
+codex-agents-md: ## Symlink global AGENTS.md and RTK.md
+	$(call pretty_print, "Installing Codex AGENTS.md + RTK.md...")
 	$(call symlink,ai-stuff/codex/AGENTS.md,${CODEX_HOME}/AGENTS.md)
+	$(call symlink,ai-stuff/codex/RTK.md,${CODEX_HOME}/RTK.md)
 
 codex-config: ## Sync dotfiles-managed block into ~/.codex/config.toml (machine state untouched)
 	$(call pretty_print, "Syncing managed block of ~/.codex/config.toml...")
@@ -49,6 +50,7 @@ codex-clean: ## Remove Codex symlinks (skills live in ~/.agents/skills — use a
 	$(call pretty_print, "Removing Codex symlinks...")
 	$(call remove_file,${CODEX_HOME}/hooks.json)
 	$(call remove_file,${CODEX_HOME}/AGENTS.md)
+	$(call remove_file,${CODEX_HOME}/RTK.md)
 	$(call remove_file,${CODEX_HOME}/scripts/auto-approve-tools.sh)
 	$(call remove_file,${CODEX_HOME}/scripts/focus-iterm.applescript)
 	$(call remove_file,${CODEX_HOME}/scripts/notify-stop.sh)

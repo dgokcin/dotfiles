@@ -7,6 +7,13 @@
 # Bare tool name (e.g. "Read") matches all calls to that tool.
 # Tilde (~) is expanded to $HOME.
 #
+# Compound Bash commands (&&, ||, ;) are split and EVERY segment must match a
+# rule (subshell parens are stripped). A leading "rtk " is ignored when
+# matching, so one rule covers both plain and rtk-rewritten forms. Quotes are
+# not parsed — a quoted '&&' splits too, which fails safe: the mangled
+# segment won't match, the hook stays silent, and the tool's normal
+# permission prompt takes over.
+#
 # Called with $1 = "pre-tool" (default) or "permission"
 
 ALLOW=(
@@ -19,6 +26,13 @@ ALLOW=(
   "Bash(git status*)"
   "Bash(git diff*)"
   "Bash(git branch*)"
+  "Bash(git rev-parse*)"
+  "Bash(git ls-files*)"
+  "Bash(git worktree list*)"
+  "Bash(git symbolic-ref *)"
+  "Bash(git remote -v*)"
+  "Bash(git config --get *)"
+  "Bash(true)"
   "Bash(ls:*)"
   "Bash(ls *)"
   "Bash(find:*)"
@@ -32,20 +46,6 @@ ALLOW=(
   "Bash(glab mr list *)"
   "Bash(rtk grep *)"
   "Bash(rtk read *)"
-  "Bash(rtk git log *)"
-  "Bash(rtk git show *)"
-  "Bash(rtk git status*)"
-  "Bash(rtk git diff*)"
-  "Bash(rtk git branch*)"
-  "Bash(rtk ls *)"
-  "Bash(rtk find *)"
-  "Bash(rtk head *)"
-  "Bash(rtk gh pr view *)"
-  "Bash(rtk gh pr diff *)"
-  "Bash(rtk gh pr list *)"
-  "Bash(rtk glab mr view *)"
-  "Bash(rtk glab mr diff *)"
-  "Bash(rtk glab mr list *)"
 )
 
 INPUT=$(cat 2>/dev/null || true)
@@ -69,32 +69,68 @@ expand_pattern() {
   echo "${p//\*\*/*}"
 }
 
-for rule in "${ALLOW[@]}"; do
-  # Bare tool name: "Read", "Glob", etc.
-  if [[ "$rule" == "$TOOL" ]]; then
-    approve "$rule"
+# Does a single (non-compound) command match any Bash rule?
+cmd_allowed() {
+  local cmd="$1" rule pattern
+  local bare="${cmd#rtk }"
+  for rule in "${ALLOW[@]}"; do
+    [[ "$rule" =~ ^Bash\((.+)\)$ ]] || continue
+    # Normalize colon format: "ls:*" → "ls *"
+    pattern=$(expand_pattern "${BASH_REMATCH[1]/:/ }")
+    # shellcheck disable=SC2254
+    if [[ "$cmd" == $pattern || "$bare" == $pattern ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+trim() {
+  local s="$1"
+  s="${s#"${s%%[![:space:]]*}"}"
+  s="${s%"${s##*[![:space:]]}"}"
+  echo "$s"
+}
+
+if [ "$TOOL" = "Bash" ]; then
+  CMD=$(echo "$INPUT" | jq -r '.tool_input.command // empty' 2>/dev/null)
+  if [ -n "$CMD" ]; then
+    # Split compound command into segments on && / || / ;
+    segs="${CMD//&&/$'\n'}"
+    segs="${segs//\|\|/$'\n'}"
+    segs="${segs//;/$'\n'}"
+    all_ok=1
+    while IFS= read -r seg; do
+      seg=$(trim "$seg")
+      # Strip subshell parens: "(git foo" / "git foo)"
+      seg="${seg#\(}"
+      seg="${seg%\)}"
+      seg=$(trim "$seg")
+      [ -z "$seg" ] && continue
+      cmd_allowed "$seg" || { all_ok=0; break; }
+    done <<<"$segs"
+    [ "$all_ok" -eq 1 ] && approve "Bash allowlist (all segments)"
   fi
+else
+  for rule in "${ALLOW[@]}"; do
+    # Bare tool name: "Read", "Glob", etc.
+    if [[ "$rule" == "$TOOL" ]]; then
+      approve "$rule"
+    fi
 
-  # Tool(pattern) format
-  if [[ "$rule" =~ ^([A-Za-z]+)\((.+)\)$ ]]; then
-    rule_tool="${BASH_REMATCH[1]}"
-    rule_arg="${BASH_REMATCH[2]}"
+    # Tool(pattern) format
+    if [[ "$rule" =~ ^([A-Za-z]+)\((.+)\)$ ]]; then
+      rule_tool="${BASH_REMATCH[1]}"
+      rule_arg="${BASH_REMATCH[2]}"
 
-    [ "$TOOL" != "$rule_tool" ] && continue
+      [ "$TOOL" != "$rule_tool" ] && continue
 
-    if [ "$TOOL" = "Bash" ]; then
-      CMD=$(echo "$INPUT" | jq -r '.tool_input.command // empty' 2>/dev/null)
-      # Normalize colon format: "ls:*" → "ls *"
-      pattern=$(expand_pattern "${rule_arg/:/  }")
-      # shellcheck disable=SC2254
-      [[ "$CMD" == $pattern ]] && approve "$rule"
-    else
       PATH_ARG=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.path // .tool_input.pattern // empty' 2>/dev/null)
       pattern=$(expand_pattern "$rule_arg")
       # shellcheck disable=SC2254
       [[ "$PATH_ARG" == $pattern ]] && approve "$rule"
     fi
-  fi
-done
+  done
+fi
 
 echo '{}'

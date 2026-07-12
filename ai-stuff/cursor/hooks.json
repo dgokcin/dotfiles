@@ -25,7 +25,8 @@
     "preToolUse": [
       {
         "type": "command",
-        "command": "rtk hook cursor 2>/dev/null || echo '{}'",
+        "command": "rtk hook cursor",
+        "matcher": "Shell",
         "timeout": 10
       }
     ],

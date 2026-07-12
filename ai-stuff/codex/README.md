@@ -9,7 +9,7 @@ skills arrive via ai.mk's `agents` pseudo-tool (`~/.agents/skills`), which
 - **Skills** — `ai-agents` symlinks every skill dir + `_shared` into `~/.agents/skills` (prunes the dead `~/.codex/skills`)
 - **Hooks** — [`hooks.json`](hooks.json) → `~/.codex/hooks.json`
 - **Hook scripts** — into `~/.codex/scripts/`
-- **AGENTS.md** — [`AGENTS.md`](AGENTS.md) → `~/.codex/AGENTS.md` (Codex's global instruction file)
+- **AGENTS.md + RTK.md** — [`AGENTS.md`](AGENTS.md) → `~/.codex/AGENTS.md` (Codex's global instruction file), [`RTK.md`](RTK.md) → `~/.codex/RTK.md` (rtk prefix rule — declarative equivalent of `rtk init -g --codex`)
 - **config.toml managed block** — see below
 
 ## config.toml
