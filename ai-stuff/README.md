@@ -37,11 +37,15 @@ ai-stuff/
 
 Driven by [`makefiles/ai.mk`](../makefiles/ai.mk) — the tool registry:
 
-| Target       | Installs to        | Covers                                                        |
-| ------------ | ------------------ | ------------------------------------------------------------- |
-| `ai-claude`  | `~/.claude/skills` | Claude Code                                                    |
-| `ai-codex`   | `~/.codex/skills`  | Codex                                                          |
-| `ai-agents`  | `~/.agents/skills` | Cursor, Gemini CLI, Windsurf, Warp, Copilot, Roo, OpenHands, … |
+| Target       | Installs to        | Covers                                                               |
+| ------------ | ------------------ | -------------------------------------------------------------------- |
+| `ai-claude`  | `~/.claude/skills` | Claude Code                                                           |
+| `ai-agents`  | `~/.agents/skills` | Codex, Cursor, Gemini CLI, Windsurf, Warp, Copilot, Roo, OpenHands, … |
+
+Codex has no dedicated target: it ignores `~/.codex/skills` and reads only
+`.agents/skills` (repo + `$HOME`), so `ai-agents` covers it. Cursor natively
+also scans `~/.claude/skills` and `~/.claude/agents` — those entries are the
+same symlinked files, deduplicated by `name`.
 
 ```bash
 make ai          # install skills into all registered tools
@@ -49,7 +53,7 @@ make ai-list     # show skills + tool registry
 make ai-clean    # remove installed skills everywhere
 make claude      # claude layer (agents/personas/configs/scripts/settings) + ai-claude
 make cursor      # cursor agents + ai-agents (+ prunes legacy ~/.cursor layout)
-make codex       # alias for ai-codex
+make codex       # codex layer (hooks/AGENTS.md/config.toml managed block) + ai-agents
 ```
 
 Each install: prune legacy names → `rm` old entry → symlink the whole skill
@@ -90,10 +94,12 @@ Skills must work in any tool. Rules used throughout `skills/`:
    unknown keys are ignored, so other tools skip them. Claude Code is the
    primary driver here; don't strip its metadata for purity.
 
-4. **Executable helpers may use `~/.claude/scripts/...` paths**
-   (e.g. `pr-status.sh`, worktree-cleanup scripts). That's the machine-level
-   claude layer, installed unconditionally by `make claude`, so the paths
-   resolve no matter which tool invokes the skill.
+4. **Executable helpers used by universal skills live in `_shared/scripts/`**
+   and are referenced via `~/.config/ai-shared/scripts/...` (e.g.
+   `pr-status.sh`, `worktree-cleanup-*.sh`). That path is installed by
+   `make ai-shared` — part of every tool's install target — so it resolves no
+   matter which tool invokes the skill. Never reference `~/.claude/scripts/...`
+   from a universal skill: it only exists when `make claude` ran.
 
 5. **Skill-local assets stay inside the skill** (`references/`, `scripts/`)
    and are referenced by bare relative paths — self-contained, BMAD-style.
@@ -111,10 +117,12 @@ Anything that is *not* a skill stays out of `skills/`:
   and Claude-only hook scripts. See [claude/README.md](claude/README.md).
 - **`codex/`** — `hooks.json` + Codex-only hook scripts. See
   [codex/README.md](codex/README.md).
-- **`_shared/scripts/`** — hook scripts shared across tools
+- **`_shared/scripts/`** — scripts shared across tools. Hook scripts
   (`auto-approve-tools.sh`, `focus-iterm.applescript`): Codex adopted Claude
   Code's hook protocol, so the same scripts serve both — symlinked into each
-  tool's own scripts dir, never referenced across tool homes.
+  tool's own scripts dir, never referenced across tool homes. Skill helpers
+  (`pr-status.sh`, `worktree-cleanup-*.sh`): invoked by universal skills via
+  the tool-agnostic `~/.config/ai-shared/scripts/...` path.
 - Hooks have no cross-tool *standard* (event names/config differ per tool),
   so hook configs stay per-tool by design. A skill must never depend on
   hooks to function, only get better when they exist.

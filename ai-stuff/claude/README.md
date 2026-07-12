@@ -15,10 +15,10 @@ ai-stuff/claude/
 │   ├── statusline.sh      # Statusline with git, context, vim mode
 │   ├── session-start.sh   # Auto-name worktree sessions
 │   ├── notify.sh          # Notification-event alert (claude-only event)
-│   ├── pr-status.sh       # Used by the create-pr skill
-│   └── worktree-*.sh      # Worktree hooks + worktree-cleanup skill helpers
-│   (auto-approve-tools.sh + focus-iterm.applescript moved to
-│    ai-stuff/_shared/scripts/ — shared with Codex hooks)
+│   └── worktree-*.sh      # EnterWorktree/ExitWorktree hook scripts (claude hook protocol)
+│   (auto-approve-tools.sh, focus-iterm.applescript, pr-status.sh, and the
+│    worktree-cleanup skill helpers moved to ai-stuff/_shared/scripts/ —
+│    shared across tools)
 ├── settings.json          # Hooks, permissions, statusline, plugins (→ ~/.claude/settings.json)
 └── README.md
 ```

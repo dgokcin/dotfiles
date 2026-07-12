@@ -6,16 +6,17 @@
 # (tools/installer/ide/platform-codes.yaml), minus the copy step.
 #
 # Tool registry — one entry per tool. Many tools read the cross-tool standard
-# directory ~/.agents/skills (Cursor, Gemini CLI, Windsurf, Warp, GitHub
-# Copilot, Roo, OpenHands, ...) — covered by the pseudo-tool "agents".
+# directory ~/.agents/skills (Codex, Cursor, Gemini CLI, Windsurf, Warp,
+# GitHub Copilot, Roo, OpenHands, ...) — covered by the pseudo-tool "agents".
+# Codex has NO entry of its own: it ignores ~/.codex/skills and reads only
+# .agents/skills (repo + $HOME) — see https://learn.chatgpt.com/docs/build-skills.
 # Adding a tool with its own directory = 2 lines:
 #   AI_TOOLS += cline
 #   ai_skills_dir_cline := ${HOME}/.cline/skills
 
-AI_TOOLS := claude codex agents
+AI_TOOLS := claude agents
 
 ai_skills_dir_claude := ${HOME}/.claude/skills
-ai_skills_dir_codex  := ${HOME}/.codex/skills
 ai_skills_dir_agents := ${HOME}/.agents/skills
 
 # Every entry in ai-stuff/skills/: skill dirs + the _shared symlink that makes
