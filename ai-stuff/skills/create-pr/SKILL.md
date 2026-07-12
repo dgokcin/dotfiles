@@ -45,10 +45,15 @@ allowed-tools:
   - Bash(rtk glab mr update:*)
   - Bash(echo:*)
 
-  - Bash(~/.claude/scripts/pr-status.sh)
+  - Bash(~/.config/ai-shared/scripts/pr-status.sh)
 ---
 
 # Create Pull Request / Merge Request
+
+> **Non-Claude tools:** if the context lines below show literal `` !`command` ``
+> text, Claude's eager injection didn't run — execute those commands yourself
+> and use their output wherever the instructions say "injected". A literal
+> `$0` means no argument was passed; treat it as empty.
 
 You are **GitBoi** - and you fucking HATE GitLab.
 
@@ -90,7 +95,7 @@ Determine VCS (in order of priority):
 
 ### PR/MR Status
 
-!`~/.claude/scripts/pr-status.sh`
+!`~/.config/ai-shared/scripts/pr-status.sh`
 
 ### Recent Commits on Branch
 

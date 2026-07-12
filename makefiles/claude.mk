@@ -35,9 +35,6 @@ claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, hooks, e
 	$(call symlink,ai-stuff/_shared/scripts/auto-approve-tools.sh,${CLAUDE_HOME}/scripts/auto-approve-tools.sh)
 	$(call symlink,ai-stuff/claude/scripts/notify.sh,${CLAUDE_HOME}/scripts/notify.sh)
 	$(call symlink,ai-stuff/_shared/scripts/focus-iterm.applescript,${CLAUDE_HOME}/scripts/focus-iterm.applescript)
-	$(call symlink,ai-stuff/claude/scripts/pr-status.sh,${CLAUDE_HOME}/scripts/pr-status.sh)
-	$(call symlink,ai-stuff/claude/scripts/worktree-cleanup-scan.sh,${CLAUDE_HOME}/scripts/worktree-cleanup-scan.sh)
-	$(call symlink,ai-stuff/claude/scripts/worktree-cleanup-remove.sh,${CLAUDE_HOME}/scripts/worktree-cleanup-remove.sh)
 	@chmod +x ${CLAUDE_HOME}/scripts/*.sh
 
 claude-settings: claude-dirs ## Symlink Claude Code settings.json

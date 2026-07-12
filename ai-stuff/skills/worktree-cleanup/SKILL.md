@@ -5,8 +5,8 @@ argument-hint: "[repo-or-dir path]"
 allowed-tools:
   - AskUserQuestion
   - Read
-  - Bash(~/.claude/scripts/worktree-cleanup-scan.sh:*)
-  - Bash(~/.claude/scripts/worktree-cleanup-remove.sh:*)
+  - Bash(~/.config/ai-shared/scripts/worktree-cleanup-scan.sh:*)
+  - Bash(~/.config/ai-shared/scripts/worktree-cleanup-remove.sh:*)
   - Bash(git worktree list:*)
   - Bash(git status:*)
   - Bash(git rev-parse:*)
@@ -44,7 +44,7 @@ The user may give a path as `$1`:
 Run the scan script with the target path (quote it; default to `.` if none given):
 
 ```bash
-~/.claude/scripts/worktree-cleanup-scan.sh "<path>"
+~/.config/ai-shared/scripts/worktree-cleanup-scan.sh "<path>"
 ```
 
 It prints a JSON array, one object per non-main worktree:
@@ -112,7 +112,7 @@ For each worktree the user chose, call the remove script with the repo, worktree
 path, and branch (all from the scan JSON):
 
 ```bash
-~/.claude/scripts/worktree-cleanup-remove.sh "<repo>" "<worktree>" "<branch>"
+~/.config/ai-shared/scripts/worktree-cleanup-remove.sh "<repo>" "<worktree>" "<branch>"
 ```
 
 It removes the worktree (`--force`), prunes git metadata, and deletes the local
