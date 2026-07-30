@@ -5,6 +5,11 @@
 # Parse JSON input to get query (avoid jq/printf overhead)
 QUERY=$(sed -n 's/.*"query" *: *"\([^"]*\)".*/\1/p')
 
+# @-mentions can't contain spaces, so treat "_" as a word separator.
+# fzf ANDs space-separated terms, so "daily_note" matches "Daily Note.md"
+# as well as "daily_note.md" and "daily-note.md".
+QUERY="${QUERY//_/ }"
+
 # Use project dir from env, fallback to pwd
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
 
