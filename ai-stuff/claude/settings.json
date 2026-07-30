@@ -4,10 +4,8 @@
     "command": "~/.claude/scripts/file-suggestion.sh"
   },
   "env": {
-    "ENABLE_TOOL_SEARCH": "true",
     "ENABLE_LSP_TOOL": "1",
     "CAVEMAN_DEFAULT_MODE": "ultra",
-    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "400000",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95"
@@ -57,11 +55,19 @@
       "Bash(rtk read:*)"
     ],
     "ask": [
-      "Write(~/vault/personal/nl/house search/buying a house/**)"
+      "Edit(~/vault/personal/nl/house search/buying a house/**)"
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus",
+  "skillOverrides": {
+    "commit": "off",
+    "spike": "off",
+    "dev-story": "off",
+    "jiragirl": "off",
+    "buddy": "off",
+    "mega-dev": "off"
+  },
   "hooks": {
     "SessionStart": [
       {
@@ -190,9 +196,12 @@
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "caveman@caveman": true,
+    "caveman@caveman": false,
     "plugin-dev@claude-plugins-official": true,
-    "daily-recap@treatwell": true
+    "gitops@treatwell": true,
+    "session-handover@treatwell": true,
+    "i-have-adhd@i-have-adhd": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -207,25 +216,43 @@
         "repo": "JuliusBrussee/caveman"
       }
     },
+    "developer-kit": {
+      "source": {
+        "source": "github",
+        "repo": "giuseppe-trisciuoglio/developer-kit"
+      }
+    },
     "treatwell": {
       "source": {
-        "source": "git",
-        "url": "git@git.treatwell.net:treatwell/ai-tooling/claude-skills.git"
+        "source": "directory",
+        "path": "/Users/denizgokcin/codes/work/claude-skills"
+      }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       }
     }
   },
   "effortLevel": "high",
   "promptSuggestionEnabled": false,
   "pluginConfigs": {
-    "daily-recap@treatwell": {
+    "gitops@treatwell": {
       "options": {
-        "slack_user_id": "U07QR93GVRU",
-        "timezone": "Europe/Amsterdam",
-        "jira_project_key": "DEVX",
-        "obsidian_vault_enabled": true,
-        "obsidian_vault_path": "\"/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault\"",
-        "obsidian_daily_notes_folder": "\"/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/work/daily notes\"",
-        "obsidian_daily_note_template_path": "\"/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault/templates/daily-template.md\""
+        "clustersJsonPath": "/Users/denizgokcin/codes/dotfiles/ai-stuff/_shared/config/.clusters.json",
+        "ownerTeam": "platform-devx"
+      }
+    },
+    "session-handover@treatwell": {
+      "options": {
+        "obsidian_vault_path": "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault"
       }
     }
   },
