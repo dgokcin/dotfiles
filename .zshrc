@@ -221,14 +221,6 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export BASH_MAX_OUTPUT_LENGTH=15000
 
-# >>> headroom persistent env >>>
-# export HEADROOM_PORT="8787"
-# export HEADROOM_HOST="127.0.0.1"
-# export HEADROOM_MODE="token"
-# export HEADROOM_BACKEND="anthropic"
-# export HEADROOM_TELEMETRY="off"
-# export HEADROOM_MEMORY_ENABLED="1"
-# export ANTHROPIC_BASE_URL="http://127.0.0.1:8787"
-# export ENABLE_TOOL_SEARCH="true"
-# export OPENAI_BASE_URL="http://127.0.0.1:8787/v1"
-# <<< headroom persistent env <<<
+
+# Added by Antigravity CLI installer
+export PATH="/Users/denizgokcin/.local/bin:$PATH"
