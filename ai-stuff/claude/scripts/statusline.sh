@@ -306,14 +306,34 @@ if [ -n "$five_hour_pct_raw" ]; then
   printf "7d @ %s" "$seven_day_reset"
 fi
 
-# Caveman mode display
-caveman_flag="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/.caveman-active"
-if [ ! -L "$caveman_flag" ] && [ -f "$caveman_flag" ]; then
-  caveman_mode=$(head -c 64 "$caveman_flag" 2>/dev/null | tr -d '\n\r' | tr '[:upper:]' '[:lower:]')
-  caveman_mode=$(printf '%s' "$caveman_mode" | tr -cd 'a-z0-9-')
+# Line 4: active mode plugins (caveman / ponytail / adhd)
+# Each plugin records its state as a flag file in the config dir. Contents are
+# the level (e.g. full/ultra); an empty file just means on (adhd's always-on
+# flag). Symlinks are skipped so a dangling/hostile link can't be read.
+# The flag file survives disabling the plugin, so also honour enabledPlugins in
+# settings.json: explicitly false hides the mode, absent means enabled.
+config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+disabled_plugins=""
+if [ -f "$settings_path" ]; then
+  disabled_plugins=$(jq -r '.enabledPlugins // {} | to_entries[] | select(.value == false) | .key | split("@")[0]' "$settings_path" 2>/dev/null | tr '\n' ' ')
+fi
 
-  if [ -n "$caveman_mode" ] && [ "$caveman_mode" != "off" ]; then
-    printf "\n"
-    printf "%bcaveman%b: %b%s%b" "$C_WHITE" "$C_RESET" "$C_ORANGE" "$caveman_mode" "$C_RESET"
-  fi
+mode_line=""
+for entry in "caveman:.caveman-active:caveman" "ponytail:.ponytail-active:ponytail" "adhd:.i-have-adhd-always:i-have-adhd"; do
+  IFS=: read -r mode_label mode_file mode_plugin <<<"$entry"
+  case " $disabled_plugins " in *" $mode_plugin "*) continue ;; esac
+
+  mode_flag="$config_dir/$mode_file"
+  [ -L "$mode_flag" ] && continue
+  [ -f "$mode_flag" ] || continue
+
+  mode_val=$(head -c 64 "$mode_flag" 2>/dev/null | tr -d '\n\r' | tr '[:upper:]' '[:lower:]')
+  mode_val=$(printf '%s' "$mode_val" | tr -cd 'a-z0-9-')
+  [ -z "$mode_val" ] && mode_val="on"
+  [ "$mode_val" = "off" ] && continue
+
+  mode_line="${mode_line:+$mode_line$SEP}${C_WHITE}${mode_label}${C_RESET}: ${C_ORANGE}${mode_val}${C_RESET}"
+done
+if [ -n "$mode_line" ]; then
+  printf "\n%b" "$mode_line"
 fi
