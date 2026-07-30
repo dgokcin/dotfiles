@@ -6,6 +6,7 @@ disable-model-invocation: false
 context: fork
 model: haiku
 allowed-tools:
+  - Bash
   - Read
   - Grep
   - Glob
@@ -56,13 +57,13 @@ Read [git config](../_shared/config/git-config.md).
 - Git dir: !`git rev-parse --git-dir 2>/dev/null`
 - Is in worktree: !`git rev-parse --is-inside-work-tree 2>/dev/null`
 - Worktree root: !`git rev-parse --show-toplevel 2>/dev/null`
-- Worktree list: !`git worktree list 2>/dev/null | head -5`
+- Worktree list: !`git worktree list 2>/dev/null`
 
 ### Branch Info
 
 - Current branch: !`git branch --show-current 2>/dev/null`
-- Tracking branch: !`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "none"`
-- Main/master branch: !`git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | cut -d/ -f2`
+- Tracking branch: !`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "(none - branch not pushed yet, this is fine)"`
+- Main/master branch: !`git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | cut -d/ -f2 || echo "(unknown)"`
 
 ### All Changes (staged + unstaged + untracked)
 
@@ -78,7 +79,7 @@ Read [git config](../_shared/config/git-config.md).
 
 ### Untracked Files
 
-!`git ls-files --others --exclude-standard 2>/dev/null`
+Untracked files appear as `??` lines in the "All Changes" status output above.
 
 ### Recent Commits (for style reference)
 
@@ -91,7 +92,7 @@ Analyze ALL changes (staged, unstaged, untracked). Create multiple logical conve
 ### Process
 
 1. Detect worktree mode: check `git rev-parse --is-inside-work-tree` and `git worktree list`
-2. Review all changes above
+2. Review all changes above. Tracking branch "(none)" is normal for a new/unpushed branch — commits are local, proceed as usual and never try to fetch, push, or set an upstream
 3. No changes → tell user nothing to commit
 4. **Worktree check**: if injected **Git dir** above contains `worktrees/`, save current HEAD: `git rev-parse HEAD` → store as `$BASE_SHA`
 5. **Read actual file contents** of changed/new files when diff alone insufficient
