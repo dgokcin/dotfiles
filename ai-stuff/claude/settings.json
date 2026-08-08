@@ -5,10 +5,12 @@
   },
   "env": {
     "ENABLE_LSP_TOOL": "1",
+    "ENABLE_TOOL_SEARCH": "auto:0.2",
     "CAVEMAN_DEFAULT_MODE": "ultra",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
-    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95"
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95",
+    "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "0"
   },
   "attribution": {
     "commit": "",
@@ -59,7 +61,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "claude-fable-5[1m]",
   "skillOverrides": {
     "commit": "off",
     "spike": "off",
@@ -196,12 +198,13 @@
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "caveman@caveman": false,
+    "caveman@caveman": true,
     "plugin-dev@claude-plugins-official": true,
     "gitops@treatwell": true,
     "session-handover@treatwell": true,
     "i-have-adhd@i-have-adhd": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "datadog@treatwell": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -214,7 +217,8 @@
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
-      }
+      },
+      "autoUpdate": true
     },
     "developer-kit": {
       "source": {
@@ -226,13 +230,15 @@
       "source": {
         "source": "directory",
         "path": "/Users/denizgokcin/codes/work/claude-skills"
-      }
+      },
+      "autoUpdate": true
     },
     "i-have-adhd": {
       "source": {
         "source": "github",
         "repo": "ayghri/i-have-adhd"
-      }
+      },
+      "autoUpdate": true
     },
     "ponytail": {
       "source": {
@@ -242,6 +248,7 @@
     }
   },
   "effortLevel": "high",
+  "outputStyle": "Terse",
   "promptSuggestionEnabled": false,
   "pluginConfigs": {
     "gitops@treatwell": {
