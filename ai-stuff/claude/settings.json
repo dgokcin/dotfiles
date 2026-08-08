@@ -6,7 +6,6 @@
   "env": {
     "ENABLE_LSP_TOOL": "1",
     "ENABLE_TOOL_SEARCH": "auto:0.2",
-    "CAVEMAN_DEFAULT_MODE": "ultra",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95",
@@ -198,12 +197,12 @@
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "caveman@caveman": true,
+    "caveman@caveman": false,
     "plugin-dev@claude-plugins-official": true,
     "gitops@treatwell": true,
     "session-handover@treatwell": true,
-    "i-have-adhd@i-have-adhd": true,
-    "ponytail@ponytail": true,
+    "i-have-adhd@i-have-adhd": false,
+    "ponytail@ponytail": false,
     "datadog@treatwell": true
   },
   "extraKnownMarketplaces": {
