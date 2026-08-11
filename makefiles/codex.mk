@@ -20,7 +20,7 @@ codex: ai-agents codex-scripts codex-hooks codex-agents-md codex-config ## Insta
 codex-scripts: ## Symlink Codex hook scripts
 	$(call mkdir_safe,${CODEX_HOME}/scripts)
 	$(call pretty_print, "Installing Codex hook scripts...")
-	$(call symlink,ai-stuff/_shared/scripts/auto-approve-tools.sh,${CODEX_HOME}/scripts/auto-approve-tools.sh)
+	@[ ! -L ${CODEX_HOME}/scripts/auto-approve-tools.sh ] || rm -f ${CODEX_HOME}/scripts/auto-approve-tools.sh
 	$(call symlink,ai-stuff/_shared/scripts/focus-iterm.applescript,${CODEX_HOME}/scripts/focus-iterm.applescript)
 	$(call symlink,ai-stuff/codex/scripts/notify-stop.sh,${CODEX_HOME}/scripts/notify-stop.sh)
 	@chmod +x $(DOTFILES)/ai-stuff/_shared/scripts/*.sh $(DOTFILES)/ai-stuff/codex/scripts/*.sh
@@ -51,7 +51,6 @@ codex-clean: ## Remove Codex symlinks (skills live in ~/.agents/skills — use a
 	$(call remove_file,${CODEX_HOME}/hooks.json)
 	$(call remove_file,${CODEX_HOME}/AGENTS.md)
 	$(call remove_file,${CODEX_HOME}/RTK.md)
-	$(call remove_file,${CODEX_HOME}/scripts/auto-approve-tools.sh)
 	$(call remove_file,${CODEX_HOME}/scripts/focus-iterm.applescript)
 	$(call remove_file,${CODEX_HOME}/scripts/notify-stop.sh)
 

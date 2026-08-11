@@ -24,27 +24,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.codex/scripts/auto-approve-tools.sh pre-tool",
-            "timeout": 10,
-            "statusMessage": "Checking auto-approve allowlist"
-          },
-          {
-            "type": "command",
             "command": "rtk hook claude",
             "timeout": 10,
             "statusMessage": "rtk token-optimizer rewrite"
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.codex/scripts/auto-approve-tools.sh permission",
-            "timeout": 10,
-            "statusMessage": "Checking auto-approve allowlist"
           }
         ]
       }
