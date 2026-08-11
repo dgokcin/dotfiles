@@ -9,7 +9,7 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95",
-    "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "0"
+    "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "1"
   },
   "attribution": {
     "commit": "",
@@ -60,7 +60,8 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "sonnet",
+  "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
     "spike": "off",
@@ -203,7 +204,8 @@
     "session-handover@treatwell": true,
     "i-have-adhd@i-have-adhd": false,
     "ponytail@ponytail": false,
-    "datadog@treatwell": true
+    "datadog@treatwell": true,
+    "codex@openai-codex": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -246,8 +248,8 @@
       }
     }
   },
-  "effortLevel": "high",
   "outputStyle": "Terse",
+  "effortLevel": "high",
   "promptSuggestionEnabled": false,
   "pluginConfigs": {
     "gitops@treatwell": {
@@ -268,6 +270,7 @@
   "autoDreamEnabled": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
+  "verbose": false,
   "teammateMode": "auto",
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
