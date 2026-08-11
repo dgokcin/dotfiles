@@ -1,0 +1,277 @@
+{
+  "fileSuggestion": {
+    "type": "command",
+    "command": "~/.claude/scripts/file-suggestion.sh"
+  },
+  "env": {
+    "ENABLE_LSP_TOOL": "1",
+    "ENABLE_TOOL_SEARCH": "auto:0.2",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95",
+    "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.datadoghq.com)",
+      "Read(~/codes/work/**)",
+      "Read(~/.config/ai-shared/**)",
+      "Read(~/vault/personal/nl/house search/buying a house/**)",
+      "Read(~/Library/Application Support/Dia/User Data/Profile 1/AgentServer/contexts/**)",
+      "WebSearch",
+      "Skill(daily-recap)",
+      "Bash(obsidian *)",
+      "Bash(npm run lint)",
+      "Bash(npm run test *)",
+      "Bash(git show *)",
+      "Bash(git log *)",
+      "Bash(glab mr view *)",
+      "Bash(glab mr diff *)",
+      "Bash(glab mr list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr list *)",
+      "Bash(find:*)",
+      "Bash(head:*)",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(rtk npm run lint)",
+      "Bash(rtk npm run test *)",
+      "Bash(rtk git show *)",
+      "Bash(rtk git log *)",
+      "Bash(rtk glab mr view *)",
+      "Bash(rtk glab mr diff *)",
+      "Bash(rtk glab mr list *)",
+      "Bash(rtk gh pr view *)",
+      "Bash(rtk gh pr diff *)",
+      "Bash(rtk gh pr list *)",
+      "Bash(rtk find:*)",
+      "Bash(rtk head:*)",
+      "Bash(rtk ls:*)",
+      "Bash(rtk grep:*)",
+      "Bash(rtk read:*)"
+    ],
+    "ask": [
+      "Edit(~/vault/personal/nl/house search/buying a house/**)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "sonnet",
+  "enableAllProjectMcpServers": false,
+  "skillOverrides": {
+    "commit": "off",
+    "spike": "off",
+    "dev-story": "off",
+    "jiragirl": "off",
+    "buddy": "off",
+    "mega-dev": "off"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.cc-notifier/cc-notifier init"
+          },
+          {
+            "type": "command",
+            "command": "echo \"Working directory: $(git rev-parse --show-toplevel 2>/dev/null || pwd)\nMain git dir: $(git rev-parse --git-common-dir 2>/dev/null)\nIs worktree: $(git rev-parse --is-inside-work-tree 2>/dev/null)\nMain worktree: $(git worktree list --porcelain 2>/dev/null | head -1 | sed 's/worktree //')\"",
+            "statusMessage": "Checking git worktree context"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/session-start.sh",
+            "statusMessage": "Auto-naming worktree session"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.cc-notifier/cc-notifier notify"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.cc-notifier/cc-notifier notify"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.cc-notifier/cc-notifier cleanup"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/auto-approve-tools.sh pre-tool"
+          },
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/auto-approve-tools.sh permission"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$NVIM\" ] && nvim --server \"$NVIM\" --remote-expr 'execute(\"checktime\")' > /dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/worktree-create.sh"
+          }
+        ]
+      }
+    ],
+    "WorktreeRemove": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/worktree-remove.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/statusline.sh"
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": false,
+    "pyright-lsp@claude-plugins-official": false,
+    "playwright@claude-plugins-official": false,
+    "context7@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": true,
+    "caveman@caveman": false,
+    "plugin-dev@claude-plugins-official": true,
+    "gitops@treatwell": true,
+    "session-handover@treatwell": true,
+    "i-have-adhd@i-have-adhd": false,
+    "ponytail@ponytail": false,
+    "datadog@treatwell": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "obsidian-skills": {
+      "source": {
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      },
+      "autoUpdate": true
+    },
+    "developer-kit": {
+      "source": {
+        "source": "github",
+        "repo": "giuseppe-trisciuoglio/developer-kit"
+      }
+    },
+    "treatwell": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/denizgokcin/codes/work/claude-skills"
+      },
+      "autoUpdate": true
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      },
+      "autoUpdate": true
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
+  "outputStyle": "Terse",
+  "effortLevel": "high",
+  "promptSuggestionEnabled": false,
+  "pluginConfigs": {
+    "gitops@treatwell": {
+      "options": {
+        "clustersJsonPath": "/Users/denizgokcin/codes/dotfiles/ai-stuff/_shared/config/.clusters.json",
+        "ownerTeam": "platform-devx"
+      }
+    },
+    "session-handover@treatwell": {
+      "options": {
+        "obsidian_vault_path": "/Users/denizgokcin/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "tui": "fullscreen",
+  "autoMemoryEnabled": true,
+  "autoDreamEnabled": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "verbose": false,
+  "teammateMode": "auto",
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
+}

@@ -33,6 +33,11 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "terraform", "hcl", "tf" },
 })
 
+-- Hot-reload: watch CWD and reload visible buffers when files change
+local dw = require('custom.directory-watcher')
+dw.setup({ path = vim.fn.getcwd() })
+require('custom.hotreload').setup()
+
 -- auto-recognize gitconfig filetypes
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = { "*.gitconfig", ".gitconfig", "gitconfig", ".gitconfig.*" },

@@ -35,6 +35,7 @@
     filemode = false
     autocrlf = input
     whitespace = cr-at-eol
+	excludesFile = /Users/denizgokcin/.config/git/ignore
 
 [pull]
   rebase = true

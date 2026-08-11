@@ -14,6 +14,10 @@ include makefiles/gitconfigs.mk
 include makefiles/shell.mk
 include makefiles/tools.mk
 include makefiles/utils.mk
+include makefiles/ai.mk
+include makefiles/claude.mk
+include makefiles/cursor.mk
+include makefiles/codex.mk
 include makefiles/targets.mk
 
 # Define reusable macros for common operations

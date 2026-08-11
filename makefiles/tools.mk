@@ -17,3 +17,7 @@ continue:
 karabiner:
 	$(call mkdir_safe,${HOME}/.config/karabiner)
 	$(call symlink,other/karabiner/karabiner.json,${HOME}/.config/karabiner/karabiner.json)
+
+tmux: ## Install tmux and symlink config (fixes TERM/escape-sequence bleed with vim)
+	$(call install_with_brew,tmux)
+	$(call symlink,other/tmux/tmux.conf,${HOME}/.tmux.conf)

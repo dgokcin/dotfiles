@@ -1,0 +1,59 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'CAVEMAN MODE ACTIVE. Rules: Drop articles/filler/pleasantries/hedging. Fragments OK. Short synonyms. Pattern: [thing] [action] [reason]. [next step]. Not: Sure! I would be happy to help you with that. Yes: Bug in auth middleware. Fix: Code/commits/security: write normal. User says stop caveman or normal mode to deactivate.'",
+            "timeout": 5,
+            "statusMessage": "Loading caveman mode"
+          },
+          {
+            "type": "command",
+            "command": "echo \"Working directory: $(git rev-parse --show-toplevel 2>/dev/null || pwd)\nMain git dir: $(git rev-parse --git-common-dir 2>/dev/null)\nIs worktree: $(git rev-parse --is-inside-work-tree 2>/dev/null)\nMain worktree: $(git worktree list --porcelain 2>/dev/null | head -1 | sed 's/worktree //')\"",
+            "timeout": 5,
+            "statusMessage": "Checking git worktree context"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude",
+            "timeout": 10,
+            "statusMessage": "rtk token-optimizer rewrite"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$NVIM\" ] && nvim --server \"$NVIM\" --remote-expr 'execute(\"checktime\")' > /dev/null 2>&1 || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.codex/scripts/notify-stop.sh",
+            "timeout": 10,
+            "statusMessage": "Sending notification"
+          }
+        ]
+      }
+    ]
+  }
+}

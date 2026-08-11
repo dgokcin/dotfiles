@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__datadog-mcp__search_datadog_spans",
+      "mcp__datadog-mcp__analyze_datadog_logs",
+      "mcp__datadog-mcp__search_datadog_logs",
+      "mcp__datadog-mcp__get_datadog_metric",
+      "mcp__datadog-mcp__search_datadog_metrics",
+      "mcp__datadog-mcp__search_datadog_hosts",
+      "mcp__datadog-mcp__search_datadog_monitors",
+      "mcp__datadog-mcp__get_datadog_metric_context",
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "mcp__claude_ai_Slack__slack_read_channel",
+      "mcp__claude_ai_Atlassian__getJiraIssue",
+      "mcp__context7__query-docs",
+      "mcp__context7__resolve-library-id",
+      "Bash(kubectl get *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl describe *)",
+      "Bash(kustomize build *)",
+      "Bash(helm show *)",
+      "Bash(glab mr view *)",
+      "Bash(glab mr list *)",
+      "Bash(glab ci view *)",
+      "Bash(rtk git status *)",
+      "Bash(rtk git log *)",
+      "Bash(rtk git diff *)",
+      "Bash(rtk git show *)",
+      "Bash(rtk git add *)",
+      "Bash(rtk git commit *)",
+      "Bash(rtk git push *)",
+      "Bash(rtk git pull *)",
+      "Bash(rtk git branch *)",
+      "Bash(rtk git fetch *)",
+      "Bash(rtk git stash *)",
+      "Bash(rtk git worktree *)",
+      "Bash(rtk gh pr *)",
+      "Bash(rtk gh issue *)",
+      "Bash(rtk gh run *)",
+      "Bash(rtk gh repo *)",
+      "Bash(rtk gh api *)",
+      "Bash(rtk gh release *)",
+      "Bash(rtk yadm *)",
+      "Bash(rtk gt *)"
+    ]
+  },
+  "worktree": {
+    "bgIsolation": "none"
+  }
+}

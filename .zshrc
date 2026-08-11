@@ -75,7 +75,6 @@ if [[ -z "$NVIM_LISTEN_ADDRESS" ]]; then
     web-search
     docker
     kubectl
-    nvm
     aws
     z
   )
@@ -87,15 +86,29 @@ else
     web-search
     docker
     kubectl
-    nvm
     aws
     z
   )
 fi
 
+# Lazy-load nvm — only init when nvm/node/npm first called
+export NVM_DIR="$HOME/.nvm"
+nvm() {
+  unfunction nvm node npm npx 2>/dev/null
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+node() { nvm; node "$@" }
+npm()  { nvm; npm  "$@" }
+npx()  { nvm; npx  "$@" }
+
 source $ZSH/oh-my-zsh.sh
-autoload -U +X compinit && compinit
-source <(kubectl completion zsh)
+
+# Cache kubectl completions — rebuild only when binary changes
+if [[ ! -f ~/.zsh_kubectl_completion ]] || [[ /usr/local/bin/kubectl -nt ~/.zsh_kubectl_completion ]] || [[ /opt/homebrew/bin/kubectl -nt ~/.zsh_kubectl_completion ]]; then
+  kubectl completion zsh > ~/.zsh_kubectl_completion 2>/dev/null
+fi
+[[ -f ~/.zsh_kubectl_completion ]] && source ~/.zsh_kubectl_completion
 
 # History in cache directory:
 HISTSIZE=10000
@@ -104,34 +117,36 @@ SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
 
 # vi mode
-bindkey -v
-export KEYTIMEOUT=1
+if [[ -z "$NVIM_LISTEN_ADDRESS" && -z "$NVIM" ]]; then
+  bindkey -v
+  export KEYTIMEOUT=1
 
-# Use vim keys in tab complete menu:
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -v '^?' backward-delete-char
+  # Use vim keys in tab complete menu:
+  bindkey -M menuselect 'h' vi-backward-char
+  bindkey -M menuselect 'k' vi-up-line-or-history
+  bindkey -M menuselect 'l' vi-forward-char
+  bindkey -M menuselect 'j' vi-down-line-or-history
+  bindkey -v '^?' backward-delete-char
 
-# Accept auto-suggestion with tab
-bindkey '^[[Z' autosuggest-accept
+  # Accept auto-suggestion with tab
+  bindkey '^[[Z' autosuggest-accept
 
-# Change cursor shape for different vi modes.
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
+  # Change cursor shape for different vi modes.
+  function zle-keymap-select {
+    if [[ ${KEYMAP} == vicmd ]] ||
+       [[ $1 = 'block' ]]; then
+      echo -ne '\e[1 q'
+    elif [[ ${KEYMAP} == main ]] ||
+         [[ ${KEYMAP} == viins ]] ||
+         [[ ${KEYMAP} = '' ]] ||
+         [[ $1 = 'beam' ]]; then
+      echo -ne '\e[5 q'
+    fi
+  }
 
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+  echo -ne '\e[5 q' # Use beam shape cursor on startup.
+  preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+fi
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -163,8 +178,6 @@ if [ -f ~/.bash_profile ]; then
 fi
 
 # eval "$(gh copilot alias -- zsh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval $(thefuck --alias)
 
 # Created by `pipx` on 2024-06-14 23:26:07
 export PATH="$PATH:/Users/denizgokcin/.local/bin"
@@ -178,3 +191,36 @@ if [ -f '/Users/denizgokcin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Use
 export PATH="/opt/homebrew/bin:$PATH"
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# Added by kubectl-plugins install
+export PATH="/Users/denizgokcin/codes/work/dev-tools/k8s:$PATH"
+
+# Added by dev-tools install
+export PATH="/Users/denizgokcin/codes/work/dev-tools/bin:$PATH"
+
+# Added by kubectl-plugins install
+export PATH="/Users/denizgokcin/codes/work/dev-tools/k8s/kubectl-plugins:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/denizgokcin/.antigravity/antigravity/bin:$PATH"
+
+# bun completions
+[ -s "/Users/denizgokcin/.bun/_bun" ] && source "/Users/denizgokcin/.bun/_bun"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Lazy-load thefuck — skip Python startup cost on every shell
+fuck() {
+  unfunction fuck 2>/dev/null
+  eval $(thefuck --alias)
+  fuck "$@"
+}
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export BASH_MAX_OUTPUT_LENGTH=15000
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/denizgokcin/.local/bin:$PATH"

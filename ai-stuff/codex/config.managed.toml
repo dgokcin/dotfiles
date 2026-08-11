@@ -1,0 +1,7 @@
+model = "gpt-5.4-mini"
+model_reasoning_effort = "low"
+
+# Hooks (~/.codex/hooks.json) are enabled by default in current Codex.
+# To disable, uncomment:
+# [features]
+# hooks = false

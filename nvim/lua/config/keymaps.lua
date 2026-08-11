@@ -62,9 +62,18 @@ vim.keymap.set("n", "<Enter>", "m`o<Esc>``", { noremap = true, silent = true, de
 vim.keymap.set("n", "<BS>", "m`O<Esc>``", { noremap = true, silent = true, desc = "Insert blank line above" })
 
 -- Move current line 1 line down in v-line mode and remember cursor position with gv
-vim.api.nvim_set_keymap("v", "J", ":m '>+1<CR>gv=gv",
-    { noremap = true, silent = true, desc = "Move selected lines down" })
-vim.api.nvim_set_keymap("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected lines up" })
+vim.api.nvim_set_keymap(
+  "v",
+  "J",
+  ":m '>+1<CR>gv=gv",
+  { noremap = true, silent = true, desc = "Move selected lines down" }
+)
+vim.api.nvim_set_keymap(
+  "v",
+  "K",
+  ":m '<-2<CR>gv=gv",
+  { noremap = true, silent = true, desc = "Move selected lines up" }
+)
 
 -- Terminal Mappings
 -- Escape terminal mode with <C-\\><C-n>
@@ -84,6 +93,13 @@ vim.keymap.set("n", "<leader>w-", "<C-W>s", { desc = "Split window below", remap
 vim.keymap.set("n", "<leader>w|", "<C-W>v", { desc = "Split window right", remap = true })
 vim.keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split window below", remap = true })
 vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split window right", remap = true })
+
+-- Yank with file path (useful for sharing context with Claude Code)
+local yank = require('custom.yank')
+vim.keymap.set('n', '<leader>ya', function() yank.yank_path(yank.get_buffer_absolute(), 'absolute') end, { desc = '[Y]ank [A]bsolute path' })
+vim.keymap.set('n', '<leader>yr', function() yank.yank_path(yank.get_buffer_cwd_relative(), 'relative') end, { desc = '[Y]ank [R]elative path' })
+vim.keymap.set('v', '<leader>ya', function() yank.yank_visual_with_path(yank.get_buffer_absolute(), 'absolute') end, { desc = '[Y]ank selection with [A]bsolute path' })
+vim.keymap.set('v', '<leader>yr', function() yank.yank_visual_with_path(yank.get_buffer_cwd_relative(), 'relative') end, { desc = '[Y]ank selection with [R]elative path' })
 
 -- Tab Management
 vim.keymap.set("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })

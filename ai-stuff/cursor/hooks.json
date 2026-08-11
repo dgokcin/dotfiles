@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "command": "~/.cursor/scripts/session-start-context.sh",
+        "timeout": 5
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "type": "command",
+        "command": "~/.cursor/scripts/auto-approve-cursor.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeReadFile": [
+      {
+        "type": "command",
+        "command": "~/.cursor/scripts/auto-approve-cursor.sh",
+        "timeout": 10
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "command": "rtk hook cursor",
+        "matcher": "Shell",
+        "timeout": 10
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "type": "command",
+        "command": "[ -n \"$NVIM\" ] && nvim --server \"$NVIM\" --remote-expr 'execute(\"checktime\")' >/dev/null 2>&1; echo '{}'",
+        "timeout": 5
+      }
+    ],
+    "stop": [
+      {
+        "type": "command",
+        "command": "~/.cursor/scripts/notify-stop.sh",
+        "timeout": 10
+      }
+    ]
+  }
+}

@@ -1,23 +1,21 @@
 return {
   "kylechui/nvim-surround",
   version = "*",
-  event = "BufRead",
-  vscode = "true",
+  vscode = true,
+  keys = {
+    { "<C-g>s", mode = "i", desc = "surround insert" },
+    { "<C-g>S", mode = "i", desc = "surround insert line" },
+    { "ys", mode = "n", desc = "surround add" },
+    { "yss", mode = "n", desc = "surround add cur line" },
+    { "yS", mode = "n", desc = "surround add line" },
+    { "ySS", mode = "n", desc = "surround add cur line (block)" },
+    { "S", mode = "v", desc = "surround visual" },
+    { "gS", mode = "v", desc = "surround visual line" },
+    { "ds", mode = "n", desc = "surround delete" },
+    { "cs", mode = "n", desc = "surround change" },
+    { "cS", mode = "n", desc = "surround change line" },
+  },
   config = function()
-    require("nvim-surround").setup({
-      keymaps = {
-        insert = "<C-g>s",
-        insert_line = "<C-g>S",
-        normal = "ys",
-        normal_cur = "yss",
-        normal_line = "yS",
-        normal_cur_line = "ySS",
-        visual = "S",
-        visual_line = "gS",
-        delete = "ds",
-        change = "cs",
-        change_line = "cS",
-      },
-    })
+    require("nvim-surround").setup()
   end,
 }
