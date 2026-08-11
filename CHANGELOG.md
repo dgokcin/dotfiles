@@ -1,5 +1,50 @@
 # Changelog
 
+## [3.12.0](https://github.com/dgokcin/dotfiles/compare/v3.11.0...v3.12.0) (2026-08-11)
+
+
+### Features
+
+* **ai:** introduce dedicated cursor modes for gitboi and jira-ninja ([faaae6a](https://github.com/dgokcin/dotfiles/commit/faaae6a08a78276f0e2848d4fc0c869345135c35))
+* **claude:** add agents and personas (gitboi, gitops-geezer, jira-girl, mega-dev, steve-square-meter) ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **claude:** add Claude Code skills framework (commit, create-pr, k8s-debug, address-review, auto-commit, daily-recap, create-story, get-story, dev-story, spike, jira-girl, mega-dev, save-property-to-vault, worktree-cleanup, and more) ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **claude:** add Claude Code skills, agents, and framework integration ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **claude:** add Claude Code skills, agents, and framework integration ([#193](https://github.com/dgokcin/dotfiles/issues/193)) ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **claude:** enable codex, datadog, and caveman plugins, add tool search configuration ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **codex:** mirror Claude skill structure for Codex compatibility with sync script and stop notifications ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **cursor:** add hooks, scripts, and cli-config symlink management ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **file-suggestion:** support underscore word separator for @-mentions ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* introduce modes.json ([f928684](https://github.com/dgokcin/dotfiles/commit/f9286846b0a20333f37401476f33ed9af7216026))
+* **k8s-debug:** add automatic cluster context detection ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **makefiles:** add targets for claude, codex, and cursor skill management ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **nvim:** add directory-watcher hot-reload, yank-with-path, and claude-code plugin ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **nvim:** add posttooluse hook to reload nvim buffers after Claude Code tool use ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **output-styles:** add slack message and code comment guidelines ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **output-styles:** add terse output style with caveman, ADHD, and ponytail rules ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **scripts:** add statusline multi-plugin active mode display ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **scripts:** add worktree-create, auto-approve-tools, focus-iterm, and pr-status scripts ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+
+
+### Bug Fixes
+
+* ad some critical rules ([111f53d](https://github.com/dgokcin/dotfiles/commit/111f53d2a584d7e546adc5b15e25926a9a7f71d4))
+* disable copilot related nvim plugins ([bd63352](https://github.com/dgokcin/dotfiles/commit/bd63352f252c274e1d0da5a3c78974e2a5bf5112))
+* escape properly for commits ([8748f08](https://github.com/dgokcin/dotfiles/commit/8748f081cfdf9902d52f0cf90e33b978562e75eb))
+* existing workflow glob fix ([edf0928](https://github.com/dgokcin/dotfiles/commit/edf0928740934ef01350e6cd417fcfabce539e58))
+* issue numbering problems ([fa66407](https://github.com/dgokcin/dotfiles/commit/fa66407b68663753e3eea6090a06854aeac9b840))
+* minor fixes in the fucked gitconfig ([898e473](https://github.com/dgokcin/dotfiles/commit/898e4736739106e69b9296361f3b52f54f47d2f2))
+* minor prompt adjustments ([#191](https://github.com/dgokcin/dotfiles/issues/191)) ([15a153a](https://github.com/dgokcin/dotfiles/commit/15a153a2e64d466d95c66b48d7cfcef48d5c14bc))
+* **nvim:** correct plugin names in disabled.lua from echasnovski/mini.* to nvim-mini/mini.* ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+* **pr-workflow:** remove git parent dependency from github pr rule ([198018e](https://github.com/dgokcin/dotfiles/commit/198018e3618743f50baac65fd1a2aa86de422cc7))
+* should solve the date problem ([60bf622](https://github.com/dgokcin/dotfiles/commit/60bf622b8a938769e20c0e830013000f4a277738))
+* try forcing frontmatter for new rule creation ([b1bebbd](https://github.com/dgokcin/dotfiles/commit/b1bebbdb8005a40de64e8b78ee31842b9568edc2))
+* working on the pr generation command ([81b26f9](https://github.com/dgokcin/dotfiles/commit/81b26f99b395afbd69fed66a3176de3b648bbd8d))
+
+
+### Performance Improvements
+
+* **shell:** lazy-load nvm and thefuck, cache kubectl completions in zshrc ([11d4479](https://github.com/dgokcin/dotfiles/commit/11d4479f4c5ee15381eef1efd29c5415db081bea))
+
 ## [3.11.0](https://github.com/dgokcin/dotfiles/compare/v3.10.0...v3.11.0) (2025-04-05)
 
 
