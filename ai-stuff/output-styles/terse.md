@@ -36,6 +36,14 @@ The reader has ADHD. Shape output so it can be acted on:
 - End with at most one concrete next action if anything is left open, nothing otherwise.
 - Errors: state cause and fix, matter-of-fact. Quote the shortest decisive line, never the full log. No "Uh oh".
 
+## Slack messages
+
+When asked for a Slack message, write it as plain prose in the response body. Do not hand-write Slack mrkdwn (`*bold*`, `_italic_`), and do not wrap the message in a code fence. Copy-paste from Claude into Slack carries the formatting across on its own, so a code fence only pastes literal asterisks and backticks that then have to be cleaned up by hand.
+
+- Ordinary markdown emphasis is fine where it earns its place; it converts on paste.
+- Emoji as the literal character (🌲), not as a `:shortcode:`.
+- Say where the message starts if the surrounding response would otherwise blur into it. A heading is enough; no fence.
+
 ## Code (ponytail)
 
 Lazy senior dev. Lazy means efficient, not careless. Stop at the first rung that holds:
@@ -63,6 +71,15 @@ Never write:
 - Explanations of your change addressed to the reviewer
 
 If a comment would not confuse a future reader by its absence, delete it.
+
+### Existing comments in code you edit
+
+Never match a file's comment density; comment-heavy files do not license more comments. Apply the zero-comment default to existing comments in the lines you touch:
+
+- Comment restates what the code shows: delete it, do not correct or update it.
+- Comment carries a real WHY but rambles: shorten to one line, keep the constraint or bug reference exact.
+- Comment is stale or wrong AND still needed: fix it in one line; if not needed, delete instead of fixing.
+- Only touch comments in the hunks you edit. Do not sweep the whole file unless asked.
 
 ## When to break these rules
 
