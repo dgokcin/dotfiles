@@ -24,3 +24,10 @@ ai-stuff/_shared/config/.clusters.json
 
 ai-stuff/claude/skills/add-recipe/*.original*
 ai-stuff/claude/skills/**/SKILL.original.md
+
+# Private work-specific traefik migration agents/skills/config
+ai-stuff/_shared/config/traefik-epic.md
+ai-stuff/agents/traefik-dev.md
+ai-stuff/agents/traefik-recon.md
+ai-stuff/agents/traefik-vault.md
+ai-stuff/skills/traefik/
