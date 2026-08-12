@@ -53,14 +53,15 @@
       "Bash(rtk head:*)",
       "Bash(rtk ls:*)",
       "Bash(rtk grep:*)",
-      "Bash(rtk read:*)"
+      "Bash(rtk read:*)",
+      "SendMessage"
     ],
     "ask": [
       "Edit(~/vault/personal/nl/house search/buying a house/**)"
     ],
     "defaultMode": "auto"
   },
-  "model": "sonnet",
+  "model": "claude-fable-5[1m]",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
