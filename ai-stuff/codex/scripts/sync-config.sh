@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # Sync the dotfiles-managed block of ~/.codex/config.toml from
 # config.managed.toml. Only the block between the markers is owned by
-# dotfiles; everything else (project trust levels, hooks.state trusted
-# hashes, caches) is machine state and left untouched.
+# dotfiles; project trust levels stay machine-local and are left untouched.
 #
 # The block is prepended because TOML requires top-level keys to appear
 # before the first table header.
@@ -20,12 +19,12 @@ tmp=$(mktemp)
 # Drop the previous managed block.
 awk -v b="$BEGIN" -v e="$END" '$0==b{skip=1} !skip; $0==e{skip=0}' "$DST" > "$tmp"
 
-# Drop bare duplicates (outside any table) of top-level keys the block owns,
-# so the merged file has no duplicate TOML keys.
-managed_keys=$(grep -oE '^[a-zA-Z_]+' "$SRC" | sort -u)
-for k in $managed_keys; do
-  awk -v key="$k" '/^\[/{intable=1} !(intable!=1 && $0 ~ "^"key" *=")' "$tmp" > "$tmp.2" && mv "$tmp.2" "$tmp"
-done
+# Keep only machine-local project tables outside the managed block. This also
+# removes stale generated state for hooks that no longer exist.
+awk '
+  /^\[/ { keep = ($0 ~ /^\[projects\./) }
+  keep { print }
+' "$tmp" > "$tmp.2" && mv "$tmp.2" "$tmp"
 
 { echo "$BEGIN"; cat "$SRC"; echo "$END"; echo; cat "$tmp"; } > "$DST"
 rm -f "$tmp"

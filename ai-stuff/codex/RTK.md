@@ -15,11 +15,6 @@ rtk npm run build
 rtk pytest -q
 ```
 
-A PreToolUse hook (`rtk hook claude` in `~/.codex/hooks.json`) also attempts
-to rewrite unprefixed commands, but whether Codex applies `updatedInput`
-mutations is unverified — the manual prefix rule above is the reliable path
-(this matches `rtk init -g --codex`'s own instructions-only approach).
-
 ## Meta Commands
 
 ```bash

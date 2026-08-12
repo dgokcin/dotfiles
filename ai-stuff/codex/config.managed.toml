@@ -1,7 +1,38 @@
-model = "gpt-5.4-mini"
-model_reasoning_effort = "low"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+service_tier = "default"
 
-# Hooks (~/.codex/hooks.json) are enabled by default in current Codex.
-# To disable, uncomment:
-# [features]
-# hooks = false
+[tui]
+vim_mode_default = true
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining", "context-used", "five-hour-limit", "weekly-limit"]
+status_line_use_colors = true
+pet = "fireball"
+
+[mcp_servers]
+
+[plugins."atlassian-rovo@openai-curated"]
+enabled = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+
+[hooks.state]
+
+[hooks.state."/Users/denizgokcin/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:0ed786805542f7114c30eda6945e72a2f1285c06fd6d4320de621a9549c095ed"
+
+[hooks.state."/Users/denizgokcin/.codex/hooks.json:permission_request:0:0"]
+trusted_hash = "sha256:3edef66d977c01b02c741ef44307a0b3e66fee85aa11e802deab1bb871ba6041"
+
+[hooks.state."/Users/denizgokcin/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:c56424322e17fd654a4c1e93b61f6529c420ecd40f3ee9cc0ae3fd3b7b9c6353"
+
+[hooks.state."/Users/denizgokcin/.codex/hooks.json:session_start:0:1"]
+trusted_hash = "sha256:167ff2b32ddd73315d8846a7b8c09462b039251374f878321d72fca941bb3587"
+
+[hooks.state."/Users/denizgokcin/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:0a3971c2697e522540874c3dd1a79802fe7482405e8960f960a83b8bc866dbf9"
+
+[notice.model_migrations]
+"gpt-5.4-mini" = "gpt-5.6-luna"
+"gpt-5.4" = "gpt-5.6-terra"

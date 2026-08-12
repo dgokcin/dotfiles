@@ -14,16 +14,16 @@ skills arrive via ai.mk's `agents` pseudo-tool (`~/.agents/skills`), which
 
 ## config.toml
 
-`~/.codex/config.toml` is mostly machine state (project trust levels,
-`hooks.state` trusted hashes, caches) and cannot be symlinked wholesale.
-Instead, [`config.managed.toml`](config.managed.toml) holds the versionable
-prefs (model, reasoning effort) and
+`~/.codex/config.toml` contains machine-local project trust levels and cannot
+be symlinked wholesale. Instead,
+[`config.managed.toml`](config.managed.toml) holds all non-project settings and
+state, and
 [`scripts/sync-config.sh`](scripts/sync-config.sh) idempotently rewrites a
 marker-delimited block at the top of the file (`make codex` runs it).
-Everything outside the markers is machine-local and untouched.
+Project tables outside the markers are machine-local and untouched.
 
 Hooks are enabled by default in current Codex; disable with
-`[features] hooks = false` (documented in the managed block).
+`[features] hooks = false`.
 
 ## Hooks
 
@@ -38,7 +38,6 @@ Converted from the Claude Code setup:
 | --- | --- | --- |
 | SessionStart | caveman-mode context echo | migrated from hand-made `~/.codex/hooks.json` |
 | SessionStart | git worktree context echo | same command as Claude's |
-| PreToolUse | `rtk hook claude` | rtk has no `codex` processor yet; its `claude` processor rewrites commands without granting permission. ⚠ Unverified whether Codex applies `updatedInput` mutations like Claude does — check `rtk gain` after a few Codex sessions; flat counters mean the rewrite silently no-ops |
 | PostToolUse (`apply_patch\|Edit\|Write`) | nvim `checktime` | refresh open buffers |
 | Stop | `notify-stop.sh` | terminal-notifier + click-to-focus iTerm |
 
