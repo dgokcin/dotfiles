@@ -1,6 +1,9 @@
 model = "gpt-5.6-sol"
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
 model_reasoning_effort = "high"
 service_tier = "default"
+approvals_reviewer = "auto_review"
 
 [tui]
 vim_mode_default = true

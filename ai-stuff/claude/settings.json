@@ -61,7 +61,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "sol",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
@@ -187,6 +187,8 @@
   "worktree": {
     "baseRef": "fresh"
   },
+  "enableArtifact": false,
+  "enableWorkflows": false,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/scripts/statusline.sh"
@@ -198,11 +200,11 @@
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
-    "skill-creator@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": false,
     "caveman@caveman": false,
-    "plugin-dev@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": false,
     "gitops@treatwell": true,
-    "session-handover@treatwell": true,
+    "session-handover@treatwell": false,
     "i-have-adhd@i-have-adhd": false,
     "ponytail@ponytail": false,
     "datadog@treatwell": true,
@@ -249,8 +251,13 @@
       }
     }
   },
-  "outputStyle": "Terse",
+  "outputStyle": "Coincise",
   "effortLevel": "high",
+  "modelSettings": {
+    "sol": {
+      "effortLevel": "medium"
+    }
+  },
   "promptSuggestionEnabled": false,
   "pluginConfigs": {
     "gitops@treatwell": {
@@ -272,7 +279,9 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "verbose": false,
-  "teammateMode": "auto",
+  "teammateMode": "iterm2",
+  "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }
