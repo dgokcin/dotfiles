@@ -29,7 +29,7 @@ AI_SKILLS := $(notdir $(wildcard $(DOTFILES)/ai-stuff/skills/*))
 
 # Names that used to be installed but no longer exist as skills — pruned on
 # every install so stale symlinks don't linger (BMAD's removals.txt pattern).
-AI_LEGACY_SKILLS := add-recipe add-vinyl gitboi gitops-geezer meeting-note quick-note request-viewing weekly-review traefik spike dev-story mega-dev commit
+AI_LEGACY_SKILLS := add-recipe add-vinyl gitboi gitops-geezer meeting-note quick-note request-viewing weekly-review traefik spike dev-story mega-dev commit jiragirl
 
 SKILL_META := $(DOTFILES)/makefiles/scripts/skill-meta.sh
 
