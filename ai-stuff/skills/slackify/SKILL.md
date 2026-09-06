@@ -3,7 +3,37 @@ name: slackify
 description: This skill should be used when the user asks to "slackify" something, "write a slack message", "post this to slack", "turn this into a slack update", or wants any text rewritten in Deniz's Slack voice. Rewrites content as Deniz writes in public channels, all lowercase, direct, zero AI fluff, tl;dr first on long updates, root cause before fix.
 ---
 
-Rewrite the given content (or draft a new message) in Deniz's Slack voice. Output the message as plain prose in the response body: no code fence around it, no hand-written mrkdwn (`*bold*`, `_italic_`). Paste from the terminal carries formatting on its own. If the surrounding response would blur into the message, put a one-line heading before it, never a fence.
+Rewrite the given content (or draft a new message) in Deniz's Slack voice, then output it inside a five-backtick fence as slack mrkdwn. Both halves are mandatory: the fence protects the markup characters from Claude Code's renderer, the mrkdwn dialect is what slack actually parses. Get either wrong and the message pastes flat.
+
+## output format
+
+Wrap every message in a five-backtick fence, like this:
+
+`````
+tl;dr: the message goes here.
+`````
+
+Five backticks, not three. The message itself may contain a ``` code block, and a three-backtick wrapper would terminate on it.
+
+Never emit the message as bare response prose. Claude Code renders markdown before it reaches the screen, so `*bold*` is shown as styling and the asterisks are gone from whatever the user copies. Slack then receives nothing to parse. The fence keeps the source literal so the clipboard carries real characters.
+
+Nothing outside the fence except at most a one-line lead-in. No commentary after it.
+
+### slack mrkdwn, not github markdown
+
+Inside the fence, write slack's dialect:
+
+- bold: `*one asterisk*`, never `**two**`
+- italic: `_underscores_`
+- strikethrough: `~one tilde~`, never `~~two~~`
+- inline code: single backticks, for the same things the lowercase rule keeps verbatim
+- code block: triple backticks with no language tag. Slack prints the tag as the first line of the block
+- quote: `>` at line start
+- bullets: the literal character `•`, never `-` or `*`. Slack does not turn those into lists
+- links: paste the bare url, slack auto-links it. Never `[text](url)`, it survives as literal brackets
+- headers: slack has none. Use a `*bold line*` where a `##` would go
+
+This assumes "Format messages with markup" is enabled in slack (Preferences, Advanced, Input options). It is, on Deniz's setup. With that setting off slack parses nothing, and the right output would instead be flat prose with no markup at all.
 
 ## lowercase
 
