@@ -1,7 +1,6 @@
 ---
 name: create-story
-description: Create a Jira story with proper ADF formatting using Jira Girl persona
-disable-model-invocation: true
+description: Create a Jira story with proper ADF formatting using the Jira Girl persona. Use when the user asks to create a Jira story, ticket, or issue, wants requirements or notes turned into a ticket, or says "make a story for X".
 context: fork
 agent: jiragirl
 allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue, Read

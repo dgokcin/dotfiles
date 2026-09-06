@@ -4,7 +4,6 @@ description: Fetch and display a Jira issue with all details using Jira Girl. Us
 context: fork
 agent: jiragirl
 allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue
-disable-model-invocation: true
 argument-hint: <DEVX-XXX or issue number>
 ---
 

@@ -2,7 +2,6 @@
 name: auto-commit
 description: Primary commit skill. Use when user asks to commit, stage and commit, or create a commit. Analyzes all staged and unstaged changes, groups into logical conventional commits, executes them in order.
 agent: gitboi
-disable-model-invocation: false
 context: fork
 model: haiku
 allowed-tools:

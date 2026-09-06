@@ -1,7 +1,6 @@
 ---
 name: aws-debug
 description: This skill should be used when the user asks to "debug AWS", "check AWS resources", "why is my Lambda failing", "S3 bucket access issues", "EC2 instance status", "RDS connection problems", "check CloudWatch logs", or mentions any AWS service debugging. Automatically selects a read-only profile first and falls back to admin if the command fails with a permissions error.
-disable-model-invocation: false
 argument-hint: <service/resource> [profile] [region]
 allowed-tools:
   - Bash(aws:*)
