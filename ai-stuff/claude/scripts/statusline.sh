@@ -269,7 +269,7 @@ if [ "$is_codex_model" = 1 ]; then
     [ -n "$codex_cache_mtime" ] && codex_cache_age=$(($(date +%s) - codex_cache_mtime))
   fi
 
-  if [ "$codex_cache_age" -gt 60 ] && [ -f "$codex_auth" ]; then
+  if [ "$codex_cache_age" -ge 60 ] && [ -f "$codex_auth" ]; then
     codex_token=$(jq -r '.tokens.access_token // empty' "$codex_auth" 2>/dev/null)
     codex_acct=$(jq -r '.tokens.account_id // empty' "$codex_auth" 2>/dev/null)
     codex_payload=""
@@ -348,11 +348,16 @@ if [ "$is_codex_model" = 1 ]; then
     if [ -n "$codex_prices" ]; then
       IFS=$'\t' read -r cx_price_in cx_price_cached cx_price_out <<<"$codex_prices"
       # fromjson? tolerates the half-written last line of a live transcript.
+      # Claude Code writes one line per content block, so a single response
+      # (text + tool call) repeats its usage on several lines sharing one
+      # message.id — count each id once or the total nearly doubles.
       # Cache writes are billed at the plain input rate (OpenAI has no
       # separate write price); cache reads at the cached-input rate.
       codex_cost_val=$(jq -R -n --arg m "$model_id" \
         --arg pin "$cx_price_in" --arg pcached "$cx_price_cached" --arg pout "$cx_price_out" '
-        [inputs | fromjson? | .message? | select(.model == $m) | .usage // empty] as $u
+        [inputs | fromjson? | .message? | select(.model == $m and .usage != null)] as $all
+        | ((($all | map(select(.id != null)) | unique_by(.id))
+            + ($all | map(select(.id == null)))) | map(.usage)) as $u
         | ( (($u | map(.input_tokens // 0) | add // 0)
              + ($u | map(.cache_creation_input_tokens // 0) | add // 0)) * ($pin | tonumber)
           + ($u | map(.cache_read_input_tokens // 0) | add // 0) * ($pcached | tonumber)

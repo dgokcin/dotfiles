@@ -61,7 +61,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "sol",
+  "model": "astra",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
@@ -191,7 +191,12 @@
   "enableWorkflows": false,
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/scripts/statusline.sh"
+    "command": "~/.claude/scripts/statusline.sh",
+    "refreshInterval": 60
+  },
+  "subagentStatusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/subagent-statusline.sh"
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": false,
@@ -203,12 +208,10 @@
     "skill-creator@claude-plugins-official": false,
     "caveman@caveman": false,
     "plugin-dev@claude-plugins-official": false,
-    "gitops@treatwell": true,
-    "session-handover@treatwell": false,
-    "i-have-adhd@i-have-adhd": false,
+    "gitops@treatwell": false,
+    "session-handover@treatwell": true,
     "ponytail@ponytail": false,
-    "datadog@treatwell": true,
-    "codex@openai-codex": true
+    "datadog@treatwell": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -237,13 +240,6 @@
       },
       "autoUpdate": true
     },
-    "i-have-adhd": {
-      "source": {
-        "source": "github",
-        "repo": "ayghri/i-have-adhd"
-      },
-      "autoUpdate": true
-    },
     "ponytail": {
       "source": {
         "source": "github",
@@ -252,9 +248,19 @@
     }
   },
   "outputStyle": "Coincise",
+  "feedbackDrafts": "off",
   "effortLevel": "high",
   "modelSettings": {
     "sol": {
+      "effortLevel": "medium"
+    },
+    "claude-fable-5": {
+      "effortLevel": "high"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
+    },
+    "astra": {
       "effortLevel": "medium"
     }
   },
@@ -272,13 +278,14 @@
       }
     }
   },
-  "autoUpdatesChannel": "latest",
   "tui": "fullscreen",
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
+  "editorMode": "vim",
   "verbose": false,
+  "preferredNotifChannel": "iterm2_with_bell",
   "teammateMode": "iterm2",
   "remoteControlAtStartup": false,
   "agentPushNotifEnabled": true,
