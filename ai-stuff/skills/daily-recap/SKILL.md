@@ -264,7 +264,30 @@ For each meeting where Gemini data was successfully fetched (step 2i above):
 
    Returns a JSON array of paths like `["work/meetings/YYYY-MM-DD title.md", ...]`.
 
-2. **Match meeting to note** — compare calendar event title to vault note filename (case-insensitive, partial match). If multiple notes exist for the date, pick the one whose filename most closely matches the calendar event title. If no match → skip silently.
+2. **Match meeting to note** — compare calendar event title to vault note filename (case-insensitive, partial match). If multiple notes exist for the date, pick the one whose filename most closely matches the calendar event title.
+
+   **If no match → CREATE the note (never skip).** Deniz wants every meeting with Gemini notes to have a vault note (2026-09-02):
+
+   ```bash
+   obsidian create name="<event title, lowercase>" template="meeting-template" silent
+   sleep 4   # Templater must finish before the next step
+   ```
+
+   Templater stamps `tp.date.now()`, so the note lands as `work/meetings/<TODAY> <title>.md`. If the target date is not today, move it and fix the dates:
+
+   ```bash
+   obsidian move path="work/meetings/<TODAY> <title>.md" to="work/meetings/YYYY-MM-DD <title>.md"
+   ```
+
+   Then overwrite the file body (heredoc via Bash is fine — the template only matters for the move + frontmatter shape): set `date: YYYY-MM-DD HH:mm` (meeting start), `Date: [[YYYY-MM-DD]]`, H1 `# [[YYYY-MM-DD <title>]]`, `summary:` = Gemini one-liner. Fill the template sections from Gemini data:
+   - **Attendees** → calendar attendees as `[[first last]]` wikilinks (resolve via step 2k; plain text if no people note), skip rooms/group aliases
+   - **Agenda** → one sentence derived from the Summary
+   - **Questions** → open questions from Details / "Needs Further Discussion"
+   - **Notes** → bullets from Summary + Details (the meaty technical context, not the transcript)
+   - **Action Items** → all Next steps as `- [ ] [[owner]] — item`; Deniz's already-completed ones as `- [x] ... ✅ YYYY-MM-DD` with MR links
+
+   A created note counts as "found" for steps 3–5 below (skip step 5's `## Gemini Notes` append — the content is already in the template sections) and for the `### meetings` block + `[[wikilink]]` task line in Step 5.
+
 
 3. **Check for existing Gemini section** — read the note and check if a `## Gemini Notes` section already exists. If yes → skip (don't overwrite).
 

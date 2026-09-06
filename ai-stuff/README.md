@@ -17,11 +17,14 @@ installation. No per-tool transformation, no drift.
 ai-stuff/
 ├── skills/            # ⭐ single source of truth — universal Agent Skills
 │   ├── _shared -> ../_shared   # makes relative ../_shared/... refs resolve
-│   ├── commit/SKILL.md
-│   ├── daily-recap/SKILL.md + scripts/
-│   ├── vault-capture/SKILL.md + references/
+│   ├── slackify/
+│   │   ├── SKILL.md            # frontmatter drives Claude Code
+│   │   └── agents/openai.yaml  # picker metadata + policy for Codex
+│   ├── daily-recap/SKILL.md + agents/ + scripts/
+│   ├── vault-capture/SKILL.md + agents/ + references/
 │   ├── .archived/     # retired skills (never installed)
 │   └── ...
+├── invocation.md      # user- vs model-invoked rules, Skill-tool phrasing, openai.yaml schema
 ├── _shared/           # personas, configs, templates referenced by skills+agents
 │   ├── personas/      # gitboi, jira-girl, mega-dev, ...
 │   ├── config/        # git-config, jira-config, .clusters.json, ...
@@ -48,7 +51,9 @@ also scans `~/.claude/skills` and `~/.claude/agents` — those entries are the
 same symlinked files, deduplicated by `name`.
 
 ```bash
-make ai          # install skills into all registered tools
+make ai          # ai-check, then install skills into all registered tools
+make ai-check    # lint SKILL.md <-> agents/openai.yaml (invocation policy, legacy keys, leftovers)
+make ai-skill-meta  # scaffold agents/openai.yaml for skills missing one
 make ai-list     # show skills + tool registry
 make ai-clean    # remove installed skills everywhere
 make claude      # claude layer (agents/personas/configs/scripts/settings) + ai-claude
@@ -67,8 +72,11 @@ AI_TOOLS += cline
 ai_skills_dir_cline := ${HOME}/.cline/skills
 ```
 
-**Add a skill** — create `ai-stuff/skills/<name>/SKILL.md`, run `make ai`.
-Nothing else; discovery is by wildcard.
+**Add a skill** — create `ai-stuff/skills/<name>/SKILL.md`, decide whether it
+is user- or model-invoked per [`invocation.md`](invocation.md), run
+`make ai-skill-meta` and curate the generated `agents/openai.yaml`
+`short_description`, then `make ai`. Discovery is by wildcard; `ai-check`
+refuses to install if the two metadata files disagree.
 
 **Retire a skill** — move its dir to `skills/.archived/` and append the name
 to `AI_LEGACY_SKILLS` in `ai.mk` so installs prune it everywhere (BMAD's
@@ -92,7 +100,14 @@ Skills must work in any tool. Rules used throughout `skills/`:
 3. **Claude-specific frontmatter keys are kept** (`allowed-tools`, `agent`,
    `context: fork`, `disable-model-invocation`). The Agent Skills spec says
    unknown keys are ignored, so other tools skip them. Claude Code is the
-   primary driver here; don't strip its metadata for purity.
+   primary driver here; don't strip its metadata for purity. The one key
+   with a cross-tool twin is `disable-model-invocation`: it must agree with
+   `policy.allow_implicit_invocation` in `agents/openai.yaml` (Codex). Rules
+   and the openai.yaml schema live in [`invocation.md`](invocation.md).
+
+6. **Cross-skill calls say `Call the Skill tool with "<name>"`**, never
+   `/name`, and only ever target a model-invoked skill. See
+   [`invocation.md`](invocation.md).
 
 4. **Executable helpers used by universal skills live in `_shared/scripts/`**
    and are referenced via `~/.config/ai-shared/scripts/...` (e.g.
@@ -115,7 +130,8 @@ Anything that is *not* a skill stays out of `skills/`:
   file works in every tool that can read files.
 - **`claude/`** — `settings.json` (hooks, permissions, statusline, plugins)
   and Claude-only hook scripts. See [claude/README.md](claude/README.md).
-- **`codex/`** — `hooks.json` + Codex-only hook scripts. See
+- **`codex/`** — `hooks.json` + Codex-only hook scripts. Codex skill-picker
+  metadata is *not* here: it lives beside each skill in `agents/openai.yaml`. See
   [codex/README.md](codex/README.md).
 - **`_shared/scripts/`** — scripts shared across tools. Hook scripts
   (`auto-approve-tools.sh`, `focus-iterm.applescript`): Codex adopted Claude

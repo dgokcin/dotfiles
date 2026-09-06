@@ -15,23 +15,60 @@ return {
             Snacks.gitbrowse()
           end,
         },
-        function()
+        function(self)
           local in_git = Snacks.git.get_root() ~= nil
           local remote = in_git and vim.fn.system("git remote get-url origin 2>/dev/null"):gsub("%s+", "") or ""
           local is_github = remote:find("github%.com") ~= nil
           local is_gitlab = remote:find("gitlab") ~= nil or remote:find("git%.treatwell") ~= nil
+          local repo = remote:match("github%.com[:/]([^/]+/[^/]+)")
+          repo = repo and repo:gsub("%.git$", "") or ""
+
+          -- Notifications as plain text (not a terminal section) so nothing renders
+          -- when empty and no "[Process exited 0]" can appear. Reads a cache file and
+          -- refreshes it in the background for the next dashboard open.
+          local items = {}
+          if in_git and is_github and repo ~= "" then
+            local notif_file = vim.fn.stdpath("cache") .. "/dash-gh-notify-" .. repo:gsub("/", "_") .. ".txt"
+            local stat = vim.uv.fs_stat(notif_file)
+            if not stat or os.time() - stat.mtime.sec > 300 then
+              local strip = [[perl -pe 's/\e\[[0-9;]*[A-Za-z]//g; s/\e\][^\a\e]*(?:\a|\e\\)//g; s/[\r\a]//g']]
+              vim.fn.jobstart({
+                "sh",
+                "-c",
+                ("gh notify -s -a -n5 -f '%s' 2>/dev/null | grep -v 'No results found.' | %s > '%s'"):format(
+                  repo,
+                  strip,
+                  notif_file
+                ),
+              })
+            end
+            local lines = stat and vim.fn.readfile(notif_file) or {}
+            lines = vim.tbl_filter(function(l)
+              return l:match("%S")
+            end, lines)
+            if #lines > 0 then
+              items[#items + 1] = {
+                pane = 2,
+                icon = " ",
+                title = "Notifications",
+                key = "N",
+                action = function()
+                  vim.ui.open("https://github.com/notifications?query=repo%3A" .. repo:gsub("/", "%%2F"))
+                end,
+              }
+              local width = (self and self.opts and self.opts.width or 60) - 3
+              for i, l in ipairs(lines) do
+                items[#items + 1] = {
+                  pane = 2,
+                  indent = 3,
+                  padding = i == #lines and 1 or 0,
+                  text = { { vim.fn.strcharpart(l, 0, width), hl = "dir" } },
+                }
+              end
+            end
+          end
+
           local cmds = {
-            {
-              title = "Notifications",
-              cmd = "gh notify -s -a -n5",
-              action = function()
-                vim.ui.open("https://github.com/notifications")
-              end,
-              key = "N",
-              icon = " ",
-              height = 5,
-              enabled = is_github,
-            },
             -- {
             --   title = "Open Issues",
             --   cmd = "gh issue list -L 3",
@@ -65,8 +102,8 @@ return {
               enabled = is_gitlab,
             },
           }
-          return vim.tbl_map(function(cmd)
-            return vim.tbl_extend("force", {
+          for _, cmd in ipairs(cmds) do
+            items[#items + 1] = vim.tbl_extend("force", {
               pane = 2,
               section = "terminal",
               enabled = in_git,
@@ -74,7 +111,8 @@ return {
               ttl = 5 * 60,
               indent = 3,
             }, cmd)
-          end, cmds)
+          end
+          return items
         end,
         { section = "startup" },
       },

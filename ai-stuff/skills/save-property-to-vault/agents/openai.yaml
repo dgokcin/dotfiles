@@ -1,0 +1,3 @@
+interface:
+  display_name: "Save Property To Vault"
+  short_description: "File an analyzed property listing into the vault"

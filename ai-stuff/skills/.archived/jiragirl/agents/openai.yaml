@@ -1,0 +1,5 @@
+interface:
+  display_name: "Jira Girl"
+  short_description: "Start a Jira Girl session for Jira and Confluence"
+policy:
+  allow_implicit_invocation: false

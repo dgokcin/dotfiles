@@ -10,6 +10,9 @@ yamllint: ## Set up yamllint with custom configuration in the config directory
 	$(call mkdir_safe,${HOME}/.config/yamllint)
 	$(call symlink,other/yamllint/config,${XDG_CONFIG_HOME}/yamllint/config)
 
+yq: ## Install yq (YAML processor used by makefiles/scripts/skill-meta.sh)
+	$(call install_with_brew,yq)
+
 continue:
 	$(call mkdir_safe,${HOME}/.continue)
 	$(call symlink,ai-stuff/continue/config.json,${HOME}/.continue/config.json)

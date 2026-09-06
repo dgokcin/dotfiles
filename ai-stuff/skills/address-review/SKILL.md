@@ -1,6 +1,6 @@
 ---
 name: address-review
-description: Fetch and address code review comments on the current PR/MR. Pass 'gh' or 'gl' to skip VCS detection. Triggers when user says things like 'address review comments', 'fix PR feedback', 'resolve reviewer comments', 'address the review', 'fix review', 'tackle the comments', or any variation of wanting to act on PR/MR review feedback. Use this skill even if the user just says 'the reviewer said X' or 'there are comments on my PR'.
+description: Fetch and address code review comments on the current PR/MR. Pass 'gh' or 'gl' to skip VCS detection.
 disable-model-invocation: true
 context: fork
 argument-hint: "[gh|gl]"

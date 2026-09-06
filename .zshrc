@@ -224,3 +224,6 @@ export BASH_MAX_OUTPUT_LENGTH=15000
 
 # Added by Antigravity CLI installer
 export PATH="/Users/denizgokcin/.local/bin:$PATH"
+
+# opencode
+export PATH=/Users/denizgokcin/.opencode/bin:$PATH

@@ -10,6 +10,7 @@ local function setup_command_abbreviations()
     { "wQ", "wq" },
     { "WQ", "wq" },
     { "W", "w" },
+    { "qq", "qall!" },
     { "Q", "q" },
     { "Qall", "qall" },
   }
@@ -20,4 +21,3 @@ local function setup_command_abbreviations()
 end
 
 setup_command_abbreviations()
-

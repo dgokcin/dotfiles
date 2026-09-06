@@ -36,6 +36,7 @@ claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, hooks, e
 	$(call pretty_print, "Installing Claude Code scripts...")
 	$(call symlink,ai-stuff/claude/scripts/file-suggestion.sh,${CLAUDE_HOME}/scripts/file-suggestion.sh)
 	$(call symlink,ai-stuff/claude/scripts/statusline.sh,${CLAUDE_HOME}/scripts/statusline.sh)
+	$(call symlink,ai-stuff/claude/scripts/subagent-statusline.sh,${CLAUDE_HOME}/scripts/subagent-statusline.sh)
 	$(call symlink,ai-stuff/claude/scripts/worktree-create.sh,${CLAUDE_HOME}/scripts/worktree-create.sh)
 	$(call symlink,ai-stuff/claude/scripts/worktree-remove.sh,${CLAUDE_HOME}/scripts/worktree-remove.sh)
 	$(call symlink,ai-stuff/claude/scripts/session-start.sh,${CLAUDE_HOME}/scripts/session-start.sh)

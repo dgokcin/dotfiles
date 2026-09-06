@@ -25,9 +25,7 @@ ai-stuff/_shared/config/.clusters.json
 ai-stuff/claude/skills/add-recipe/*.original*
 ai-stuff/claude/skills/**/SKILL.original.md
 
-# Private work-specific traefik migration agents/skills/config
+# Private work-specific traefik migration config. The skill, traefik-dev and traefik-recon moved into
+# k8s-gitops-platform-apps on 2026-08-12; only the personal Obsidian layer stays here.
 ai-stuff/_shared/config/traefik-epic.md
-ai-stuff/agents/traefik-dev.md
-ai-stuff/agents/traefik-recon.md
 ai-stuff/agents/traefik-vault.md
-ai-stuff/skills/traefik/

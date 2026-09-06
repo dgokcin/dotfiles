@@ -53,14 +53,15 @@
       "Bash(rtk head:*)",
       "Bash(rtk ls:*)",
       "Bash(rtk grep:*)",
-      "Bash(rtk read:*)"
+      "Bash(rtk read:*)",
+      "SendMessage"
     ],
     "ask": [
       "Edit(~/vault/personal/nl/house search/buying a house/**)"
     ],
     "defaultMode": "auto"
   },
-  "model": "sonnet",
+  "model": "astra",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
@@ -186,9 +187,16 @@
   "worktree": {
     "baseRef": "fresh"
   },
+  "enableArtifact": false,
+  "enableWorkflows": false,
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/scripts/statusline.sh"
+    "command": "~/.claude/scripts/statusline.sh",
+    "refreshInterval": 60
+  },
+  "subagentStatusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/subagent-statusline.sh"
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": false,
@@ -197,15 +205,13 @@
     "context7@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
     "feature-dev@claude-plugins-official": false,
-    "skill-creator@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": false,
     "caveman@caveman": false,
-    "plugin-dev@claude-plugins-official": true,
-    "gitops@treatwell": true,
+    "plugin-dev@claude-plugins-official": false,
+    "gitops@treatwell": false,
     "session-handover@treatwell": true,
-    "i-have-adhd@i-have-adhd": false,
     "ponytail@ponytail": false,
-    "datadog@treatwell": true,
-    "codex@openai-codex": true
+    "datadog@treatwell": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -234,13 +240,6 @@
       },
       "autoUpdate": true
     },
-    "i-have-adhd": {
-      "source": {
-        "source": "github",
-        "repo": "ayghri/i-have-adhd"
-      },
-      "autoUpdate": true
-    },
     "ponytail": {
       "source": {
         "source": "github",
@@ -248,8 +247,23 @@
       }
     }
   },
-  "outputStyle": "Terse",
+  "outputStyle": "Coincise",
+  "feedbackDrafts": "off",
   "effortLevel": "high",
+  "modelSettings": {
+    "sol": {
+      "effortLevel": "medium"
+    },
+    "claude-fable-5": {
+      "effortLevel": "high"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
+    },
+    "astra": {
+      "effortLevel": "medium"
+    }
+  },
   "promptSuggestionEnabled": false,
   "pluginConfigs": {
     "gitops@treatwell": {
@@ -264,14 +278,17 @@
       }
     }
   },
-  "autoUpdatesChannel": "latest",
   "tui": "fullscreen",
   "autoMemoryEnabled": true,
   "autoDreamEnabled": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
+  "editorMode": "vim",
   "verbose": false,
-  "teammateMode": "auto",
+  "preferredNotifChannel": "iterm2_with_bell",
+  "teammateMode": "iterm2",
+  "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }

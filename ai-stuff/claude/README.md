@@ -12,7 +12,8 @@ cross-tool architecture.
 ai-stuff/claude/
 ├── scripts/               # Claude-only hook + integration scripts (→ ~/.claude/scripts)
 │   ├── file-suggestion.sh # Custom file suggestion using rg + fzf
-│   ├── statusline.sh      # Statusline with git, context, vim mode
+│   ├── statusline.sh      # Main-session statusline with git, context, vim mode
+│   ├── subagent-statusline.sh # Subagent rows with each task's resolved model
 │   ├── session-start.sh   # Auto-name worktree sessions
 │   ├── notify.sh          # Notification-event alert (claude-only event)
 │   └── worktree-*.sh      # EnterWorktree/ExitWorktree hook scripts (claude hook protocol)

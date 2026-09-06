@@ -19,18 +19,6 @@
         ]
       }
     ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude",
-            "timeout": 10,
-            "statusMessage": "rtk token-optimizer rewrite"
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
       {
         "matcher": "apply_patch|Edit|Write",

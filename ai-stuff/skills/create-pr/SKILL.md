@@ -1,7 +1,6 @@
 ---
 name: create-pr
-description: Create GitHub PR or GitLab MR. Pass 'gh' or 'gl' to skip VCS detection
-disable-model-invocation: false
+description: Create a GitHub PR or GitLab MR for the current branch. Use when the user asks to open, create, or raise a PR or MR, says "ship it" after committing, or wants the branch put up for review. Pass 'gh' or 'gl' to skip VCS detection.
 argument-hint: "[gh|gl]"
 context: fork
 model: sonnet
