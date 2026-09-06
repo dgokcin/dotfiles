@@ -1,0 +1,5 @@
+interface:
+  display_name: "Address Review"
+  short_description: "Fetch and fix review comments on the current PR/MR"
+policy:
+  allow_implicit_invocation: false

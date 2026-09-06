@@ -1,0 +1,5 @@
+interface:
+  display_name: "Daily Recap"
+  short_description: "Recap today from Slack, Gmail, Calendar into the vault"
+policy:
+  allow_implicit_invocation: false

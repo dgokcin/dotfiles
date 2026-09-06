@@ -1,0 +1,3 @@
+interface:
+  display_name: "Create PR"
+  short_description: "Open a GitHub PR or GitLab MR for the current branch"

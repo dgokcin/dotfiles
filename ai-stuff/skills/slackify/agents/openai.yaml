@@ -1,0 +1,3 @@
+interface:
+  display_name: "Slackify"
+  short_description: "Rewrite text in Deniz's lowercase Slack voice"

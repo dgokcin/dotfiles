@@ -1,0 +1,3 @@
+interface:
+  display_name: "Get Story"
+  short_description: "Fetch and display a Jira issue with all details"

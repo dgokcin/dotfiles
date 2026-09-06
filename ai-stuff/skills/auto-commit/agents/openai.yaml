@@ -1,0 +1,3 @@
+interface:
+  display_name: "Auto Commit"
+  short_description: "Group changes into conventional commits and run them"
