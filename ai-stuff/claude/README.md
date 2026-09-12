@@ -57,35 +57,28 @@ the quota surface that provider can actually support.
 |---|---|---|
 | Anthropic | 5h / weekly bars from stdin `rate_limits`, plus a bar per model-scoped weekly window (Fable, ...) | Claude Code's `total_cost_usd` |
 | ChatGPT (`openai-oauth`) | live bars polled from the ChatGPT usage endpoint | published OpenAI API rates (`~/.clodex/pricing-cache.json`) |
-| OpenCode Go (`opencode-go`) | API-equivalent value over the billing period vs. what the plan costs, with request count and the model doing the spending | per-provider costs in `~/.clodex/providers.json` |
+| OpenCode Go (`opencode-go`) | real 5h / weekly / monthly quota from the provider's `/usage` endpoint | per-provider costs in `~/.clodex/providers.json` |
 | any other clodex provider | `· no quota data` | provider costs if known, otherwise nothing |
 
-OpenCode Go publishes no usage/quota API that a statusline can poll — its limits
-surface only inside 429 bodies, and the console API at `console.opencode.ai/api`
-(`usage`, `budgets`, `billing/balance/summary`) authenticates with a Google or
-GitHub browser session, not the inference API key (both `Authorization: Bearer`
-and `x-api-key` return `401 {"_tag":"Unauthorized"}`).
+OpenCode Go serves real quota at `/usage` on its inference base (for Go:
+`https://opencode.ai/zen/go/v1/usage`), authenticated by the same API key used
+for inference — the 5-hour, weekly and monthly windows its web UI shows. The URL
+is derived from `api.url` in the provider registry, so a rehosted base needs no
+edit, and the key is read from opencode's own `auth.json` (clodex keeps its copy
+in the keychain). Note this is *not* the console API at `console.opencode.ai/api`
+(`usage`, `budgets`, `billing/balance/summary`), which is a separate
+Google/GitHub browser-session system that rejects the API key.
 
-The plan is flat-rate, so per-token cost is not what you are billed and a "spend
-budget" would be meaningless. Instead the line prices the window's usage at the
-provider's published rates and compares it to the plan fee — the question it
-answers is whether the subscription is worth keeping. Past 100% it has paid for
-itself, so the bar fills toward green rather than red, and the figure is not
-clamped. Configure with `CLODEX_PLAN_USD` and `CLODEX_SPEND_WINDOW_DAYS`
-(default 30, matching a monthly billing period) in `settings.json`; omit the plan
-cost and it degrades to the bare figure. A few cents of a cheap model says
-nothing on its own, so the line also carries the request count and the model
-responsible — labelled with its share of window spend, since an unqualified
-model id sitting under the session's own model reads as the one in use.
-
-Anthropic meters some models on their own weekly window on top of the all-models
-one — being at 100% on Fable while `weekly` reads 67% is the case worth seeing.
-Claude Code 2.1.269 does not put those on stdin (its payload builder emits only
-`five_hour`, `seven_day` and `spend_limit`), so the bars come from the limits
-array it caches in `~/.claude.json` under `cachedUsageUtilization`, stamped with
-its age because Claude Code refreshes it on its own schedule. Newer builds
-document a `rate_limits.model_scoped` field; that is preferred when present and
-renders without an age stamp.
+When no reading is available — no key, offline, another provider — the line
+falls back to pricing the window's usage from clodex's own per-request logs and
+comparing it to the plan fee (`CLODEX_PLAN_USD`, `CLODEX_SPEND_WINDOW_DAYS`,
+default 30 to match a monthly billing period), and says `no quota reading` so the
+estimate is never mistaken for real quota. Since the plan is flat-rate, that
+figure answers "is the subscription worth it" rather than "how much do I owe":
+past 100% it has paid for itself, so the bar fills toward green and the value is
+not clamped. It also carries the request count and the model responsible,
+labelled with its share of window spend, since an unqualified model id sitting
+under the session's own model reads as the one in use.
 
 Provider resolution prefers ground truth (an id that names its provider, or the
 clodex session log) over the alias table, which cannot answer for models that
