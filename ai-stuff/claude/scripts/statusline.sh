@@ -431,6 +431,40 @@ refresh_spend() {
   return 0
 }
 
+# Real server-side quota for an OpenCode-style provider. The inference base
+# exposes /usage next to the chat endpoints, authenticated by the same API key
+# (the console's own API is a separate, session-cookie system and is not usable
+# here). The URL comes from the provider registry rather than a constant, so a
+# rehosted or self-hosted base needs no edit.
+#
+# Windows: rolling (the 5-hour one), weekly, monthly. Emits nine US-separated
+# fields, percent/resetsAt/status per window, with "-" for anything absent.
+refresh_ocusage() {
+  local provider=$1 url key payload
+  local auth="${OPENCODE_AUTH_JSON:-$HOME/.local/share/opencode/auth.json}"
+  [ -f "$auth" ] && [ -f "$clodex_providers" ] || return 0
+  url=$(jq -r --arg p "$provider" \
+    '[.providers[]? | select(.id == $p) | .api.url // ""] | first // empty' \
+    "$clodex_providers" 2>/dev/null)
+  [ -n "$url" ] || return 0
+  # clodex keeps the key in the keychain; opencode's own auth file is the
+  # plaintext copy. Fall back to the canonical id when the clodex provider has
+  # been renamed locally.
+  key=$(jq -r --arg p "$provider" '(.[$p].key // .["opencode-go"].key) // empty' \
+    "$auth" 2>/dev/null)
+  [ -n "$key" ] || return 0
+  payload=$(curl -s --max-time 5 -H "Authorization: Bearer $key" \
+    "${url%/}/usage" 2>/dev/null | jq -r '
+    .usage | select(. != null)
+    | [(.rolling, .weekly, .monthly)
+       | [(.percent | if . == null then "-" else tostring end),
+          (.resetsAt // "-"),
+          (.status // "-")]]
+    | flatten | join("\u001f")' 2>/dev/null)
+  [ -n "$payload" ] && cache_write "$cache_dir/ocusage-$provider" "$payload"
+  return 0
+}
+
 # API-equivalent session cost. Claude Code's own total_cost_usd prices every
 # model off its Anthropic table, which is fiction for a routed backend, so
 # recompute from the transcript's real per-message token counts at the rates
@@ -472,7 +506,8 @@ prune_cache() {
 if [ "${1:-}" = "--refresh" ]; then
   case "${2:-}" in
   quota) refresh_quota "${3:-}" "${4:-}" ;;
-  spend) refresh_spend "${3:-}" "$(to_int "${4:-}" 7)" ;;
+  spend) refresh_spend "${3:-}" "$(to_int "${4:-}" 30)" ;;
+  ocusage) refresh_ocusage "${3:-}" ;;
   cost) refresh_cost "${3:-}" "${4:-}" "${5:-}" "${6:-}" "${7:-0}" "${8:-0}" "${9:-0}" ;;
   esac
   prune_cache
@@ -832,6 +867,30 @@ if [ "$family" = "anthropic" ]; then
   fi
 fi
 
+# --- opencode: real quota from the provider's own /usage endpoint ---
+oc_ok=0
+oc_as_of=""
+oc_p1="" oc_r1="" oc_s1=""
+oc_p2="" oc_r2="" oc_s2=""
+oc_p3="" oc_r3="" oc_s3=""
+if [ "$family" = "opencode" ]; then
+  oc_cache="$cache_dir/ocusage-$provider_id"
+  [ "$(cache_age "$oc_cache")" -ge 60 ] &&
+    spawn_refresh "ocusage-$provider_id" ocusage "$provider_id"
+  if [ -f "$oc_cache" ]; then
+    IFS=$'\037' read -r oc_p1 oc_r1 oc_s1 oc_p2 oc_r2 oc_s2 oc_p3 oc_r3 oc_s3 \
+      <<<"$(cache_value "$oc_cache")"
+    [ -n "$oc_p1" ] && [ "$oc_p1" != "-" ] && oc_ok=1
+    if [ "$oc_ok" = 1 ]; then
+      oc_as_of=$(cache_stamp "$oc_cache")
+      if [ -n "$oc_as_of" ]; then
+        oc_age=$(($(date +%s) - $(to_int "$oc_as_of")))
+        [ "$oc_age" -lt 300 ] && oc_as_of=""
+      fi
+    fi
+  fi
+fi
+
 # --- opencode: rolling spend against a self-declared budget ---
 # Not a quota: OpenCode Go publishes no usage endpoint, so there is no remaining
 # allowance to read. This is what the window actually cost, against a budget set
@@ -1095,7 +1154,59 @@ chatgpt)
 opencode)
   printf "\n"
   printf "%b%s%b" "$C_ORANGE" "$provider_id" "$C_RESET"
-  if [ -n "$spend_total" ]; then
+  if [ "$oc_ok" = 1 ]; then
+    # Real quota beats the locally derived estimate, so it takes the line.
+    oc_bar() {
+      local label=$1 pct=$2 status=$3
+      [ -n "$pct" ] && [ "$pct" != "-" ] || return 0
+      pct=$(echo "$pct" | awk '{printf "%d", int($1 + 0.5)}')
+      printf "%b%s:%b " "$C_WHITE" "$label" "$C_RESET"
+      build_bar "$pct" 10
+      printf " %b%s%%%b" "$C_CYAN" "$pct" "$C_RESET"
+      # Anything other than "ok" means the window is capped or degraded; the
+      # percentage alone would not show that.
+      [ -n "$status" ] && [ "$status" != "ok" ] && [ "$status" != "-" ] &&
+        printf " %b%s%b" "$C_RED" "$status" "$C_RESET"
+      return 0
+    }
+    printf " "
+    oc_bar "5h" "$oc_p1" "$oc_s1"
+    printf "%b" "$SEP"
+    oc_bar "weekly" "$oc_p2" "$oc_s2"
+    printf "%b" "$SEP"
+    oc_bar "monthly" "$oc_p3" "$oc_s3"
+
+    printf "\n"
+    printf "%bresets:%b" "$C_WHITE" "$C_RESET"
+    oc_reset() {
+      local label=$1 iso=$2 style=$3 epoch
+      [ -n "$iso" ] && [ "$iso" != "-" ] || return 0
+      epoch=$(iso_to_epoch "$iso")
+      [ -n "$epoch" ] || return 0
+      printf "%s @ %s" "$label" "$(format_reset_time_epoch "$epoch" "$style")"
+      return 0
+    }
+    printf " "
+    oc_reset "5h" "$oc_r1" time
+    printf "%b" "$SEP"
+    oc_reset "weekly" "$oc_r2" datetime
+    printf "%b" "$SEP"
+    oc_reset "monthly" "$oc_r3" datetime
+    # The plan is flat-rate, so quota answers "can I keep going" and this
+    # answers "is it worth paying for" — different questions, both wanted.
+    if [ -n "$spend_total" ] && [ -n "$spend_pct" ]; then
+      printf "%b" "$SEP"
+      printf "%b%s of %s plan%b" "$C_DIM" "$(format_money "$spend_total")" \
+        "$(format_money "$spend_budget")" "$C_RESET"
+    fi
+    if [ -n "$oc_as_of" ]; then
+      oc_age=$(($(date +%s) - $(to_int "$oc_as_of")))
+      age_color="$C_DIM"
+      [ "$oc_age" -ge 7200 ] && age_color="$C_YELLOW"
+      printf "%b" "$SEP"
+      printf "%bas of %s%b" "$age_color" "$(format_age "$oc_age")" "$C_RESET"
+    fi
+  elif [ -n "$spend_total" ]; then
     printf " %b%dd:%b " "$C_WHITE" "$spend_days" "$C_RESET"
     if [ -n "$spend_pct" ]; then
       # Not a spend cap: the plan is flat-rate, so this is the API-equivalent
@@ -1126,8 +1237,12 @@ opencode)
   else
     printf " %bspend pending%b" "$C_DIM" "$C_RESET"
   fi
-  printf "%b" "$SEP"
-  printf "%bno upstream quota api%b" "$C_DIM" "$C_RESET"
+  # Only claim there is no quota when we genuinely could not read one — saying
+  # it next to live quota bars would be nonsense.
+  if [ "$oc_ok" != 1 ]; then
+    printf "%b" "$SEP"
+    printf "%bno quota reading%b" "$C_DIM" "$C_RESET"
+  fi
   ;;
 *)
   # A clodex provider we know nothing about: say so rather than borrow the
