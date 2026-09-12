@@ -1,0 +1,4 @@
+# Base markdownlint config used by nvim-lint (see lua/plugins/markdownlint.lua).
+# Project-level .markdownlint* files still take precedence over this.
+default: true
+MD013: false # line-length
