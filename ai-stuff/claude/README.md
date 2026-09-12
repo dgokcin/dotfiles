@@ -12,7 +12,9 @@ cross-tool architecture.
 ai-stuff/claude/
 ├── scripts/               # Claude-only hook + integration scripts (→ ~/.claude/scripts)
 │   ├── file-suggestion.sh # Custom file suggestion using rg + fzf
-│   ├── statusline.sh      # Main-session statusline with git, context, vim mode
+│   ├── statusline.sh      # Main-session statusline: git, context, per-provider quota/cost
+│   ├── statusline-test.sh # Fixture tests for statusline.sh (repo-only, not installed)
+│   ├── fixtures/          # stdin fixtures used by statusline-test.sh
 │   ├── subagent-statusline.sh # Subagent rows with each task's resolved model
 │   ├── session-start.sh   # Auto-name worktree sessions
 │   ├── notify.sh          # Notification-event alert (claude-only event)
@@ -43,6 +45,60 @@ Agents (ai-stuff/agents/)                ← execution env: model + tools + pers
     ▼
 Personas + Config (ai-stuff/_shared/)    ← identity, rules, shared constants
 ```
+
+## Statusline
+
+Claude Code is the interface; the model behind a session may be Anthropic's own
+API or a third-party backend routed through the clodex proxy — so
+`statusline.sh` resolves the real upstream provider per session and renders only
+the quota surface that provider can actually support.
+
+| Backend | Line 2 | Cost source |
+|---|---|---|
+| Anthropic | 5h / weekly bars from stdin `rate_limits`, plus a bar per model-scoped weekly window (Fable, ...) | Claude Code's `total_cost_usd` |
+| ChatGPT (`openai-oauth`) | live bars polled from the ChatGPT usage endpoint | published OpenAI API rates (`~/.clodex/pricing-cache.json`) |
+| OpenCode Go (`opencode-go`) | API-equivalent value over the billing period vs. what the plan costs, with request count and the model doing the spending | per-provider costs in `~/.clodex/providers.json` |
+| any other clodex provider | `· no quota data` | provider costs if known, otherwise nothing |
+
+OpenCode Go publishes no usage/quota API that a statusline can poll — its limits
+surface only inside 429 bodies, and the console API at `console.opencode.ai/api`
+(`usage`, `budgets`, `billing/balance/summary`) authenticates with a Google or
+GitHub browser session, not the inference API key (both `Authorization: Bearer`
+and `x-api-key` return `401 {"_tag":"Unauthorized"}`).
+
+The plan is flat-rate, so per-token cost is not what you are billed and a "spend
+budget" would be meaningless. Instead the line prices the window's usage at the
+provider's published rates and compares it to the plan fee — the question it
+answers is whether the subscription is worth keeping. Past 100% it has paid for
+itself, so the bar fills toward green rather than red, and the figure is not
+clamped. Configure with `CLODEX_PLAN_USD` and `CLODEX_SPEND_WINDOW_DAYS`
+(default 30, matching a monthly billing period) in `settings.json`; omit the plan
+cost and it degrades to the bare figure. A few cents of a cheap model says
+nothing on its own, so the line also carries the request count and the model
+responsible — labelled with its share of window spend, since an unqualified
+model id sitting under the session's own model reads as the one in use.
+
+Anthropic meters some models on their own weekly window on top of the all-models
+one — being at 100% on Fable while `weekly` reads 67% is the case worth seeing.
+Claude Code 2.1.269 does not put those on stdin (its payload builder emits only
+`five_hour`, `seven_day` and `spend_limit`), so the bars come from the limits
+array it caches in `~/.claude.json` under `cachedUsageUtilization`, stamped with
+its age because Claude Code refreshes it on its own schedule. Newer builds
+document a `rate_limits.model_scoped` field; that is preferred when present and
+renders without an age stamp.
+
+Provider resolution prefers ground truth (an id that names its provider, or the
+clodex session log) over the alias table, which cannot answer for models that
+have no alias or whose alias is ambiguous across providers. `STATUSLINE_DEBUG=1`
+prints the resolution chain to stderr.
+
+The render path does no network I/O: quota, spend and session cost all come from
+`~/.cache/claude-statusline/`, refreshed by detached `statusline.sh --refresh`
+runs. A failed refresh keeps the last good reading and stamps its age.
+
+Run `./scripts/statusline-test.sh` after changing it — it drives the real script
+against `scripts/fixtures/*.json` with a scratch clodex/codex home, so it touches
+neither your accounts nor the network.
 
 ## Claude-specific skill features
 
