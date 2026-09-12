@@ -9,7 +9,9 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95",
-    "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "1"
+    "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "1",
+    "CLODEX_PLAN_USD": "10",
+    "CLODEX_SPEND_WINDOW_DAYS": "30"
   },
   "attribution": {
     "commit": "",
@@ -61,7 +63,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "astra",
+  "model": "deepseek-v4.1-flash",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
@@ -133,10 +135,6 @@
           {
             "type": "command",
             "command": "~/.claude/scripts/auto-approve-tools.sh pre-tool"
-          },
-          {
-            "type": "command",
-            "command": "rtk hook claude"
           }
         ]
       }
@@ -211,7 +209,8 @@
     "gitops@treatwell": false,
     "session-handover@treatwell": true,
     "ponytail@ponytail": false,
-    "datadog@treatwell": true
+    "datadog@treatwell": true,
+    "deploy-on-aws@agent-plugins-for-aws": false
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -245,6 +244,12 @@
         "source": "github",
         "repo": "DietrichGebert/ponytail"
       }
+    },
+    "agent-plugins-for-aws": {
+      "source": {
+        "source": "github",
+        "repo": "awslabs/agent-plugins"
+      }
     }
   },
   "outputStyle": "Coincise",
@@ -262,6 +267,12 @@
     },
     "astra": {
       "effortLevel": "medium"
+    },
+    "claude-opus-5": {
+      "effortLevel": "high"
+    },
+    "deepseek-v4-pro": {
+      "effortLevel": "xhigh"
     }
   },
   "promptSuggestionEnabled": false,
