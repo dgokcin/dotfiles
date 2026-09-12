@@ -1,0 +1,412 @@
+#!/bin/bash
+# Fixture-driven tests for statusline.sh.
+#
+# Runs the real script against stdin fixtures with CLODEX_HOME / CODEX_HOME /
+# XDG_CACHE_HOME / CLAUDE_CONFIG_DIR redirected at a scratch tree, so nothing
+# here reads the developer's actual accounts and no test touches the network.
+# Repo-only: this is not symlinked into ~/.claude.
+
+set -u
+here=$(cd "$(dirname "$0")" && pwd)
+script="$here/statusline.sh"
+fixtures="$here/fixtures"
+scratch=$(mktemp -d "${TMPDIR:-/tmp}/statusline-test.XXXXXX")
+trap 'rm -rf "$scratch"' EXIT
+
+pass=0
+fail=0
+
+# ===== scratch environment =====
+
+clodex="$scratch/clodex"
+mkdir -p "$clodex/logs/sessions"
+
+cat >"$clodex/providers.json" <<'JSON'
+{
+  "schemaVersion": 4,
+  "providers": [
+    {
+      "id": "openai-oauth",
+      "name": "OpenAI (ChatGPT)",
+      "authType": "oauth",
+      "api": { "url": "https://api.openai.com/v1" }
+    },
+    {
+      "id": "opencode-go",
+      "name": "OpenCode Go",
+      "authType": "api",
+      "api": { "url": "https://opencode.ai/zen/go/v1" },
+      "modelsCache": {
+        "models": [
+          { "id": "deepseek-v4-pro", "upstreamModelId": "deepseek-v4-pro",
+            "cost": { "input": 0.66, "output": 1.98, "cache_read": 0.022 } },
+          { "id": "minimax-m3", "upstreamModelId": "minimax-m3",
+            "cost": { "input": 0.3, "output": 1.2, "cache_read": 0.06 } }
+        ]
+      }
+    },
+    {
+      "id": "mystery-provider",
+      "name": "Mystery",
+      "authType": "api",
+      "api": { "url": "https://example.invalid/v1" }
+    }
+  ]
+}
+JSON
+
+cat >"$clodex/config.json" <<'JSON'
+{
+  "modelAliases": [
+    { "name": "deepseek-v4-pro", "providerId": "opencode-go", "modelId": "deepseek-v4-pro" }
+  ]
+}
+JSON
+
+cat >"$clodex/pricing-cache.json" <<'JSON'
+{
+  "models": [
+    {
+      "model_id": "gpt-5.6-sol",
+      "pricing": [
+        { "platform": "openai", "tier": "standard",
+          "input_per_1m_tokens": 1.25,
+          "cached_input_per_1m_tokens": 0.125,
+          "output_per_1m_tokens": 10 }
+      ]
+    }
+  ]
+}
+JSON
+
+# A clodex session log naming a provider for a bare alias — the one case the
+# model id alone cannot answer. The trailing line is a background request on a
+# different model: Claude Code fires those inside the same session and they log
+# as anthropic/passthrough, so a resolver that just takes the session's last
+# line reports the wrong backend for the whole statusline.
+cat >"$clodex/logs/sessions/20260912-000000000Z-claude-http-proxy-pid1-0.jsonl" <<'JSON'
+{"timestamp":"2026-09-12T08:00:00.000Z","event":"request","claudeSessionId":"fx-opencode","modelId":"deepseek-v4-pro","provider":"opencode-go","route":"translated"}
+{"timestamp":"2026-09-12T08:00:01.000Z","event":"request","claudeSessionId":"fx-opencode","modelId":"claude-haiku-4-5-20251001","provider":"anthropic","route":"passthrough"}
+JSON
+
+# Transcript for the cost regression: one response written as two content-block
+# lines sharing a message.id (must be counted once), recorded under the bare
+# model id while stdin reports it with a [1m] marker.
+transcript="$scratch/transcript.jsonl"
+cat >"$transcript" <<'JSON'
+{"message":{"id":"m1","model":"minimax-m3","usage":{"input_tokens":1000,"cache_creation_input_tokens":2000,"cache_read_input_tokens":100000,"output_tokens":500}}}
+{"message":{"id":"m1","model":"minimax-m3","usage":{"input_tokens":1000,"cache_creation_input_tokens":2000,"cache_read_input_tokens":100000,"output_tokens":500}}}
+{"message":{"id":"m2","model":"some-other-model","usage":{"input_tokens":999999,"output_tokens":999999}}}
+{"message":{"id":"m3","model":"minimax-m3","usage":
+JSON
+
+settings_dir="$scratch/claude"
+mkdir -p "$settings_dir"
+cat >"$settings_dir/settings.json" <<'JSON'
+{ "env": { "CLODEX_PLAN_USD": "20", "CLODEX_SPEND_WINDOW_DAYS": "7" } }
+JSON
+
+# Claude Code's own usage cache, the fallback source for per-model weekly
+# windows. CLAUDE_CONFIG_DIR points here, so the real ~/.claude.json is never
+# read by the suite.
+cat >"$settings_dir/.claude.json" <<'JSON'
+{
+  "cachedUsageUtilization": {
+    "fetchedAtMs": 1,
+    "utilization": {
+      "limits": [
+        { "kind": "session", "group": "session", "percent": 0, "resets_at": null },
+        { "kind": "weekly_all", "group": "weekly", "percent": 67, "resets_at": "2026-09-13T00:00:00Z" },
+        { "kind": "weekly_scoped", "group": "weekly", "percent": 100,
+          "resets_at": "2026-09-13T00:00:00.441453+00:00",
+          "scope": { "model": { "display_name": "Fable" } } }
+      ]
+    }
+  }
+}
+JSON
+
+# ===== harness =====
+
+strip_ansi() { sed $'s/\033\\[[0-9;]*m//g'; }
+
+# run <fixture-file> -> populates $out / $err / $status
+run() {
+  local fx=$1 stdin_file="$scratch/stdin.json"
+  if [ "$fx" = "-" ]; then
+    cat >"$stdin_file"
+  else
+    cp "$fx" "$stdin_file"
+  fi
+  # Claude Code exports its settings env block into child processes, so a
+  # developer running this from inside a session would otherwise inherit their
+  # own budget/auto-compact values and see different output than CI.
+  env -u CLODEX_PLAN_USD -u CLODEX_SPEND_BUDGET_USD -u CLODEX_SPEND_WINDOW_DAYS \
+    -u CLAUDE_CODE_AUTO_COMPACT_WINDOW -u CLAUDE_AUTOCOMPACT_PCT_OVERRIDE \
+    -u STATUSLINE_DEBUG \
+    CLODEX_HOME="$clodex" \
+    CODEX_HOME="$scratch/codex-missing" \
+    XDG_CACHE_HOME="$scratch/cache" \
+    CLAUDE_CONFIG_DIR="$settings_dir" \
+    COLUMNS=120 \
+    "$script" <"$stdin_file" >"$scratch/stdout" 2>"$scratch/stderr"
+  status=$?
+  out=$(strip_ansi <"$scratch/stdout")
+  err=$(cat "$scratch/stderr")
+}
+
+ok() {
+  pass=$((pass + 1))
+  printf '  ok   %s\n' "$1"
+}
+no() {
+  fail=$((fail + 1))
+  printf '  FAIL %s\n' "$1"
+  [ -n "${2:-}" ] && printf '       %s\n' "$2"
+}
+
+expect_contains() {
+  case "$out" in
+  *"$1"*) ok "contains: $1" ;;
+  *) no "contains: $1" "got: $(printf '%s' "$out" | tr '\n' '/')" ;;
+  esac
+}
+
+expect_absent() {
+  case "$out" in
+  *"$1"*) no "absent: $1" "got: $(printf '%s' "$out" | tr '\n' '/')" ;;
+  *) ok "absent: $1" ;;
+  esac
+}
+
+expect_clean() {
+  [ "$status" = "0" ] && ok "exit 0" || no "exit 0" "status=$status"
+  [ -z "$err" ] && ok "no stderr" || no "no stderr" "$err"
+}
+
+seed_cache() {
+  local name=$1 value=$2 age=${3:-0}
+  mkdir -p "$scratch/cache/claude-statusline"
+  printf '%s\n%s\n' "$(($(date +%s) - age))" "$value" \
+    >"$scratch/cache/claude-statusline/$name"
+}
+
+# ===== cases =====
+
+printf '\nanthropic: stdin rate limits drive the bars\n'
+run "$fixtures/anthropic.json"
+expect_clean
+expect_contains "current:"
+expect_contains "31%"
+expect_contains "weekly:"
+expect_contains "48%"
+expect_contains "cost: \$0.4213"
+expect_absent "no quota data"
+
+printf '\nmodel-scoped windows from stdin: every bucket renders\n'
+run "$fixtures/model-scoped.json"
+expect_clean
+expect_contains "fable:"
+expect_contains "100%"
+# The final record is the regression: `read` fails on a stream with no trailing
+# newline, which used to drop the last bucket silently.
+expect_contains "sonnet:"
+expect_contains "12%"
+expect_contains "fable @"
+expect_contains "sonnet @"
+# stdin was authoritative here, so no staleness stamp from the cache.
+expect_absent "as of"
+
+printf '\nmodel-scoped windows fall back to Claude Code usage cache\n'
+run "$fixtures/anthropic.json"
+expect_clean
+expect_contains "fable:"
+expect_contains "100%"
+# That cache is refreshed on Claude Code's schedule, not ours; a stale reading
+# must say so rather than pass as live.
+expect_contains "as of"
+
+printf '\nopenai-oauth: codex bars from cache, API-equivalent cost\n'
+# 31/61 pct, 300/10080 minute windows, reset epochs.
+seed_cache "quota-acct-test" "31	300	1789000000	61	10080	1789300000"
+mkdir -p "$scratch/codex-missing"
+cat >"$scratch/codex-missing/auth.json" <<'JSON'
+{ "tokens": { "access_token": "stub", "account_id": "acct-test" } }
+JSON
+run "$fixtures/openai-oauth.json"
+expect_clean
+expect_contains "codex"
+expect_contains "5h:"
+expect_contains "31%"
+expect_contains "weekly:"
+expect_contains "61%"
+expect_absent "current:"
+rm -rf "$scratch/codex-missing"
+
+printf '\nopencode-go: spend bar, no borrowed Anthropic bars\n'
+seed_cache "spend-opencode-go-7d" $'7.62\03789\037deepseek-v4.1-flash\03763'
+run "$fixtures/opencode-go.json"
+expect_clean
+expect_contains "opencode-go"
+expect_contains "7d:"
+expect_contains "38%"
+expect_contains "\$7.62 of \$20 plan"
+# A few cents means nothing alone; volume and the model burning it carry the line.
+expect_contains "89 reqs"
+# Must read as a window aggregate: directly under the session's model name on
+# line 1, a bare model id reads as the model currently in use.
+expect_contains "deepseek-v4.1-flash 63% of spend"
+expect_contains "no upstream quota api"
+# The whole point of the change: the Anthropic numbers on stdin must not leak
+# into a session that never touched that account.
+expect_absent "current:"
+expect_absent "resets:"
+
+printf '\nopencode-go: legacy bare-total cache still renders\n'
+seed_cache "spend-opencode-go-7d" "7.62"
+rm -f "$scratch/cache/claude-statusline/provider-fx-opencode-deepseek-v4-pro"
+run "$fixtures/opencode-go.json"
+expect_clean
+expect_contains "\$7.62 of \$20 plan"
+expect_absent "reqs"
+expect_absent "of spend"
+seed_cache "spend-opencode-go-7d" $'7.62\03789\037deepseek-v4.1-flash\03763'
+
+printf '\nopencode-go: value past 100%% reports the real figure\n'
+seed_cache "spend-opencode-go-7d" $'14.80\037870\037kimi-k3\03791'
+rm -f "$scratch/cache/claude-statusline/provider-fx-opencode-deepseek-v4-pro"
+run "$fixtures/opencode-go.json"
+expect_clean
+# Not a cap: exceeding the plan cost is the good case, so the number is not
+# clamped to 100 the way a quota percentage would be.
+expect_contains "74%"
+expect_contains "\$14.80 of \$20 plan"
+seed_cache "spend-opencode-go-7d" $'7.62\03789\037deepseek-v4.1-flash\03763'
+
+printf '\nopencode-go: provider resolved from the clodex session log\n'
+# fx-opencode is a bare alias; the log entry is what proves the provider. Drop
+# the alias table so only the log can answer.
+mv "$clodex/config.json" "$clodex/config.json.off"
+rm -f "$scratch/cache/claude-statusline/provider-fx-opencode"
+run "$fixtures/opencode-go.json"
+expect_clean
+expect_contains "opencode-go"
+expect_contains "7d:"
+mv "$clodex/config.json.off" "$clodex/config.json"
+
+printf '\nsparse session json: null fields must not shift later values\n'
+run "$fixtures/sparse.json"
+expect_clean
+# 1000 + 5000, with cache_creation_input_tokens absent entirely.
+expect_contains "ctx: 6k / 272k"
+expect_contains "effort: n/a"
+expect_contains "12%"
+# display_name is null; the id is a better fallback than a blank.
+expect_contains "claude-opus-5"
+# The five_hour reset epoch must stay in the reset slot. It leaking into a token
+# count or a percentage is the signature of a field-alignment bug.
+expect_absent "1789257600%"
+expect_absent "1789.2m"
+
+printf '\nopencode-go: no plan cost configured degrades to the bare figure\n'
+cat >"$settings_dir/settings.json" <<'JSON'
+{ "env": { "CLODEX_SPEND_WINDOW_DAYS": "7" } }
+JSON
+run "$fixtures/opencode-go.json"
+expect_clean
+expect_contains "\$7.62"
+expect_absent "of \$20 plan"
+expect_absent "○"
+expect_absent "●"
+cat >"$settings_dir/settings.json" <<'JSON'
+{ "env": { "CLODEX_PLAN_USD": "20", "CLODEX_SPEND_WINDOW_DAYS": "7" } }
+JSON
+
+printf '\n[1m] marker: cost still resolves (regression)\n'
+# Compute the cost synchronously, the way the detached refresher would.
+CLODEX_HOME="$clodex" XDG_CACHE_HOME="$scratch/cache" \
+  "$script" --refresh cost fx-1m "$transcript" "minimax-m3" "minimax-m3[1m]" \
+  0.3 0.06 1.2 2>"$scratch/stderr"
+[ -s "$scratch/stderr" ] && no "refresh cost quiet" "$(cat "$scratch/stderr")" || ok "refresh cost quiet"
+sed "s#TRANSCRIPT_PLACEHOLDER#$transcript#" "$fixtures/opencode-1m.json" \
+  >"$scratch/opencode-1m.json"
+run "$scratch/opencode-1m.json"
+expect_clean
+# (1000 + 2000) * 0.3 + 100000 * 0.06 + 500 * 1.2, per 1M, counting the repeated
+# message.id once and ignoring the other model's line.
+expect_contains "cost: ~\$0.0075 api"
+
+printf '\nunknown provider: no quota, no invented cost\n'
+run "$fixtures/unknown-provider.json"
+expect_clean
+expect_contains "mystery-provider"
+expect_contains "no quota data"
+expect_absent "current:"
+expect_absent "cost:"
+
+printf '\nmissing codex auth: renders cleanly, says why\n'
+rm -rf "$scratch/codex-missing"
+run "$fixtures/missing-auth.json"
+expect_clean
+expect_contains "no limit data"
+expect_absent "current:"
+
+printf '\ncold cache with valid auth: says fetching, not "check auth.json"\n'
+mkdir -p "$scratch/codex-missing"
+cat >"$scratch/codex-missing/auth.json" <<'JSON'
+{ "tokens": { "access_token": "stub", "account_id": "acct-cold" } }
+JSON
+# Hold the refresh lock so the render cannot spawn a refresher — this asserts
+# the cold-cache message, and keeps the suite off the network.
+mkdir -p "$scratch/cache/claude-statusline/.lock-quota-acct-cold"
+run "$fixtures/openai-oauth.json"
+expect_clean
+expect_contains "fetching limits"
+expect_absent "check"
+rmdir "$scratch/cache/claude-statusline/.lock-quota-acct-cold"
+rm -rf "$scratch/codex-missing"
+
+printf '\nstale cache: reading is stamped with its age\n'
+mkdir -p "$scratch/codex-missing"
+cat >"$scratch/codex-missing/auth.json" <<'JSON'
+{ "tokens": { "access_token": "stub", "account_id": "acct-stale" } }
+JSON
+# 3h old, past the 5m "worth mentioning" threshold. Cache is keyed by account so
+# this cannot collide with the fresh reading seeded earlier.
+seed_cache "quota-acct-stale" "31	300	1789000000	61	10080	1789300000" 10800
+run "$fixtures/openai-oauth.json"
+expect_clean
+expect_contains "as of 3h ago"
+rm -rf "$scratch/codex-missing"
+
+printf '\nmalformed stdin: degrades instead of erroring\n'
+run "$fixtures/malformed.json"
+expect_clean
+expect_contains "ctx:"
+
+printf '\nmissing clodex home: routed model falls back without noise\n'
+saved_clodex="$clodex"
+clodex="$scratch/clodex-absent"
+run "$fixtures/opencode-go.json"
+expect_clean
+clodex="$saved_clodex"
+
+printf '\nSTATUSLINE_DEBUG reports the resolution chain\n'
+debug_out=$(env -u CLODEX_PLAN_USD -u CLODEX_SPEND_BUDGET_USD -u CLODEX_SPEND_WINDOW_DAYS \
+  CLODEX_HOME="$clodex" CODEX_HOME="$scratch/codex-missing" \
+  XDG_CACHE_HOME="$scratch/cache" CLAUDE_CONFIG_DIR="$settings_dir" \
+  STATUSLINE_DEBUG=1 "$script" <"$fixtures/opencode-go.json" 2>&1 >/dev/null)
+case "$debug_out" in
+*"provider=opencode-go"*"family=opencode"*) ok "debug line" ;;
+*) no "debug line" "$debug_out" ;;
+esac
+
+printf '\nrender does no network I/O and spawns nothing when caches are warm\n'
+before=$(find "$scratch/cache" -name '.lock-*' 2>/dev/null | wc -l | tr -d ' ')
+run "$fixtures/opencode-go.json"
+after=$(find "$scratch/cache" -name '.lock-*' 2>/dev/null | wc -l | tr -d ' ')
+[ "$before" = "$after" ] && ok "no refresher spawned on warm cache" ||
+  no "no refresher spawned on warm cache" "locks $before -> $after"
+
+printf '\n%s passed, %s failed\n' "$pass" "$fail"
+[ "$fail" -eq 0 ]
