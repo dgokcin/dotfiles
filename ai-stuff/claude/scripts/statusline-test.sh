@@ -146,6 +146,7 @@ run() {
     -u STATUSLINE_DEBUG \
     CLODEX_HOME="$clodex" \
     CODEX_HOME="$scratch/codex-missing" \
+    OPENCODE_AUTH_JSON="$scratch/opencode-auth-missing.json" \
     XDG_CACHE_HOME="$scratch/cache" \
     CLAUDE_CONFIG_DIR="$settings_dir" \
     COLUMNS=120 \
@@ -243,7 +244,33 @@ expect_contains "61%"
 expect_absent "current:"
 rm -rf "$scratch/codex-missing"
 
-printf '\nopencode-go: spend bar, no borrowed Anthropic bars\n'
+printf '\nopencode-go: real quota from the provider /usage endpoint\n'
+# 5h / weekly / monthly: percent, resetsAt, status.
+seed_cache "ocusage-opencode-go" \
+  $'1\0372026-09-12T13:25:25.939Z\037ok\0371\0372026-09-14T00:00:00.939Z\037ok\03724\0372026-09-30T09:34:36.939Z\037ok'
+run "$fixtures/opencode-go.json"
+expect_clean
+expect_contains "5h:"
+expect_contains "weekly:"
+expect_contains "monthly:"
+expect_contains "24%"
+expect_contains "monthly @"
+# Real quota supersedes the local estimate, so the "no quota" disclaimer and the
+# spend bar must both step aside.
+expect_absent "no quota reading"
+expect_absent "of spend"
+# Anthropic's own limits still must not leak in.
+expect_absent "current:"
+
+printf '\nopencode-go: a capped window is flagged, not just shown as a number\n'
+seed_cache "ocusage-opencode-go" \
+  $'100\0372026-09-12T13:25:25.939Z\037limited\0371\0372026-09-14T00:00:00.939Z\037ok\03724\0372026-09-30T09:34:36.939Z\037ok'
+run "$fixtures/opencode-go.json"
+expect_clean
+expect_contains "limited"
+rm -f "$scratch/cache/claude-statusline/ocusage-opencode-go"
+
+printf '\nopencode-go: falls back to the local estimate without a quota reading\n'
 seed_cache "spend-opencode-go-7d" $'7.62\03789\037deepseek-v4.1-flash\03763'
 run "$fixtures/opencode-go.json"
 expect_clean
@@ -256,7 +283,9 @@ expect_contains "89 reqs"
 # Must read as a window aggregate: directly under the session's model name on
 # line 1, a bare model id reads as the model currently in use.
 expect_contains "deepseek-v4.1-flash 63% of spend"
-expect_contains "no upstream quota api"
+# With no reading available it must say so, rather than let the local estimate
+# pass for real quota.
+expect_contains "no quota reading"
 # The whole point of the change: the Anthropic numbers on stdin must not leak
 # into a session that never touched that account.
 expect_absent "current:"
@@ -401,12 +430,29 @@ case "$debug_out" in
 *) no "debug line" "$debug_out" ;;
 esac
 
-printf '\nrender does no network I/O and spawns nothing when caches are warm\n'
-before=$(find "$scratch/cache" -name '.lock-*' 2>/dev/null | wc -l | tr -d ' ')
+printf '\nwarm caches: the render refreshes nothing\n'
+# Counting lock dirs measured their asynchronous cleanup, not spawning. A
+# completed refresh rewrites its cache stamp, so compare stamps instead.
+# Wait out refreshers spawned by earlier cases: the lock is released only after
+# the child finishes, so no locks means nothing is still in flight to rewrite a
+# cache underneath this check.
+drain=0
+while [ -n "$(find "$scratch/cache" -name '.lock-*' 2>/dev/null)" ] && [ "$drain" -lt 2000 ]; do
+  drain=$((drain + 1))
+done
+seed_cache "ocusage-opencode-go" \
+  $'1\0372026-09-12T13:25:25.939Z\037ok\0371\0372026-09-14T00:00:00.939Z\037ok\03724\0372026-09-30T09:34:36.939Z\037ok'
+seed_cache "cost-fx-opencode" "0.004"
+warm_before=$(cat "$scratch/cache/claude-statusline/ocusage-opencode-go" \
+  "$scratch/cache/claude-statusline/spend-opencode-go-7d" \
+  "$scratch/cache/claude-statusline/cost-fx-opencode" 2>/dev/null)
 run "$fixtures/opencode-go.json"
-after=$(find "$scratch/cache" -name '.lock-*' 2>/dev/null | wc -l | tr -d ' ')
-[ "$before" = "$after" ] && ok "no refresher spawned on warm cache" ||
-  no "no refresher spawned on warm cache" "locks $before -> $after"
+expect_clean
+warm_after=$(cat "$scratch/cache/claude-statusline/ocusage-opencode-go" \
+  "$scratch/cache/claude-statusline/spend-opencode-go-7d" \
+  "$scratch/cache/claude-statusline/cost-fx-opencode" 2>/dev/null)
+[ "$warm_before" = "$warm_after" ] && ok "warm caches untouched" ||
+  no "warm caches untouched" "a refresh rewrote a warm cache"
 
 printf '\n%s passed, %s failed\n' "$pass" "$fail"
 [ "$fail" -eq 0 ]
