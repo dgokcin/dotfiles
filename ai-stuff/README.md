@@ -30,10 +30,9 @@ ai-stuff/
 │   ├── config/        # git-config, jira-config, .clusters.json, ...
 │   └── templates/     # property/daily-recap output templates
 ├── agents/            # subagent definitions (Claude Code + Cursor)
-├── claude/            # Claude Code-specific layer: settings.json, hook scripts
-├── codex/             # Codex-specific layer (currently nothing beyond skills)
-├── continue/          # Continue.dev config
-└── fabric/            # Fabric patterns
+├── claude/            # Claude Code-specific settings, keybindings, and hook scripts
+├── codex/             # Codex-specific layer
+└── cursor/            # Cursor-specific settings, keybindings, agents, and hooks
 ```
 
 ## Installation
@@ -43,7 +42,7 @@ Driven by [`makefiles/ai.mk`](../makefiles/ai.mk) — the tool registry:
 | Target       | Installs to        | Covers                                                               |
 | ------------ | ------------------ | -------------------------------------------------------------------- |
 | `ai-claude`  | `~/.claude/skills` | Claude Code                                                           |
-| `ai-agents`  | `~/.agents/skills` | Codex, Cursor, Gemini CLI, Windsurf, Warp, Copilot, Roo, OpenHands, … |
+| `ai-agents`  | `~/.agents/skills` | Codex, Cursor, Gemini CLI, Windsurf, Copilot, Roo, OpenHands, …       |
 
 Codex has no dedicated target: it ignores `~/.codex/skills` and reads only
 `.agents/skills` (repo + `$HOME`), so `ai-agents` covers it. Cursor natively

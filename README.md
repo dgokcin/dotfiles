@@ -16,6 +16,7 @@ A comprehensive dotfiles repository featuring an advanced Cursor rules system, d
 .
 ├── .cursor/           # Cursor rules and AI workflow configurations
 ├── ai-stuff/          # AI-related configurations and prompts
+├── Brewfile           # Homebrew packages, applications, and fonts
 ├── bin/              # Utility scripts and tools
 ├── docs/             # Documentation and guides
 ├── makefiles/        # Modular make configurations
@@ -65,19 +66,26 @@ alwaysApply: true|false  # Determines if rule is applied to every request
    cd dotfiles
    ```
 
-2. **Choose Your Setup**
+2. **Install Packages and Applications**
+
+   ```bash
+   make brew-bundle
+   ```
+
+3. **Choose Your Setup**
 
    ```bash
    make personal  # For personal environment
    make work     # For work environment
    ```
 
-3. **Individual Components**
+4. **Individual Components**
 
    ```bash
    make zsh      # Configure ZSH
    make nvim     # Setup Neovim
-   make vscode   # Configure VSCode
+   make cursor   # Configure Cursor
+   make claude   # Configure Claude Code
    ```
 
 ## 🛠 Components
@@ -96,10 +104,8 @@ alwaysApply: true|false  # Determines if rule is applied to every request
 ### Development Tools
 
 - Neovim configuration
-- VSCode settings
+- Cursor settings and keybindings
 - Lazygit setup
-- Continue AI integration
-- Karabiner (macOS)
 
 ## 🤖 AI Integration
 
@@ -115,7 +121,6 @@ The repository includes various AI-assisted development tools:
 
 ### AI Tools Configuration
 
-- Continue AI setup
 - Custom AI workflows
 - Memory bank system
 
