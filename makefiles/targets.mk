@@ -1,10 +1,10 @@
 # High-level targets for setting up environments
 
 # Setup personal environment
-personal: ideavim gvim nvim bash zsh personal-git yamllint continue
+personal: ideavim nvim bash zsh personal-git yamllint k9s
 
 # Setup work environment
-work: ideavim gvim nvim bash zsh work-git yamllint continue
+work: ideavim nvim bash zsh work-git yamllint k9s
 
-PHONY: nvim
+.PHONY: personal work
 

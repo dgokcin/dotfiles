@@ -9,7 +9,7 @@
 # (tools/installer/ide/platform-codes.yaml), minus the copy step.
 #
 # Tool registry — one entry per tool. Many tools read the cross-tool standard
-# directory ~/.agents/skills (Codex, Cursor, Gemini CLI, Windsurf, Warp,
+# directory ~/.agents/skills (Codex, Cursor, Gemini CLI, Windsurf,
 # GitHub Copilot, Roo, OpenHands, ...) — covered by the pseudo-tool "agents".
 # Codex has NO entry of its own: it ignores ~/.codex/skills and reads only
 # .agents/skills (repo + $HOME) — see https://learn.chatgpt.com/docs/build-skills.
