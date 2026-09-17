@@ -254,13 +254,5 @@
     "key": "escape",
     "command": "-aws.amazonq.rejectCodeSuggestion",
     "when": "aws.codewhisperer.connected && inlineSuggestionVisible && !editorReadonly"
-  },
-  {
-    "key": "shift+cmd+l",
-    "command": "continue.focusContinueInput"
-  },
-  {
-    "key": "cmd+l",
-    "command": "-continue.focusContinueInput"
-  },
+  }
 ]
