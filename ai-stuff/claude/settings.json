@@ -58,12 +58,9 @@
       "Bash(rtk read:*)",
       "SendMessage"
     ],
-    "ask": [
-      "Edit(~/vault/personal/nl/house search/buying a house/**)"
-    ],
     "defaultMode": "auto"
   },
-  "model": "deepseek-v4.1-flash",
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
@@ -210,8 +207,13 @@
     "session-handover@treatwell": true,
     "ponytail@ponytail": false,
     "datadog@treatwell": true,
-    "deploy-on-aws@agent-plugins-for-aws": false
+    "multi-openai@cc-multi-cli-plugin": true,
+    "multi-core@cc-multi-cli-plugin": true,
+    "multi-cursor@cc-multi-cli-plugin": true
   },
+  "prependPlugins": [
+    "multi-core@cc-multi-cli-plugin"
+  ],
   "extraKnownMarketplaces": {
     "obsidian-skills": {
       "source": {
@@ -249,10 +251,17 @@
       "source": {
         "source": "github",
         "repo": "awslabs/agent-plugins"
+      },
+      "autoUpdate": true
+    },
+    "cc-multi-cli-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "greenpolo/cc-multi-cli-plugin"
       }
     }
   },
-  "outputStyle": "Coincise",
+  "outputStyle": "Declaude",
   "feedbackDrafts": "off",
   "effortLevel": "high",
   "modelSettings": {
@@ -266,13 +275,16 @@
       "effortLevel": "medium"
     },
     "astra": {
-      "effortLevel": "medium"
+      "effortLevel": "high"
     },
     "claude-opus-5": {
       "effortLevel": "high"
     },
     "deepseek-v4-pro": {
       "effortLevel": "xhigh"
+    },
+    "luna": {
+      "effortLevel": "low"
     }
   },
   "promptSuggestionEnabled": false,

@@ -55,7 +55,7 @@ the quota surface that provider can actually support.
 
 | Backend | Line 2 | Cost source |
 |---|---|---|
-| Anthropic | 5h / weekly bars from stdin `rate_limits`, plus a bar per model-scoped weekly window (Fable, ...) | Claude Code's `total_cost_usd` |
+| Anthropic | 5h / weekly bars from stdin `rate_limits` | Claude Code's `total_cost_usd` |
 | ChatGPT (`openai-oauth`) | live bars polled from the ChatGPT usage endpoint | published OpenAI API rates (`~/.clodex/pricing-cache.json`) |
 | OpenCode Go (`opencode-go`) | real 5h / weekly / monthly quota from the provider's `/usage` endpoint | per-provider costs in `~/.clodex/providers.json` |
 | any other clodex provider | `· no quota data` | provider costs if known, otherwise nothing |
@@ -84,6 +84,13 @@ Provider resolution prefers ground truth (an id that names its provider, or the
 clodex session log) over the alias table, which cannot answer for models that
 have no alias or whose alias is ambiguous across providers. `STATUSLINE_DEBUG=1`
 prints the resolution chain to stderr.
+
+Both live-polled blocks (codex, opencode) always stamp the age of their reading,
+and the stamp turns yellow past five minutes — for a 60-second poll, minutes-old
+data means refreshes are failing. This matters for codex in particular: the codex
+CLI's own `/status` does not poll anything, it replays the rate limits attached to
+its last API response, so the two tools legitimately show different numbers and
+only the timestamps reveal why.
 
 The render path does no network I/O: quota, spend and session cost all come from
 `~/.cache/claude-statusline/`, refreshed by detached `statusline.sh --refresh`

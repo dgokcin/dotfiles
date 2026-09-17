@@ -46,9 +46,9 @@ file_mtime() {
   stat -f %m "$1" 2>/dev/null || stat -c %Y "$1" 2>/dev/null
 }
 
-# Model-scoped windows report resets_at as an ISO string, unlike the epoch the
-# five_hour/seven_day windows use. Seconds precision is enough; drop any
-# fractional part and trailing zone, and read it as UTC.
+# OpenCode reports resets_at as an ISO string, unlike the epoch the Anthropic and
+# codex windows use. Seconds precision is enough; drop any fractional part and
+# trailing zone, and read it as UTC.
 iso_to_epoch() {
   local iso=$1 base
   case "$iso" in
@@ -281,7 +281,7 @@ provider_family() {
   printf 'routed'
 }
 
-# "<input>\t<cached>\t<output>" per 1M tokens, empty when unknown.
+# "<input>\t<cached>\t<output>\t<cache write>" per 1M tokens, empty when unknown.
 #
 # The source has to differ per family. pricing-cache.json has no opencode
 # platform at all (kimi-k3 has no rows; the deepseek rows are aggregator prices,
@@ -301,7 +301,8 @@ resolve_prices() {
       | [.pricing[]? | select(.platform == "openai" and .tier == "standard"
           and ((.notes // "") | test("long") | not))] | first
       | select(.input_per_1m_tokens != null)
-      | [.input_per_1m_tokens, .cached_input_per_1m_tokens // 0, .output_per_1m_tokens // 0]
+      | [.input_per_1m_tokens, .cached_input_per_1m_tokens // 0, .output_per_1m_tokens // 0,
+         .input_per_1m_tokens]
       | @tsv' "$clodex_pricing" 2>/dev/null
     ;;
   opencode | routed)
@@ -310,7 +311,8 @@ resolve_prices() {
       [.providers[]? | select(.id == $p) | .modelsCache.models[]?
        | select(.id == $m or .upstreamModelId == $m) | .cost] | first
       | select(. != null and .input != null)
-      | [.input, .cache_read // 0, .output // 0] | @tsv' "$clodex_providers" 2>/dev/null
+      | [.input, .cache_read // 0, .output // 0, .cache_write // .input]
+      | @tsv' "$clodex_providers" 2>/dev/null
     ;;
   esac
 }
@@ -355,10 +357,13 @@ refresh_quota() {
   # Windows come back in seconds; project to minutes so codex_window_label and
   # the cache format stay unchanged. secondary_window may be null (team plans
   # expose only the weekly window). Absent fields become "-".
-  payload=$(curl -s --max-time 5 \
+  local raw http
+  raw=$(curl -s -w '\n%{http_code}' --max-time 5 \
     -H "Authorization: Bearer $token" \
     -H "chatgpt-account-id: $acct" \
-    "https://chatgpt.com/backend-api/wham/usage" 2>/dev/null | jq -r '
+    "https://chatgpt.com/backend-api/wham/usage" 2>/dev/null)
+  http=$(printf '%s' "$raw" | tail -1)
+  payload=$(printf '%s' "$raw" | sed '$d' | jq -r '
     .rate_limit
     | select(.primary_window.used_percent != null)
     | [.primary_window, .secondary_window]
@@ -366,7 +371,14 @@ refresh_quota() {
           (.limit_window_seconds | if . == null then null else . / 60 | floor end),
           .reset_at)
     | map(if . == null then "-" else tostring end) | @tsv' 2>/dev/null)
-  [ -n "$payload" ] && cache_write "$cache_dir/quota-$acct" "$payload"
+  # Never clobber a good reading with a failure — but do record why it failed,
+  # so a stale number can say "the token expired" instead of just ageing.
+  if [ -n "$payload" ]; then
+    cache_write "$cache_dir/quota-$acct" "$payload"
+    rm -f "$cache_dir/quota-$acct.err" 2>/dev/null
+  else
+    cache_write "$cache_dir/quota-$acct.err" "${http:-net}"
+  fi
   return 0
 }
 
@@ -403,8 +415,8 @@ refresh_spend() {
       | {key: .id, value: (.cost // {})}] | from_entries' \
     "$clodex_providers" 2>/dev/null)
   [ -n "$prices" ] || prices='{}'
-  # Cache writes bill at the plain input rate (these providers publish no
-  # separate write price); cache reads at the cache_read rate.
+  # Cache writes bill at their published rate when there is one (qwen and the
+  # opencode-hosted gpt charge ~25% over input), otherwise at the input rate.
   #
   # Emits "<total>\x1f<requests>\x1f<top model by spend>": on a cheap model the
   # dollar figure alone is close to meaningless, so the volume and what is
@@ -415,7 +427,8 @@ refresh_spend() {
      | select(.event == "response_usage" and .provider == $p and .timestamp >= $cut)]
     | group_by(.requestId) | map(.[-1])
     | map(. + {cost: (($prices[.modelId] // {}) as $c
-          | ((((.inputTokens // 0) + (.cacheCreationInputTokens // 0)) * ($c.input // 0))
+          | (((.inputTokens // 0) * ($c.input // 0))
+             + ((.cacheCreationInputTokens // 0) * ($c.cache_write // $c.input // 0))
              + ((.cacheReadInputTokens // 0) * ($c.cache_read // 0))
              + ((.outputTokens // 0) * ($c.output // 0))) / 1e6)})
     | (map(.cost) | add // 0) as $total
@@ -476,16 +489,19 @@ refresh_ocusage() {
 # call) repeats its usage across several lines sharing one message.id — count
 # each id once or the total nearly doubles.
 refresh_cost() {
-  local sid=$1 transcript=$2 mid=$3 mraw=$4 pin=$5 pcached=$6 pout=$7 val
+  local sid=$1 transcript=$2 mid=$3 mraw=$4 pin=$5 pcached=$6 pout=$7 pwrite=${8:-} val
+  # Most providers publish no separate cache-write price; those fall back to the
+  # plain input rate. Some (qwen, opencode-hosted gpt) charge a premium for it.
+  [ -n "$pwrite" ] || pwrite=$pin
   [ -n "$sid" ] && [ -f "$transcript" ] || return 0
   val=$(jq -R -n --arg m "$mid" --arg mraw "$mraw" \
-    --arg pin "$pin" --arg pcached "$pcached" --arg pout "$pout" '
+    --arg pin "$pin" --arg pcached "$pcached" --arg pout "$pout" --arg pwrite "$pwrite" '
     [inputs | fromjson? | .message?
      | select(. != null and .usage != null and (.model == $m or .model == $mraw))] as $all
     | ((($all | map(select(.id != null)) | unique_by(.id))
         + ($all | map(select(.id == null)))) | map(.usage)) as $u
-    | ((($u | map(.input_tokens // 0) | add // 0)
-        + ($u | map(.cache_creation_input_tokens // 0) | add // 0)) * ($pin | tonumber)
+    | (($u | map(.input_tokens // 0) | add // 0) * ($pin | tonumber)
+       + ($u | map(.cache_creation_input_tokens // 0) | add // 0) * ($pwrite | tonumber)
        + ($u | map(.cache_read_input_tokens // 0) | add // 0) * ($pcached | tonumber)
        + ($u | map(.output_tokens // 0) | add // 0) * ($pout | tonumber)) / 1e6' \
     <"$transcript" 2>/dev/null)
@@ -508,7 +524,7 @@ if [ "${1:-}" = "--refresh" ]; then
   quota) refresh_quota "${3:-}" "${4:-}" ;;
   spend) refresh_spend "${3:-}" "$(to_int "${4:-}" 30)" ;;
   ocusage) refresh_ocusage "${3:-}" ;;
-  cost) refresh_cost "${3:-}" "${4:-}" "${5:-}" "${6:-}" "${7:-0}" "${8:-0}" "${9:-0}" ;;
+  cost) refresh_cost "${3:-}" "${4:-}" "${5:-}" "${6:-}" "${7:-0}" "${8:-0}" "${9:-0}" "${10:-}" ;;
   esac
   prune_cache
   exit 0
@@ -549,11 +565,9 @@ done < <(printf '%s' "$input" | jq -r '
   (.rate_limits.seven_day.resets_at | s),
   (.worktree.name | s),
   (.worktree.original_cwd | s),
-  ([.rate_limits.model_scoped[]?
-    | [(.display_name // "-"),
-       (.utilization | if . == null then "-" else tostring end),
-       (.resets_at | if . == null then "-" else tostring end)]
-    | join("\u001f")] | join("\u001e"))' 2>/dev/null)
+  (.context_window.total_input_tokens | s),
+  (.context_window.used_percentage | s),
+  (if .context_window.current_usage == null then "" else "1" end)' 2>/dev/null)
 
 cwd=${sl_fields[0]-}
 model_display=${sl_fields[1]-}
@@ -572,7 +586,9 @@ rl7_pct=${sl_fields[13]-}
 rl7_reset=${sl_fields[14]-}
 worktree_name=${sl_fields[15]-}
 worktree_orig=${sl_fields[16]-}
-model_scoped_raw=${sl_fields[17]-}
+tok_total=${sl_fields[17]-}
+pct_stdin=${sl_fields[18]-}
+ctx_have=${sl_fields[19]-}
 
 model_id=$(strip_ctx_marker "$model_id_raw")
 # Routed models do not always carry a display name; the id is better than a gap.
@@ -604,7 +620,14 @@ vim_mode=""
 
 # Token calculations
 ctx_size=$(to_int "$ctx_size" 200000)
-current_tokens=$(($(to_int "$tok_in") + $(to_int "$tok_cc") + $(to_int "$tok_cr")))
+# Claude Code already sums input + cache_creation + cache_read into
+# total_input_tokens; prefer its figure and only add up the parts if an older
+# build omits it.
+if [ -n "$tok_total" ]; then
+  current_tokens=$(to_int "$tok_total")
+else
+  current_tokens=$(($(to_int "$tok_in") + $(to_int "$tok_cc") + $(to_int "$tok_cr")))
+fi
 
 format_tokens() {
   local num
@@ -620,11 +643,17 @@ format_tokens() {
 
 used_fmt=$(format_tokens "$current_tokens")
 total_fmt=$(format_tokens "$ctx_size")
-if [ "$ctx_size" -gt 0 ]; then
+if [ -n "$pct_stdin" ]; then
+  pct_used=$(echo "$pct_stdin" | awk '{printf "%d", int($1 + 0.5)}')
+elif [ "$ctx_size" -gt 0 ]; then
   pct_used=$((current_tokens * 100 / ctx_size))
 else
   pct_used=0
 fi
+# current_usage is null until the model completes an API call — after a /model
+# switch, for instance. That is "no reading yet", not zero context, and showing
+# it as 0 / 272k (0%) mid-session just looks broken.
+[ -z "$ctx_have" ] && used_fmt="–"
 
 # Auto-compact: remaining tokens until trigger
 ac_window=$(to_int "$(settings_env CLAUDE_CODE_AUTO_COMPACT_WINDOW)" "$ctx_size")
@@ -786,7 +815,7 @@ codex_window_fields() {
 
 codex_pct_primary="" codex_label_primary="" codex_reset_primary=""
 codex_pct_secondary="" codex_label_secondary="" codex_reset_secondary=""
-quota_as_of="" codex_acct=""
+quota_as_of="" codex_acct="" quota_err=""
 
 if [ "$family" = "chatgpt" ]; then
   resolve_codex_home
@@ -800,13 +829,11 @@ if [ "$family" = "chatgpt" ]; then
       spawn_refresh "quota-$codex_acct" quota "$codex_home" "$codex_acct"
 
     if [ -f "$quota_cache" ]; then
+      # Always stamped. The codex CLI's own /status replays a snapshot from its
+      # last API response, so the two tools legitimately disagree; without an
+      # age on screen there is no way to tell a live reading from an old one.
       quota_as_of=$(cache_stamp "$quota_cache")
-      # Refreshes keep readings <=60s old; only stamp the age once they have
-      # been failing long enough to matter (stale token, offline).
-      if [ -n "$quota_as_of" ]; then
-        quota_age=$(($(date +%s) - $(to_int "$quota_as_of")))
-        [ "$quota_age" -lt 300 ] && quota_as_of=""
-      fi
+      [ -f "$quota_cache.err" ] && quota_err=$(cache_value "$quota_cache.err")
       IFS=$'\t' read -r cx_p_pct cx_p_win cx_p_reset cx_s_pct cx_s_win cx_s_reset \
         <<<"$(cache_value "$quota_cache")"
       if codex_fields=$(codex_window_fields "${cx_p_pct:--}" "${cx_p_win:--}" "${cx_p_reset:--}"); then
@@ -815,54 +842,6 @@ if [ "$family" = "chatgpt" ]; then
       if codex_fields=$(codex_window_fields "${cx_s_pct:--}" "${cx_s_win:--}" "${cx_s_reset:--}"); then
         IFS=$'\t' read -r codex_pct_secondary codex_label_secondary codex_reset_secondary <<<"$codex_fields"
       fi
-    fi
-  fi
-fi
-
-# --- per-model weekly windows (Fable and friends) ---
-# Anthropic meters some models on their own weekly window on top of the
-# all-models one, and being at 100% there while "weekly" reads 67% is exactly
-# the thing worth seeing. Claude Code 2.1.269 does not put these on stdin (its
-# payload builder emits only five_hour/seven_day/spend_limit) but it does cache
-# the full limits array it fetches, so read stdin first — newer builds document
-# a rate_limits.model_scoped field — and fall back to that cache.
-#
-# Records are RS-separated, fields US-separated, with "-" for absent values so
-# nothing can collapse. Returns "<label>\x1f<pct>\x1f<resets_at>" per bucket,
-# plus the cache's fetch time on the last record when it came from the cache.
-claude_config_json() {
-  local f candidates
-  # An explicit config dir is authoritative: falling back to $HOME behind the
-  # user's back would report a different account's usage.
-  if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
-    candidates="$CLAUDE_CONFIG_DIR/.claude.json"
-  else
-    candidates="$HOME/.claude/.claude.json $HOME/.claude.json"
-  fi
-  for f in $candidates; do
-    [ -f "$f" ] || continue
-    if jq -e '.cachedUsageUtilization.utilization.limits' "$f" >/dev/null 2>&1; then
-      printf '%s' "$f"
-      return
-    fi
-  done
-}
-
-scoped_fetched_ms=""
-model_scoped_records=""
-if [ "$family" = "anthropic" ]; then
-  model_scoped_records="$model_scoped_raw"
-  if [ -z "$model_scoped_records" ]; then
-    scoped_src=$(claude_config_json)
-    if [ -n "$scoped_src" ]; then
-      model_scoped_records=$(jq -r '
-        [.cachedUsageUtilization.utilization.limits[]?
-         | select(.kind == "weekly_scoped" and .scope.model.display_name != null)
-         | [(.scope.model.display_name),
-            (.percent | if . == null then "-" else tostring end),
-            (.resets_at // "-" | tostring)]
-         | join("\u001f")] | join("\u001e")' "$scoped_src" 2>/dev/null)
-      scoped_fetched_ms=$(jq -r '.cachedUsageUtilization.fetchedAtMs // empty' "$scoped_src" 2>/dev/null)
     fi
   fi
 fi
@@ -883,10 +862,6 @@ if [ "$family" = "opencode" ]; then
     [ -n "$oc_p1" ] && [ "$oc_p1" != "-" ] && oc_ok=1
     if [ "$oc_ok" = 1 ]; then
       oc_as_of=$(cache_stamp "$oc_cache")
-      if [ -n "$oc_as_of" ]; then
-        oc_age=$(($(date +%s) - $(to_int "$oc_as_of")))
-        [ "$oc_age" -lt 300 ] && oc_as_of=""
-      fi
     fi
   fi
 fi
@@ -927,11 +902,11 @@ if [ "$family" = "anthropic" ]; then
 else
   prices=$(resolve_prices "$family" "$provider_id" "$model_id")
   if [ -n "$prices" ] && [ -n "$session_id" ]; then
-    IFS=$'\t' read -r p_in p_cached p_out <<<"$prices"
+    IFS=$'\t' read -r p_in p_cached p_out p_write <<<"$prices"
     cost_cache="$cache_dir/cost-$session_id"
     [ "$(cache_age "$cost_cache")" -ge 15 ] &&
       spawn_refresh "cost-$session_id" cost "$session_id" "$transcript_path" \
-        "$model_id" "$model_id_raw" "$p_in" "$p_cached" "$p_out"
+        "$model_id" "$model_id_raw" "$p_in" "$p_cached" "$p_out" "$p_write"
     cost_val=$(to_num "$(cache_value "$cost_cache")" "")
     [ -n "$cost_val" ] && cost_fmt="~$(format_cost "$cost_val") api"
   fi
@@ -1034,8 +1009,9 @@ esac
 printf "\n"
 printf "%b%s%b" "$C_BLUE" "$model_display" "$C_RESET"
 printf "%b" "$SEP"
-printf "ctx: %b%s / %s%b %b(%s%%)%b" "$C_ORANGE" "$used_fmt" "$total_fmt" "$C_RESET" "$C_GREEN" "$pct_used" "$C_RESET"
-if [ -n "$ac_remaining_fmt" ]; then
+printf "ctx: %b%s / %s%b" "$C_ORANGE" "$used_fmt" "$total_fmt" "$C_RESET"
+[ -n "$ctx_have" ] && printf " %b(%s%%)%b" "$C_GREEN" "$pct_used" "$C_RESET"
+if [ -n "$ctx_have" ] && [ -n "$ac_remaining_fmt" ]; then
   printf " %bacp:%b%s" "$C_DIM" "$C_RESET" "$ac_remaining_fmt"
 fi
 if [ -n "$cost_fmt" ]; then
@@ -1060,43 +1036,11 @@ anthropic)
     build_bar "$seven_day_pct" 10
     printf " %b%s%%%b" "$C_CYAN" "$seven_day_pct" "$C_RESET"
 
-    # Per-model weekly windows (Fable, ...) sit alongside the all-models one.
-    printf '%s\n' "$model_scoped_records" | tr '\036' '\n' |
-      while IFS=$'\037' read -r sc_label sc_pct sc_reset || [ -n "$sc_label" ]; do
-        [ -n "$sc_label" ] && [ "$sc_pct" != "-" ] && [ -n "$sc_pct" ] || continue
-        sc_pct=$(echo "$sc_pct" | awk '{printf "%d", int($1 + 0.5)}')
-        printf "%b" "$SEP"
-        printf "%b%s:%b " "$C_WHITE" \
-          "$(printf '%s' "$sc_label" | tr '[:upper:]' '[:lower:]')" "$C_RESET"
-        build_bar "$sc_pct" 10
-        printf " %b%s%%%b" "$C_CYAN" "$sc_pct" "$C_RESET"
-      done
-
     printf "\n"
     printf "%bresets:%b 5h @ %s" "$C_WHITE" "$C_RESET" \
       "$(format_reset_time_epoch "$rl5_reset" "time")"
     printf "%b" "$SEP"
     printf "7d @ %s" "$(format_reset_time_epoch "$rl7_reset" "datetime")"
-    printf '%s\n' "$model_scoped_records" | tr '\036' '\n' |
-      while IFS=$'\037' read -r sc_label sc_pct sc_reset || [ -n "$sc_label" ]; do
-        [ -n "$sc_label" ] && [ "$sc_reset" != "-" ] && [ -n "$sc_reset" ] || continue
-        sc_epoch=$(iso_to_epoch "$sc_reset")
-        [ -n "$sc_epoch" ] || continue
-        printf "%b" "$SEP"
-        printf "%s @ %s" "$(printf '%s' "$sc_label" | tr '[:upper:]' '[:lower:]')" \
-          "$(format_reset_time_epoch "$sc_epoch" "datetime")"
-      done
-    # These buckets come from Claude Code's own usage cache, which it refreshes
-    # on its own schedule — stamp the age so a stale 100% is not read as live.
-    if [ -n "$scoped_fetched_ms" ]; then
-      scoped_age=$(($(date +%s) - $(to_int "${scoped_fetched_ms%???}")))
-      if [ "$scoped_age" -ge 900 ]; then
-        age_color="$C_DIM"
-        [ "$scoped_age" -ge 21600 ] && age_color="$C_YELLOW"
-        printf "%b" "$SEP"
-        printf "%bas of %s%b" "$age_color" "$(format_age "$scoped_age")" "$C_RESET"
-      fi
-    fi
   fi
   ;;
 chatgpt)
@@ -1136,9 +1080,17 @@ chatgpt)
       if [ -n "$quota_as_of" ]; then
         quota_age=$(($(date +%s) - $(to_int "$quota_as_of")))
         age_color="$C_DIM"
-        [ "$quota_age" -ge 7200 ] && age_color="$C_YELLOW"
+        [ "$quota_age" -ge 300 ] && age_color="$C_YELLOW"
         printf "%b" "$SEP"
         printf "%bas of %s%b" "$age_color" "$(format_age "$quota_age")" "$C_RESET"
+        # An expired token never heals on its own: this file is refreshed by the
+        # codex CLI, which a clodex-only workflow never runs.
+        case "$quota_err" in
+        401 | 403)
+          printf "%b" "$SEP"
+          printf "%btoken expired — run codex%b" "$C_RED" "$C_RESET"
+          ;;
+        esac
       fi
     fi
   elif [ -n "$codex_acct" ]; then
@@ -1202,7 +1154,7 @@ opencode)
     if [ -n "$oc_as_of" ]; then
       oc_age=$(($(date +%s) - $(to_int "$oc_as_of")))
       age_color="$C_DIM"
-      [ "$oc_age" -ge 7200 ] && age_color="$C_YELLOW"
+      [ "$oc_age" -ge 300 ] && age_color="$C_YELLOW"
       printf "%b" "$SEP"
       printf "%bas of %s%b" "$age_color" "$(format_age "$oc_age")" "$C_RESET"
     fi

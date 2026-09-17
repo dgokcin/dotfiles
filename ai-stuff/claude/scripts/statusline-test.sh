@@ -41,7 +41,9 @@ cat >"$clodex/providers.json" <<'JSON'
           { "id": "deepseek-v4-pro", "upstreamModelId": "deepseek-v4-pro",
             "cost": { "input": 0.66, "output": 1.98, "cache_read": 0.022 } },
           { "id": "minimax-m3", "upstreamModelId": "minimax-m3",
-            "cost": { "input": 0.3, "output": 1.2, "cache_read": 0.06 } }
+            "cost": { "input": 0.3, "output": 1.2, "cache_read": 0.06 } },
+          { "id": "qwen-write", "upstreamModelId": "qwen-write",
+            "cost": { "input": 1, "output": 2, "cache_read": 0.1, "cache_write": 4 } }
         ]
       }
     },
@@ -104,26 +106,6 @@ settings_dir="$scratch/claude"
 mkdir -p "$settings_dir"
 cat >"$settings_dir/settings.json" <<'JSON'
 { "env": { "CLODEX_PLAN_USD": "20", "CLODEX_SPEND_WINDOW_DAYS": "7" } }
-JSON
-
-# Claude Code's own usage cache, the fallback source for per-model weekly
-# windows. CLAUDE_CONFIG_DIR points here, so the real ~/.claude.json is never
-# read by the suite.
-cat >"$settings_dir/.claude.json" <<'JSON'
-{
-  "cachedUsageUtilization": {
-    "fetchedAtMs": 1,
-    "utilization": {
-      "limits": [
-        { "kind": "session", "group": "session", "percent": 0, "resets_at": null },
-        { "kind": "weekly_all", "group": "weekly", "percent": 67, "resets_at": "2026-09-13T00:00:00Z" },
-        { "kind": "weekly_scoped", "group": "weekly", "percent": 100,
-          "resets_at": "2026-09-13T00:00:00.441453+00:00",
-          "scope": { "model": { "display_name": "Fable" } } }
-      ]
-    }
-  }
-}
 JSON
 
 # ===== harness =====
@@ -204,29 +186,6 @@ expect_contains "48%"
 expect_contains "cost: \$0.4213"
 expect_absent "no quota data"
 
-printf '\nmodel-scoped windows from stdin: every bucket renders\n'
-run "$fixtures/model-scoped.json"
-expect_clean
-expect_contains "fable:"
-expect_contains "100%"
-# The final record is the regression: `read` fails on a stream with no trailing
-# newline, which used to drop the last bucket silently.
-expect_contains "sonnet:"
-expect_contains "12%"
-expect_contains "fable @"
-expect_contains "sonnet @"
-# stdin was authoritative here, so no staleness stamp from the cache.
-expect_absent "as of"
-
-printf '\nmodel-scoped windows fall back to Claude Code usage cache\n'
-run "$fixtures/anthropic.json"
-expect_clean
-expect_contains "fable:"
-expect_contains "100%"
-# That cache is refreshed on Claude Code's schedule, not ours; a stale reading
-# must say so rather than pass as live.
-expect_contains "as of"
-
 printf '\nopenai-oauth: codex bars from cache, API-equivalent cost\n'
 # 31/61 pct, 300/10080 minute windows, reset epochs.
 seed_cache "quota-acct-test" "31	300	1789000000	61	10080	1789300000"
@@ -241,6 +200,9 @@ expect_contains "5h:"
 expect_contains "31%"
 expect_contains "weekly:"
 expect_contains "61%"
+# A fresh reading is stamped too: codex's own /status replays a snapshot from
+# its last request, so an unlabelled number cannot be compared against it.
+expect_contains "as of"
 expect_absent "current:"
 rm -rf "$scratch/codex-missing"
 
@@ -259,6 +221,7 @@ expect_contains "monthly @"
 # spend bar must both step aside.
 expect_absent "no quota reading"
 expect_absent "of spend"
+expect_contains "as of"
 # Anthropic's own limits still must not leak in.
 expect_absent "current:"
 
@@ -323,6 +286,32 @@ expect_contains "opencode-go"
 expect_contains "7d:"
 mv "$clodex/config.json.off" "$clodex/config.json"
 
+printf '\nno context reading yet: a dash, not a misleading 0%%\n'
+# current_usage is null until the model completes an API call (e.g. straight
+# after /model). Rendering that as 0 / 272k (0%) reads as a broken statusline.
+jq 'del(.context_window.current_usage) | del(.context_window.total_input_tokens)' \
+  "$fixtures/anthropic.json" >"$scratch/no-ctx.json"
+run "$scratch/no-ctx.json"
+expect_clean
+expect_contains "ctx: –"
+expect_absent "(0%)"
+expect_absent "acp:"
+
+printf '\nexpired codex token: says so instead of quietly ageing\n'
+mkdir -p "$scratch/codex-missing"
+cat >"$scratch/codex-missing/auth.json" <<'JSON'
+{ "tokens": { "access_token": "stub", "account_id": "acct-401" } }
+JSON
+seed_cache "quota-acct-401" "31	300	1789000000	61	10080	1789300000" 36000
+seed_cache "quota-acct-401.err" "401" 30
+mkdir -p "$scratch/cache/claude-statusline/.lock-quota-acct-401"
+run "$fixtures/openai-oauth.json"
+expect_clean
+expect_contains "as of 10h ago"
+expect_contains "token expired"
+rmdir "$scratch/cache/claude-statusline/.lock-quota-acct-401"
+rm -rf "$scratch/codex-missing" "$scratch/cache/claude-statusline/quota-acct-401.err"
+
 printf '\nsparse session json: null fields must not shift later values\n'
 run "$fixtures/sparse.json"
 expect_clean
@@ -364,6 +353,23 @@ expect_clean
 # (1000 + 2000) * 0.3 + 100000 * 0.06 + 500 * 1.2, per 1M, counting the repeated
 # message.id once and ignoring the other model's line.
 expect_contains "cost: ~\$0.0075 api"
+
+printf '\ncache writes use their published rate, not the input rate\n'
+# Same transcript numbers as the [1m] case: 1000 in, 2000 cache-write,
+# 100000 cache-read, 500 out. At 1 / 4 / 0.1 / 2 per 1M that is
+# 1000 + 8000 + 10000 + 1000 = 20000 -> $0.0200. Billing writes at the input
+# rate instead would give $0.0140, a 30% undercount.
+sed 's/minimax-m3/qwen-write/g' "$transcript" >"$scratch/transcript-write.jsonl"
+CLODEX_HOME="$clodex" XDG_CACHE_HOME="$scratch/cache" \
+  "$script" --refresh cost fx-write "$scratch/transcript-write.jsonl" \
+  "qwen-write" "qwen-write" 1 0.1 2 4 2>"$scratch/stderr"
+[ -s "$scratch/stderr" ] && no "cache-write refresh quiet" "$(cat "$scratch/stderr")" ||
+  ok "cache-write refresh quiet"
+write_cost=$(sed -n 2p "$scratch/cache/claude-statusline/cost-fx-write" 2>/dev/null)
+case "$write_cost" in
+0.02*) ok "cache writes billed at cache_write rate ($write_cost)" ;;
+*) no "cache writes billed at cache_write rate" "got $write_cost, expected 0.02" ;;
+esac
 
 printf '\nunknown provider: no quota, no invented cost\n'
 run "$fixtures/unknown-provider.json"
