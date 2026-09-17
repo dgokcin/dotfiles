@@ -181,7 +181,6 @@ fi
 
 # Created by `pipx` on 2024-06-14 23:26:07
 export PATH="$PATH:/Users/denizgokcin/.local/bin"
-if [ -f "/Users/denizgokcin/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/denizgokcin/.config/fabric/fabric-bootstrap.inc"; fi
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/denizgokcin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/denizgokcin/google-cloud-sdk/path.zsh.inc'; fi
@@ -201,9 +200,6 @@ export PATH="/Users/denizgokcin/codes/work/dev-tools/bin:$PATH"
 # Added by kubectl-plugins install
 export PATH="/Users/denizgokcin/codes/work/dev-tools/k8s/kubectl-plugins:$PATH"
 
-# Added by Antigravity
-export PATH="/Users/denizgokcin/.antigravity/antigravity/bin:$PATH"
-
 # bun completions
 [ -s "/Users/denizgokcin/.bun/_bun" ] && source "/Users/denizgokcin/.bun/_bun"
 
@@ -221,9 +217,6 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export BASH_MAX_OUTPUT_LENGTH=15000
 
-
-# Added by Antigravity CLI installer
-export PATH="/Users/denizgokcin/.local/bin:$PATH"
 
 # opencode
 export PATH=/Users/denizgokcin/.opencode/bin:$PATH
