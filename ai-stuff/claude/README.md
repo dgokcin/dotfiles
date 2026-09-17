@@ -12,7 +12,9 @@ cross-tool architecture.
 ai-stuff/claude/
 ├── scripts/               # Claude-only hook + integration scripts (→ ~/.claude/scripts)
 │   ├── file-suggestion.sh # Custom file suggestion using rg + fzf
-│   ├── statusline.sh      # Main-session statusline with git, context, vim mode
+│   ├── statusline.sh      # Main-session statusline: git, context, per-provider quota/cost
+│   ├── statusline-test.sh # Fixture tests for statusline.sh (repo-only, not installed)
+│   ├── fixtures/          # stdin fixtures used by statusline-test.sh
 │   ├── subagent-statusline.sh # Subagent rows with each task's resolved model
 │   ├── session-start.sh   # Auto-name worktree sessions
 │   ├── notify.sh          # Notification-event alert (claude-only event)
@@ -43,6 +45,60 @@ Agents (ai-stuff/agents/)                ← execution env: model + tools + pers
     ▼
 Personas + Config (ai-stuff/_shared/)    ← identity, rules, shared constants
 ```
+
+## Statusline
+
+Claude Code is the interface; the model behind a session may be Anthropic's own
+API or a third-party backend routed through the clodex proxy — so
+`statusline.sh` resolves the real upstream provider per session and renders only
+the quota surface that provider can actually support.
+
+| Backend | Line 2 | Cost source |
+|---|---|---|
+| Anthropic | 5h / weekly bars from stdin `rate_limits` | Claude Code's `total_cost_usd` |
+| ChatGPT (`openai-oauth`) | live bars polled from the ChatGPT usage endpoint | published OpenAI API rates (`~/.clodex/pricing-cache.json`) |
+| OpenCode Go (`opencode-go`) | real 5h / weekly / monthly quota from the provider's `/usage` endpoint | per-provider costs in `~/.clodex/providers.json` |
+| any other clodex provider | `· no quota data` | provider costs if known, otherwise nothing |
+
+OpenCode Go serves real quota at `/usage` on its inference base (for Go:
+`https://opencode.ai/zen/go/v1/usage`), authenticated by the same API key used
+for inference — the 5-hour, weekly and monthly windows its web UI shows. The URL
+is derived from `api.url` in the provider registry, so a rehosted base needs no
+edit, and the key is read from opencode's own `auth.json` (clodex keeps its copy
+in the keychain). Note this is *not* the console API at `console.opencode.ai/api`
+(`usage`, `budgets`, `billing/balance/summary`), which is a separate
+Google/GitHub browser-session system that rejects the API key.
+
+When no reading is available — no key, offline, another provider — the line
+falls back to pricing the window's usage from clodex's own per-request logs and
+comparing it to the plan fee (`CLODEX_PLAN_USD`, `CLODEX_SPEND_WINDOW_DAYS`,
+default 30 to match a monthly billing period), and says `no quota reading` so the
+estimate is never mistaken for real quota. Since the plan is flat-rate, that
+figure answers "is the subscription worth it" rather than "how much do I owe":
+past 100% it has paid for itself, so the bar fills toward green and the value is
+not clamped. It also carries the request count and the model responsible,
+labelled with its share of window spend, since an unqualified model id sitting
+under the session's own model reads as the one in use.
+
+Provider resolution prefers ground truth (an id that names its provider, or the
+clodex session log) over the alias table, which cannot answer for models that
+have no alias or whose alias is ambiguous across providers. `STATUSLINE_DEBUG=1`
+prints the resolution chain to stderr.
+
+Both live-polled blocks (codex, opencode) always stamp the age of their reading,
+and the stamp turns yellow past five minutes — for a 60-second poll, minutes-old
+data means refreshes are failing. This matters for codex in particular: the codex
+CLI's own `/status` does not poll anything, it replays the rate limits attached to
+its last API response, so the two tools legitimately show different numbers and
+only the timestamps reveal why.
+
+The render path does no network I/O: quota, spend and session cost all come from
+`~/.cache/claude-statusline/`, refreshed by detached `statusline.sh --refresh`
+runs. A failed refresh keeps the last good reading and stamps its age.
+
+Run `./scripts/statusline-test.sh` after changing it — it drives the real script
+against `scripts/fixtures/*.json` with a scratch clodex/codex home, so it touches
+neither your accounts nor the network.
 
 ## Claude-specific skill features
 
