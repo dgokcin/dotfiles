@@ -60,7 +60,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
@@ -206,14 +206,8 @@
     "gitops@treatwell": false,
     "session-handover@treatwell": true,
     "ponytail@ponytail": false,
-    "datadog@treatwell": true,
-    "multi-openai@cc-multi-cli-plugin": true,
-    "multi-core@cc-multi-cli-plugin": true,
-    "multi-cursor@cc-multi-cli-plugin": true
+    "datadog@treatwell": true
   },
-  "prependPlugins": [
-    "multi-core@cc-multi-cli-plugin"
-  ],
   "extraKnownMarketplaces": {
     "obsidian-skills": {
       "source": {
@@ -253,12 +247,6 @@
         "repo": "awslabs/agent-plugins"
       },
       "autoUpdate": true
-    },
-    "cc-multi-cli-plugin": {
-      "source": {
-        "source": "github",
-        "repo": "greenpolo/cc-multi-cli-plugin"
-      }
     }
   },
   "outputStyle": "Declaude",
