@@ -43,7 +43,12 @@ to_num() {
 }
 
 file_mtime() {
-  stat -f %m "$1" 2>/dev/null || stat -c %Y "$1" 2>/dev/null
+  # GNU stat -f is --file-system and exits 0, so it cannot fall through to -c.
+  if [ "$(uname)" = Darwin ]; then
+    stat -f %m "$1" 2>/dev/null
+  else
+    stat -c %Y "$1" 2>/dev/null
+  fi
 }
 
 # OpenCode reports resets_at as an ISO string, unlike the epoch the Anthropic and
