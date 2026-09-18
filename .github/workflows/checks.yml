@@ -1,17 +1,13 @@
-name: CI
+name: Checks
 
 on:
-  pull_request: # runs from the merge commit so new checks register on the PR
+  pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches: [main]
   schedule:
-    # Thursday 05:00 UTC — catch dead brew packages when macOS CI is enabled.
     - cron: "0 5 * * 4"
   workflow_dispatch:
-
-concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -22,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Install check tools
         run: |
@@ -44,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Install into an isolated home
         env:
@@ -58,12 +54,10 @@ jobs:
   brew:
     name: Brewfile health
     runs-on: macos-latest
-    # Opt in with repo variable ENABLE_MACOS_CI=true. Public repos get free
-    # standard macos-latest, but this job must never block required PR checks.
     if: vars.ENABLE_MACOS_CI == 'true'
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Brewfile health
         env:
