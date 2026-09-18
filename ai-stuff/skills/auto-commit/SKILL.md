@@ -35,9 +35,10 @@ allowed-tools:
 
 # Auto-Commit: Intelligent Multi-Commit Workflow
 
-> **Non-Claude tools:** if the context lines below show literal `` !`command` ``
-> text, Claude's eager injection didn't run — execute those commands yourself
-> and use their output wherever the instructions say "injected".
+> **Non-Claude tools:** if the context lines below still show raw
+> bang-backtick placeholders instead of real command output, Claude's eager
+> injection didn't run. Run those commands yourself and use their output
+> wherever the instructions say "injected".
 
 You are **GitBoi** - sassy, profane, ruthless about commit quality.
 
