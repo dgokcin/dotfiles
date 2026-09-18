@@ -2,8 +2,8 @@
 #
 # Cursor reads skills from the cross-tool standard directory ~/.agents/skills
 # (installed by makefiles/ai.mk via make ai-agents). This file handles the
-# Cursor-specific pieces: agents, lifecycle hooks (hooks.json), CLI settings
-# (cli-config.json), and the hook scripts they call. It also prunes the legacy
+# Cursor-specific pieces: agents, lifecycle hooks (hooks.json), CLI settings,
+# editor settings, keybindings, and hook scripts. It also prunes the legacy
 # ~/.cursor layout that predates the universal skills setup.
 #
 # Cursor's hook protocol differs from Claude Code's (tool-specific events,
@@ -13,12 +13,18 @@
 
 CURSOR_HOME := ${HOME}/.cursor
 
+ifeq ($(UNAME),Darwin)
+CURSOR_USER_HOME := ${HOME}/Library/Application Support/Cursor/User
+else
+CURSOR_USER_HOME := ${XDG_CONFIG_HOME}/Cursor/User
+endif
+
 # Old per-tool skill/persona/config/template symlinks installed by the
 # pre-universal cursor.mk — pruned on install.
 CURSOR_LEGACY := $(addprefix ${CURSOR_HOME}/skills/,gitboi jiragirl mega-dev commit create-pr create-story dev-story get-story) \
 	${CURSOR_HOME}/personas ${CURSOR_HOME}/config ${CURSOR_HOME}/templates
 
-cursor: cursor-agents cursor-scripts cursor-hooks cursor-config ai-agents ## Install Cursor agents, hook scripts, config, hooks + universal skills (~/.agents/skills)
+cursor: cursor-agents cursor-scripts cursor-hooks cursor-config cursor-user-config ai-agents ## Install Cursor agents, hooks, settings, keybindings, and universal skills
 	$(call pretty_print, "Pruning legacy ~/.cursor skill symlinks...")
 	@rm -rf $(CURSOR_LEGACY)
 
@@ -49,6 +55,18 @@ cursor-config: ## Symlink Cursor CLI configuration
 	$(call pretty_print, "Installing Cursor CLI configuration...")
 	$(call symlink,ai-stuff/cursor/cli-config.json,${CURSOR_HOME}/cli-config.json)
 
+cursor-user-config: ## Symlink Cursor editor settings and keybindings
+	$(call pretty_print, "Installing Cursor editor settings and keybindings...")
+	@mkdir -p "$(CURSOR_USER_HOME)"
+	@for f in settings.json keybindings.json; do \
+		target="$(CURSOR_USER_HOME)/$$f"; \
+		if [ -f "$$target" ] && [ ! -L "$$target" ]; then \
+			mv "$$target" "$$target.bak"; \
+			echo "backed up unmanaged $$f -> $$f.bak"; \
+		fi; \
+		ln -sfn "$(DOTFILES)/ai-stuff/cursor/$$f" "$$target"; \
+	done
+
 cursor-clean: ## Remove Cursor symlinks (universal skills stay; use ai-clean-agents for those)
 	$(call pretty_print, "Removing Cursor symlinks...")
 	@for a in $(CLAUDE_AGENTS); do rm -f "${CURSOR_HOME}/agents/$$a"; done
@@ -59,6 +77,10 @@ cursor-clean: ## Remove Cursor symlinks (universal skills stay; use ai-clean-age
 	$(call remove_file,${CURSOR_HOME}/scripts/auto-approve-cursor.sh)
 	$(call remove_file,${CURSOR_HOME}/scripts/session-start-context.sh)
 	$(call remove_file,${CURSOR_HOME}/scripts/notify-stop.sh)
+	@for f in settings.json keybindings.json; do \
+		target="$(CURSOR_USER_HOME)/$$f"; \
+		[ ! -L "$$target" ] || rm -f "$$target"; \
+	done
 	@rm -rf $(CURSOR_LEGACY)
 
-.PHONY: cursor cursor-agents cursor-scripts cursor-hooks cursor-config cursor-clean
+.PHONY: cursor cursor-agents cursor-scripts cursor-hooks cursor-config cursor-user-config cursor-clean

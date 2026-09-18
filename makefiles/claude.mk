@@ -4,7 +4,7 @@
 # personas/configs/templates live at ~/.config/ai-shared (make ai-shared) —
 # agents reference them there, so nothing tool-specific holds content.
 # This file only handles what is Claude Code-specific: agents, hook scripts,
-# and settings.json.
+# settings, and keybindings.
 
 CLAUDE_HOME := ${HOME}/.claude
 
@@ -15,7 +15,7 @@ CLAUDE_OUTPUT_STYLES := $(notdir $(wildcard $(DOTFILES)/ai-stuff/output-styles/*
 # Pre-ai-shared layout installed by the old claude.mk — pruned on install.
 CLAUDE_LEGACY := ${CLAUDE_HOME}/personas ${CLAUDE_HOME}/config ${CLAUDE_HOME}/templates
 
-claude: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings ai-shared ai-claude ## Install Claude Code agents, scripts, settings, and skills
+claude: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings ai-shared ai-claude ## Install Claude Code agents, scripts, settings, keybindings, and skills
 	$(call pretty_print, "Pruning legacy ~/.claude personas/config/templates symlinks...")
 	@rm -rf $(CLAUDE_LEGACY)
 
@@ -49,12 +49,17 @@ claude-settings: claude-dirs ## Symlink Claude Code settings.json
 	$(call pretty_print, "Installing Claude Code settings...")
 	$(call symlink,ai-stuff/claude/settings.json,${CLAUDE_HOME}/settings.json)
 
+claude-keybindings: claude-dirs ## Symlink Claude Code keybindings.json
+	$(call pretty_print, "Installing Claude Code keybindings...")
+	$(call symlink,ai-stuff/claude/keybindings.json,${CLAUDE_HOME}/keybindings.json)
+
 claude-clean: ai-clean-claude ## Remove Claude Code symlinks
 	$(call pretty_print, "Removing Claude Code symlinks...")
 	@for a in $(CLAUDE_AGENTS); do rm -f "${CLAUDE_HOME}/agents/$$a"; done
 	@for s in $(CLAUDE_OUTPUT_STYLES); do rm -f "${CLAUDE_HOME}/output-styles/$$s"; done
 	$(call remove_file,${CLAUDE_HOME}/scripts)
 	$(call remove_file,${CLAUDE_HOME}/settings.json)
+	$(call remove_file,${CLAUDE_HOME}/keybindings.json)
 	@rm -rf $(CLAUDE_LEGACY)
 
-.PHONY: claude claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-clean
+.PHONY: claude claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-clean

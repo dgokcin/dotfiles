@@ -1,4 +1,4 @@
-// Place your key bindings in this file to override the defaultsauto[]
+// Place your key bindings in this file to override the defaults
 [
   {
     "key": "f2",
@@ -63,10 +63,6 @@
     "key": "ctrl+enter",
     "command": "-explorer.openToSide",
     "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus"
-  },
-  {
-    "key": "cmd+t",
-    "command": "terminal.toggle"
   },
   {
     "key": "ctrl+alt+t",
@@ -146,6 +142,20 @@
     "command": "workbench.action.toggleAuxiliaryBar"
   },
   {
+    "key": "ctrl+r",
+    "command": "redo",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
+  },
+  {
+    "key": "shift+cmd+z",
+    "command": "-redo"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "-extension.vim_ctrl+r",
+    "when": "editorTextFocus && vim.active && vim.use<C-r> && !inDebugRepl"
+  },
+  {
     "key": "enter",
     "command": "-acceptRenameInput",
     "when": "editorFocus && renameInputVisible && !isComposing"
@@ -154,6 +164,15 @@
     "key": "enter",
     "command": "-renameFile",
     "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "u",
+    "command": "undo",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal'"
+  },
+  {
+    "key": "cmd+z",
+    "command": "-undo"
   },
   // multi-cursor support for classic vim plugin
   {
@@ -218,7 +237,6 @@
     "when": "editorTextFocus && neovim.mode != insert",
     "args": "<S-right>"
   },
-  // Select all matches (ctrl + a). This is effectively the same as (ctrl + shift + l)
   {
     "key": "ctrl+a",
     "command": "editor.action.selectHighlights",
@@ -241,7 +259,6 @@
   },
   {
     "key": "backspace",
-
     "command": "-markdown.extension.onBackspaceKey",
     "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && !suggestWidgetVisible && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
   },
@@ -251,8 +268,65 @@
     "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && !suggestWidgetVisible && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/ || editorTextFocus && !editorHasMultipleSelections && !editorReadonly && !markdown.extension.editor.cursor.inFencedCodeBlock && !markdown.extension.editor.cursor.inMathEnv && config.editor.acceptSuggestionOnEnter == 'off' && vim.mode != 'CommandlineInProgress' && vim.mode != 'EasyMotionInputMode' && vim.mode != 'EasyMotionMode' && vim.mode != 'Normal' && vim.mode != 'Replace' && vim.mode != 'SearchInProgressMode' && vim.mode != 'SurroundInputMode' && vim.mode != 'Visual' && vim.mode != 'VisualBlock' && vim.mode != 'VisualLine' && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
   },
   {
-    "key": "escape",
-    "command": "-aws.amazonq.rejectCodeSuggestion",
-    "when": "aws.codewhisperer.connected && inlineSuggestionVisible && !editorReadonly"
+    "key": "cmd+t",
+    "command": "composer.createNewComposerTab",
+    "when": "composerFocused"
+  },
+  {
+    "key": "cmd+t",
+    "command": "-composer.createNewComposerTab",
+    "when": "composerFocused || focusedView =~ /^workbench.panel.aichat.view/"
+  },
+  {
+    "key": "cmd+l",
+    "command": "composerMode.chat"
+  },
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
+  },
+  {
+    "key": "shift+cmd+t",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+  {
+    "key": "cmd+b",
+    "command": "-markdown.extension.editing.toggleBold",
+    "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+  },
+  {
+    "key": "shift+cmd+v",
+    "command": "markdown.showPreviewToSide",
+    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+  },
+  {
+    "key": "cmd+k v",
+    "command": "-markdown.showPreviewToSide",
+    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+  },
+  {
+    "command": "runCommands",
+    "key": "cmd+g k",
+    "when": "editorTextFocus || terminalFocus || panelFocus || sidebarVisible",
+    "args": {
+      "commands": [
+        "workbench.action.closeSidebar",
+        "workbench.action.terminal.focus",
+        "workbench.action.toggleMaximizedPanel",
+        {
+          "command": "workbench.action.terminal.sendSequence",
+          "args": { "text": "k9s && exit\r" }
+        },
+        "workbench.action.terminal.toggleTerminal"
+      ]
+    }
+  },
+  {
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u001b\r"
+    },
+    "when": "terminalFocus"
   }
 ]

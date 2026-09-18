@@ -13,14 +13,20 @@ yamllint: ## Set up yamllint with custom configuration in the config directory
 yq: ## Install yq (YAML processor used by makefiles/scripts/skill-meta.sh)
 	$(call install_with_brew,yq)
 
-continue:
-	$(call mkdir_safe,${HOME}/.continue)
-	$(call symlink,ai-stuff/continue/config.json,${HOME}/.continue/config.json)
-
-karabiner:
-	$(call mkdir_safe,${HOME}/.config/karabiner)
-	$(call symlink,other/karabiner/karabiner.json,${HOME}/.config/karabiner/karabiner.json)
+k9s: ## Symlink k9s aliases
+	$(call mkdir_safe,${XDG_CONFIG_HOME}/k9s)
+	$(call symlink,other/k9s/aliases.yaml,${XDG_CONFIG_HOME}/k9s/aliases.yaml)
 
 tmux: ## Install tmux and symlink config (fixes TERM/escape-sequence bleed with vim)
 	$(call install_with_brew,tmux)
 	$(call symlink,other/tmux/tmux.conf,${HOME}/.tmux.conf)
+
+brew-bundle: ## Install packages and applications from Brewfile
+	@command -v brew >/dev/null || { echo "Homebrew is required"; exit 1; }
+	@HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file="$(DOTFILES)/Brewfile"
+
+brew-bundle-check: ## Check packages and applications from Brewfile
+	@command -v brew >/dev/null || { echo "Homebrew is required"; exit 1; }
+	@brew bundle check --file="$(DOTFILES)/Brewfile"
+
+.PHONY: lazygit yamllint yq k9s tmux brew-bundle brew-bundle-check

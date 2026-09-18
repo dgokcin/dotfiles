@@ -19,6 +19,7 @@ include makefiles/claude.mk
 include makefiles/cursor.mk
 include makefiles/codex.mk
 include makefiles/targets.mk
+include makefiles/ci.mk
 
 # Define reusable macros for common operations
 define symlink
