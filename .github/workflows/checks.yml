@@ -51,13 +51,24 @@ jobs:
           make install-ci
           make verify-install
 
-  brew:
-    name: Brewfile health
+  mac:
+    name: macOS
     runs-on: macos-latest
-    if: vars.ENABLE_MACOS_CI == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # Cursor user settings land under ~/Library on Darwin; Linux CI cannot
+      # cover that path. Everything else in install-ci already ran on Ubuntu.
+      - name: Darwin Cursor user config
+        env:
+          HOME: ${{ runner.temp }}/dotfiles-home
+          XDG_CONFIG_HOME: ${{ runner.temp }}/dotfiles-home/.config
+        run: |
+          mkdir -p "$HOME" "$XDG_CONFIG_HOME"
+          make cursor-user-config
+          test -L "$HOME/Library/Application Support/Cursor/User/settings.json"
+          test -L "$HOME/Library/Application Support/Cursor/User/keybindings.json"
 
       - name: Brewfile health
         env:

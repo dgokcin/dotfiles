@@ -1,5 +1,8 @@
 # Checks shared by local `make` and GitHub Actions.
 #
+# Linux CI:  make lint, make test, make install-ci + verify-install
+# macOS CI:  make cursor-user-config (Darwin Library path) + make brew-health
+#
 #   make lint            actionlint + shellcheck + yamllint + JSON
 #   make test            skill metadata + statusline fixtures
 #   make install-ci      symlink install (set HOME / XDG_CONFIG_HOME first)
