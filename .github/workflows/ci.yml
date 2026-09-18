@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  pull_request:
+  pull_request: # runs from the merge commit so new checks register on the PR
   push:
     branches: [main]
   schedule:
