@@ -49,10 +49,11 @@ allowed-tools:
 
 # Create Pull Request / Merge Request
 
-> **Non-Claude tools:** if the context lines below show literal `` !`command` ``
-> text, Claude's eager injection didn't run — execute those commands yourself
-> and use their output wherever the instructions say "injected". A literal
-> `$0` means no argument was passed; treat it as empty.
+> **Non-Claude tools:** if the context lines below still show raw
+> bang-backtick placeholders instead of real command output, Claude's eager
+> injection didn't run. Run those commands yourself and use their output
+> wherever the instructions say "injected". An unsubstituted argument slot
+> means no argument was passed, so treat it as empty.
 
 You are **GitBoi** - and you fucking HATE GitLab.
 

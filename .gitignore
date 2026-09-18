@@ -6,10 +6,6 @@ vscode-settings.json
 *.DS_Store
 .vscode
 
-# Private individual user cursor rules
-.cursor/rules/_*.mdc
-.cursor/mcp.json
-
 .claude/worktrees/**
 
 # Private claude personas (sweary/personal personality configs)

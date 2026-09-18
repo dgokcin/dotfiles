@@ -35,7 +35,7 @@ test-statusline:
 
 # Same symlink surface as personal/work + the AI tool layers, without brew
 # installs. CI (and local dry-runs) must set HOME / XDG_CONFIG_HOME first.
-install-ci: ideavim nvim bash zsh setup-git k9s claude cursor codex ## Isolated symlink install for CI
+install-ci: nvim bash zsh setup-git k9s claude cursor codex ## Isolated symlink install for CI
 
 verify-install: ## Assert install-ci symlinks point at this repo
 	@$(DOTFILES)/makefiles/scripts/verify-install.sh
