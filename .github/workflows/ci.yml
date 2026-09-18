@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
   schedule:
-    # Thursday 05:00 UTC — catch dead brew packages and broken install targets.
+    # Thursday 05:00 UTC — catch dead brew packages when macOS CI is enabled.
     - cron: "0 5 * * 4"
   workflow_dispatch:
 
@@ -27,7 +27,7 @@ jobs:
       - name: Install check tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y yamllint
+          sudo apt-get install -y yamllint shellcheck
           curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | bash
           sudo mv actionlint /usr/local/bin/actionlint
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
@@ -40,8 +40,8 @@ jobs:
         run: make test
 
   setup:
-    name: Install and Brewfile
-    runs-on: macos-latest
+    name: Isolated install
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -54,6 +54,16 @@ jobs:
           mkdir -p "$HOME" "$XDG_CONFIG_HOME"
           make install-ci
           make verify-install
+
+  brew:
+    name: Brewfile health
+    runs-on: macos-latest
+    # Opt in with repo variable ENABLE_MACOS_CI=true. Public repos get free
+    # standard macos-latest, but this job must never block required PR checks.
+    if: vars.ENABLE_MACOS_CI == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
 
       - name: Brewfile health
         env:
