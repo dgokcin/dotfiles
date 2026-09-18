@@ -1,6 +1,6 @@
 # Editor configuration setups
 
-.PHONY: nvim ideavim
+.PHONY: nvim
 
 nvim: ## Setup Neovim configuration by linking dotfiles
 	@$(call mkdir_safe,${XDG_CONFIG_HOME}/nvim)
@@ -12,5 +12,3 @@ nvim: ## Setup Neovim configuration by linking dotfiles
 		fi; \
 	done
 
-ideavim: ## Setup IdeaVim configuration by linking .ideavimrc
-	$(call symlink,.ideavimrc,${HOME}/.ideavimrc)

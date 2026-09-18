@@ -11,7 +11,6 @@ clean:
 	$(call remove_file,${HOME}/.local/share/nvim)
 	$(call remove_file,${HOME}/.local/state/nvim)
 	$(call remove_file,${XDG_CONFIG_HOME}/terminator/config)
-	$(call remove_file,${HOME}/.ideavimrc)
 	$(call remove_file,${HOME}/.gitconfig)
 	$(call remove_file,${XDG_CONFIG_HOME}/git/config)
 	$(call remove_file,${XDG_CONFIG_HOME}/git/work.gitconfig)
