@@ -18,6 +18,7 @@ allowed-tools:
   - Bash(git symbolic-ref:*)
   - Bash(git config --get remote.origin.url)
   - Bash(git remote -v:*)
+  - Bash(git worktree list:*)
   - Bash(rtk git status:*)
   - Bash(rtk git diff:*)
   - Bash(rtk git log:*)
@@ -27,6 +28,7 @@ allowed-tools:
   - Bash(rtk git symbolic-ref:*)
   - Bash(rtk git config --get remote.origin.url)
   - Bash(rtk git remote -v:*)
+  - Bash(rtk git worktree list:*)
 
   - Bash(gh pr view:*)
   - Bash(gh pr view:*)
@@ -44,6 +46,7 @@ allowed-tools:
   - Bash(rtk glab mr update:*)
   - Bash(echo:*)
 
+  - Bash(head:*)
   - Bash(~/.config/ai-shared/scripts/pr-status.sh)
 ---
 
