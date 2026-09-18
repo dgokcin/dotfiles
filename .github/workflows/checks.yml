@@ -1,4 +1,4 @@
-name: Checks
+name: Dotfiles
 
 on:
   pull_request:
@@ -13,14 +13,14 @@ permissions:
   contents: read
 
 jobs:
-  check:
-    name: Lint and test
+  linux-lint-test:
+    name: Linux — lint and test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install check tools
+      - name: Install lint tools
         run: |
           sudo apt-get update
           sudo apt-get install -y yamllint shellcheck
@@ -35,8 +35,8 @@ jobs:
       - name: Test
         run: make test
 
-  setup:
-    name: Isolated install
+  linux-install:
+    name: Linux — isolated install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -51,8 +51,8 @@ jobs:
           make install-ci
           make verify-install
 
-  mac:
-    name: macOS
+  macos-brew-cursor:
+    name: macOS — Brewfile and Cursor
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -60,7 +60,7 @@ jobs:
 
       # Cursor user settings land under ~/Library on Darwin; Linux CI cannot
       # cover that path. Everything else in install-ci already ran on Ubuntu.
-      - name: Darwin Cursor user config
+      - name: Link Cursor user settings
         env:
           HOME: ${{ runner.temp }}/dotfiles-home
           XDG_CONFIG_HOME: ${{ runner.temp }}/dotfiles-home/.config
@@ -70,7 +70,7 @@ jobs:
           test -L "$HOME/Library/Application Support/Cursor/User/settings.json"
           test -L "$HOME/Library/Application Support/Cursor/User/keybindings.json"
 
-      - name: Brewfile health
+      - name: Check Brewfile packages
         env:
           FAIL_STALE: ${{ github.event_name == 'schedule' && '1' || '0' }}
         run: make brew-health

@@ -1,4 +1,4 @@
-# Checks shared by local `make` and GitHub Actions.
+# Targets shared by local `make` and the Dotfiles GitHub Actions workflow.
 #
 # Linux CI:  make lint, make test, make install-ci + verify-install
 # macOS CI:  make cursor-user-config (Darwin Library path) + make brew-health
