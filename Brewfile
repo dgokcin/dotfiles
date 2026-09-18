@@ -58,7 +58,7 @@ brew "python-tk@3.10"
 brew "python@3.12"
 brew "ripgrep"
 brew "rtk"
-brew "ruby@3.2"
+brew "ruby@3.4"
 brew "rust"
 brew "skopeo"
 brew "sops"
@@ -78,7 +78,6 @@ brew "yq"
 # Applications currently managed by Homebrew
 cask "1password-cli"
 cask "drawio"
-cask "gstreamer-runtime"
 cask "hammerspoon"
 
 # Applications currently installed outside Homebrew
