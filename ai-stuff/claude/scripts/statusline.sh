@@ -348,6 +348,17 @@ resolve_codex_home() {
 }
 
 # ===== background refresh workers =====
+# Per-model weekly rows, from either the live endpoint body or the copy in
+# .claude.json. Same shape both ways, so one projection serves both and the
+# renderer never learns which one it got: rows joined by US, fields by tab,
+# "-" standing in for "the endpoint listed none".
+scoped_jq='(.limits // [])
+  | map(select(.kind == "weekly_scoped" and .percent != null
+               and .scope.model.display_name != null)
+        | [(.scope.model.display_name), ((.percent + 0.5) | floor | tostring),
+           (.resets_at // "")] | join("\t"))
+  | if length == 0 then "-" else join("\u001f") end'
+
 # These run detached, never write to stdout, and only ever replace a cache file
 # on success — a failed fetch leaves the last good reading in place.
 
@@ -483,6 +494,37 @@ refresh_ocusage() {
   return 0
 }
 
+# Live per-model weekly windows (the "Current week (Fable)" row in /usage).
+# Claude Code caches the same response in .claude.json, but only rewrites it
+# when it fetches for itself: at startup, when /usage is opened, and on hitting
+# a wall. A long session would show an hours-old number, so ask the endpoint.
+#
+# The stored access token is used read-only. A 401 is recorded, never refreshed:
+# rotating the refresh token would break the CLI's own login.
+#
+# Emits one US-separated row per window, "<label>\t<percent>\t<resets_at>", or
+# "-" when the endpoint answered and listed none — distinguishing that from a
+# failed fetch, which leaves the previous reading alone.
+refresh_ccusage() {
+  local token raw http rows
+  token=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null |
+    jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
+  [ -n "$token" ] || return 0
+  raw=$(curl -s -w '\n%{http_code}' --max-time 5 \
+    -H "Authorization: Bearer $token" \
+    -H "Content-Type: application/json" \
+    "https://api.anthropic.com/api/oauth/usage?skip_spend=1" 2>/dev/null)
+  http=$(printf '%s' "$raw" | tail -1)
+  rows=$(printf '%s' "$raw" | sed '$d' | jq -r "$scoped_jq" 2>/dev/null)
+  if [ "$http" = "200" ] && [ -n "$rows" ]; then
+    cache_write "$cache_dir/ccusage" "$rows"
+    rm -f "$cache_dir/ccusage.err" 2>/dev/null
+  else
+    cache_write "$cache_dir/ccusage.err" "${http:-net}"
+  fi
+  return 0
+}
+
 # API-equivalent session cost. Claude Code's own total_cost_usd prices every
 # model off its Anthropic table, which is fiction for a routed backend, so
 # recompute from the transcript's real per-message token counts at the rates
@@ -529,6 +571,7 @@ if [ "${1:-}" = "--refresh" ]; then
   quota) refresh_quota "${3:-}" "${4:-}" ;;
   spend) refresh_spend "${3:-}" "$(to_int "${4:-}" 30)" ;;
   ocusage) refresh_ocusage "${3:-}" ;;
+  ccusage) refresh_ccusage ;;
   cost) refresh_cost "${3:-}" "${4:-}" "${5:-}" "${6:-}" "${7:-0}" "${8:-0}" "${9:-0}" "${10:-}" ;;
   esac
   prune_cache
@@ -897,6 +940,37 @@ if [ "$family" = "opencode" ]; then
   fi
 fi
 
+# --- anthropic: per-model weekly windows ---
+# The statusline payload carries only the five-hour and all-model weekly
+# windows, so the Fable row the /usage panel shows has to come from elsewhere.
+# Preferred source is the endpoint itself, refreshed in the background; the copy
+# Claude Code caches in .claude.json covers the first render and any fetch that
+# fails, at whatever age it happens to be.
+scoped_rows="" scoped_as_of=0 scoped_err=""
+if [ "$family" = "anthropic" ]; then
+  cc_cache="$cache_dir/ccusage"
+  [ "$(cache_age "$cc_cache")" -ge 60 ] && spawn_refresh ccusage ccusage
+  cc_val=$(cache_value "$cc_cache")
+  if [ -n "$cc_val" ]; then
+    scoped_as_of=$(to_int "$(cache_stamp "$cc_cache")")
+    [ "$cc_val" != "-" ] && scoped_rows=$(printf '%s' "$cc_val" | tr '\037' '\n')
+  else
+    cc_config="${CLAUDE_CONFIG_DIR:+$CLAUDE_CONFIG_DIR/.claude.json}"
+    [ -n "$cc_config" ] || cc_config="$HOME/.claude.json"
+    if [ -f "$cc_config" ]; then
+      # One pass over a 300K+ file: line 1 is the fetch epoch, line 2 the rows.
+      scoped_raw=$(jq -r ".cachedUsageUtilization as \$c
+        | ((\$c.fetchedAtMs // 0) / 1000 | floor | tostring),
+          (\$c.utilization | $scoped_jq)" "$cc_config" 2>/dev/null)
+      scoped_as_of=$(to_int "$(printf '%s\n' "$scoped_raw" | sed -n 1p)")
+      cc_val=$(printf '%s\n' "$scoped_raw" | sed -n 2p)
+      [ -n "$cc_val" ] && [ "$cc_val" != "-" ] &&
+        scoped_rows=$(printf '%s' "$cc_val" | tr '\037' '\n')
+    fi
+  fi
+  [ -f "$cc_cache.err" ] && scoped_err=$(cache_value "$cc_cache.err")
+fi
+
 # --- cost ---
 # Anthropic sessions use the figure Claude Code already computed; everything
 # else is recomputed at the upstream's own rates, and shows nothing at all when
@@ -1041,11 +1115,51 @@ anthropic)
     build_bar "$seven_day_pct" 10
     printf " %b%s%%%b" "$C_CYAN" "$seven_day_pct" "$C_RESET"
 
+    # Per-model weekly windows (Fable). Skip a row whose window has already
+    # rolled over: a cached 100% from last week is not a limit you are at.
+    scoped_reset_note=""
+    if [ -n "$scoped_rows" ]; then
+      while IFS=$'\t' read -r sc_name sc_pct sc_reset; do
+        [ -n "$sc_name" ] && [ -n "$sc_pct" ] || continue
+        sc_epoch=""
+        if [ -n "$sc_reset" ]; then
+          sc_epoch=$(iso_to_epoch "$sc_reset")
+          [ -n "$sc_epoch" ] && [ "$sc_epoch" -le "$(date +%s)" ] && continue
+        fi
+        sc_label=$(printf '%s' "$sc_name" | tr '[:upper:]' '[:lower:]')
+        printf "%b" "$SEP"
+        printf "%b%s:%b " "$C_WHITE" "$sc_label" "$C_RESET"
+        build_bar "$sc_pct" 10
+        printf " %b%s%%%b" "$C_CYAN" "$sc_pct" "$C_RESET"
+        # Its own reset only when it differs from the all-model weekly one,
+        # which is the usual case and already on the resets line.
+        rl7_epoch=$(to_int "$rl7_reset")
+        if [ -n "$sc_epoch" ] && [ "$((sc_epoch > rl7_epoch + 60 || sc_epoch < rl7_epoch - 60))" = 1 ]; then
+          scoped_reset_note="${scoped_reset_note}${SEP}${sc_label} @ $(format_reset_time_epoch "$sc_epoch" datetime)"
+        fi
+      done <<<"$scoped_rows"
+    fi
+
     printf "\n"
     printf "%bresets:%b 5h @ %s" "$C_WHITE" "$C_RESET" \
       "$(format_reset_time_epoch "$rl5_reset" "time")"
     printf "%b" "$SEP"
     printf "7d @ %s" "$(format_reset_time_epoch "$rl7_reset" "datetime")"
+    [ -n "$scoped_reset_note" ] && printf "%b" "$scoped_reset_note"
+    # A refresh runs every 60s, so anything older means fetches are failing and
+    # the rows are the fallback copy. Say so, and name the reason when there is
+    # one: a 401 never heals on its own from here.
+    if [ -n "$scoped_rows" ] && [ "$scoped_as_of" -gt 0 ]; then
+      scoped_age=$(($(date +%s) - scoped_as_of))
+      if [ "$scoped_age" -ge 300 ]; then
+        printf "%b" "$SEP"
+        printf "%bmodel limits as of %s%b" "$C_YELLOW" "$(format_age "$scoped_age")" "$C_RESET"
+        case "$scoped_err" in
+        401 | 403) printf " %bre-auth needed%b" "$C_RED" "$C_RESET" ;;
+        ?*) printf " %b(%s)%b" "$C_DIM" "$scoped_err" "$C_RESET" ;;
+        esac
+      fi
+    fi
   fi
   ;;
 chatgpt)
