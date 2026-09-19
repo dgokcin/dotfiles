@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.13.0](https://github.com/dgokcin/dotfiles/compare/v3.12.0...v3.13.0) (2026-09-19)
+
+
+### Features
+
+* Add per-model weekly usage windows to statusline ([#201](https://github.com/dgokcin/dotfiles/issues/201)) ([2ec020b](https://github.com/dgokcin/dotfiles/commit/2ec020bfb9955196adf3c245a2936c47235f67e9))
+* add reasoning effect override feature ([#203](https://github.com/dgokcin/dotfiles/issues/203)) ([618615e](https://github.com/dgokcin/dotfiles/commit/618615eedccbf1b4a0f2d8dffeb2fddfe76a9ad4))
+
 ## [3.12.0](https://github.com/dgokcin/dotfiles/compare/v3.11.0...v3.12.0) (2026-08-11)
 
 
