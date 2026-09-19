@@ -5,6 +5,9 @@ model_reasoning_effort = "high"
 service_tier = "default"
 approvals_reviewer = "auto_review"
 
+[features]
+reasoning_effort_override = true
+
 [tui]
 vim_mode_default = true
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining", "context-used", "five-hour-limit", "weekly-limit"]
