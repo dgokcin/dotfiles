@@ -1,19 +1,38 @@
 export DOTFILES_DIR="$HOME/codes/dotfiles"
-export PATH="/Users/denizgokcin/.volta/bin:$PATH"
-export PATH="$DOTFILES_DIR/bin:$PATH"
-export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+
+# Homebrew provides system packages only. User-owned runtimes and standalone
+# tools are prepended below so transitive Homebrew dependencies cannot win.
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+export VOLTA_HOME="$HOME/.volta"
+export BUN_INSTALL="$HOME/.bun"
+if [ "$(uname -s)" = Darwin ]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+else
+  export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+fi
+
 export EDITOR=nvim
 export VISUAL=nvim
 export FZF_DEFAULT_OPTS="--bind='j:down,k:up'"
-export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export PATH="$HOME/pyenv/bin:$PATH"
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-export GIT_EDITOR="/opt/homebrew/bin/nvim"
+export GIT_EDITOR=nvim
 export TERM=xterm-256color
 export LANG=en_US.UTF-8
+export PATH="$HOME/codes/work/dev-tools/k8s:$PATH"
 export PATH="$HOME/codes/work/dev-tools/bin:$PATH"
+export PATH="$HOME/codes/work/dev-tools/k8s/kubectl-plugins:$PATH"
 export PATH="$HOME/codes/work/docker-build-tools/bin:$PATH"
-export PATH="$HOME/.volta/bin:$PATH"
 export HEADROOM_MEMORY_DB_PATH="$HOME/.headroom/memory.db"
+
+# Preferred owners stay last so they win over Homebrew and legacy paths.
+export PATH="$DOTFILES_DIR/bin:$HOME/.local/bin:$HOME/.opencode/bin:$BUN_INSTALL/bin:$PNPM_HOME/bin:$PNPM_HOME:$VOLTA_HOME/bin:$PATH"

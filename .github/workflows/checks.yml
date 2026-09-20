@@ -35,6 +35,9 @@ jobs:
       - name: Test
         run: make test
 
+      - name: Test bootstrap orchestration
+        run: make test-bootstrap
+
   linux-install:
     name: Linux — isolated install
     runs-on: ubuntu-latest

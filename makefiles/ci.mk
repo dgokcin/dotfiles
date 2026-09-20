@@ -1,10 +1,11 @@
 # Targets shared by local `make` and the Dotfiles GitHub Actions workflow.
 #
-# Linux CI:  make lint, make test, make install-ci + verify-install
+# Linux CI:  make lint, make test, make test-bootstrap, make install-ci + verify-install
 # macOS CI:  make cursor-user-config (Darwin Library path) + make brew-health
 #
 #   make lint            actionlint + shellcheck + yamllint + JSON
 #   make test            skill metadata + statusline fixtures
+#   make test-bootstrap  bootstrap dependency and installer contract
 #   make install-ci      symlink install (set HOME / XDG_CONFIG_HOME first)
 #   make verify-install  assert those symlinks point back at this repo
 #   make brew-health     Brewfile formulae/casks still resolve
@@ -33,9 +34,12 @@ test: ai-check test-statusline ## Skill lint + statusline fixture tests
 test-statusline:
 	@$(DOTFILES)/ai-stuff/claude/scripts/statusline-test.sh
 
+test-bootstrap: ## Verify bootstrap contains preferred installers without executing them
+	@$(DOTFILES)/makefiles/scripts/test-bootstrap.sh
+
 # Same symlink surface as personal/work + the AI tool layers, without brew
 # installs. CI (and local dry-runs) must set HOME / XDG_CONFIG_HOME first.
-install-ci: nvim bash zsh setup-git k9s claude cursor codex ## Isolated symlink install for CI
+install-ci: nvim bash zsh setup-git k9s claude-dotfiles cursor codex-dotfiles ## Isolated symlink install for CI
 
 verify-install: ## Assert install-ci symlinks point at this repo
 	@$(DOTFILES)/makefiles/scripts/verify-install.sh
@@ -43,4 +47,4 @@ verify-install: ## Assert install-ci symlinks point at this repo
 brew-health: ## Fail if Brewfile taps/formulae/casks are missing (stale ones fail when FAIL_STALE=1)
 	@$(DOTFILES)/makefiles/scripts/brew-health.sh
 
-.PHONY: lint lint-actions lint-shell lint-yaml lint-json test test-statusline install-ci verify-install brew-health
+.PHONY: lint lint-actions lint-shell lint-yaml lint-json test test-statusline test-bootstrap install-ci verify-install brew-health

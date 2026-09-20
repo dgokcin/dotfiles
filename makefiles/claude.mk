@@ -15,7 +15,19 @@ CLAUDE_OUTPUT_STYLES := $(notdir $(wildcard $(DOTFILES)/ai-stuff/output-styles/*
 # Pre-ai-shared layout installed by the old claude.mk — pruned on install.
 CLAUDE_LEGACY := ${CLAUDE_HOME}/personas ${CLAUDE_HOME}/config ${CLAUDE_HOME}/templates
 
-claude: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings ai-shared ai-claude ## Install Claude Code agents, scripts, settings, keybindings, and skills
+claude: claude-cli claude-dotfiles ## Install Claude Code plus its managed configuration
+
+claude-cli: ## Install Claude Code with Anthropic's recommended native installer
+	@if [ ! -x "$(HOME)/.local/bin/claude" ]; then \
+		installer=$$(mktemp); \
+		trap 'rm -f "$$installer"' EXIT HUP INT TERM; \
+		curl -fsSL https://claude.ai/install.sh -o "$$installer"; \
+		bash "$$installer"; \
+	else \
+		echo "Claude Code already installed at $(HOME)/.local/bin/claude"; \
+	fi
+
+claude-dotfiles: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings ai-shared ai-claude ## Install Claude Code configuration only
 	$(call pretty_print, "Pruning legacy ~/.claude personas/config/templates symlinks...")
 	@rm -rf $(CLAUDE_LEGACY)
 
@@ -62,4 +74,4 @@ claude-clean: ai-clean-claude ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/keybindings.json)
 	@rm -rf $(CLAUDE_LEGACY)
 
-.PHONY: claude claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-clean
+.PHONY: claude claude-cli claude-dotfiles claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-clean

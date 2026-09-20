@@ -1,5 +1,7 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Load shared aliases, functions, PATH, and private overrides first.
+if [ -f "$HOME/.bash_profile" ]; then
+  source "$HOME/.bash_profile"
+fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -91,17 +93,6 @@ else
   )
 fi
 
-# Lazy-load nvm — only init when nvm/node/npm first called
-export NVM_DIR="$HOME/.nvm"
-nvm() {
-  unfunction nvm node npm npx 2>/dev/null
-  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-  nvm "$@"
-}
-node() { nvm; node "$@" }
-npm()  { nvm; npm  "$@" }
-npx()  { nvm; npx  "$@" }
-
 source $ZSH/oh-my-zsh.sh
 
 # Cache kubectl completions — rebuild only when binary changes
@@ -173,37 +164,18 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [ -f ~/.bash_profile ]; then
-    . ~/.bash_profile;
-fi
-
 # eval "$(gh copilot alias -- zsh)"
 
-# Created by `pipx` on 2024-06-14 23:26:07
-export PATH="$PATH:/Users/denizgokcin/.local/bin"
-
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/denizgokcin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/denizgokcin/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/denizgokcin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/denizgokcin/google-cloud-sdk/completion.zsh.inc'; fi
-export PATH="/opt/homebrew/bin:$PATH"
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
-# Added by kubectl-plugins install
-export PATH="/Users/denizgokcin/codes/work/dev-tools/k8s:$PATH"
-
-# Added by dev-tools install
-export PATH="/Users/denizgokcin/codes/work/dev-tools/bin:$PATH"
-
-# Added by kubectl-plugins install
-export PATH="/Users/denizgokcin/codes/work/dev-tools/k8s/kubectl-plugins:$PATH"
-
 # bun completions
-[ -s "/Users/denizgokcin/.bun/_bun" ] && source "/Users/denizgokcin/.bun/_bun"
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
 # Lazy-load thefuck — skip Python startup cost on every shell
 fuck() {
@@ -212,11 +184,4 @@ fuck() {
   fuck "$@"
 }
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 export BASH_MAX_OUTPUT_LENGTH=15000
-
-
-# opencode
-export PATH=/Users/denizgokcin/.opencode/bin:$PATH
