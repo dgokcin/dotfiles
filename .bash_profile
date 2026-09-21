@@ -1,5 +1,5 @@
 # The following lines were added by Docker Desktop to add commands to your PATH.
-export PATH="$PATH:/Users/denizgokcin/.docker/bin"
+export PATH="$PATH:$HOME/.docker/bin"
 # End of Docker Desktop section.
 
 # Load the shell dotfiles, and then some:
@@ -8,5 +8,3 @@ export PATH="$PATH:/Users/denizgokcin/.docker/bin"
 for file in ~/.{aliases,functions,path,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"

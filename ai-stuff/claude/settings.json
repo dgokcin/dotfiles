@@ -60,7 +60,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "astra",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",

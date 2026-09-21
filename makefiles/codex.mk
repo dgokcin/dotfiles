@@ -11,7 +11,19 @@
 
 CODEX_HOME := ${HOME}/.codex
 
-codex: ai-agents codex-scripts codex-hooks codex-agents-md codex-config ## Install Codex skills, hooks, AGENTS.md, and managed config
+codex: codex-cli codex-dotfiles ## Install Codex plus its managed configuration
+
+codex-cli: ## Install Codex with OpenAI's recommended standalone installer
+	@if [ ! -x "$(HOME)/.local/bin/codex" ]; then \
+		installer=$$(mktemp); \
+		trap 'rm -f "$$installer"' EXIT HUP INT TERM; \
+		curl -fsSL https://chatgpt.com/codex/install.sh -o "$$installer"; \
+		CODEX_INSTALL_DIR="$(HOME)/.local/bin" CODEX_NON_INTERACTIVE=1 sh "$$installer"; \
+	else \
+		echo "Codex already installed at $(HOME)/.local/bin/codex"; \
+	fi
+
+codex-dotfiles: ai-agents codex-scripts codex-hooks codex-agents-md codex-config ## Install Codex configuration only
 # Codex reads ~/.agents/skills — kill our old symlinks in ~/.codex/skills but
 # keep .system, the dir where Codex caches its own built-in skills.
 	$(call pretty_print, "Pruning dead skill symlinks in ~/.codex/skills")
@@ -54,4 +66,4 @@ codex-clean: ## Remove Codex symlinks (skills live in ~/.agents/skills — use a
 	$(call remove_file,${CODEX_HOME}/scripts/focus-iterm.applescript)
 	$(call remove_file,${CODEX_HOME}/scripts/notify-stop.sh)
 
-.PHONY: codex codex-scripts codex-hooks codex-agents-md codex-config codex-clean
+.PHONY: codex codex-cli codex-dotfiles codex-scripts codex-hooks codex-agents-md codex-config codex-clean
