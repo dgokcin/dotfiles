@@ -82,6 +82,7 @@ Run `make help` for the full target list.
 | `yarn` | Corepack shim; project `packageManager` selects the version |
 | `pnpm` | Official standalone installer |
 | `bun` | Official standalone installer |
+| `uv` | Astral standalone installer |
 | `opencode-cli` | Official standalone installer |
 | `claude-cli` | Anthropic native installer |
 | `codex-cli` | OpenAI standalone installer |

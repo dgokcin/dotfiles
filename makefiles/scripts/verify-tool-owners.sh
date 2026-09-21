@@ -45,6 +45,8 @@ done
 
 assert_path codex "$HOME/.local/bin/codex"
 assert_path claude "$HOME/.local/bin/claude"
+assert_path uv "$HOME/.local/bin/uv"
+assert_path uvx "$HOME/.local/bin/uvx"
 assert_path opencode "$HOME/.opencode/bin/opencode"
 assert_path bun "$BUN_INSTALL/bin/bun"
 assert_prefix pnpm "$PNPM_HOME"
