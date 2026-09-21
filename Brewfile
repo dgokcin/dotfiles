@@ -95,6 +95,7 @@ cask "setapp"
 cask "slack"
 cask "spotify"
 cask "stremio"
+cask "surfshark"
 
 # User-installed font families
 cask "font-hack-nerd-font"
