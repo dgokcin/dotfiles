@@ -57,6 +57,7 @@ Run `make help` for the full target list.
 | `bootstrap` | Full new-Mac setup: Homebrew bundle, runtimes, CLIs, shell, editors, and AI tools |
 | `personal` | `nvim bash zsh setup-git yamllint k9s` |
 | `work` | Identical to `personal` today. The split is kept for backward compatibility, and `work.gitconfig` is linked either way. |
+| `brew-trust` | Trust the third-party taps the `Brewfile` declares (Homebrew 7 gate) |
 | `brew-bundle` | Install everything in the `Brewfile` |
 | `brew-bundle-check` | Report what is missing, install nothing |
 | `clean` | Remove the symlinks and state this repo installs |
