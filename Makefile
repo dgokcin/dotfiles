@@ -18,6 +18,7 @@ include makefiles/ai.mk
 include makefiles/claude.mk
 include makefiles/cursor.mk
 include makefiles/codex.mk
+include makefiles/raycast.mk
 include makefiles/targets.mk
 include makefiles/ci.mk
 

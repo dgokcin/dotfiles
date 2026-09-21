@@ -42,6 +42,7 @@ make personal       # shell, editors, git, and tool configs
 make claude         # native CLI, agents, hooks, settings, keybindings, skills
 make cursor         # agents, hooks, settings, keybindings, skills
 make codex          # standalone CLI, hooks, AGENTS.md, config, skills
+make raycast        # script commands plus Raycast preferences (macOS)
 make ai             # skills only, into every registered tool
 ```
 
@@ -92,6 +93,20 @@ macOS applications and general native command-line tools.
 
 `lazygit`, `yamllint`, `yq`, `k9s`, and `tmux` retain individual configuration
 targets that install with Homebrew where needed and link config from `other/`.
+
+### 🔍 Raycast
+
+| Target | Does |
+| --- | --- |
+| `raycast` | Run `raycast-scripts` and `raycast-defaults` (macOS only) |
+| `raycast-scripts` | Symlink `other/raycast/scripts` to `~/.raycast-scripts` |
+| `raycast-defaults` | Apply `com.raycast.macos` preferences, skipped while Raycast runs |
+| `raycast-clean` | Remove the script directory symlink |
+
+Raycast keeps aliases, quicklinks, snippets, and extension settings in an
+encrypted database, so those move between Macs through Cloud Sync rather than
+this repo. Registering the script directory is a one-time click. See
+`other/raycast/README.md`.
 
 ### 🤖 AI
 
