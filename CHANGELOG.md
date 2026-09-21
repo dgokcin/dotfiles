@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.13.0](https://github.com/dgokcin/dotfiles/compare/v3.12.0...v3.13.0) (2026-09-21)
+
+
+### Features
+
+* Add per-model weekly usage windows to statusline ([#201](https://github.com/dgokcin/dotfiles/issues/201)) ([2ec020b](https://github.com/dgokcin/dotfiles/commit/2ec020bfb9955196adf3c245a2936c47235f67e9))
+* Add Raycast integration and adjust Claude default model ([#205](https://github.com/dgokcin/dotfiles/issues/205)) ([4e80d2f](https://github.com/dgokcin/dotfiles/commit/4e80d2fb8ed017c7c13e8d82c88f51dbbd2ae8ea))
+* add reasoning effect override feature ([#203](https://github.com/dgokcin/dotfiles/issues/203)) ([618615e](https://github.com/dgokcin/dotfiles/commit/618615eedccbf1b4a0f2d8dffeb2fddfe76a9ad4))
+* **tools:** Add uv, AWS CLI v2, and Surfshark installers ([#207](https://github.com/dgokcin/dotfiles/issues/207)) ([74b5370](https://github.com/dgokcin/dotfiles/commit/74b53705f61b0fff00a61e7246b18089095def28))
+* **tools:** Standardize CLI installation ([#204](https://github.com/dgokcin/dotfiles/issues/204)) ([cb9c3f8](https://github.com/dgokcin/dotfiles/commit/cb9c3f849ffff674de00aad35db1aa7bb7218d2a))
+
 ## [3.12.0](https://github.com/dgokcin/dotfiles/compare/v3.11.0...v3.12.0) (2026-08-11)
 
 
