@@ -60,7 +60,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "astra",
+  "model": "opus[1m]",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "commit": "off",
@@ -266,7 +266,7 @@
       "effortLevel": "high"
     },
     "claude-opus-5": {
-      "effortLevel": "high"
+      "effortLevel": "medium"
     },
     "deepseek-v4-pro": {
       "effortLevel": "xhigh"
