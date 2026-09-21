@@ -45,6 +45,10 @@ if [[ "${SKIP_BREW_UPDATE:-}" != "1" ]]; then
   brew update --quiet
 fi
 
+# Homebrew 7 refuses to load formulae from untrusted taps, so `brew info`
+# below would report every third-party formula as missing.
+"$(dirname "$0")/brew-trust.sh" "$BREWFILE"
+
 tap_fail=0
 for tap in "${taps[@]}"; do
   if brew tap "$tap" >/dev/null; then

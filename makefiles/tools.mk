@@ -89,13 +89,17 @@ tmux: ## Install tmux and symlink config (fixes TERM/escape-sequence bleed with 
 	$(call install_with_brew,tmux)
 	$(call symlink,other/tmux/tmux.conf,${HOME}/.tmux.conf)
 
-brew-bundle: ## Install packages and applications from Brewfile
+brew-trust: ## Trust the third-party taps the Brewfile declares
+	@command -v brew >/dev/null || { echo "Homebrew is required"; exit 1; }
+	@$(DOTFILES)/makefiles/scripts/brew-trust.sh
+
+brew-bundle: brew-trust ## Install packages and applications from Brewfile
 	@command -v brew >/dev/null || { echo "Homebrew is required"; exit 1; }
 	@HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file="$(DOTFILES)/Brewfile"
 
-brew-bundle-check: ## Check packages and applications from Brewfile
+brew-bundle-check: brew-trust ## Check packages and applications from Brewfile
 	@command -v brew >/dev/null || { echo "Homebrew is required"; exit 1; }
 	@brew bundle check --file="$(DOTFILES)/Brewfile"
 
 .PHONY: tools volta node npm-tools yarn pnpm bun opencode-cli verify-tool-owners \
-	lazygit yamllint yq k9s tmux brew-bundle brew-bundle-check
+	lazygit yamllint yq k9s tmux brew-trust brew-bundle brew-bundle-check
