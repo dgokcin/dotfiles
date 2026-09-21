@@ -18,6 +18,7 @@ expected_bootstrap=(
   'https://get.pnpm.io/install.sh'
   'https://bun.com/install'
   'https://astral.sh/uv/install.sh'
+  'awscli.amazonaws.com'
   'https://opencode.ai/install'
   'https://chatgpt.com/codex/install.sh'
   'https://claude.ai/install.sh'
@@ -34,7 +35,7 @@ for expected in "${expected_bootstrap[@]}"; do
   fi
 done
 
-installer_pattern='get\.volta\.sh|get\.pnpm\.io/install\.sh|bun\.com/install|astral\.sh/uv/install\.sh|opencode\.ai/install|chatgpt\.com/codex/install\.sh|claude\.ai/install\.sh'
+installer_pattern='get\.volta\.sh|get\.pnpm\.io/install\.sh|bun\.com/install|astral\.sh/uv/install\.sh|awscli\.amazonaws\.com|opencode\.ai/install|chatgpt\.com/codex/install\.sh|claude\.ai/install\.sh'
 if grep -Eq "$installer_pattern" "$install_ci_output"; then
   printf '  FAIL   install-ci includes a runtime or CLI installer\n'
   fail=$((fail + 1))

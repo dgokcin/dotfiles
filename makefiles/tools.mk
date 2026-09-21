@@ -11,7 +11,11 @@ else
 PNPM_HOME ?= $(HOME)/.local/share/pnpm
 endif
 
-tools: node npm-tools yarn pnpm bun uv opencode-cli codex-cli claude-cli ## Install preferred runtimes and CLI tools
+# macOS installs the pkg payload into <customLocation>/aws-cli; Linux uses the
+# same path through the installer's --install-dir flag.
+AWS_CLI_HOME ?= $(HOME)/.local/aws-cli
+
+tools: node npm-tools yarn pnpm bun uv aws-cli opencode-cli codex-cli claude-cli ## Install preferred runtimes and CLI tools
 	@$(DOTFILES)/makefiles/scripts/verify-tool-owners.sh
 
 volta: ## Install Volta with its official installer
@@ -65,6 +69,38 @@ uv: ## Install uv with Astral's recommended standalone installer
 		echo "uv already installed at $(HOME)/.local/bin/uv"; \
 	fi
 
+aws-cli: ## Install the AWS CLI v2 with AWS's official installer
+	@if [ ! -x "$(HOME)/.local/bin/aws" ]; then \
+		workdir=$$(mktemp -d); \
+		trap 'rm -rf "$$workdir"' EXIT HUP INT TERM; \
+		mkdir -p "$(HOME)/.local/bin"; \
+		if [ "$(UNAME)" = Darwin ]; then \
+			curl -fsSL https://awscli.amazonaws.com/AWSCLIV2.pkg -o "$$workdir/AWSCLIV2.pkg"; \
+			printf '%s\n' \
+				'<?xml version="1.0" encoding="UTF-8"?>' \
+				'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' \
+				'<plist version="1.0">' \
+				'  <array>' \
+				'    <dict>' \
+				'      <key>choiceAttribute</key><string>customLocation</string>' \
+				'      <key>attributeSetting</key><string>$(HOME)/.local</string>' \
+				'      <key>choiceIdentifier</key><string>default</string>' \
+				'    </dict>' \
+				'  </array>' \
+				'</plist>' > "$$workdir/choices.xml"; \
+			installer -pkg "$$workdir/AWSCLIV2.pkg" -target CurrentUserHomeDirectory \
+				-applyChoiceChangesXML "$$workdir/choices.xml"; \
+			ln -sf "$(AWS_CLI_HOME)/aws" "$(HOME)/.local/bin/aws"; \
+			ln -sf "$(AWS_CLI_HOME)/aws_completer" "$(HOME)/.local/bin/aws_completer"; \
+		else \
+			curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-$$(uname -m).zip" -o "$$workdir/awscliv2.zip"; \
+			unzip -q "$$workdir/awscliv2.zip" -d "$$workdir"; \
+			"$$workdir/aws/install" --install-dir "$(AWS_CLI_HOME)" --bin-dir "$(HOME)/.local/bin" --update; \
+		fi; \
+	else \
+		echo "AWS CLI already installed at $(HOME)/.local/bin/aws"; \
+	fi
+
 opencode-cli: ## Install OpenCode with its official installer
 	@if [ ! -x "$(HOME)/.opencode/bin/opencode" ]; then \
 		installer=$$(mktemp); \
@@ -111,5 +147,5 @@ brew-bundle-check: brew-trust ## Check packages and applications from Brewfile
 	@command -v brew >/dev/null || { echo "Homebrew is required"; exit 1; }
 	@brew bundle check --file="$(DOTFILES)/Brewfile"
 
-.PHONY: tools volta node npm-tools yarn pnpm bun uv opencode-cli verify-tool-owners \
+.PHONY: tools volta node npm-tools yarn pnpm bun uv aws-cli opencode-cli verify-tool-owners \
 	lazygit yamllint yq k9s tmux brew-trust brew-bundle brew-bundle-check
