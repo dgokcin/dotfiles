@@ -138,13 +138,6 @@ same agent files at `~/.cursor/agents`) resolves them identically. The only
 
 ## External Dependencies (hooks in settings.json)
 
-### cc-notifier
-
-Notification bridge for session lifecycle events —
-[trentmcnitt/cc-notifier](https://github.com/trentmcnitt/cc-notifier).
-Wired into `SessionStart` (init), `Stop` / `Notification` (notify),
-`SessionEnd` (cleanup).
-
 ### rtk (Rust Token Killer)
 
 Token-optimizing CLI proxy (60-90% savings) — injected via `PreToolUse` hook
@@ -157,15 +150,13 @@ Token-optimizing CLI proxy (60-90% savings) — injected via `PreToolUse` hook
 ```
 User Input
     ↓
-SessionStart Hook (cc-notifier init, session-start.sh)
+SessionStart Hook (session-start.sh)
     ↓
 PreToolUse Hook (auto-approve-tools.sh, rtk rewrite)
     ↓
 Tool Execution
     ↓
-Permission/Notification Hooks (auto-approve-tools.sh, cc-notifier)
-    ↓
-Stop/SessionEnd Hooks (cc-notifier)
+Permission Hooks (auto-approve-tools.sh)
 ```
 
 ## Related Documentation

@@ -41,9 +41,8 @@ Converted from the Claude Code setup:
 | PostToolUse (`apply_patch\|Edit\|Write`) | nvim `checktime` | refresh open buffers |
 | Stop | `notify-stop.sh` | terminal-notifier + click-to-focus iTerm |
 
-**Not portable** (no Codex equivalent): `Notification` event (cc-notifier
-permission alerts), `SessionEnd` (cc-notifier cleanup), `WorktreeCreate`/
-`WorktreeRemove`, statusline, file-suggestion.
+**Not portable** (no Codex equivalent): `WorktreeCreate`/`WorktreeRemove`,
+statusline, file-suggestion.
 
 ## Trust
 

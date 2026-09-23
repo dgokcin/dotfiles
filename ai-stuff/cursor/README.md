@@ -53,11 +53,6 @@ Converted from the Claude Code setup:
 
 **Not portable** (no Cursor equivalent, or Claude Code-specific):
 
-- `cc-notifier` (Claude's `SessionStart init`, `Stop notify`,
-  `Notification`, `SessionEnd cleanup`) — tied to Claude Code's lifecycle;
-  Cursor's `stop` uses `notify-stop.sh` instead. Cursor *does* have
-  `sessionEnd`, but there is nothing Claude-side to convert once cc-notifier is
-  dropped.
 - `session-start.sh` (worktree session auto-naming) — a Claude Code feature.
 - `WorktreeCreate` / `WorktreeRemove` — no Cursor event.
 - `statusLine`, `fileSuggestion` — Claude Code-only surfaces, not hooks.
