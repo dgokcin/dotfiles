@@ -68,6 +68,7 @@ assert_link "$HOME/.inputrc" "$REPO/.inputrc"
 assert_link "$XDG_CONFIG_HOME/git/config" "$REPO/base.gitconfig"
 assert_link "$XDG_CONFIG_HOME/git/work.gitconfig" "$REPO/work.gitconfig"
 assert_link "$XDG_CONFIG_HOME/k9s/aliases.yaml" "$REPO/other/k9s/aliases.yaml"
+assert_link "$XDG_CONFIG_HOME/k9s/views.yaml" "$REPO/other/k9s/views.yaml"
 assert_link "$XDG_CONFIG_HOME/nvim/init.lua" "$REPO/nvim/init.lua"
 assert_link "$XDG_CONFIG_HOME/ai-shared" "$REPO/ai-stuff/_shared"
 
