@@ -1,0 +1,25 @@
+views:
+  v1/nodes:
+    sortColumn: NAME
+    columns:
+      - NAME
+      - AGE
+      - STATUS
+      - VERSION
+      - INSTANCE_TYPE:.metadata.labels.node\.kubernetes\.io/instance-type|S
+      - AZ:.metadata.labels.topology\.kubernetes\.io/zone|W
+      - KARPENTER_POOL:.metadata.labels.karpenter\.sh/nodepool|W
+      - CA_NODEGROUP:.metadata.labels.eks\.amazonaws\.com/nodegroup|W
+      - CAPACITY_TYPE:.metadata.labels.karpenter\.sh/capacity-type|W
+      - EKS_CAPACITY_TYPE:.metadata.labels.eks\.amazonaws\.com/capacityType|W
+      - INSTANCE_ID:.spec.providerID|W
+  v1/pods:
+    columns:
+      - NAME
+      - NAMESPACE
+      - STATUS
+      - AGE
+      - READY
+      - RESTARTS
+      - LAST_REASON:.status.containerStatuses[0].lastState.terminated.reason|W
+      - LAST_EXIT_CODE:.status.containerStatuses[0].lastState.terminated.exitCode|N

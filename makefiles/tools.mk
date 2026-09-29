@@ -127,9 +127,10 @@ yamllint: ## Set up yamllint with custom configuration in the config directory
 yq: ## Install yq (YAML processor used by makefiles/scripts/skill-meta.sh)
 	$(call install_with_brew,yq)
 
-k9s: ## Symlink k9s aliases
+k9s: ## Symlink k9s aliases and views
 	$(call mkdir_safe,${XDG_CONFIG_HOME}/k9s)
 	$(call symlink,other/k9s/aliases.yaml,${XDG_CONFIG_HOME}/k9s/aliases.yaml)
+	$(call symlink,other/k9s/views.yaml,${XDG_CONFIG_HOME}/k9s/views.yaml)
 
 tmux: ## Install tmux and symlink config (fixes TERM/escape-sequence bleed with vim)
 	$(call install_with_brew,tmux)
