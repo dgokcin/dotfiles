@@ -156,7 +156,7 @@ PreToolUse Hook (auto-approve-tools.sh, rtk rewrite)
     ↓
 Tool Execution
     ↓
-Permission Hooks (auto-approve-tools.sh)
+PermissionRequest Hook (auto-approve-tools.sh)
 ```
 
 ## Related Documentation
