@@ -75,7 +75,6 @@ brew "yq"
 # Applications currently managed by Homebrew
 cask "1password-cli"
 cask "drawio"
-cask "hammerspoon"
 
 # Additional applications managed through Homebrew casks
 cask "1password"
