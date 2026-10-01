@@ -4,14 +4,14 @@
     "command": "~/.claude/scripts/file-suggestion.sh"
   },
   "env": {
-    "ENABLE_LSP_TOOL": "1",
-    "ENABLE_TOOL_SEARCH": "auto:0.2",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "95",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "1",
     "CLODEX_PLAN_USD": "10",
-    "CLODEX_SPEND_WINDOW_DAYS": "30"
+    "CLODEX_SPEND_WINDOW_DAYS": "30",
+    "ENABLE_LSP_TOOL": "1",
+    "ENABLE_TOOL_SEARCH": "auto:0.2"
   },
   "attribution": {
     "commit": "",
@@ -60,17 +60,102 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
+    "buddy": "off",
     "commit": "off",
-    "spike": "off",
     "dev-story": "off",
     "jiragirl": "off",
-    "buddy": "off",
-    "mega-dev": "off"
+    "mega-dev": "off",
+    "spike": "off"
   },
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.config/iterm2/cc-status"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/auto-approve-tools.sh permission"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.config/iterm2/cc-status"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$NVIM\" ] && nvim --server \"$NVIM\" --remote-expr 'execute(\"checktime\")' > /dev/null 2>&1 || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.config/iterm2/cc-status"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/auto-approve-tools.sh pre-tool"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.config/iterm2/cc-status"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.config/iterm2/cc-status"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "matcher": "*",
@@ -86,37 +171,52 @@
             "statusMessage": "Auto-naming worktree session"
           }
         ]
-      }
-    ],
-    "PreToolUse": [
+      },
       {
-        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/auto-approve-tools.sh pre-tool"
+            "command": "$HOME/.config/iterm2/cc-status"
           }
         ]
       }
     ],
-    "PermissionRequest": [
+    "Stop": [
       {
-        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/scripts/auto-approve-tools.sh permission"
+            "command": "$HOME/.config/iterm2/cc-status"
           }
         ]
       }
     ],
-    "PostToolUse": [
+    "StopFailure": [
       {
-        "matcher": "Write|Edit|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "[ -n \"$NVIM\" ] && nvim --server \"$NVIM\" --remote-expr 'execute(\"checktime\")' > /dev/null 2>&1 || true"
+            "command": "$HOME/.config/iterm2/cc-status"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.config/iterm2/cc-status"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.config/iterm2/cc-status"
           }
         ]
       }
@@ -157,31 +257,22 @@
     "command": "~/.claude/scripts/subagent-statusline.sh"
   },
   "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": false,
-    "pyright-lsp@claude-plugins-official": false,
-    "playwright@claude-plugins-official": false,
     "context7@claude-plugins-official": false,
-    "ralph-loop@claude-plugins-official": false,
+    "datadog@treatwell": true,
     "feature-dev@claude-plugins-official": false,
-    "skill-creator@claude-plugins-official": false,
-    "caveman@caveman": false,
+    "playwright@claude-plugins-official": false,
     "plugin-dev@claude-plugins-official": false,
-    "gitops@treatwell": false,
-    "session-handover@treatwell": true,
     "ponytail@ponytail": false,
-    "datadog@treatwell": true
+    "pyright-lsp@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
-    "obsidian-skills": {
+    "agent-plugins-for-aws": {
       "source": {
         "source": "github",
-        "repo": "kepano/obsidian-skills"
-      }
-    },
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
+        "repo": "awslabs/agent-plugins"
       },
       "autoUpdate": true
     },
@@ -191,12 +282,11 @@
         "repo": "giuseppe-trisciuoglio/developer-kit"
       }
     },
-    "treatwell": {
+    "obsidian-skills": {
       "source": {
-        "source": "directory",
-        "path": "/Users/denizgokcin/codes/work/claude-skills"
-      },
-      "autoUpdate": true
+        "source": "github",
+        "repo": "kepano/obsidian-skills"
+      }
     },
     "ponytail": {
       "source": {
@@ -204,29 +294,25 @@
         "repo": "DietrichGebert/ponytail"
       }
     },
-    "agent-plugins-for-aws": {
+    "treatwell": {
       "source": {
-        "source": "github",
-        "repo": "awslabs/agent-plugins"
-      },
-      "autoUpdate": true
+        "source": "directory",
+        "path": "$HOME/codes/work/claude-skills"
+      }
     }
   },
   "outputStyle": "Declaude",
   "feedbackDrafts": "off",
   "effortLevel": "high",
   "modelSettings": {
-    "sol": {
-      "effortLevel": "medium"
+    "astra": {
+      "effortLevel": "high"
     },
     "claude-fable-5": {
       "effortLevel": "high"
     },
     "claude-fable-5-1": {
       "effortLevel": "medium"
-    },
-    "astra": {
-      "effortLevel": "high"
     },
     "claude-opus-5": {
       "effortLevel": "medium"
@@ -236,6 +322,12 @@
     },
     "luna": {
       "effortLevel": "low"
+    },
+    "sol": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
     }
   },
   "promptSuggestionEnabled": false,
