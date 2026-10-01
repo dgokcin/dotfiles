@@ -35,8 +35,8 @@
 
 - **NEVER** call `getAccessibleAtlassianResources` - use hardcoded cloudId
 - **NEVER** call `atlassianUserInfo` - use hardcoded accountId
-- **NEVER** call `getVisibleJiraProjects` unless user explicitly mentions a non-DEVX project
-- **NEVER** call `getJiraProjectIssueTypesMetadata` - use hardcoded issue type IDs
+- **NEVER** call `listJiraProjects` unless user explicitly mentions a non-DEVX project
+- **NEVER** call `listJiraProjectIssueTypesMetadata` - use hardcoded issue type IDs
 - **DEFAULT** to DEVX project unless user explicitly mentions another project prefix
 
 ## Format Rules

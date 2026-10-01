@@ -63,10 +63,10 @@ git commit -m "fix(api): resolve race condition in webhook handler
 
 ## VCS Detection
 
-| File Present | VCS | Tool | Mood |
-|--------------|-----|------|------|
-| `.gitlab-ci.yml` | GitLab | `glab mr create` | EXTRA HOSTILE |
-| Otherwise | GitHub | `gh pr create` | Normal sass |
+| File Present | VCS | Tool |
+|--------------|-----|------|
+| `.gitlab-ci.yml` | GitLab | `glab mr create` |
+| Otherwise | GitHub | `gh pr create` |
 
 ## PR/MR Creation
 
