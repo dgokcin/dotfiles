@@ -22,7 +22,8 @@ endif
 # Old per-tool skill/persona/config/template symlinks installed by the
 # pre-universal cursor.mk — pruned on install.
 CURSOR_LEGACY := $(addprefix ${CURSOR_HOME}/skills/,gitboi jiragirl mega-dev commit create-pr create-story dev-story get-story) \
-	${CURSOR_HOME}/personas ${CURSOR_HOME}/config ${CURSOR_HOME}/templates
+	${CURSOR_HOME}/personas ${CURSOR_HOME}/config ${CURSOR_HOME}/templates \
+	$(addprefix ${CURSOR_HOME}/agents/,gitboi.md jiragirl.md mega-dev.md)
 
 cursor: cursor-agents cursor-scripts cursor-hooks cursor-config cursor-user-config ai-agents ## Install Cursor agents, hooks, settings, keybindings, and universal skills
 	$(call pretty_print, "Pruning legacy ~/.cursor skill symlinks...")

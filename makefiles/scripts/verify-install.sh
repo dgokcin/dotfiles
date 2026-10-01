@@ -76,7 +76,7 @@ assert_link "$HOME/.claude/settings.json" "$REPO/ai-stuff/claude/settings.json"
 assert_link "$HOME/.claude/keybindings.json" "$REPO/ai-stuff/claude/keybindings.json"
 assert_link "$HOME/.claude/scripts/statusline.sh" "$REPO/ai-stuff/claude/scripts/statusline.sh"
 assert_link "$HOME/.claude/scripts/auto-approve-tools.sh" "$REPO/ai-stuff/_shared/scripts/auto-approve-tools.sh"
-assert_link "$HOME/.claude/agents/gitboi.md" "$REPO/ai-stuff/agents/gitboi.md"
+assert_link "$HOME/.claude/agents/gitops-geezer.md" "$REPO/ai-stuff/agents/gitops-geezer.md"
 assert_link "$HOME/.claude/skills/auto-commit" "$REPO/ai-stuff/skills/auto-commit"
 
 assert_link "$HOME/.cursor/hooks.json" "$REPO/ai-stuff/cursor/hooks.json"
