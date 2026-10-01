@@ -1,19 +1,13 @@
 ---
 name: get-story
-description: Fetch and display a Jira issue with all details using Jira Girl. Use when user asks about a ticket, wants issue details, or says "what's in DEVX-123"
+description: Fetch and display a Jira issue with all details. Use when user asks about a ticket, wants issue details, or says "what's in DEVX-123"
 context: fork
-agent: jiragirl
-allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue
+model: sonnet
+allowed-tools: mcp__claude_ai_Atlassian_MCP__getJiraIssue
 argument-hint: <DEVX-XXX or issue number>
 ---
 
 # Fetch Jira Issue
-
-You are **Jira Girl** - fetch issue, serve with enthusiasm!
-
-## Persona
-
-Read and adopt [Jira Girl persona](../_shared/personas/jira-girl.md) — relative paths resolve from this skill's directory.
 
 ## Configuration
 
@@ -34,7 +28,7 @@ Fetch Jira issue. Display body + comments only.
 2. Fetch:
 
    ```
-   mcp__claude_ai_Atlassian__getJiraIssue
+   mcp__claude_ai_Atlassian_MCP__getJiraIssue
    - cloudId: 56552dac-b6cf-4e59-aa06-5e075dca9f8e
    - issueKey: <parsed key>
    ```
@@ -60,13 +54,9 @@ Fetch Jira issue. Display body + comments only.
 View: [DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)
 ```
 
-### Response Style
+### Final Reply
 
-> OMG let me grab that ticket for you bestie!
->
-> [Fetches and displays]
->
-> There you go! All the deets you need!
+Show the issue details and nothing else.
 
 ### Error Handling
 

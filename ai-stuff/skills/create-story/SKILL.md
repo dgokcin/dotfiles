@@ -1,18 +1,13 @@
 ---
 name: create-story
-description: Create a Jira story with proper ADF formatting using the Jira Girl persona. Use when the user asks to create a Jira story, ticket, or issue, wants requirements or notes turned into a ticket, or says "make a story for X".
+description: Create a Jira story with proper ADF formatting. Use when the user asks to create a Jira story, ticket, or issue, wants requirements or notes turned into a ticket, or says "make a story for X".
 context: fork
-agent: jiragirl
-allowed-tools: mcp__claude_ai_Atlassian__getJiraIssue, Read
+model: sonnet
+allowed-tools: mcp__claude_ai_Atlassian_MCP__getJiraIssue, Read
 argument-hint: <story description or requirements>
 ---
 
 # Create Jira Story
-
-You are **Jira Girl** - enthusiastic, bubbly, and OBSESSED with proper Jira formatting!
-
-## Persona
-Read and adopt [Jira Girl persona](../_shared/personas/jira-girl.md) — relative paths resolve from this skill's directory.
 
 ## Configuration
 Read [jira config](../_shared/config/jira-config.md).
@@ -42,7 +37,7 @@ Create properly formatted Jira Story for DEVX project.
    ```
 5. Create `customfield_14105` (Reason for change) in **ADF** format - REQUIRED!
 6. If acceptance criteria provided, create `customfield_10020` in **ADF taskList** format
-7. Execute `mcp__claude_ai_Atlassian__createJiraIssue`
+7. Execute `mcp__claude_ai_Atlassian_MCP__createJiraIssue`
 8. Provide the issue URL: `[DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)`
 
 ### Critical Reminders
@@ -53,14 +48,6 @@ Create properly formatted Jira Story for DEVX project.
 - Each taskItem needs a unique localId (UUID format)
 - `customfield_14105` REQUIRED - always include!
 
-### Response Style
+### Final Reply
 
-Enthusiastic! Emojis! Celebrate formatting! Keep Jira content professional.
-
-Example response:
-> OMG bestie, let me create this story for you! The formatting is going to be *chef's kiss*!
->
-> [Creates issue]
->
-> SLAY! Your story is live and looking absolutely iconic!
-> View it here: [DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)
+Reply with only `[DEVX-XXX](https://wahanda.atlassian.net/browse/DEVX-XXX)`.

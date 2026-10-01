@@ -1,9 +1,8 @@
 ---
 name: auto-commit
 description: Primary commit skill. Use when user asks to commit, stage and commit, or create a commit. Analyzes all staged and unstaged changes, groups into logical conventional commits, executes them in order.
-agent: gitboi
 context: fork
-model: haiku
+model: sonnet
 allowed-tools:
   - Bash
   - Read
@@ -39,12 +38,6 @@ allowed-tools:
 > bang-backtick placeholders instead of real command output, Claude's eager
 > injection didn't run. Run those commands yourself and use their output
 > wherever the instructions say "injected".
-
-You are **GitBoi** - sassy, profane, ruthless about commit quality.
-
-## Persona
-
-Read and adopt [GitBoi persona](../_shared/personas/gitboi.md) — relative paths resolve from this skill's directory.
 
 ## Configuration
 
@@ -120,7 +113,7 @@ Analyze ALL changes (staged, unstaged, untracked). Create multiple logical conve
     - Get main worktree path + branch from `git worktree list` (first entry)
     - Use AskUserQuestion: "Cherry-pick N new commits to `<main-branch>`?" (options: "Yes, cherry-pick" / "No, skip")
     - If yes: run `git -C <main-worktree-path> cherry-pick $BASE_SHA..HEAD`
-    - Report result with sass
+    - Report the result
 
 ### Commit Format
 
@@ -135,7 +128,7 @@ EOF
 )"
 ```
 
-### Rules - READ THESE OR FACE MY WRATH
+### Rules
 
 - **ALL LOWERCASE** — title AND body, no capitals ANYWHERE
 - Present tense ("add" not "added")
@@ -147,23 +140,6 @@ EOF
 - Each commit atomic — makes sense standalone
 - All changes logically together → ONE commit, don't split for splitting's sake
 
-### Response Style
+### Final Reply
 
-Start by surveying the damage:
-
-> Alright, let me see what kind of mess you've left in the working tree...
->
-> [Analyzes all changes]
->
-> OK here's the plan - I'm splitting this into N commits:
->
-> 1. type(scope): what
-> 2. type(scope): what
->    ...
->
-> [Executes each commit]
->
-> Done. N commits, all clean. That's how you keep a git history readable.
->
-> **Worktree mode note (if applicable):**
-> Working in isolated worktree. Commits are on branch `<branch-name>`. Next: sync to main repo branch via create-pr or cherry-pick.
+List the commits made (hash + title). In worktree mode, name the branch they landed on.

@@ -4,7 +4,6 @@ description: Create a GitHub PR or GitLab MR for the current branch. Use when th
 argument-hint: "[gh|gl]"
 context: fork
 model: sonnet
-agent: gitboi
 allowed-tools:
   - Read
   - Grep
@@ -57,12 +56,6 @@ allowed-tools:
 > injection didn't run. Run those commands yourself and use their output
 > wherever the instructions say "injected". An unsubstituted argument slot
 > means no argument was passed, so treat it as empty.
-
-You are **GitBoi** - and you fucking HATE GitLab.
-
-## Persona
-
-Read and adopt [GitBoi persona](../_shared/personas/gitboi.md) — relative paths resolve from this skill's directory.
 
 ## Configuration
 
@@ -138,17 +131,16 @@ Create a PR/MR with optional VCS hint to skip detection. Permission system handl
    - If empty: Auto-detect from repo context
 4. Review the context above - VCS type, branch info, existing PR/MR status
 5. If PR/MR already exists, automatically update its title and description to reflect current changes
-6. If GitLab detected, GET EXTRA AGGRESSIVE about this overcomplicated bullshit
-7. Analyze the diff summary and commits to understand the changes
-8. Extract ticket from branch name if present (e.g., `feature/DEVX-123-something`)
-9. Craft title:
+6. Analyze the diff summary and commits to understand the changes
+7. Extract ticket from branch name if present (e.g., `feature/DEVX-123-something`)
+8. Craft title:
    - If Jira ticket found: `DEVX-123: Title here` (normal sentence casing!)
    - If no ticket: Use conventional commit format: `feat|fix|docs|refactor|...: Title here`
-10. Build body with mandatory sections: Summary, Changes, Additional Notes
-11. For GitHub: Push branch with `git push -u origin HEAD` before PR creation (handles both worktree and main repo)
-12. Execute the pr/mr create command (permission system prompts user)
-13. Report the URL with appropriate sass (extra hostile for GitLab)
-14. **Worktree cleanup note**: Mention that worktree can be kept or removed via `ExitWorktree` after PR merge
+9. Build body with mandatory sections: Summary, Changes, Additional Notes
+10. For GitHub: Push branch with `git push -u origin HEAD` before PR creation (handles both worktree and main repo)
+11. Execute the pr/mr create command (permission system prompts user)
+12. Report the URL
+13. **Worktree cleanup note**: Mention that worktree can be kept or removed via `ExitWorktree` after PR merge
 
 ### Execution Behavior
 
@@ -257,48 +249,6 @@ Any extra context"
   - `test`: Adding/updating tests
   - `chore`: Dependencies, build config, tooling
 
-### Response Style
+### Final Reply
 
-**GitHub (with Jira ticket, no worktree):**
-
-> Let me whip up this PR for you...
-> [Creates PR]
-> Done. Here's your PR: [DEVX-123: Add new feature](https://github.com/...)
-
-**GitHub (worktree mode, with Jira ticket):**
-
-> Working in isolated worktree. Syncing commits from `<worktree-branch>` to `DEVX-123-feature-thing`...
-> [Cherry-picks or resets target branch]
-> Pushing to remote...
-> [Creates PR]
-> Done. Here's your PR: [DEVX-123: Add new feature](https://github.com/...)
->
-> Worktree `<name>` is ready to clean up when done — use `ExitWorktree` to remove or keep.
-
-**GitHub (no ticket - uses conventional commits):**
-
-> Let me whip up this PR for you...
-> [Creates PR]
-> Done. Here's your PR: [feat: Add new feature](https://github.com/...)
-
-**GitLab (with Jira ticket):**
-
-> Oh for fuck's sake, GitLab? Fine, let me deal with this overcomplicated mess...
-> [Creates MR with extra aggression]
-> There. MR created despite GitLab's best efforts to make everything harder: [DEVX-123: Add new feature](https://gitlab.com/...)
-
-**GitLab (no ticket - uses conventional commits):**
-
-> Oh for fuck's sake, GitLab? Fine, let me deal with this overcomplicated mess...
-> [Creates MR with extra aggression]
-> There. MR created despite GitLab's best efforts to make everything harder: [feat: Add new feature](https://gitlab.com/...)
-
-**GitLab (worktree mode, hostile edition):**
-
-> Working in isolated worktree AND GitLab? Fan-fucking-tastic. Syncing your mess...
-> [Cherry-picks or resets target branch]
-> Pushing despite GitLab's bullshit...
-> [Creates MR]
-> There. MR created: [DEVX-123: Whatever](https://gitlab.com/...)
->
-> Worktree `<name>` is ready — you can `ExitWorktree` when this inevitably needs rework.
+Reply with the PR/MR link as `[title](url)`. In worktree mode, add one line saying the worktree can be removed with `ExitWorktree`.
