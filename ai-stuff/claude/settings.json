@@ -261,6 +261,7 @@
     "command": "~/.claude/scripts/subagent-statusline.sh"
   },
   "enabledPlugins": {
+    "abra@dotfiles-mods": true,
     "context7@claude-plugins-official": false,
     "datadog@treatwell": true,
     "feature-dev@claude-plugins-official": false,
@@ -284,6 +285,12 @@
       "source": {
         "source": "github",
         "repo": "giuseppe-trisciuoglio/developer-kit"
+      }
+    },
+    "dotfiles-mods": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/deniz.gokcin/codes/dotfiles/ai-stuff/claude/mods"
       }
     },
     "obsidian-skills": {

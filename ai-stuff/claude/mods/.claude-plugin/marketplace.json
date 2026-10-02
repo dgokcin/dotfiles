@@ -1,0 +1,14 @@
+{
+  "name": "dotfiles-mods",
+  "description": "Claude Code mods from these dotfiles",
+  "owner": {
+    "name": "deniz gökçin"
+  },
+  "plugins": [
+    {
+      "name": "abra",
+      "source": "./abra",
+      "description": "A pixel Abra that lives at the right edge of the band above the prompt"
+    }
+  ]
+}
