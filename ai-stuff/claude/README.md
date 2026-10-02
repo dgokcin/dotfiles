@@ -29,8 +29,9 @@ ai-stuff/claude/
 ```
 
 `settings.json` declares `mods/` as the `dotfiles-mods` marketplace and enables
-its plugins. Claude Code caches an installed plugin by version, so bump a mod's
-`version` and run `claude plugin update <name>@dotfiles-mods` after editing it.
+its plugins, and `make claude-mods` installs every mod under `mods/`. A directory
+marketplace loads each mod in place from the repo, so edits apply on
+`/reload-plugins` without a version bump.
 
 `make claude` also installs (sources live elsewhere):
 

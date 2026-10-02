@@ -32,7 +32,7 @@ while Claude works.
 1. Copy the four GIFs from `media/gen<N>/<mon>/` in [jakobhoeg/vscode-pokemon](https://github.com/jakobhoeg/vscode-pokemon/tree/main/media) into `sprites/<mon>/`.
    The files are `default_idle_8fps.gif`, `default_walk_8fps.gif`, `shiny_idle_8fps.gif`, and `shiny_walk_8fps.gif`.
 2. Run `node scripts/build-frames.mjs`.
-3. Bump `version` in `.claude-plugin/plugin.json`, then run `claude plugin update pokemon@dotfiles-mods`.
+3. Run `/reload-plugins`. The mod loads in place from the repo, so no version bump or reinstall is needed.
 
 ## Layout
 
