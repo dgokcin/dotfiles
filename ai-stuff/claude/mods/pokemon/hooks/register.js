@@ -1,7 +1,8 @@
 import { SPRITES } from './frames.js'
 
 // One pixel Pokémon lives at the right edge of the band above the prompt. It
-// bobs in place while you're idle and paces back and forth while Claude works.
+// paces back and forth while Claude works, walks home to the right edge when
+// the turn ends, and bobs in place there while you're idle.
 
 const TICK_MS = 50
 const MOVE_TICKS = 3
@@ -54,9 +55,10 @@ function frameAt(anim, elapsed) {
 function cellsNow() {
   const sprite = SPRITES[mon]
   const sheet = sprite.variants[variant]
-  const frame = frameAt(working ? sheet.walk : sheet.idle, tick * TICK_MS)
+  const walking = working || !isHome()
+  const frame = frameAt(walking ? sheet.walk : sheet.idle, tick * TICK_MS)
   const colors = COLORS[mon][variant]
-  const flip = working && facing === 'left'
+  const flip = walking && facing === 'left'
   const pixel = (px, py) => {
     if (px < 0 || px >= sprite.width) return null
     const row = frame[py]
@@ -79,18 +81,25 @@ function cellsNow() {
   return new Uint8Array(words.buffer).toBase64()
 }
 
+// The right edge of the strip, where the sprite idles
+const homeX = () => columns - SPRITES[mon].width
+const isHome = () => x >= homeX()
+
 // Keep the sprite inside the strip
 function clampX() {
-  x = Math.max(0, Math.min(columns - SPRITES[mon].width, x))
+  x = Math.max(0, Math.min(homeX(), x))
 }
 
-// Advance the clock, and while working move one column every few ticks, turning at the edges
+// Advance the clock and move one column every few ticks: pacing while
+// working, heading right while idle until the sprite is home
 function step() {
   tick += 1
-  if (!working || tick % MOVE_TICKS !== 0) return
-  const maxX = columns - SPRITES[mon].width
-  if (facing === 'left' && x <= 0) facing = 'right'
-  else if (facing === 'right' && x >= maxX) facing = 'left'
+  if (tick % MOVE_TICKS !== 0) return
+  if (!working) {
+    if (isHome()) return
+    facing = 'right'
+  } else if (facing === 'left' && x <= 0) facing = 'right'
+  else if (facing === 'right' && isHome()) facing = 'left'
   x += facing === 'left' ? -1 : 1
   clampX()
 }
@@ -119,7 +128,9 @@ export function register(on) {
   on('command.run', { command: 'pokemon' }, async ($, e) => {
     const asked = e.args.trim().toLowerCase()
     if (MONS.includes(asked)) {
+      const wasHome = isHome()
       mon = asked
+      if (wasHome) x = homeX()
       clampX()
       await $.store.set('mon', mon)
     } else if (VARIANTS.includes(asked)) {
@@ -140,9 +151,11 @@ export function register(on) {
       return next(e)
     }
     const { Box, Raster } = $.ui.resolve(e)
+    const wasHome = isHome()
     working = e.props.isWorking
     bandId = e.requestId
     columns = Math.max(SPRITES[mon].width, Math.min(STRIP_COLUMNS, e.props.bodyColumns))
+    if (wasHome) x = homeX()
     clampX()
 
     const sprite = Raster({ key: 'pokemon', columns, rows: rowsOf(mon), cells: cellsNow() })

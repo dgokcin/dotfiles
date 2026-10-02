@@ -92,3 +92,40 @@ test('/pokemon charmander draws Charmander', async ($, on) => {
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
   expect((await ui.find({ key: 'pokemon' })).props.rows).toBe(9)
 })
+
+// The rightmost column that holds part of the sprite
+function rightEdge(cells: string, columns: number): number {
+  const points = codePoints(cells)
+  let edge = -1
+  points.forEach((cp, i) => {
+    if (cp !== 0x20) edge = Math.max(edge, i % columns)
+  })
+  return edge
+}
+
+test('walks back to the right edge after a turn and idles there', async ($, on) => {
+  const clock = mock.clock(on)
+  const blits: string[] = []
+  on('ui.render', () => THEIRS)
+  on('ui.blit', ($, e) => {
+    blits.push(e.cells)
+    return { value: {} }
+  })
+  on('session.start', () => ({ cwd: '/work' }))
+  on('command.register', () => ({ value: undefined }))
+  on('store.get', () => ({ value: undefined }))
+  await $.session.start({ surface: 'terminal', isInteractive: true, cwd: '/work' })
+
+  const idle = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  const home = rightEdge((await idle.find({ key: 'pokemon' })).props.cells, 40)
+  await idle.unmount()
+
+  const busy = await $.ui.mount({ ...BAND, surface: 'terminal', props: { ...BAND.props, isWorking: true } })
+  await clock.advance(150 * 10)
+  expect(rightEdge(blits[blits.length - 1], 40)).toBeLessThan(home)
+  await busy.unmount()
+
+  await $.ui.mount({ ...BAND, surface: 'terminal' })
+  await clock.advance(150 * 40)
+  expect(rightEdge(blits[blits.length - 1], 40)).toBe(home)
+})

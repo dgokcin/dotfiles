@@ -1,8 +1,8 @@
 # pokemon
 
 A Claude Code mod that draws one pixel Pokémon at the right edge of the band
-above the prompt. It bobs in place while you're idle and paces back and forth
-while Claude works.
+above the prompt. It paces back and forth while Claude works, walks home to the
+right edge when the turn ends, and bobs in place there while you're idle.
 
 ## Requirements
 
