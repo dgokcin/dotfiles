@@ -1,7 +1,7 @@
 import { expect, mock, test } from 'claude-code/testing'
 
 const BAND = {
-  plugin: 'abra',
+  plugin: 'pokemon',
   component: 'AbovePrompt',
   requestId: 'band',
   viewport: { columns: 120, rows: 40 },
@@ -22,10 +22,10 @@ function codePoints(cells: string): number[] {
   return Array.from(words).filter((_, i) => i % 3 === 0)
 }
 
-test('draws Abra as a half-block raster in the terminal band', async ($, on) => {
+test('draws Abra by default as a half-block raster in the terminal band', async ($, on) => {
   on('ui.render', () => THEIRS)
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
-  const raster = await ui.find({ key: 'abra' })
+  const raster = await ui.find({ key: 'pokemon' })
   expect(raster).toBeDefined()
   expect(raster.props.columns).toBe(40)
   expect(raster.props.rows).toBe(10)
@@ -35,10 +35,10 @@ test('draws Abra as a half-block raster in the terminal band', async ($, on) => 
 test('leaves the band alone on desktop and during a survey', async ($, on) => {
   on('ui.render', () => THEIRS)
   const desktop = await $.ui.mount({ ...BAND, surface: 'desktop' })
-  expect(await desktop.find({ key: 'abra' })).toBeUndefined()
+  expect(await desktop.find({ key: 'pokemon' })).toBeUndefined()
   await desktop.unmount()
   const survey = await $.ui.mount({ ...BAND, surface: 'terminal', props: { ...BAND.props, hasSurvey: true } })
-  expect(await survey.find({ key: 'abra' })).toBeUndefined()
+  expect(await survey.find({ key: 'pokemon' })).toBeUndefined()
 })
 
 test('paces while Claude works', async ($, on) => {
@@ -55,20 +55,31 @@ test('paces while Claude works', async ($, on) => {
 
   await $.session.start({ surface: 'terminal', isInteractive: true, cwd: '/work' })
   await $.ui.mount({ ...BAND, surface: 'terminal', props: { ...BAND.props, isWorking: true } })
-  await clock.advance(150 * 6)
-  expect(blits.length).toBe(6)
-  expect(new Set(blits).size).toBe(6)
+  await clock.advance(50 * 30)
+  expect(blits.length).toBe(30)
+  expect(new Set(blits).size).toBeGreaterThan(5)
 })
 
-test('/abra toggles shiny and saves it', async ($, on) => {
+test('/pokemon switches the mon and the variant, and saves both', async ($, on) => {
   const saved = new Map<string, unknown>()
+  on('ui.render', () => THEIRS)
   on('store.set', ($, e) => {
     saved.set(e.key, e.value)
     return { value: undefined }
   })
-  const first = await $.command.run({ command: 'abra', args: '' })
-  expect(first.text).toBe('Abra is now shiny.')
-  const second = await $.command.run({ command: 'abra', args: 'default' })
-  expect(second.text).toBe('Abra is now default.')
-  expect(saved.get('variant')).toBe('default')
+
+  const mon = await $.command.run({ command: 'pokemon', args: 'bulbasaur' })
+  expect(mon.text).toBe('Now showing default bulbasaur.')
+  const shiny = await $.command.run({ command: 'pokemon', args: 'shiny' })
+  expect(shiny.text).toBe('Now showing shiny bulbasaur.')
+  expect(saved.get('mon')).toBe('bulbasaur')
+  expect(saved.get('variant')).toBe('shiny')
+
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect((await ui.find({ key: 'pokemon' })).props.rows).toBe(9)
+})
+
+test('/pokemon rejects an unknown name', async ($) => {
+  const answer = await $.command.run({ command: 'pokemon', args: 'mewtwo' })
+  expect(answer.text).toMatch(/^Unknown option "mewtwo"/)
 })

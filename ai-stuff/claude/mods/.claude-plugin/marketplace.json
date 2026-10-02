@@ -6,9 +6,9 @@
   },
   "plugins": [
     {
-      "name": "abra",
-      "source": "./abra",
-      "description": "A pixel Abra that lives at the right edge of the band above the prompt"
+      "name": "pokemon",
+      "source": "./pokemon",
+      "description": "A pixel Pokémon that lives at the right edge of the band above the prompt"
     }
   ]
 }

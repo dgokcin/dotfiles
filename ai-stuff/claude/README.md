@@ -23,7 +23,7 @@ ai-stuff/claude/
 │    worktree-cleanup skill helpers moved to ai-stuff/_shared/scripts/ —
 │    shared across tools)
 ├── mods/                  # Local plugin marketplace `dotfiles-mods` for Claude Code mods
-│   └── abra/              # Pixel Abra in the band above the prompt (see its README)
+│   └── pokemon/           # Pixel Pokémon in the band above the prompt (see its README)
 ├── settings.json          # Hooks, permissions, statusline, plugins (→ ~/.claude/settings.json)
 └── README.md
 ```
