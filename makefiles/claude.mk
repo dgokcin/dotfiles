@@ -4,13 +4,16 @@
 # configs/templates live at ~/.config/ai-shared (make ai-shared) —
 # agents reference them there, so nothing tool-specific holds content.
 # This file only handles what is Claude Code-specific: agents, hook scripts,
-# settings, and keybindings.
+# settings, keybindings, and mods.
 
 CLAUDE_HOME := ${HOME}/.claude
 
 CLAUDE_AGENTS := $(notdir $(wildcard $(DOTFILES)/ai-stuff/agents/*.md))
 
 CLAUDE_OUTPUT_STYLES := $(notdir $(wildcard $(DOTFILES)/ai-stuff/output-styles/*.md))
+
+CLAUDE_MODS_DIR := $(DOTFILES)/ai-stuff/claude/mods
+CLAUDE_MODS := $(patsubst $(CLAUDE_MODS_DIR)/%/.claude-plugin/plugin.json,%,$(wildcard $(CLAUDE_MODS_DIR)/*/.claude-plugin/plugin.json))
 
 # Pre-ai-shared layout installed by the old claude.mk — pruned on install.
 CLAUDE_LEGACY := ${CLAUDE_HOME}/personas ${CLAUDE_HOME}/config ${CLAUDE_HOME}/templates \
@@ -28,7 +31,7 @@ claude-cli: ## Install Claude Code with Anthropic's recommended native installer
 		echo "Claude Code already installed at $(HOME)/.local/bin/claude"; \
 	fi
 
-claude-dotfiles: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings ai-shared ai-claude ## Install Claude Code configuration only
+claude-dotfiles: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-mods ai-shared ai-claude ## Install Claude Code configuration only
 	$(call pretty_print, "Pruning legacy ~/.claude symlinks...")
 	@rm -rf $(CLAUDE_LEGACY)
 
@@ -67,8 +70,16 @@ claude-keybindings: claude-dirs ## Symlink Claude Code keybindings.json
 	$(call pretty_print, "Installing Claude Code keybindings...")
 	$(call symlink,ai-stuff/claude/keybindings.json,${CLAUDE_HOME}/keybindings.json)
 
+# Mods load in place from the dotfiles-mods directory marketplace, so edits
+# apply on /reload-plugins. This registers the marketplace and installs each mod.
+claude-mods: claude-settings ## Install Claude Code mods from ai-stuff/claude/mods
+	$(call pretty_print, "Installing Claude Code mods...")
+	@claude plugin marketplace update dotfiles-mods >/dev/null 2>&1 || claude plugin marketplace add "$(CLAUDE_MODS_DIR)"
+	@for m in $(CLAUDE_MODS); do claude plugin install "$$m@dotfiles-mods"; done
+
 claude-clean: ai-clean-claude ## Remove Claude Code symlinks
 	$(call pretty_print, "Removing Claude Code symlinks...")
+	@for m in $(CLAUDE_MODS); do claude plugin uninstall "$$m@dotfiles-mods" >/dev/null 2>&1 || true; done
 	@for a in $(CLAUDE_AGENTS); do rm -f "${CLAUDE_HOME}/agents/$$a"; done
 	@for s in $(CLAUDE_OUTPUT_STYLES); do rm -f "${CLAUDE_HOME}/output-styles/$$s"; done
 	$(call remove_file,${CLAUDE_HOME}/scripts)
@@ -76,4 +87,4 @@ claude-clean: ai-clean-claude ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/keybindings.json)
 	@rm -rf $(CLAUDE_LEGACY)
 
-.PHONY: claude claude-cli claude-dotfiles claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-clean
+.PHONY: claude claude-cli claude-dotfiles claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-mods claude-clean

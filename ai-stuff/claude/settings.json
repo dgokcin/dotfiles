@@ -261,7 +261,6 @@
     "command": "~/.claude/scripts/subagent-statusline.sh"
   },
   "enabledPlugins": {
-    "abra@dotfiles-mods": true,
     "context7@claude-plugins-official": false,
     "datadog@treatwell": true,
     "feature-dev@claude-plugins-official": false,
@@ -271,7 +270,8 @@
     "pyright-lsp@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": false
+    "typescript-lsp@claude-plugins-official": false,
+    "pokemon@dotfiles-mods": true
   },
   "extraKnownMarketplaces": {
     "agent-plugins-for-aws": {

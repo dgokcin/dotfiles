@@ -23,14 +23,15 @@ ai-stuff/claude/
 │    worktree-cleanup skill helpers moved to ai-stuff/_shared/scripts/ —
 │    shared across tools)
 ├── mods/                  # Local plugin marketplace `dotfiles-mods` for Claude Code mods
-│   └── abra/              # Pixel Abra in the band above the prompt (see its README)
+│   └── pokemon/           # Pixel Pokémon in the band above the prompt (see its README)
 ├── settings.json          # Hooks, permissions, statusline, plugins (→ ~/.claude/settings.json)
 └── README.md
 ```
 
 `settings.json` declares `mods/` as the `dotfiles-mods` marketplace and enables
-its plugins. Claude Code caches an installed plugin by version, so bump a mod's
-`version` and run `claude plugin update <name>@dotfiles-mods` after editing it.
+its plugins, and `make claude-mods` installs every mod under `mods/`. A directory
+marketplace loads each mod in place from the repo, so edits apply on
+`/reload-plugins` without a version bump.
 
 `make claude` also installs (sources live elsewhere):
 
