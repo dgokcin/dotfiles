@@ -83,3 +83,12 @@ test('/pokemon rejects an unknown name', async ($) => {
   const answer = await $.command.run({ command: 'pokemon', args: 'mewtwo' })
   expect(answer.text).toMatch(/^Unknown option "mewtwo"/)
 })
+
+test('/pokemon charmander draws Charmander', async ($, on) => {
+  on('ui.render', () => THEIRS)
+  on('store.set', () => ({ value: undefined }))
+  const answer = await $.command.run({ command: 'pokemon', args: 'charmander' })
+  expect(answer.text).toBe('Now showing default charmander.')
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect((await ui.find({ key: 'pokemon' })).props.rows).toBe(9)
+})

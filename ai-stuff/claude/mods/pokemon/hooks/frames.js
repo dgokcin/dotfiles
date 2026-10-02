@@ -623,5 +623,221 @@ export const SPRITES = {
         ]
       }
     }
+  },
+  "charmander": {
+    "width": 19,
+    "height": 17,
+    "variants": {
+      "default": {
+        "palette": [
+          "#604020",
+          "#f88838",
+          "#b85820",
+          "#e8e8f8",
+          "#284858",
+          "#000000",
+          "#d8a830",
+          "#f0d070",
+          "#e02828"
+        ],
+        "idle": [
+          {
+            "ms": 300,
+            "rows": [
+              "...................",
+              ".....aaaaa.........",
+              "....abbbbba........",
+              "...acbbbbbca.......",
+              "...abbbbbbba.......",
+              "...abcbbbcba.......",
+              "..acdbbbbbdca......",
+              "..acebbbbbeca......",
+              "..fcebbbbbecf......",
+              "...fccbbbccf.......",
+              "...afcccccfa.......",
+              "...fcfffffcf.......",
+              "...fcaghgacf.......",
+              "..acffhhhffca......",
+              "..accghhhgcca......",
+              "..accfaaafff.......",
+              "...ff.............."
+            ]
+          },
+          {
+            "ms": 300,
+            "rows": [
+              ".....aaaaa.........",
+              "....abbbbba........",
+              "...acbbbbbca.......",
+              "...abbbbbbba.......",
+              "...abcbbbcba.......",
+              "..acdbbbbbdca......",
+              "..acebbbbbeca......",
+              "..fcebbbbbecf......",
+              "...fccbbbccf.......",
+              "...afcccccfa.......",
+              "...fcfffffcf.......",
+              "...fcaghgacf.......",
+              "..acffhhhffca......",
+              "..accghhhgcca......",
+              "...fffaaafcca......",
+              "..........ff.......",
+              "..................."
+            ]
+          }
+        ],
+        "walk": [
+          {
+            "ms": 300,
+            "rows": [
+              "...................",
+              "...........aaaa....",
+              ".i........abbbba...",
+              ".ii......abbbbbba..",
+              ".hi......abbbbbbc..",
+              "iiii....abbbbbbcba.",
+              "ihhi....abbbbbdcba.",
+              ".ihi....abbbbbebbba",
+              ".ii....abbbbbbebbbf",
+              ".fca...abbbcabbbcf.",
+              ".fccaaabbbcbcaffa..",
+              "..fccbbbbcabbca....",
+              "..fccccbbbcffff....",
+              "...ffcccbbccga.....",
+              ".....ffacccca......",
+              ".......fccaa.......",
+              "........fff........"
+            ]
+          },
+          {
+            "ms": 300,
+            "rows": [
+              "...........aaaa....",
+              "...i......abbbba...",
+              "...i.....abbbbbba..",
+              "..ii.....abbbbbbc..",
+              "..iii...abbbbbbcba.",
+              ".iihi...abbbbbdcba.",
+              ".ihhi...abbbbbebbba",
+              ".ahi...abbbbbbebbbf",
+              ".fca...abbbcabbbcf.",
+              ".fccaaabbbcbcaffa..",
+              "..fccbbbbbabbca....",
+              "..fccccbbbbffff....",
+              "...ffccccbbcga.....",
+              ".....ffaacccca.....",
+              "........afcca......",
+              "..........fff......",
+              "..................."
+            ]
+          }
+        ]
+      },
+      "shiny": {
+        "palette": [
+          "#604020",
+          "#f8c038",
+          "#f88838",
+          "#e8e8f8",
+          "#284858",
+          "#000000",
+          "#d8a830",
+          "#f0d070",
+          "#e02828"
+        ],
+        "idle": [
+          {
+            "ms": 300,
+            "rows": [
+              "...................",
+              ".....aaaaa.........",
+              "....abbbbba........",
+              "...acbbbbbca.......",
+              "...abbbbbbba.......",
+              "...abcbbbcba.......",
+              "..acdbbbbbdca......",
+              "..acebbbbbeca......",
+              "..fcebbbbbecf......",
+              "...fccbbbccf.......",
+              "...afcccccfa.......",
+              "...fcfffffcf.......",
+              "...fcaghgacf.......",
+              "..acffhhhffca......",
+              "..accghhhgcca......",
+              "..accfaaafff.......",
+              "...ff.............."
+            ]
+          },
+          {
+            "ms": 300,
+            "rows": [
+              ".....aaaaa.........",
+              "....abbbbba........",
+              "...acbbbbbca.......",
+              "...abbbbbbba.......",
+              "...abcbbbcba.......",
+              "..acdbbbbbdca......",
+              "..acebbbbbeca......",
+              "..fcebbbbbecf......",
+              "...fccbbbccf.......",
+              "...afcccccfa.......",
+              "...fcfffffcf.......",
+              "...fcaghgacf.......",
+              "..acffhhhffca......",
+              "..accghhhgcca......",
+              "...fffaaafcca......",
+              "..........ff.......",
+              "..................."
+            ]
+          }
+        ],
+        "walk": [
+          {
+            "ms": 300,
+            "rows": [
+              "...................",
+              "...........aaaa....",
+              ".i........abbbba...",
+              ".ii......abbbbbba..",
+              ".hi......abbbbbbc..",
+              "iiii....abbbbbbcba.",
+              "ihhi....abbbbbdcba.",
+              ".ihi....abbbbbebbba",
+              ".ii....abbbbbbebbbf",
+              ".fca...abbbcabbbcf.",
+              ".fccaaabbbcbcaffa..",
+              "..fccbbbbcabbca....",
+              "..fccccbbbcffff....",
+              "...ffcccbbccga.....",
+              ".....ffacccca......",
+              ".......fccaa.......",
+              "........fff........"
+            ]
+          },
+          {
+            "ms": 300,
+            "rows": [
+              "...........aaaa....",
+              "...i......abbbba...",
+              "...i.....abbbbbba..",
+              "..ii.....abbbbbbc..",
+              "..iii...abbbbbbcba.",
+              ".iihi...abbbbbdcba.",
+              ".ihhi...abbbbbebbba",
+              ".ahi...abbbbbbebbbf",
+              ".fca...abbbcabbbcf.",
+              ".fccaaabbbcbcaffa..",
+              "..fccbbbbbabbca....",
+              "..fccccbbbbffff....",
+              "...ffccccbbcga.....",
+              ".....ffaacccca.....",
+              "........afcca......",
+              "..........fff......",
+              "..................."
+            ]
+          }
+        ]
+      }
+    }
   }
 }

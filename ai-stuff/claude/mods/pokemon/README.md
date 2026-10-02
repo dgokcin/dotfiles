@@ -15,7 +15,7 @@ while Claude works.
 | Command | Effect |
 | --- | --- |
 | `/pokemon` | Show which mon and variant are active, and the options |
-| `/pokemon abra`, `/pokemon bulbasaur` | Pick a mon, saved across sessions |
+| `/pokemon abra`, `/pokemon bulbasaur`, `/pokemon charmander` | Pick a mon, saved across sessions |
 | `/pokemon shiny`, `/pokemon default` | Pick a variant, saved across sessions |
 | Ctrl+X Ctrl+A | Collapse or expand the band (Claude Code's own binding) |
 
@@ -25,6 +25,7 @@ while Claude works.
 | --- | --- | --- | --- |
 | abra | 19x19 | 10 | 2 idle, 2 walk at 300 ms |
 | bulbasaur | 20x17 | 9 | 6 idle, 6 walk at 100 ms |
+| charmander | 19x17 | 9 | 2 idle, 2 walk at 300 ms |
 
 ## Add a mon
 
