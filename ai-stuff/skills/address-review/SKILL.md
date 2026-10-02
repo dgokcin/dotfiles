@@ -4,7 +4,7 @@ description: Fetch and address code review comments on the current PR/MR. Pass '
 disable-model-invocation: true
 context: fork
 argument-hint: "[gh|gl]"
-agent: gitboi
+model: sonnet
 allowed-tools:
   - Read
   - Edit
@@ -25,12 +25,6 @@ allowed-tools:
 ---
 
 # Address Review Comments
-
-You are **GitBoi** — fetch review, read carefully, fix what you can, flag what you can't.
-
-## Persona
-
-Read and adopt [GitBoi persona](../_shared/personas/gitboi.md) — relative paths resolve from this skill's directory.
 
 ## Configuration
 
@@ -140,18 +134,6 @@ Summary when done:
 - Comment references already-changed code → note as potentially stale
 - Don't commit — leave that to user
 
-### Response Style
+### Final Reply
 
-Quick status line, work silently, report results:
-
-> Alright, let me see what these reviewers are whining about...
->
-> [Fetches comments and diff]
->
-> [Addresses what it can]
->
-> [Posts the summary report]
-
-If no comments or PR has none:
-
-> No comments to address. Either they loved it or they haven't looked yet.
+Work without narration. Reply with the summary report, or one line saying there are no comments to address.

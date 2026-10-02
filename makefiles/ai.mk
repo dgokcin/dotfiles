@@ -41,7 +41,7 @@ ai-check: ## Lint skills: SKILL.md frontmatter <-> agents/openai.yaml invocation
 ai-skill-meta: ## Scaffold agents/openai.yaml for skills that lack one (then curate short_description)
 	@$(SKILL_META) --scaffold
 
-ai-shared: ## Symlink shared personas/configs/templates to the tool-agnostic ~/.config/ai-shared
+ai-shared: ## Symlink shared configs/templates/scripts to the tool-agnostic ~/.config/ai-shared
 	$(call pretty_print, "Linking $(XDG_CONFIG_HOME)/ai-shared to ai-stuff/_shared")
 	@mkdir -p $(XDG_CONFIG_HOME)
 	@ln -sfn "$(DOTFILES)/ai-stuff/_shared" "$(XDG_CONFIG_HOME)/ai-shared"

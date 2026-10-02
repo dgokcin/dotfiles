@@ -3,8 +3,7 @@
 # Skills: Codex reads only the cross-tool standard dir ~/.agents/skills —
 # installed by ai.mk's "agents" pseudo-tool. Codex does NOT read
 # ~/.codex/skills (that dir is pruned on install). This file handles what is
-# Codex-specific: lifecycle hooks (hooks.json), the hook scripts they call,
-# the global AGENTS.md, and the managed block of config.toml. Codex's hook
+# Codex-specific: lifecycle hooks (hooks.json), the global AGENTS.md, and the managed block of config.toml. Codex's hook
 # system (~v0.114+) adopted Claude Code's protocol (same stdin payload +
 # output schema), so shared scripts live in ai-stuff/_shared/scripts/ and are
 # symlinked into each tool's own dir.
@@ -29,12 +28,11 @@ codex-dotfiles: ai-agents codex-scripts codex-hooks codex-agents-md codex-config
 	$(call pretty_print, "Pruning dead skill symlinks in ~/.codex/skills")
 	@[ -d ${CODEX_HOME}/skills ] && find ${CODEX_HOME}/skills -maxdepth 1 -type l -delete || true
 
-codex-scripts: ## Symlink Codex hook scripts
+codex-scripts: ## Prune retired Codex hook script symlinks
 	$(call mkdir_safe,${CODEX_HOME}/scripts)
-	$(call pretty_print, "Installing Codex hook scripts...")
+	$(call pretty_print, "Pruning retired Codex hook scripts...")
 	@[ ! -L ${CODEX_HOME}/scripts/auto-approve-tools.sh ] || rm -f ${CODEX_HOME}/scripts/auto-approve-tools.sh
-	$(call symlink,ai-stuff/_shared/scripts/focus-iterm.applescript,${CODEX_HOME}/scripts/focus-iterm.applescript)
-	$(call symlink,ai-stuff/codex/scripts/notify-stop.sh,${CODEX_HOME}/scripts/notify-stop.sh)
+	@rm -f ${CODEX_HOME}/scripts/focus-iterm.applescript ${CODEX_HOME}/scripts/notify-stop.sh
 	@chmod +x $(DOTFILES)/ai-stuff/_shared/scripts/*.sh $(DOTFILES)/ai-stuff/codex/scripts/*.sh
 
 codex-hooks: ## Symlink Codex hooks.json (backs up an unmanaged existing file)
@@ -63,7 +61,5 @@ codex-clean: ## Remove Codex symlinks (skills live in ~/.agents/skills — use a
 	$(call remove_file,${CODEX_HOME}/hooks.json)
 	$(call remove_file,${CODEX_HOME}/AGENTS.md)
 	$(call remove_file,${CODEX_HOME}/RTK.md)
-	$(call remove_file,${CODEX_HOME}/scripts/focus-iterm.applescript)
-	$(call remove_file,${CODEX_HOME}/scripts/notify-stop.sh)
 
 .PHONY: codex codex-cli codex-dotfiles codex-scripts codex-hooks codex-agents-md codex-config codex-clean

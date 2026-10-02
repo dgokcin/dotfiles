@@ -22,7 +22,8 @@ endif
 # Old per-tool skill/persona/config/template symlinks installed by the
 # pre-universal cursor.mk — pruned on install.
 CURSOR_LEGACY := $(addprefix ${CURSOR_HOME}/skills/,gitboi jiragirl mega-dev commit create-pr create-story dev-story get-story) \
-	${CURSOR_HOME}/personas ${CURSOR_HOME}/config ${CURSOR_HOME}/templates
+	${CURSOR_HOME}/personas ${CURSOR_HOME}/config ${CURSOR_HOME}/templates \
+	$(addprefix ${CURSOR_HOME}/agents/,gitboi.md jiragirl.md mega-dev.md)
 
 cursor: cursor-agents cursor-scripts cursor-hooks cursor-config cursor-user-config ai-agents ## Install Cursor agents, hooks, settings, keybindings, and universal skills
 	$(call pretty_print, "Pruning legacy ~/.cursor skill symlinks...")
@@ -37,10 +38,9 @@ cursor-scripts: ## Symlink Cursor hook scripts (shared allowlist + Cursor adapte
 	$(call mkdir_safe,${CURSOR_HOME}/scripts)
 	$(call pretty_print, "Installing Cursor hook scripts...")
 	$(call symlink,ai-stuff/_shared/scripts/auto-approve-tools.sh,${CURSOR_HOME}/scripts/auto-approve-tools.sh)
-	$(call symlink,ai-stuff/_shared/scripts/focus-iterm.applescript,${CURSOR_HOME}/scripts/focus-iterm.applescript)
 	$(call symlink,ai-stuff/cursor/scripts/auto-approve-cursor.sh,${CURSOR_HOME}/scripts/auto-approve-cursor.sh)
 	$(call symlink,ai-stuff/cursor/scripts/session-start-context.sh,${CURSOR_HOME}/scripts/session-start-context.sh)
-	$(call symlink,ai-stuff/cursor/scripts/notify-stop.sh,${CURSOR_HOME}/scripts/notify-stop.sh)
+	@rm -f ${CURSOR_HOME}/scripts/focus-iterm.applescript ${CURSOR_HOME}/scripts/notify-stop.sh
 	@chmod +x $(DOTFILES)/ai-stuff/_shared/scripts/*.sh $(DOTFILES)/ai-stuff/cursor/scripts/*.sh
 
 cursor-hooks: ## Symlink Cursor hooks.json (backs up an unmanaged existing file)
@@ -73,10 +73,8 @@ cursor-clean: ## Remove Cursor symlinks (universal skills stay; use ai-clean-age
 	$(call remove_file,${CURSOR_HOME}/hooks.json)
 	$(call remove_file,${CURSOR_HOME}/cli-config.json)
 	$(call remove_file,${CURSOR_HOME}/scripts/auto-approve-tools.sh)
-	$(call remove_file,${CURSOR_HOME}/scripts/focus-iterm.applescript)
 	$(call remove_file,${CURSOR_HOME}/scripts/auto-approve-cursor.sh)
 	$(call remove_file,${CURSOR_HOME}/scripts/session-start-context.sh)
-	$(call remove_file,${CURSOR_HOME}/scripts/notify-stop.sh)
 	@for f in settings.json keybindings.json; do \
 		target="$(CURSOR_USER_HOME)/$$f"; \
 		[ ! -L "$$target" ] || rm -f "$$target"; \

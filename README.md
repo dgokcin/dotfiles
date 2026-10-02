@@ -14,7 +14,7 @@ Claude Code, Codex, Cursor, and anything else that reads the cross-tool
 .
 ├── Makefile              entry point; includes makefiles/*.mk, defines shared macros
 ├── makefiles/            one .mk per concern, plus helper scripts in scripts/
-├── ai-stuff/             skills, agents, personas, and per-tool AI settings
+├── ai-stuff/             skills, agents, and per-tool AI settings
 ├── nvim/                 Neovim config (LazyVim + lazy.nvim, Lua)
 ├── other/                app configs: lazygit, k9s, tmux, yamllint, vscode, winterm
 ├── Brewfile              Homebrew taps, formulae, casks, and fonts
@@ -158,6 +158,6 @@ Some files are gitignored because they carry personal or work-specific detail.
 The tracked file is the template, and the private variant sits beside it with a
 leading underscore or a dot prefix.
 
-- `ai-stuff/_shared/personas/_*.md` and `ai-stuff/_shared/config/_*.md`
+- `ai-stuff/_shared/config/_*.md`
 - `ai-stuff/_shared/config/.clusters.json` (cluster and account names)
 - `ai-stuff/_shared/config/traefik-epic.md`

@@ -76,7 +76,7 @@ assert_link "$HOME/.claude/settings.json" "$REPO/ai-stuff/claude/settings.json"
 assert_link "$HOME/.claude/keybindings.json" "$REPO/ai-stuff/claude/keybindings.json"
 assert_link "$HOME/.claude/scripts/statusline.sh" "$REPO/ai-stuff/claude/scripts/statusline.sh"
 assert_link "$HOME/.claude/scripts/auto-approve-tools.sh" "$REPO/ai-stuff/_shared/scripts/auto-approve-tools.sh"
-assert_link "$HOME/.claude/agents/gitboi.md" "$REPO/ai-stuff/agents/gitboi.md"
+assert_link "$HOME/.claude/agents/gitops-geezer.md" "$REPO/ai-stuff/agents/gitops-geezer.md"
 assert_link "$HOME/.claude/skills/auto-commit" "$REPO/ai-stuff/skills/auto-commit"
 
 assert_link "$HOME/.cursor/hooks.json" "$REPO/ai-stuff/cursor/hooks.json"
@@ -89,7 +89,6 @@ assert_link "$HOME/.agents/skills/auto-commit" "$REPO/ai-stuff/skills/auto-commi
 assert_link "$HOME/.codex/hooks.json" "$REPO/ai-stuff/codex/hooks.json"
 assert_link "$HOME/.codex/AGENTS.md" "$REPO/ai-stuff/codex/AGENTS.md"
 assert_link "$HOME/.codex/RTK.md" "$REPO/ai-stuff/codex/RTK.md"
-assert_link "$HOME/.codex/scripts/notify-stop.sh" "$REPO/ai-stuff/codex/scripts/notify-stop.sh"
 assert_contains "$HOME/.codex/config.toml" "BEGIN dotfiles-managed"
 
 assert_exists "$HOME/.oh-my-zsh"

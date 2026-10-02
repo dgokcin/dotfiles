@@ -30,18 +30,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.codex/scripts/notify-stop.sh",
-            "timeout": 10,
-            "statusMessage": "Sending notification"
-          }
-        ]
-      }
     ]
   }
 }

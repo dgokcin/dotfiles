@@ -8,10 +8,7 @@ vscode-settings.json
 
 .claude/worktrees/**
 
-# Private claude personas (sweary/personal personality configs)
-ai-stuff/claude/personas/_*.md
-
-# Private shared configs/personas
+# Private shared configs
 ai-stuff/_shared/**/_*.md
 
 # Private cluster context map (contains sensitive account/cluster names)

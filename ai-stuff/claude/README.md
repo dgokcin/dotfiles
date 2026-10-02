@@ -1,7 +1,7 @@
 # Claude Code Layer
 
 Claude Code-specific configuration: hook scripts, `settings.json`, and the
-install wiring for agents/personas/configs/templates. **Skills do not live
+install wiring for agents/configs/templates. **Skills do not live
 here** — they are universal and come from [`ai-stuff/skills/`](../skills/)
 via `make ai-claude`. See [ai-stuff/README.md](../README.md) for the
 cross-tool architecture.
@@ -22,9 +22,15 @@ ai-stuff/claude/
 │   (auto-approve-tools.sh, focus-iterm.applescript, pr-status.sh, and the
 │    worktree-cleanup skill helpers moved to ai-stuff/_shared/scripts/ —
 │    shared across tools)
+├── mods/                  # Local plugin marketplace `dotfiles-mods` for Claude Code mods
+│   └── abra/              # Pixel Abra in the band above the prompt (see its README)
 ├── settings.json          # Hooks, permissions, statusline, plugins (→ ~/.claude/settings.json)
 └── README.md
 ```
+
+`settings.json` declares `mods/` as the `dotfiles-mods` marketplace and enables
+its plugins. Claude Code caches an installed plugin by version, so bump a mod's
+`version` and run `claude plugin update <name>@dotfiles-mods` after editing it.
 
 `make claude` also installs (sources live elsewhere):
 
@@ -38,12 +44,12 @@ ai-stuff/claude/
 
 ```
 Skills (universal, ai-stuff/skills/)     ← same files for every AI tool
-    │ uses (agent: frontmatter, Claude only)
+    │ reads via relative ../_shared/... links
     ▼
-Agents (ai-stuff/agents/)                ← execution env: model + tools + persona
+Config (ai-stuff/_shared/)               ← rules, shared constants
+    ▲
     │ loads via @~/.config/ai-shared/... includes (tool-agnostic path)
-    ▼
-Personas + Config (ai-stuff/_shared/)    ← identity, rules, shared constants
+Agents (ai-stuff/agents/)                ← standalone subagents: model + tools
 ```
 
 ## Statusline
@@ -124,13 +130,10 @@ line as an instruction to run the command):
 
 | Agent               | Purpose                                    |
 | ------------------- | ------------------------------------------ |
-| `gitboi`            | Git operations with sass                   |
-| `jiragirl`          | Jira operations (MCP Atlassian tools)      |
-| `mega-dev`          | Story-to-PR orchestration                  |
 | `gitops-geezer`     | ArgoCD / GitOps                            |
 | `steve-square-meter`| Funda house-search analysis                |
 
-Agent bodies reference personas/configs with `@~/.config/ai-shared/...` eager
+Agent bodies reference configs with `@~/.config/ai-shared/...` eager
 includes — a tool-agnostic path (`make ai-shared`), so Cursor (which gets the
 same agent files at `~/.cursor/agents`) resolves them identically. The only
 `.claude` paths left in an agent file are Claude's own runtime features

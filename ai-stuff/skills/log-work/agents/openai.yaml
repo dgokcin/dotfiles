@@ -1,0 +1,3 @@
+interface:
+  display_name: "Log Work"
+  short_description: "Log finished work as a DEVX story in Code Review"

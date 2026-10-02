@@ -49,7 +49,6 @@ Converted from the Claude Code setup:
 | PreToolUse (`rtk hook claude`) | `preToolUse` | `rtk hook cursor` | rtk has a native `cursor` processor; it rewrites via `updated_input` and deliberately answers `"ask"` — rtk rewrites mutating commands too (`git push`, `curl`), so auto-flipping to `"allow"` would bypass prompts. Output is passed through untouched; the allowlist hook and Cursor's own prompt decide |
 | PermissionRequest (`auto-approve-tools.sh permission`) | — | folded into `beforeShellExecution`/`beforeReadFile` | Cursor has no separate permission event; the `before*` verdict *is* the permission decision |
 | PostToolUse (`Write\|Edit\|MultiEdit`) | `afterFileEdit` | inline `nvim ... checktime` | refresh open buffers; same command as Claude/Codex |
-| Stop | `stop` | [`notify-stop.sh`](scripts/notify-stop.sh) | terminal-notifier + click-to-focus iTerm; reads `workspace_roots[0]` |
 
 **Not portable** (no Cursor equivalent, or Claude Code-specific):
 

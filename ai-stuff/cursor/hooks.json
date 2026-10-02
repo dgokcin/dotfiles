@@ -36,13 +36,6 @@
         "command": "[ -n \"$NVIM\" ] && nvim --server \"$NVIM\" --remote-expr 'execute(\"checktime\")' >/dev/null 2>&1; echo '{}'",
         "timeout": 5
       }
-    ],
-    "stop": [
-      {
-        "type": "command",
-        "command": "~/.cursor/scripts/notify-stop.sh",
-        "timeout": 10
-      }
     ]
   }
 }

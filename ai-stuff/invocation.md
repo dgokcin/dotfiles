@@ -15,7 +15,7 @@ carries the same answer in two places and they must never disagree:
 ## Which one is it?
 
 **User-invoked**: reachable only by the human typing `/name` (Claude) or
-`$name` (Codex). Use for persona sessions and orchestrators, and for things
+`$name` (Codex). Use for orchestrators and for things
 that must never fire by accident (`daily-recap`, `address-review`).
 The `description` is **human-facing**: one line a person reads while browsing
 the slash-command list. Strip trigger phrasing ("Use when the user says…").
@@ -40,9 +40,9 @@ step that needs two is two calls, say so.
 
 **Invariant**: a user-invoked skill can never be reached this way. No other
 skill can call it, including by naming it to the Skill tool. So anything an
-orchestrator calls must be model-invoked; that is why `get-story` and
-`create-story` are model-invoked even though they run under a persona: a
-user-invoked session skill that wanted to call them could, the reverse never.
+orchestrator calls must be model-invoked; that is why `get-story`,
+`create-story`, and `log-work` are model-invoked: a user-invoked session
+skill that wanted to call them could, the reverse never.
 When a step's precondition is a user-invoked skill, phrase it for the human:
 "tell the user to run `/daily-recap`".
 

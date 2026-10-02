@@ -25,8 +25,7 @@ ai-stuff/
 │   ├── .archived/     # retired skills (never installed)
 │   └── ...
 ├── invocation.md      # user- vs model-invoked rules, Skill-tool phrasing, openai.yaml schema
-├── _shared/           # personas, configs, templates referenced by skills+agents
-│   ├── personas/      # gitboi, jira-girl, mega-dev, ...
+├── _shared/           # configs, templates referenced by skills+agents
 │   ├── config/        # git-config, jira-config, .clusters.json, ...
 │   └── templates/     # property/daily-recap output templates
 ├── agents/            # subagent definitions (Claude Code + Cursor)
@@ -55,7 +54,7 @@ make ai-check    # lint SKILL.md <-> agents/openai.yaml (invocation policy, lega
 make ai-skill-meta  # scaffold agents/openai.yaml for skills missing one
 make ai-list     # show skills + tool registry
 make ai-clean    # remove installed skills everywhere
-make claude      # claude layer (agents/personas/configs/scripts/settings) + ai-claude
+make claude      # claude layer (agents/configs/scripts/settings) + ai-claude
 make cursor      # cursor agents + ai-agents (+ prunes legacy ~/.cursor layout)
 make codex       # codex layer (hooks/AGENTS.md/config.toml managed block) + ai-agents
 ```
@@ -86,7 +85,7 @@ to `AI_LEGACY_SKILLS` in `ai.mk` so installs prune it everywhere (BMAD's
 Skills must work in any tool. Rules used throughout `skills/`:
 
 1. **Shared content = relative markdown links.**
-   `[GitBoi persona](../_shared/personas/gitboi.md)` — resolves from the
+   `[git config](../_shared/config/git-config.md)` — resolves from the
    skill's directory in the repo *and* in every install tree (the `_shared`
    symlink sits next to the installed skills). Never reference
    `~/.claude/...` for content another tool needs to read.
@@ -124,7 +123,7 @@ Anything that is *not* a skill stays out of `skills/`:
 
 - **`agents/`** — subagent definitions with `tools:`/`model:` frontmatter.
   Installed to `~/.claude/agents` and `~/.cursor/agents`. They reference
-  personas/configs via the tool-agnostic `~/.config/ai-shared/...` path
+  configs via the tool-agnostic `~/.config/ai-shared/...` path
   (`make ai-shared` symlinks it to `ai-stuff/_shared`), so the same agent
   file works in every tool that can read files.
 - **`claude/`** — `settings.json` (hooks, permissions, statusline, plugins)
