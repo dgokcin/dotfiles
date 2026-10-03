@@ -32,6 +32,12 @@ ai-stuff/claude/
 its plugins. Claude Code caches an installed plugin by version, so bump a mod's
 `version` and run `claude plugin update <name>@dotfiles-mods` after editing it.
 
+The pokemon mod lives in [dgokcin/claude-pokemon](https://github.com/dgokcin/claude-pokemon).
+`make claude-mods` clones it to `~/codes/claude-pokemon` if it's missing, and
+`settings.json` declares that clone as the `claude-pokemon` marketplace. A directory
+marketplace loads the mod in place, so edits apply on `/reload-plugins` without a
+version bump.
+
 `make claude` also installs (sources live elsewhere):
 
 | Target          | Source                 | Destination           | Consumed by                            |

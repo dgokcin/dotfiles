@@ -261,7 +261,6 @@
     "command": "~/.claude/scripts/subagent-statusline.sh"
   },
   "enabledPlugins": {
-    "abra@dotfiles-mods": true,
     "context7@claude-plugins-official": false,
     "datadog@treatwell": true,
     "feature-dev@claude-plugins-official": false,
@@ -271,7 +270,8 @@
     "pyright-lsp@claude-plugins-official": false,
     "ralph-loop@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": false
+    "typescript-lsp@claude-plugins-official": false,
+    "pokemon@claude-pokemon": true
   },
   "extraKnownMarketplaces": {
     "agent-plugins-for-aws": {
@@ -281,16 +281,16 @@
       },
       "autoUpdate": true
     },
+    "claude-pokemon": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/deniz.gokcin/codes/claude-pokemon"
+      }
+    },
     "developer-kit": {
       "source": {
         "source": "github",
         "repo": "giuseppe-trisciuoglio/developer-kit"
-      }
-    },
-    "dotfiles-mods": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/deniz.gokcin/codes/dotfiles/ai-stuff/claude/mods"
       }
     },
     "obsidian-skills": {

@@ -12,6 +12,9 @@ CLAUDE_AGENTS := $(notdir $(wildcard $(DOTFILES)/ai-stuff/agents/*.md))
 
 CLAUDE_OUTPUT_STYLES := $(notdir $(wildcard $(DOTFILES)/ai-stuff/output-styles/*.md))
 
+CLAUDE_POKEMON_REPO := dgokcin/claude-pokemon
+CLAUDE_POKEMON_DIR := ${HOME}/codes/claude-pokemon
+
 # Pre-ai-shared layout installed by the old claude.mk — pruned on install.
 CLAUDE_LEGACY := ${CLAUDE_HOME}/personas ${CLAUDE_HOME}/config ${CLAUDE_HOME}/templates \
 	$(addprefix ${CLAUDE_HOME}/agents/,gitboi.md jiragirl.md mega-dev.md)
@@ -67,8 +70,17 @@ claude-keybindings: claude-dirs ## Symlink Claude Code keybindings.json
 	$(call pretty_print, "Installing Claude Code keybindings...")
 	$(call symlink,ai-stuff/claude/keybindings.json,${CLAUDE_HOME}/keybindings.json)
 
+# The pokemon mod lives in its own repo. A local clone serves as a directory
+# marketplace, so the mod loads in place and edits apply on /reload-plugins.
+claude-mods: claude-settings ## Clone and install Claude Code mods (claude-pokemon)
+	$(call pretty_print, "Installing Claude Code mods...")
+	@[ -d "$(CLAUDE_POKEMON_DIR)" ] || git clone "git@github.com:$(CLAUDE_POKEMON_REPO).git" "$(CLAUDE_POKEMON_DIR)"
+	@claude plugin marketplace update claude-pokemon >/dev/null 2>&1 || claude plugin marketplace add "$(CLAUDE_POKEMON_DIR)"
+	@claude plugin install pokemon@claude-pokemon
+
 claude-clean: ai-clean-claude ## Remove Claude Code symlinks
 	$(call pretty_print, "Removing Claude Code symlinks...")
+	@claude plugin uninstall pokemon@claude-pokemon >/dev/null 2>&1 || true
 	@for a in $(CLAUDE_AGENTS); do rm -f "${CLAUDE_HOME}/agents/$$a"; done
 	@for s in $(CLAUDE_OUTPUT_STYLES); do rm -f "${CLAUDE_HOME}/output-styles/$$s"; done
 	$(call remove_file,${CLAUDE_HOME}/scripts)
@@ -76,4 +88,4 @@ claude-clean: ai-clean-claude ## Remove Claude Code symlinks
 	$(call remove_file,${CLAUDE_HOME}/keybindings.json)
 	@rm -rf $(CLAUDE_LEGACY)
 
-.PHONY: claude claude-cli claude-dotfiles claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-clean
+.PHONY: claude claude-cli claude-dotfiles claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings claude-mods claude-clean
