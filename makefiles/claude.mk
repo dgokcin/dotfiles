@@ -58,7 +58,6 @@ claude-scripts: claude-dirs ## Symlink Claude Code scripts (statusline, hooks, e
 	$(call symlink,ai-stuff/claude/scripts/session-start.sh,${CLAUDE_HOME}/scripts/session-start.sh)
 	$(call symlink,ai-stuff/_shared/scripts/auto-approve-tools.sh,${CLAUDE_HOME}/scripts/auto-approve-tools.sh)
 	$(call symlink,ai-stuff/claude/scripts/notify.sh,${CLAUDE_HOME}/scripts/notify.sh)
-	$(call symlink,ai-stuff/claude/scripts/require-jira-key.sh,${CLAUDE_HOME}/scripts/require-jira-key.sh)
 	$(call symlink,ai-stuff/_shared/scripts/focus-iterm.applescript,${CLAUDE_HOME}/scripts/focus-iterm.applescript)
 	@chmod +x ${CLAUDE_HOME}/scripts/*.sh
 
