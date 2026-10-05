@@ -142,10 +142,6 @@
           {
             "type": "command",
             "command": "rtk hook claude"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/scripts/require-jira-key.sh"
           }
         ]
       }

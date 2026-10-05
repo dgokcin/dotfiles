@@ -1,6 +1,6 @@
 ---
 name: log-work
-description: Create a DEVX story for work already done on the current branch, written as a to-do, and move it to Code Review. Use when a PR or MR has no Jira key, a hook asks for one, or the user says "log this work" or "make a ticket for what I did".
+description: Create a DEVX story for work already done on the current branch, written as a to-do, and move it to Code Review. Use only when the user explicitly says "log this work" or "make a ticket for what I did". Never invoke it from create-pr.
 allowed-tools: Bash(git log:*), Bash(git diff:*), Bash(git branch:*), AskUserQuestion, mcp__claude_ai_Atlassian_MCP__createJiraIssue, mcp__claude_ai_Atlassian_MCP__transitionJiraIssue, Read
 ---
 
@@ -20,11 +20,11 @@ Read [jira config](../_shared/config/jira-config.md). Never call lookup APIs.
 3. Call `AskUserQuestion` before creating anything. Put the drafted summary and reason in the question text, header `Jira`, with these options:
    - **Create story (Recommended)**: create it as drafted
    - **Use existing ticket**: the user types the key via "Other"
-   - **Skip ticket**: open the PR without a Jira key
+   - **Skip ticket**: don't create anything
 4. Act on the answer:
    - **Create story**: continue to step 5. If the user typed edits via "Other", apply them first.
    - **Use existing ticket**: reply with that key and stop.
-   - **Skip ticket**: reply `JIRA_SKIP=1` and stop. The caller prefixes the PR command with it (`JIRA_SKIP=1 gh pr create ...`) so the hook lets it through.
+   - **Skip ticket**: stop.
 5. Call `createJiraIssue`:
    - cloudId `56552dac-b6cf-4e59-aa06-5e075dca9f8e`, projectKey `DEVX`, issueTypeName `Story`
    - assignee `currentUserAccountId` from the config
