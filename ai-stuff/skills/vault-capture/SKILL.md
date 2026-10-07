@@ -1,7 +1,7 @@
 ---
 name: vault-capture
 description: This skill should be used when the user asks to "add to my vault", "add to obsidian", "save this to my vault", "add a task", "note this down", "add a task to <epic/workstream>", "capture this", "add to my daily note", "make a note about", or otherwise wants content written into their Obsidian vault at ~/vault. Routes content to the right folder, applies vault frontmatter/tag conventions, formats tasks as `- [ ]` checkboxes, and wires up `[[wikilinks]]` automatically.
-model: haiku
+model: claude-haiku-5-5
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 

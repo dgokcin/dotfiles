@@ -307,11 +307,11 @@ For each meeting where Gemini data was successfully fetched (step 2i above):
 
 #### 2j. Claude Code sessions (Haiku subagent)
 
-Run the companion script to extract session data, then pipe to a Haiku subagent for summarization. This captures engineering work that never surfaces in Slack or Gmail (local coding, debugging, config changes, dotfiles work).
+Run the companion script to extract session data, then pipe to a Haiku 5.5 subagent for summarization. This captures engineering work that never surfaces in Slack or Gmail (local coding, debugging, config changes, dotfiles work).
 
 ```bash
 python3 ~/.claude/skills/daily-recap/scripts/summarize-claude-sessions.py YYYY-MM-DD | \
-  claude -p --model claude-haiku-4-5-20251001 \
+  claude -p --model claude-haiku-5-5 \
   "Summarize these Claude Code sessions into 2-5 bullet points of what engineering work was done. Focus on: features built, tickets worked, bugs debugged, code changed. Skip meta/tooling sessions (e.g. only ran 'exit', only did shell commands with no edits). Max one line per bullet. Output plain bullets only."
 ```
 

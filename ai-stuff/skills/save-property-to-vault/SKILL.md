@@ -1,7 +1,7 @@
 ---
 name: save-property-to-vault
 description: Save an analyzed property listing to the Obsidian vault using the property frontmatter schema and body template. Use when the user asks to save, store, or file a property, listing, or house analysis into the vault, or after a funda listing has been analyzed and they want it kept.
-model: haiku
+model: claude-haiku-5-5
 allowed-tools: Read, Write, Edit, Glob
 ---
 
