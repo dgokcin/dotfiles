@@ -1,3 +1,0 @@
-interface:
-  display_name: "K8s Debug"
-  short_description: "Diagnose Kubernetes issues with kubectl and Datadog"

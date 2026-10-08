@@ -28,8 +28,8 @@ Analyze funda.nl listings against my situation below.
 
 ## Configuration
 
-@~/.config/ai-shared/config/house-search-config.md
-@~/.config/ai-shared/config/\_house-search-private.md
+@~/.config/dgokcin-skills/house-search.md
+@~/.config/dgokcin-skills/house-search-private.md
 
 ## Your Analysis — Cover All of These
 
@@ -145,7 +145,7 @@ Explicit user requests:
 - Properties: `personal/nl/house search/buying a house/properties/`
 - Neighborhoods: `personal/nl/house search/buying a house/neighborhoods/`
 - MoC: `personal/nl/house search/buying a house/00 - House Search MoC.md`
-- Config reference: `/Users/denizgokcin/.config/ai-shared/config/house-search-config.md`
+- Config reference: `~/.config/dgokcin-skills/house-search.md`
 
 ## Vault Rules
 
@@ -156,7 +156,7 @@ Explicit user requests:
 ## Write Tool — Path Gotcha
 
 - NEVER use backslash-escaped spaces in `Write` tool paths (e.g., `foo\ bar/`) — silently fails, file not created
-- Use unescaped spaces directly: `/Users/denizgokcin/vault/personal/nl/house search/...`
+- Use unescaped spaces directly: `~/vault/personal/nl/house search/...`
 
 ## Chrome MCP — Correct Fetch Pattern
 
@@ -167,7 +167,7 @@ Explicit user requests:
 
 # Persistent Agent Memory
 
-You have a persistent Persistent Agent Memory directory at `/Users/denizgokcin/.claude/agent-memory/SteveSquareMeter/`. Its contents persist across conversations.
+You have a persistent Persistent Agent Memory directory at `~/.claude/agent-memory/SteveSquareMeter/`. Its contents persist across conversations.
 
 As you work, consult your memory files to build on previous experience. When you encounter a mistake that seems like it could be common, check your Persistent Agent Memory for relevant notes — and if nothing is written yet, record what you learned.
 
@@ -206,13 +206,13 @@ When looking for past context:
 1. Search topic files in your memory directory:
 
 ```
-Grep with pattern="<search term>" path="/Users/denizgokcin/.claude/agent-memory/SteveSquareMeter/" glob="*.md"
+Grep with pattern="<search term>" path="~/.claude/agent-memory/SteveSquareMeter/" glob="*.md"
 ```
 
 2. Session transcript logs (last resort — large files, slow):
 
 ```
-Grep with pattern="<search term>" path="/Users/denizgokcin/.claude/projects/-Users-denizgokcin-Library-Mobile-Documents-iCloud-md-obsidian-Documents-vault/" glob="*.jsonl"
+Grep with pattern="<search term>" path="~/.claude/projects/"  glob="*.jsonl"
 ```
 
 Use narrow search terms (error messages, file paths, function names) rather than broad keywords.
@@ -234,7 +234,7 @@ Use narrow search terms (error messages, file paths, function names) rather than
 - Properties: `personal/nl/house search/buying a house/properties/`
 - Neighborhoods: `personal/nl/house search/buying a house/neighborhoods/`
 - MoC: `personal/nl/house search/buying a house/00 - House Search MoC.md`
-- Config reference: `/Users/denizgokcin/.config/ai-shared/config/house-search-config.md`
+- Config reference: `~/.config/dgokcin-skills/house-search.md`
 
 ## Vault Rules
 
@@ -245,7 +245,7 @@ Use narrow search terms (error messages, file paths, function names) rather than
 ## Write Tool — Path Gotcha
 
 - NEVER use backslash-escaped spaces in `Write` tool paths (e.g., `foo\ bar/`) — silently fails, file not created
-- Use unescaped spaces directly: `/Users/denizgokcin/vault/personal/nl/house search/...`
+- Use unescaped spaces directly: `~/vault/personal/nl/house search/...`
 
 ## Chrome MCP — Correct Fetch Pattern
 

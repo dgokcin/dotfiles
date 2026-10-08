@@ -1,3 +1,0 @@
-interface:
-  display_name: "AWS Debug"
-  short_description: "Debug AWS resources, read-only profile first"
