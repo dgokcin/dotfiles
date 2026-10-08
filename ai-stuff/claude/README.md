@@ -1,10 +1,9 @@
 # Claude Code Layer
 
 Claude Code-specific configuration: hook scripts, `settings.json`, and the
-install wiring for agents/configs/templates. **Skills do not live
-here** — they are universal and come from [`ai-stuff/skills/`](../skills/)
-via `make ai-claude`. See [ai-stuff/README.md](../README.md) for the
-cross-tool architecture.
+install wiring for agents/configs/templates. Skills come from `~/codes/skills`
+through `make skills`. See [ai-stuff/README.md](../README.md) for the
+cross-tool layout.
 
 ## Directory Structure
 
@@ -19,9 +18,8 @@ ai-stuff/claude/
 │   ├── session-start.sh   # Auto-name worktree sessions
 │   ├── notify.sh          # Notification-event alert (claude-only event)
 │   └── worktree-*.sh      # EnterWorktree/ExitWorktree hook scripts (claude hook protocol)
-│   (auto-approve-tools.sh, focus-iterm.applescript, pr-status.sh, and the
-│    worktree-cleanup skill helpers moved to ai-stuff/_shared/scripts/ —
-│    shared across tools)
+│   (auto-approve-tools.sh and focus-iterm.applescript live in
+│    ai-stuff/_shared/scripts/, shared across tools)
 ├── mods/                  # Local plugin marketplace `dotfiles-mods` for Claude Code mods
 │   └── abra/              # Pixel Abra in the band above the prompt (see its README)
 ├── settings.json          # Hooks, permissions, statusline, plugins (→ ~/.claude/settings.json)
@@ -44,14 +42,10 @@ version bump.
 | --------------- | ---------------------- | --------------------- | -------------------------------------- |
 | `claude-agents` | `ai-stuff/agents/*.md` | `~/.claude/agents`    | Claude Code subagents                  |
 | `ai-shared`     | `ai-stuff/_shared`     | `~/.config/ai-shared` | agents' `@~/.config/ai-shared/...` includes (tool-agnostic) |
-| `ai-claude`     | `ai-stuff/skills/*`    | `~/.claude/skills`    | skills (universal, see ai.mk)          |
 
 ## Architecture
 
 ```
-Skills (universal, ai-stuff/skills/)     ← same files for every AI tool
-    │ reads via relative ../_shared/... links
-    ▼
 Config (ai-stuff/_shared/)               ← rules, shared constants
     ▲
     │ loads via @~/.config/ai-shared/... includes (tool-agnostic path)
@@ -111,26 +105,6 @@ runs. A failed refresh keeps the last good reading and stamps its age.
 Run `./scripts/statusline-test.sh` after changing it — it drives the real script
 against `scripts/fixtures/*.json` with a scratch clodex/codex home, so it touches
 neither your accounts nor the network.
-
-## Claude-specific skill features
-
-Universal skills carry Claude-only frontmatter that other tools ignore:
-
-| Field                      | Purpose                                    |
-| -------------------------- | ------------------------------------------ |
-| `disable-model-invocation` | Prevents automatic triggering              |
-| `context: fork`            | Runs in isolated subagent context          |
-| `agent`                    | Which agent definition to execute under    |
-| `allowed-tools`            | Tool allowlist during execution            |
-
-Dynamic context injection — Claude Code executes `!`command`` lines eagerly
-and injects output before the model sees the prompt (other tools treat the
-line as an instruction to run the command):
-
-```markdown
-### Staged Changes
-!`git diff --staged --stat`
-```
 
 ## Agents
 

@@ -1,12 +1,10 @@
 # Codex Layer
 
-Codex consumes the universal skills from [`ai-stuff/skills/`](../skills/) —
-see [ai-stuff/README.md](../README.md). **Codex reads skills only from
-`.agents/skills` (repo + `$HOME`)** — it ignores `~/.codex/skills` — so
-skills arrive via ai.mk's `agents` pseudo-tool (`~/.agents/skills`), which
-`make codex` depends on. `make codex` installs:
+Codex reads skills only from `.agents/skills` (repo and `$HOME`) and ignores
+`~/.codex/skills`. `make skills` installs skills into `~/.agents/skills`; see
+[ai-stuff/README.md](../README.md). `make codex` prunes our dead symlinks in
+`~/.codex/skills` and installs:
 
-- **Skills** — `ai-agents` symlinks every skill dir + `_shared` into `~/.agents/skills` (prunes the dead `~/.codex/skills`)
 - **Hooks** — [`hooks.json`](hooks.json) → `~/.codex/hooks.json`
 - **AGENTS.md + RTK.md** — [`AGENTS.md`](AGENTS.md) → `~/.codex/AGENTS.md` (Codex's global instruction file), [`RTK.md`](RTK.md) → `~/.codex/RTK.md` (rtk prefix rule — declarative equivalent of `rtk init -g --codex`)
 - **config.toml managed block** — see below

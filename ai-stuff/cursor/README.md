@@ -1,9 +1,8 @@
 # Cursor Layer
 
-Cursor reads the universal skills from the cross-tool standard directory
-`~/.agents/skills` (installed by [`makefiles/ai.mk`](../../makefiles/ai.mk) via
-`make ai-agents`) — see [ai-stuff/README.md](../README.md). `make cursor`
-additionally installs:
+Cursor reads skills from the cross-tool standard directory `~/.agents/skills`,
+which `make skills` fills; see [ai-stuff/README.md](../README.md).
+`make cursor` installs:
 
 - **Agents** — Cursor agents symlinked into `~/.cursor/agents` (same
   definitions as Claude Code)
