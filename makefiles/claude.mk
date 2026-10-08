@@ -1,10 +1,9 @@
 # Claude Code configuration setup (tool-specific layer)
 #
-# Universal skills are installed by makefiles/ai.mk (make ai-claude); shared
-# configs/templates live at ~/.config/ai-shared (make ai-shared) —
-# agents reference them there, so nothing tool-specific holds content.
-# This file only handles what is Claude Code-specific: agents, hook scripts,
-# settings, and keybindings.
+# Skills come from ~/codes/skills via `make skills` (skills.mk). Shared configs and
+# templates live at ~/.config/ai-shared (make ai-shared), and agents reference
+# them there. This file handles the Claude Code pieces: agents, output styles,
+# hook scripts, settings, and keybindings.
 
 CLAUDE_HOME := ${HOME}/.claude
 
@@ -31,7 +30,7 @@ claude-cli: ## Install Claude Code with Anthropic's recommended native installer
 		echo "Claude Code already installed at $(HOME)/.local/bin/claude"; \
 	fi
 
-claude-dotfiles: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings ai-shared ai-claude ## Install Claude Code configuration only
+claude-dotfiles: claude-dirs claude-agents claude-output-styles claude-scripts claude-settings claude-keybindings ai-shared ## Install Claude Code configuration only
 	$(call pretty_print, "Pruning legacy ~/.claude symlinks...")
 	@rm -rf $(CLAUDE_LEGACY)
 
@@ -77,7 +76,7 @@ claude-mods: claude-settings ## Clone and install Claude Code mods (claude-pokem
 	@claude plugin marketplace update claude-pokemon >/dev/null 2>&1 || claude plugin marketplace add "$(CLAUDE_POKEMON_DIR)"
 	@claude plugin install pokemon@claude-pokemon
 
-claude-clean: ai-clean-claude ## Remove Claude Code symlinks
+claude-clean: ## Remove Claude Code symlinks
 	$(call pretty_print, "Removing Claude Code symlinks...")
 	@claude plugin uninstall pokemon@claude-pokemon >/dev/null 2>&1 || true
 	@for a in $(CLAUDE_AGENTS); do rm -f "${CLAUDE_HOME}/agents/$$a"; done

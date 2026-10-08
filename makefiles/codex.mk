@@ -1,9 +1,8 @@
 # Codex configuration setup (tool-specific layer)
 #
-# Skills: Codex reads only the cross-tool standard dir ~/.agents/skills —
-# installed by ai.mk's "agents" pseudo-tool. Codex does NOT read
-# ~/.codex/skills (that dir is pruned on install). This file handles what is
-# Codex-specific: lifecycle hooks (hooks.json), the global AGENTS.md, and the managed block of config.toml. Codex's hook
+# Codex reads skills from ~/.agents/skills, which `make skills` fills. Codex
+# does not read ~/.codex/skills, so install prunes our dead symlinks there.
+# This file handles what is Codex-specific: lifecycle hooks (hooks.json), the global AGENTS.md, and the managed block of config.toml. Codex's hook
 # system (~v0.114+) adopted Claude Code's protocol (same stdin payload +
 # output schema), so shared scripts live in ai-stuff/_shared/scripts/ and are
 # symlinked into each tool's own dir.
@@ -22,7 +21,7 @@ codex-cli: ## Install Codex with OpenAI's recommended standalone installer
 		echo "Codex already installed at $(HOME)/.local/bin/codex"; \
 	fi
 
-codex-dotfiles: ai-agents codex-scripts codex-hooks codex-agents-md codex-config ## Install Codex configuration only
+codex-dotfiles: codex-scripts codex-hooks codex-agents-md codex-config ## Install Codex configuration only
 # Codex reads ~/.agents/skills — kill our old symlinks in ~/.codex/skills but
 # keep .system, the dir where Codex caches its own built-in skills.
 	$(call pretty_print, "Pruning dead skill symlinks in ~/.codex/skills")
@@ -56,7 +55,7 @@ codex-config: ## Sync dotfiles-managed block into ~/.codex/config.toml (machine 
 	$(call pretty_print, "Syncing managed block of ~/.codex/config.toml...")
 	@bash $(DOTFILES)/ai-stuff/codex/scripts/sync-config.sh
 
-codex-clean: ## Remove Codex symlinks (skills live in ~/.agents/skills — use ai-clean)
+codex-clean: ## Remove Codex symlinks (skills are managed by `make skills`)
 	$(call pretty_print, "Removing Codex symlinks...")
 	$(call remove_file,${CODEX_HOME}/hooks.json)
 	$(call remove_file,${CODEX_HOME}/AGENTS.md)

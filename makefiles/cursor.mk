@@ -1,10 +1,9 @@
 # Cursor configuration setup (tool-specific layer)
 #
-# Cursor reads skills from the cross-tool standard directory ~/.agents/skills
-# (installed by makefiles/ai.mk via make ai-agents). This file handles the
-# Cursor-specific pieces: agents, lifecycle hooks (hooks.json), CLI settings,
-# editor settings, keybindings, and hook scripts. It also prunes the legacy
-# ~/.cursor layout that predates the universal skills setup.
+# Cursor reads skills from ~/.agents/skills, which `make skills` fills. This
+# file handles the Cursor-specific pieces: agents, lifecycle hooks (hooks.json),
+# CLI settings, editor settings, keybindings, and hook scripts. It also prunes
+# the legacy ~/.cursor persona/config/template layout.
 #
 # Cursor's hook protocol differs from Claude Code's (tool-specific events,
 # {"permission": ...} output), so the shared allowlist is reused via a small
@@ -19,14 +18,12 @@ else
 CURSOR_USER_HOME := ${XDG_CONFIG_HOME}/Cursor/User
 endif
 
-# Old per-tool skill/persona/config/template symlinks installed by the
-# pre-universal cursor.mk — pruned on install.
-CURSOR_LEGACY := $(addprefix ${CURSOR_HOME}/skills/,gitboi jiragirl mega-dev commit create-pr create-story dev-story get-story) \
-	${CURSOR_HOME}/personas ${CURSOR_HOME}/config ${CURSOR_HOME}/templates \
+# Old persona/config/template symlinks, pruned on install.
+CURSOR_LEGACY := ${CURSOR_HOME}/personas ${CURSOR_HOME}/config ${CURSOR_HOME}/templates \
 	$(addprefix ${CURSOR_HOME}/agents/,gitboi.md jiragirl.md mega-dev.md)
 
-cursor: cursor-agents cursor-scripts cursor-hooks cursor-config cursor-user-config ai-agents ## Install Cursor agents, hooks, settings, keybindings, and universal skills
-	$(call pretty_print, "Pruning legacy ~/.cursor skill symlinks...")
+cursor: cursor-agents cursor-scripts cursor-hooks cursor-config cursor-user-config ## Install Cursor agents, hooks, settings, and keybindings
+	$(call pretty_print, "Pruning legacy ~/.cursor symlinks...")
 	@rm -rf $(CURSOR_LEGACY)
 
 cursor-agents: ## Symlink Cursor agents (same definitions as Claude Code)
@@ -67,7 +64,7 @@ cursor-user-config: ## Symlink Cursor editor settings and keybindings
 		ln -sfn "$(DOTFILES)/ai-stuff/cursor/$$f" "$$target"; \
 	done
 
-cursor-clean: ## Remove Cursor symlinks (universal skills stay; use ai-clean-agents for those)
+cursor-clean: ## Remove Cursor symlinks (skills are managed by `make skills`)
 	$(call pretty_print, "Removing Cursor symlinks...")
 	@for a in $(CLAUDE_AGENTS); do rm -f "${CURSOR_HOME}/agents/$$a"; done
 	$(call remove_file,${CURSOR_HOME}/hooks.json)
