@@ -155,10 +155,9 @@ version and [`CHANGELOG.md`](CHANGELOG.md) from conventional commit messages.
 
 ## 🔒 Private files
 
-Some files are gitignored because they carry personal or work-specific detail.
-The tracked file is the template, and the private variant sits beside it with a
-leading underscore or a dot prefix.
+Private skill config (Jira IDs, cluster names, Slack IDs, GitLab hosts) lives in
+the gitignored `~/codes/skills/local/`, which `make skills` links to
+`~/.config/dgokcin-skills`.
 
-- `ai-stuff/_shared/config/_*.md`
-- `ai-stuff/_shared/config/.clusters.json` (cluster and account names)
-- `ai-stuff/_shared/config/traefik-epic.md`
+The only gitignored file here is `ai-stuff/agents/traefik-vault.md`, a
+work-specific agent.

@@ -9,9 +9,7 @@ a separate repo, `~/codes/skills`, and `make skills` installs them into
 ```
 ai-stuff/
 ├── _shared/           # tool-agnostic content, linked to ~/.config/ai-shared
-│   ├── config/        # git, gitops, jira, house-search config
-│   ├── scripts/       # hook scripts and helpers shared across tools
-│   └── templates/     # property and daily-recap output templates
+│   └── scripts/       # hook scripts shared across tools
 ├── agents/            # subagent definitions (Claude Code + Cursor)
 ├── output-styles/     # Claude Code output styles
 ├── claude/            # Claude Code settings, keybindings, hook scripts, mods
