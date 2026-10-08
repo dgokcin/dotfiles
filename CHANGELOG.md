@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.14.0](https://github.com/dgokcin/dotfiles/compare/v3.13.0...v3.14.0) (2026-10-08)
+
+
+### Features
+
+* **claude:** install pokemon mod from external repo ([#214](https://github.com/dgokcin/dotfiles/issues/214)) ([ec42856](https://github.com/dgokcin/dotfiles/commit/ec42856f4a49d416cb6d67396fd8c63344853f7a))
+* **k9s:** add custom views configuration for nodes and pods ([#210](https://github.com/dgokcin/dotfiles/issues/210)) ([8cd9228](https://github.com/dgokcin/dotfiles/commit/8cd9228fdb44726137625e4d3d779250732929a5))
+
 ## [3.13.0](https://github.com/dgokcin/dotfiles/compare/v3.12.0...v3.13.0) (2026-09-21)
 
 
