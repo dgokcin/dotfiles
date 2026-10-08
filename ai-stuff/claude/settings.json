@@ -341,7 +341,7 @@
   "pluginConfigs": {
     "gitops@treatwell": {
       "options": {
-        "clustersJsonPath": "/Users/denizgokcin/codes/dotfiles/ai-stuff/_shared/config/.clusters.json",
+        "clustersJsonPath": "~/.config/dgokcin-skills/clusters.json",
         "ownerTeam": "platform-devx"
       }
     },
