@@ -4,7 +4,7 @@
 # macOS CI:  make cursor-user-config (Darwin Library path) + make brew-health
 #
 #   make lint            actionlint + shellcheck + yamllint + JSON
-#   make test            skill metadata + statusline fixtures
+#   make test            statusline fixtures
 #   make test-bootstrap  bootstrap dependency and installer contract
 #   make install-ci      symlink install (set HOME / XDG_CONFIG_HOME first)
 #   make verify-install  assert those symlinks point back at this repo
@@ -29,7 +29,7 @@ lint-yaml:
 lint-json:
 	@$(DOTFILES)/makefiles/scripts/lint-json.sh
 
-test: ai-check test-statusline ## Skill lint + statusline fixture tests
+test: test-statusline ## Statusline fixture tests
 
 test-statusline:
 	@$(DOTFILES)/ai-stuff/claude/scripts/statusline-test.sh

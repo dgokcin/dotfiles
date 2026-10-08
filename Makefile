@@ -15,6 +15,7 @@ include makefiles/shell.mk
 include makefiles/tools.mk
 include makefiles/utils.mk
 include makefiles/ai.mk
+include makefiles/skills.mk
 include makefiles/claude.mk
 include makefiles/cursor.mk
 include makefiles/codex.mk

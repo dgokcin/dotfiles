@@ -124,7 +124,7 @@ yamllint: ## Set up yamllint with custom configuration in the config directory
 	$(call mkdir_safe,${HOME}/.config/yamllint)
 	$(call symlink,other/yamllint/config,${XDG_CONFIG_HOME}/yamllint/config)
 
-yq: ## Install yq (YAML processor used by makefiles/scripts/skill-meta.sh)
+yq: ## Install yq (YAML processor)
 	$(call install_with_brew,yq)
 
 k9s: ## Symlink k9s aliases and views

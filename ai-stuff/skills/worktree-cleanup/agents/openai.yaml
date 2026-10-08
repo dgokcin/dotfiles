@@ -1,3 +1,0 @@
-interface:
-  display_name: "Worktree Cleanup"
-  short_description: "Remove git worktrees whose PRs/MRs already merged"

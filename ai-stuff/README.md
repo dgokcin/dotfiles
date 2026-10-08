@@ -1,142 +1,51 @@
-# AI Stuff — Universal Skills, One Source of Truth
+# AI Stuff
 
-Skills are authored **once** in [`skills/`](skills/) using the
-[Agent Skills](https://agentskills.io) standard (the format Claude Code,
-Codex, Cursor, Gemini CLI, and ~50 other tools read natively) and installed
-into every tool by symlink. Switching or adding an LLM provider costs one
-line in a Makefile table — never a second copy of a skill.
-
-The approach mirrors [BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD)'s
-platform installer (`tools/installer/ide/platform-codes.yaml`): one
-tool-agnostic skill format + a per-tool directory registry + verbatim
-installation. No per-tool transformation, no drift.
+Per-tool AI configuration plus the content those tools share. Skills live in
+a separate repo, `~/codes/skills`, and `make skills` installs them into
+`~/.claude/skills` and `~/.agents/skills` (see [`makefiles/skills.mk`](../makefiles/skills.mk)).
 
 ## Layout
 
 ```
 ai-stuff/
-├── skills/            # ⭐ single source of truth — universal Agent Skills
-│   ├── _shared -> ../_shared   # makes relative ../_shared/... refs resolve
-│   ├── slackify/
-│   │   ├── SKILL.md            # frontmatter drives Claude Code
-│   │   └── agents/openai.yaml  # picker metadata + policy for Codex
-│   ├── daily-recap/SKILL.md + agents/ + scripts/
-│   ├── vault-capture/SKILL.md + agents/ + references/
-│   ├── .archived/     # retired skills (never installed)
-│   └── ...
-├── invocation.md      # user- vs model-invoked rules, Skill-tool phrasing, openai.yaml schema
-├── _shared/           # configs, templates referenced by skills+agents
-│   ├── config/        # git-config, jira-config, .clusters.json, ...
-│   └── templates/     # property/daily-recap output templates
+├── _shared/           # tool-agnostic content, linked to ~/.config/ai-shared
+│   └── scripts/       # hook scripts shared across tools
 ├── agents/            # subagent definitions (Claude Code + Cursor)
-├── claude/            # Claude Code-specific settings, keybindings, and hook scripts
-├── codex/             # Codex-specific layer
-└── cursor/            # Cursor-specific settings, keybindings, agents, and hooks
+├── output-styles/     # Claude Code output styles
+├── claude/            # Claude Code settings, keybindings, hook scripts, mods
+├── codex/             # Codex hooks, AGENTS.md, managed config.toml block
+└── cursor/            # Cursor hooks, CLI config, editor settings, keybindings
 ```
 
 ## Installation
 
-Driven by [`makefiles/ai.mk`](../makefiles/ai.mk) — the tool registry:
+| Target      | Installs                                                        |
+| ----------- | --------------------------------------------------------------- |
+| `ai-shared` | `ai-stuff/_shared` to `~/.config/ai-shared`                     |
+| `claude`    | agents, output styles, scripts, settings, keybindings, `ai-shared` |
+| `cursor`    | agents, hook scripts, hooks.json, CLI config, editor settings   |
+| `codex`     | hooks, `AGENTS.md`, `RTK.md`, managed `config.toml` block        |
 
-| Target       | Installs to        | Covers                                                               |
-| ------------ | ------------------ | -------------------------------------------------------------------- |
-| `ai-claude`  | `~/.claude/skills` | Claude Code                                                           |
-| `ai-agents`  | `~/.agents/skills` | Codex, Cursor, Gemini CLI, Windsurf, Copilot, Roo, OpenHands, …       |
+Every install is a symlink back into this repo.
 
-Codex has no dedicated target: it ignores `~/.codex/skills` and reads only
-`.agents/skills` (repo + `$HOME`), so `ai-agents` covers it. Cursor natively
-also scans `~/.claude/skills` and `~/.claude/agents` — those entries are the
-same symlinked files, deduplicated by `name`.
+## Shared content
 
-```bash
-make ai          # ai-check, then install skills into all registered tools
-make ai-check    # lint SKILL.md <-> agents/openai.yaml (invocation policy, legacy keys, leftovers)
-make ai-skill-meta  # scaffold agents/openai.yaml for skills missing one
-make ai-list     # show skills + tool registry
-make ai-clean    # remove installed skills everywhere
-make claude      # claude layer (agents/configs/scripts/settings) + ai-claude
-make cursor      # cursor agents + ai-agents (+ prunes legacy ~/.cursor layout)
-make codex       # codex layer (hooks/AGENTS.md/config.toml managed block) + ai-agents
-```
-
-Each install: prune legacy names → `rm` old entry → symlink the whole skill
-directory. Whole-dir symlinks mean new files inside a skill (references,
-scripts) ship without touching any Makefile.
-
-**Add a tool** (e.g. Cline) — 2 lines in `ai.mk`:
-
-```make
-AI_TOOLS += cline
-ai_skills_dir_cline := ${HOME}/.cline/skills
-```
-
-**Add a skill** — create `ai-stuff/skills/<name>/SKILL.md`, decide whether it
-is user- or model-invoked per [`invocation.md`](invocation.md), run
-`make ai-skill-meta` and curate the generated `agents/openai.yaml`
-`short_description`, then `make ai`. Discovery is by wildcard; `ai-check`
-refuses to install if the two metadata files disagree.
-
-**Retire a skill** — move its dir to `skills/.archived/` and append the name
-to `AI_LEGACY_SKILLS` in `ai.mk` so installs prune it everywhere (BMAD's
-`removals.txt` pattern).
-
-## Portability conventions
-
-Skills must work in any tool. Rules used throughout `skills/`:
-
-1. **Shared content = relative markdown links.**
-   `[git config](../_shared/config/git-config.md)` — resolves from the
-   skill's directory in the repo *and* in every install tree (the `_shared`
-   symlink sits next to the installed skills). Never reference
-   `~/.claude/...` for content another tool needs to read.
-
-2. **`!`command`` dynamic-context lines are kept.**
-   Claude Code executes them eagerly and injects the output before the model
-   sees the prompt. Other tools show the line as text — models read it as
-   "run this command", which degrades gracefully to one extra tool call.
-
-3. **Claude-specific frontmatter keys are kept** (`allowed-tools`, `agent`,
-   `context: fork`, `disable-model-invocation`). The Agent Skills spec says
-   unknown keys are ignored, so other tools skip them. Claude Code is the
-   primary driver here; don't strip its metadata for purity. The one key
-   with a cross-tool twin is `disable-model-invocation`: it must agree with
-   `policy.allow_implicit_invocation` in `agents/openai.yaml` (Codex). Rules
-   and the openai.yaml schema live in [`invocation.md`](invocation.md).
-
-6. **Cross-skill calls say `Call the Skill tool with "<name>"`**, never
-   `/name`, and only ever target a model-invoked skill. See
-   [`invocation.md`](invocation.md).
-
-4. **Executable helpers used by universal skills live in `_shared/scripts/`**
-   and are referenced via `~/.config/ai-shared/scripts/...` (e.g.
-   `pr-status.sh`, `worktree-cleanup-*.sh`). That path is installed by
-   `make ai-shared` — part of every tool's install target — so it resolves no
-   matter which tool invokes the skill. Never reference `~/.claude/scripts/...`
-   from a universal skill: it only exists when `make claude` ran.
-
-5. **Skill-local assets stay inside the skill** (`references/`, `scripts/`)
-   and are referenced by bare relative paths — self-contained, BMAD-style.
+- **`_shared/`** is reachable at the tool-agnostic path
+  `~/.config/ai-shared/...`. Agents and external skills reference it there, so
+  the same file works in every tool and never depends on `~/.claude/...`.
+- **`_shared/scripts/`** holds hook scripts (`auto-approve-tools.sh`,
+  `focus-iterm.applescript`) that each tool's install symlinks into its own
+  scripts dir. Codex adopted Claude Code's hook protocol, so the same scripts
+  serve both. Cursor reuses the allowlist through an adapter.
+- Hooks have no cross-tool standard, so hook configs stay per-tool.
 
 ## Tool-specific layers
 
-Anything that is *not* a skill stays out of `skills/`:
-
-- **`agents/`** — subagent definitions with `tools:`/`model:` frontmatter.
-  Installed to `~/.claude/agents` and `~/.cursor/agents`. They reference
-  configs via the tool-agnostic `~/.config/ai-shared/...` path
-  (`make ai-shared` symlinks it to `ai-stuff/_shared`), so the same agent
-  file works in every tool that can read files.
-- **`claude/`** — `settings.json` (hooks, permissions, statusline, plugins)
-  and Claude-only hook scripts. See [claude/README.md](claude/README.md).
-- **`codex/`** — `hooks.json` + Codex-only hook scripts. Codex skill-picker
-  metadata is *not* here: it lives beside each skill in `agents/openai.yaml`. See
+- **`agents/`** holds subagent definitions with `tools:`/`model:`
+  frontmatter, installed to `~/.claude/agents` and `~/.cursor/agents`.
+- **`claude/`** holds `settings.json` and Claude-only hook scripts. See
+  [claude/README.md](claude/README.md).
+- **`codex/`** holds `hooks.json` and the managed config block. See
   [codex/README.md](codex/README.md).
-- **`_shared/scripts/`** — scripts shared across tools. Hook scripts
-  (`auto-approve-tools.sh`, `focus-iterm.applescript`): Codex adopted Claude
-  Code's hook protocol, so the same scripts serve both — symlinked into each
-  tool's own scripts dir, never referenced across tool homes. Skill helpers
-  (`pr-status.sh`, `worktree-cleanup-*.sh`): invoked by universal skills via
-  the tool-agnostic `~/.config/ai-shared/scripts/...` path.
-- Hooks have no cross-tool *standard* (event names/config differ per tool),
-  so hook configs stay per-tool by design. A skill must never depend on
-  hooks to function, only get better when they exist.
+- **`cursor/`** holds Cursor hooks and settings. See
+  [cursor/README.md](cursor/README.md).

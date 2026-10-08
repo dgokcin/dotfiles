@@ -1,6 +1,6 @@
 # High-level targets for setting up environments
 
-bootstrap: brew-bundle tools personal claude cursor codex raycast ## Set up a new Mac with packages, CLIs, shell, editors, and AI configuration
+bootstrap: brew-bundle tools personal claude cursor codex skills raycast ## Set up a new Mac with packages, CLIs, shell, editors, AI configuration, and skills
 
 # Setup personal environment
 personal: nvim bash zsh personal-git yamllint k9s
