@@ -10,6 +10,7 @@
     "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "1",
     "CLODEX_PLAN_USD": "10",
     "CLODEX_SPEND_WINDOW_DAYS": "30",
+    "CLAUDE_CODE_FORCE_TERMINAL_IMAGES": "1",
     "ENABLE_LSP_TOOL": "1",
     "ENABLE_TOOL_SEARCH": "auto:0.2"
   },
@@ -60,6 +61,7 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "opus",
   "enableAllProjectMcpServers": false,
   "skillOverrides": {
     "buddy": "off",

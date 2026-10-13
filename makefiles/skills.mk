@@ -13,8 +13,10 @@ SKILLS_DIR ?= $(HOME)/codes/skills
 SKILLS_AGENTS := claude-code codex cursor
 SKILLS_CLI := npx -y skills@latest
 SKILLS_LINK := $(DOTFILES)/makefiles/scripts/skills-link.sh
+SKILLS_STATUS := $(DOTFILES)/makefiles/scripts/skills-status.sh
 
 skills: skills-repo ## Pick skills from ~/codes/skills interactively and link them live
+	@$(SKILLS_STATUS) "$(SKILLS_DIR)"
 	@$(SKILLS_CLI) add "$(SKILLS_DIR)" -g -a $(SKILLS_AGENTS)
 	@$(SKILLS_LINK) "$(SKILLS_DIR)"
 
@@ -29,6 +31,9 @@ skills-remove: ## Pick installed skills to remove
 skills-list: ## List globally installed skills
 	@$(SKILLS_CLI) list -g
 
+skills-status: ## Show which skills in ~/codes/skills are installed
+	@$(SKILLS_STATUS) "$(SKILLS_DIR)"
+
 skills-repo: ## Clone ~/codes/skills and link its private config
 	@[ -d "$(SKILLS_DIR)" ] || git clone "git@github.com:$(SKILLS_REPO).git" "$(SKILLS_DIR)"
 	@if [ ! -d "$(SKILLS_DIR)/local" ]; then \
@@ -39,4 +44,4 @@ skills-repo: ## Clone ~/codes/skills and link its private config
 	@mkdir -p "$(HOME)/.config"
 	@ln -sfn "$(SKILLS_DIR)/local" "$(HOME)/.config/dgokcin-skills"
 
-.PHONY: skills skills-all skills-remove skills-list skills-repo
+.PHONY: skills skills-all skills-remove skills-list skills-status skills-repo

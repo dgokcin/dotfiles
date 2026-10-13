@@ -136,6 +136,9 @@ tmux: ## Install tmux and symlink config (fixes TERM/escape-sequence bleed with 
 	$(call install_with_brew,tmux)
 	$(call symlink,other/tmux/tmux.conf,${HOME}/.tmux.conf)
 
+hammerspoon: ## Symlink the Hammerspoon config directory
+	$(call symlink,other/hammerspoon,${HOME}/.hammerspoon)
+
 brew-trust: ## Trust the third-party taps the Brewfile declares
 	@command -v brew >/dev/null || { echo "Homebrew is required"; exit 1; }
 	@$(DOTFILES)/makefiles/scripts/brew-trust.sh
@@ -149,4 +152,4 @@ brew-bundle-check: brew-trust ## Check packages and applications from Brewfile
 	@brew bundle check --file="$(DOTFILES)/Brewfile"
 
 .PHONY: tools volta node npm-tools yarn pnpm bun uv aws-cli opencode-cli verify-tool-owners \
-	lazygit yamllint yq k9s tmux brew-trust brew-bundle brew-bundle-check
+	lazygit yamllint yq k9s tmux hammerspoon brew-trust brew-bundle brew-bundle-check
