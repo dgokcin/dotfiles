@@ -5,8 +5,9 @@ return {
   event = { "BufReadPost", "BufEnter" },
   init = function()
     vim.g.VM_maps = {
-      ["Add Cursor Down"] = "<M-j>",
-      ["Add Cursor Up"] = "<M-k>",
+      -- alt+j/k belong to herdr pane focus.
+      ["Add Cursor Down"] = "<M-J>",
+      ["Add Cursor Up"] = "<M-K>",
     }
   end,
 }
