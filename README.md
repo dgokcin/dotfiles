@@ -17,7 +17,7 @@ installs them into each tool.
 ├── makefiles/            one .mk per concern, plus helper scripts in scripts/
 ├── ai-stuff/             agents, shared AI content, and per-tool AI settings
 ├── nvim/                 Neovim config (LazyVim + lazy.nvim, Lua)
-├── other/                app configs: lazygit, k9s, tmux, yamllint, vscode, winterm
+├── other/                app configs: lazygit, k9s, tmux, herdr, yamllint, vscode, winterm
 ├── Brewfile              Homebrew taps, formulae, casks, and fonts
 ├── .github/workflows/    checks.yml, release-please.yml
 └── dotfiles at the root  .zshrc, .aliases, .functions, .path, .extra,
@@ -95,8 +95,10 @@ belong to the editor's package manager. Tree-sitter CLI is not installed
 globally; install it through Cargo only when developing grammars. Homebrew owns
 macOS applications and general native command-line tools.
 
-`lazygit`, `yamllint`, `yq`, `k9s`, and `tmux` retain individual configuration
-targets that install with Homebrew where needed and link config from `other/`.
+`lazygit`, `yamllint`, `yq`, `k9s`, `tmux`, and `herdr` retain individual
+configuration targets that install with Homebrew where needed and link config
+from `other/`. `herdr` only links `config.toml`, because herdr installs and
+updates itself through `herdr update`.
 
 ### 🔍 Raycast
 

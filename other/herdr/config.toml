@@ -1,0 +1,45 @@
+onboarding = false
+
+[theme]
+name = "dracula"
+auto_switch = false
+
+[keys]
+# Pane focus needs no prefix: left Option (alt) + h/j/k/l.
+focus_pane_left  = "alt+h"
+focus_pane_down  = "alt+j"
+focus_pane_up    = "alt+k"
+focus_pane_right = "alt+l"
+last_pane        = "prefix+semicolon"
+
+# Splits match nvim-tree: \ vertical, - horizontal.
+split_vertical   = "prefix+backslash"
+split_horizontal = "prefix+minus"
+
+# Tabs move horizontally, like gT / gt.
+new_tab           = "prefix+t"
+previous_tab      = "prefix+shift+h"
+next_tab          = "prefix+shift+l"
+move_tab_previous = "prefix+alt+h"
+move_tab_next     = "prefix+alt+l"
+
+# Workspaces move vertically, like the sidebar.
+previous_workspace = "prefix+shift+k"
+next_workspace     = "prefix+shift+j"
+switch_workspace   = "prefix+shift+1..9"
+
+# Agents use bracket motions, like [q / ]q.
+previous_agent = "prefix+["
+next_agent     = "prefix+]"
+focus_agent    = "prefix+alt+1..9"
+
+# Navigate mode (prefix+w): j/k walk workspaces, H/J/K/L move between panes.
+navigate_workspace_up   = "k"
+navigate_workspace_down = "j"
+navigate_pane_left      = "shift+h"
+navigate_pane_down      = "shift+j"
+navigate_pane_up        = "shift+k"
+navigate_pane_right     = "shift+l"
+
+[ui.toast]
+delivery = "herdr"

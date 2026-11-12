@@ -136,6 +136,11 @@ tmux: ## Install tmux and symlink config (fixes TERM/escape-sequence bleed with 
 	$(call install_with_brew,tmux)
 	$(call symlink,other/tmux/tmux.conf,${HOME}/.tmux.conf)
 
+herdr: ## Symlink herdr config.toml (herdr itself installs and updates through `herdr update`)
+	$(call mkdir_safe,${XDG_CONFIG_HOME}/herdr)
+	$(call symlink,other/herdr/config.toml,${XDG_CONFIG_HOME}/herdr/config.toml)
+	@command -v herdr >/dev/null && herdr server reload-config >/dev/null 2>&1 || true
+
 hammerspoon: ## Symlink the Hammerspoon config directory
 	$(call symlink,other/hammerspoon,${HOME}/.hammerspoon)
 
@@ -152,4 +157,4 @@ brew-bundle-check: brew-trust ## Check packages and applications from Brewfile
 	@brew bundle check --file="$(DOTFILES)/Brewfile"
 
 .PHONY: tools volta node npm-tools yarn pnpm bun uv aws-cli opencode-cli verify-tool-owners \
-	lazygit yamllint yq k9s tmux hammerspoon brew-trust brew-bundle brew-bundle-check
+	lazygit yamllint yq k9s tmux herdr hammerspoon brew-trust brew-bundle brew-bundle-check
